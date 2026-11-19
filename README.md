@@ -7,7 +7,7 @@ Die App zeigt deinen Familienstammbaum und erinnert dich an Geburtstage, auch we
 ## Installieren
 
 1. Öffne auf dem Handy die Seite **Releases** dieses Projekts (rechts auf der GitHub-Seite) und lade `Familienstammbaum.apk` herunter.
-   Direktlink zur neuesten Version: `https://github.com/Markpalu84/familienstammbaum-app/releases/latest/download/Familienstammbaum.apk`
+   Direktlink zur neuesten Version: `https://github.com/Cokakula/familienstammbaum-app/releases/latest/download/Familienstammbaum.apk`
 2. Tippe auf die heruntergeladene Datei. Android fragt beim ersten Mal, ob Chrome Apps installieren darf: **Einstellungen → Zulassen**, dann zurück und **Installieren**.
 3. Falls Google Play Protect warnt («Unbekannte App»): **Weitere Details → Trotzdem installieren**. Die Warnung kommt, weil die App nicht aus dem Play Store stammt.
 4. App **Stammbaum** öffnen und den Einladungslink einfügen:
