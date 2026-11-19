@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Stammbaum</string>
+
+    <!-- Einrichtung -->
+    <string name="setup_title">Familienstammbaum</string>
+    <string name="setup_text">Füge deinen persönlichen Stammbaum-Link ein. Du findest ihn in deiner Einladung per E-Mail oder WhatsApp. Als Admin nimmst du den Admin-Link aus «Mitglieder &amp; Zugriff».</string>
+    <string name="setup_tip">Tipp: In WhatsApp den Link lange drücken, dann «Teilen» und «Stammbaum» wählen.</string>
+    <string name="link_label">Stammbaum-Link</string>
+    <string name="link_invalid">Das ist kein Stammbaum-Link. Er beginnt mit https://script.google.com/macros/s/</string>
+    <string name="paste">Aus Zwischenablage einfügen</string>
+    <string name="open">Stammbaum öffnen</string>
+    <string name="link_saved">Stammbaum-Link gespeichert</string>
+    <string name="no_link_in_text">In diesem Text ist kein Stammbaum-Link.</string>
+
+    <!-- Allgemein -->
+    <string name="offline_text">Keine Verbindung. Prüfe das Internet und versuche es erneut.</string>
+    <string name="retry">Erneut versuchen</string>
+    <string name="choose_photos">Fotos wählen</string>
+    <string name="no_app_for_link">Keine App gefunden, die diesen Link öffnen kann.</string>
+    <string name="notifications_denied">Ohne Mitteilungen kommen keine Geburtstags-Erinnerungen. Du kannst sie in den App-Einstellungen erlauben.</string>
+
+    <!-- Erinnerungen -->
+    <string name="channel_name">Geburtstage</string>
+    <string name="channel_description">Erinnerungen an Geburtstage aus dem Stammbaum</string>
+    <string name="bday_today_title">Heute hat %1$s Geburtstag</string>
+    <string name="bday_tomorrow_title">Morgen hat %1$s Geburtstag</string>
+    <string name="bday_today_text_age">%1$s wird heute %2$d.</string>
+    <string name="bday_tomorrow_text_age">%1$s wird morgen %2$d.</string>
+    <string name="bday_text_plain">Tippe, um die Karte im Stammbaum zu öffnen.</string>
+    <string name="action_call">Anrufen</string>
+    <string name="action_whatsapp">WhatsApp</string>
+    <string name="wa_text">Alles Gute zum Geburtstag, %1$s! Gëzuar ditëlindjen!</string>
+
+    <!-- Einstellungen -->
+    <string name="settings_title">App-Einstellungen</string>
+    <string name="section_reminders">Geburtstags-Erinnerungen</string>
+    <string name="reminders_switch">Erinnerungen einschalten</string>
+    <string name="time_label">Uhrzeit</string>
+    <string name="day_before">Auch am Vortag erinnern</string>
+    <string name="permission_hint">Mitteilungen sind für diese App ausgeschaltet. Ohne sie kommen keine Erinnerungen.</string>
+    <string name="permission_button">Mitteilungen erlauben</string>
+    <string name="check_button">Jetzt prüfen</string>
+    <string name="checking">Wird geprüft …</string>
+    <string name="check_offline">Keine Verbindung. Es werden die zuletzt geladenen Daten verwendet.</string>
+    <string name="check_count">Geburtstage im Stammbaum: %1$d</string>
+    <string name="check_next">Nächster Geburtstag: %1$s am %2$s</string>
+    <string name="check_shown">Erinnerungen angezeigt: %1$d</string>
+    <string name="section_link">Stammbaum-Link</string>
+    <string name="no_link">Noch kein Link gespeichert</string>
+    <string name="change_link">Link ändern</string>
+    <string name="about_text">Die Daten liegen im Google-Konto des Stammbaums. Die App zeigt den Stammbaum und erinnert dich an Geburtstage, auch wenn sie geschlossen ist.</string>
+</resources>
