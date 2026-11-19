@@ -602,6 +602,21 @@ function execFromParam(g) {
 }
 function paramOfExec(exec) { const m = /^https:\/\/script\.google\.com\/macros\/s\/([A-Za-z0-9_-]+)\/exec$/.exec(exec || ''); return m ? m[1] : exec || ''; }
 function webBase() { return IS_WEB ? location.origin + location.pathname : WEB_URL; }
+/* Eingefügten Link (Einladung, Notfall-Link oder Google-Web-App-Adresse, auch im alten Format) in eine Adresse der Webversion umwandeln */
+function webTarget(text) {
+  const m = /https?:\/\/[^\s"'<>]+/.exec(text || ''); if (!m) return null;
+  let u; try { u = new URL(m[0].replace(/[.,;)!]+$/, '')); } catch (e) { return null; }
+  const g = u.hostname === 'script.google.com' ? paramOfExec(u.origin + u.pathname.replace(/\/dev$/, '/exec')) : (u.searchParams.get('g') || '');
+  if (!execFromParam(g)) return null;
+  return `${webBase()}?g=${encodeURIComponent(g)}${u.hash || ''}`;
+}
+async function pasteLinkWeb() {
+  const t = await textPrompt({ title: 'Link einfügen', label: 'Einladungslink oder Adresse der Google-Web-App', placeholder: 'https://…', ok: 'Öffnen' });
+  if (!t) return;
+  const target = webTarget(t);
+  if (!target) throw { code: 'user', message: 'Das ist kein Stammbaum-Link. Kopiere den ganzen Link aus WhatsApp oder der E-Mail.' };
+  location.href = target; setTimeout(() => location.reload(), 60);
+}
 const LS = {
   get(k) { try { return localStorage.getItem('stammbaum.' + k); } catch (e) { return null; } },
   set(k, v) { try { localStorage.setItem('stammbaum.' + k, v); } catch (e) {} },
@@ -1337,9 +1352,9 @@ function renderMain() {
   if (S.denied) {
     if (main.dataset.v === 'denied') return;
     return setMain('denied', stateHtml('Kein Zugriff', S.denyMsg || 'Öffne den Einladungslink, den du bekommen hast. Er funktioniert nur einmal, danach öffnet sich der Stammbaum auf diesem Gerät direkt.',
-      `<div class="foot-acts" style="max-width:320px;margin:20px auto 0">${IN_APP ? `<button type="button" class="btn primary" data-act="paste-link">${I.copy} Einladungslink einfügen</button>` : ''}<button type="button" class="btn" data-act="recover">${I.target} Notfall-Schlüssel eingeben</button></div>`));
+      `<div class="foot-acts" style="max-width:320px;margin:20px auto 0">${IN_APP || IS_WEB ? `<button type="button" class="btn primary" data-act="paste-link">${I.copy} Einladungslink einfügen</button>` : ''}<button type="button" class="btn" data-act="recover">${I.target} Notfall-Schlüssel eingeben</button></div>`));
   }
-  if (S.noGoogle && IS_WEB) return setMain('na', stateHtml('Einladungslink öffnen', 'Öffne den Einladungslink, den du per WhatsApp oder E-Mail bekommen hast. Danach öffnet sich der Stammbaum hier direkt.'));
+  if (S.noGoogle && IS_WEB) return setMain('na', stateHtml('Einladungslink öffnen', 'Öffne den Einladungslink, den du per WhatsApp oder E-Mail bekommen hast. Danach öffnet sich der Stammbaum hier direkt.', `<button type="button" class="btn primary" data-act="paste-link">${I.copy} Link einfügen</button>`));
   if (S.iosHint) return setMain('ios', stateHtml('Zum Home-Bildschirm hinzufügen', 'Tippe unten auf das Teilen-Symbol (Quadrat mit Pfeil nach oben) → «Zum Home-Bildschirm» → «Hinzufügen». Öffne den Stammbaum dann über das neue Symbol. Die Einladung wird erst dort eingelöst.', `<button type="button" class="btn" data-act="ios-browser">Doch hier im Browser öffnen</button>`));
   if (S.noGoogle) return setMain('na', IN_APP ? stateHtml('Kein Stammbaum verbunden', 'Füge den Einladungslink ein, den du bekommen hast.', `<button type="button" class="btn primary" data-act="paste-link">${I.copy} Einladungslink einfügen</button>`) : stateHtml('Als Google-Web-App öffnen', 'Diese Datei läuft als Google-Apps-Script-Web-App oder in der Familienstammbaum-App.'));
   if (!S.loaded && S.loadError) return setMain('err', stateHtml('Daten nicht erreichbar', 'Die Verbindung zu deinem Google-Konto hat nicht geklappt. Prüfe die Internetverbindung.', `<button type="button" class="btn primary" data-act="retry-load">${I.refresh} Erneut versuchen</button>`));
@@ -1393,7 +1408,7 @@ function onMainClick(e) {
       else toast('Du bist jetzt Admin. Einladungen findest du im Menü oben.');
     });
     case 'recover': return act(enterRecoveryCode);
-    case 'paste-link': if (NATIVE && NATIVE.openSetup) NATIVE.openSetup(); return;
+    case 'paste-link': if (IS_WEB) return act(pasteLinkWeb); if (NATIVE && NATIVE.openSetup) NATIVE.openSetup(); return;
     case 'restore': return act(pickBackupFile);
     case 'ios-browser': try { sessionStorage.setItem('iosGo', '1'); } catch (e) {} location.reload(); return;
     case 'create-tree': return act(async () => {
@@ -2252,7 +2267,7 @@ function openLink() { const ex = appLink(); return ex ? `${webBase()}?g=${encode
 function secretLink(kind, secret) { return `${openLink()}#${kind}=${secret}`; }
 function inviteText(link) {
   const t = curTree(); const n = t ? t.name : 'Familienstammbaum';
-  return `Du bist zum Familienstammbaum «${n}» eingeladen. Je ftuar në trungun familjar «${n}».\n\niPhone oder Computer: Link einfach öffnen.\nAndroid: am besten mit der App ${APK_URL}\ndann den Link lange drücken → Teilen → Stammbaum.\n\nDein persönlicher Link (funktioniert nur einmal, bitte nicht weitergeben):\n${link}`;
+  return `Du bist zum Familienstammbaum «${n}» eingeladen. Je ftuar në trungun familjar «${n}».\n\nÖffne den Link auf dem Handy oder Computer, auf dem du den Stammbaum benutzen möchtest. Tipp: danach im Browser «Zum Home-Bildschirm» bzw. «Zum Startbildschirm hinzufügen».\n\nDein persönlicher Link (funktioniert nur einmal, bitte nicht weitergeben):\n${link}`;
 }
 function memberInitials(name) { const parts = String(name || '?').trim().split(/[\s@.]+/); return ((parts[0] || '?')[0] + ((parts[1] || '')[0] || '')).toUpperCase(); }
 function fmtSeen(s) { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || ''); return m ? `${m[3]}.${m[2]}.${m[1]}` : ''; }
@@ -2365,7 +2380,7 @@ function inviteForm() {
 function shareDialog(inv, self) {
   const text = self ? `Familienstammbaum auf weiterem Gerät öffnen (funktioniert nur einmal):\n${inv.link}` : inviteText(inv.link);
   return dialog(`<div class="dlg-title">${self ? 'Link für dein weiteres Gerät' : 'Einladung bereit'}</div>
-    <div class="dlg-text">${self ? 'Öffne diesen Link auf dem anderen Gerät, in der App («Einladungslink einfügen») oder im Browser.' : `Schicke ${esc(inv.name)} diesen Link. Rechte: <b>${esc(ROLE_DE[inv.role])}</b>.`} Er funktioniert nur einmal. Schliesst du dieses Fenster, ist er nicht mehr abrufbar; dann erstellst du einfach einen neuen.</div>
+    <div class="dlg-text">${self ? 'Öffne diesen Link im Browser des anderen Geräts.' : `Schicke ${esc(inv.name)} diesen Link. Rechte: <b>${esc(ROLE_DE[inv.role])}</b>.`} Er funktioniert nur einmal. Schliesst du dieses Fenster, ist er nicht mehr abrufbar; dann erstellst du einfach einen neuen.</div>
     <div class="dlg-form"><input class="link-box" readonly value="${esc(inv.link)}" aria-label="Einladungslink"></div>
     <div class="dlg-btns"><button type="button" class="btn" data-v="copy">${I.copy} Kopieren</button><a class="btn primary" href="${esc(waLink(text))}" target="_blank" rel="noopener">WhatsApp</a></div>
     <div class="dlg-btns"><a class="btn" href="${esc(mailLink('Einladung zum Familienstammbaum', text))}" target="_blank" rel="noopener">${I.mail} E-Mail</a>${IN_APP || navigator.share ? '<button type="button" class="btn" data-v="share">Teilen …</button>' : ''}</div>
@@ -2986,16 +3001,21 @@ async function boot() {
       <div class="dlg-btns"><button type="button" class="btn" data-v="browser">Im Browser öffnen</button><button type="button" class="btn primary" data-v="home">Als App hinzufügen</button></div>`, { sticky: true });
     if (v === 'home') { S.iosHint = true; render(); return; }
   }
+  let keepLink = false;
   if (kind) {
     let go = true;
     if (loadSession()) go = await confirmDialog({ title: kind === 'i' ? 'Einladung einlösen?' : 'Notfall-Schlüssel verwenden?', text: 'Dieses Gerät hat schon Zugriff auf einen Stammbaum. Der bisherige Zugang auf diesem Gerät wird dabei ersetzt.', ok: 'Einlösen' });
     if (go) {
       S.busy = kind === 'i' ? 'Einladung wird eingelöst …' : 'Notfall-Schlüssel wird geprüft …'; render();
       try { clearSession(); await redeem(kind, hash[kind]); toast(kind === 'i' ? 'Willkommen! Dieses Gerät hat jetzt Zugriff.' : 'Zugriff wiederhergestellt'); }
-      catch (e) { S.denyMsg = (e && e.code === 'user' && e.message) || ''; if (!S.denyMsg) handleErr(e); }
+      catch (e) {
+        S.denyMsg = (e && e.code === 'user' && e.message) || '';
+        if (!S.denyMsg) handleErr(e);
+        if (e && (e.code === 'net' || e.code === 'no_google')) keepLink = true;   /* ohne Verbindung: Link behalten, später nochmals */
+      }
       finally { S.busy = ''; }
     }
-    forgetLink();
+    if (!keepLink) forgetLink();
   }
   load(true);
 }

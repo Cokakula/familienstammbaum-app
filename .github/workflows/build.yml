@@ -1,8 +1,8 @@
 name: Android-App bauen
 
+# Die Android-App wird nicht mehr automatisch gebaut (alle nutzen die Webversion).
+# Bei Bedarf in GitHub unter «Actions» von Hand starten.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:

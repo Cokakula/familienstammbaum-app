@@ -1,3 +1,13 @@
+# Familienstammbaum
+
+**Webversion für alle (iPhone, Android, Computer):** https://cokakula.github.io/familienstammbaum-app/
+
+Ende-zu-Ende-verschlüsselt: Alle Angaben und Fotos werden im Browser verschlüsselt, bevor sie zu Google gehen. Google speichert nur unlesbare Daten. Die Webversion liegt im Zweig `gh-pages` dieses Projekts.
+
+Die frühere Android-App (unten) wird nicht mehr weiterentwickelt.
+
+---
+
 # Familienstammbaum – Android-App
 
 Die App zeigt deinen Familienstammbaum und erinnert dich an Geburtstage, auch wenn sie geschlossen ist.
