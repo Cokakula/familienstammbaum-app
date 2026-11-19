@@ -20,6 +20,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -54,8 +55,12 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_PERSON = "person"
         const val ACTION_SETUP = "ch.familienstammbaum.app.SETUP"
-        private const val HOST = "appassets.androidplatform.net"
-        private const val START_URL = "https://$HOST/assets/www/index.html"
+        /** Die App zeigt die Webversion an: immer derselbe Stand wie im Browser */
+        private const val WEB_HOST = "cokakula.github.io"
+        private const val START_URL = "https://$WEB_HOST/familienstammbaum-app/"
+        /** Nur einmal nach dem Update: bisherigen Zugang aus der früher eingebauten Oberfläche übernehmen */
+        private const val ASSET_HOST = "appassets.androidplatform.net"
+        private const val MIGRATE_URL = "https://$ASSET_HOST/assets/migrate.html"
         private const val RELOCK_AFTER_MS = 60_000L
         private val AUTH = BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL
     }
@@ -63,6 +68,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var web: WebView
     private lateinit var setup: View
     private lateinit var lockView: View
+    private lateinit var offline: View
+    @Volatile private var pageHost: String = ""
     private lateinit var linkInput: EditText
     private lateinit var linkError: TextView
     private lateinit var assets: WebViewAssetLoader
@@ -132,9 +139,11 @@ class MainActivity : AppCompatActivity() {
         web = findViewById(R.id.web)
         setup = findViewById(R.id.setup)
         lockView = findViewById(R.id.lock)
+        offline = findViewById(R.id.offline)
+        findViewById<Button>(R.id.retryButton).setOnClickListener { offline.visibility = View.GONE; web.visibility = View.VISIBLE; web.reload() }
         linkInput = findViewById(R.id.linkInput)
         linkError = findViewById(R.id.linkError)
-        assets = WebViewAssetLoader.Builder().setDomain(HOST).addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this)).build()
+        assets = WebViewAssetLoader.Builder().setDomain(ASSET_HOST).addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this)).build()
         prompt = BiometricPrompt(this, ContextCompat.getMainExecutor(this), object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 unlocked = true
@@ -222,12 +231,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun showWeb(reload: Boolean) {
         setup.visibility = View.GONE
+        offline.visibility = View.GONE
         web.visibility = View.VISIBLE
-        if (reload || web.url == null) web.loadUrl(START_URL)
+        if (!reload && web.url != null) return
+        if (!Prefs.webMigrated(this)) {
+            web.loadUrl(MIGRATE_URL)
+            web.postDelayed({ if (!Prefs.webMigrated(this)) { Prefs.setWebMigrated(this); web.loadUrl(START_URL) } }, 4000)
+        } else web.loadUrl(START_URL)
     }
 
     private fun showSetup() {
         web.visibility = View.GONE
+        offline.visibility = View.GONE
         setup.visibility = View.VISIBLE
         linkError.visibility = View.GONE
         linkInput.setText("")
@@ -328,36 +343,48 @@ class MainActivity : AppCompatActivity() {
 
     /** Schnittstelle für die Oberfläche (nur für die eigene, in der App mitgelieferte Seite) */
     inner class Bridge {
+        private fun ours() = pageHost == WEB_HOST
+
+        /** Einmalig: Zugang aus der früher eingebauten Oberfläche (eigener Speicher) an die Webversion übergeben */
+        @JavascriptInterface fun migrateSession(sess: String?) {
+            if (pageHost != ASSET_HOST) return
+            if (!sess.isNullOrBlank()) Prefs.setOldSession(this@MainActivity, sess)
+            Prefs.setWebMigrated(this@MainActivity)
+            runOnUiThread { web.loadUrl(START_URL) }
+        }
+        @JavascriptInterface fun sessionImported() { if (ours()) Prefs.clearOldSession(this@MainActivity) }
         @JavascriptInterface fun getConfig(): String {
             val ctx = this@MainActivity
+            if (!ours()) return "{}"
             val o = JSONObject().put("exec", Prefs.exec(ctx) ?: "")
+            Prefs.oldSession(ctx)?.let { o.put("sess", it) }
             Prefs.pending(ctx)?.let { o.put("link", it) }
             pendingPerson?.let { o.put("person", it) }
             pendingPerson = null
             if (Prefs.reset(ctx)) { o.put("reset", true); Prefs.clearReset(ctx) }
             return o.toString()
         }
-        @JavascriptInterface fun linkUsed() { Prefs.clearPending(this@MainActivity) }
-        @JavascriptInterface fun saveSession(json: String) {
+        @JavascriptInterface fun linkUsed() { if (!ours()) return; Prefs.clearPending(this@MainActivity) }
+        @JavascriptInterface fun saveSession(json: String) { if (!ours()) return;
             Prefs.setSession(this@MainActivity, json)
             runOnUiThread { Birthdays.schedule(this@MainActivity, update = false) }
         }
-        @JavascriptInterface fun clearSession() { Prefs.clearSession(this@MainActivity) }
-        @JavascriptInterface fun saveBirthdays(json: String) { Prefs.setCache(this@MainActivity, json) }
+        @JavascriptInterface fun clearSession() { if (!ours()) return; Prefs.clearSession(this@MainActivity) }
+        @JavascriptInterface fun saveBirthdays(json: String) { if (!ours()) return; Prefs.setCache(this@MainActivity, json) }
         @JavascriptInterface fun http(id: Int, url: String, body: String) {
-            if (url != Prefs.exec(this@MainActivity)) { respond(id, false, "Ungültige Adresse"); return }
+            if (!ours() || url != Prefs.exec(this@MainActivity)) { respond(id, false, "Ungültige Adresse"); return }
             Thread { try { respond(id, true, Net.post(url, body)) } catch (e: Exception) { respond(id, false, e.message ?: "Fehler") } }.start()
         }
-        @JavascriptInterface fun shareText(text: String) {
+        @JavascriptInterface fun shareText(text: String) { if (!ours()) return;
             runOnUiThread {
                 internalNav = true
                 startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text), null))
             }
         }
-        @JavascriptInterface fun openSettings() { runOnUiThread { this@MainActivity.openSettings() } }
-        @JavascriptInterface fun openSetup() { runOnUiThread { showSetup() } }
-        @JavascriptInterface fun pickedMeta(): String = pickedMeta
-        @JavascriptInterface fun saveBegin(name: String, mime: String) {
+        @JavascriptInterface fun openSettings() { if (!ours()) return; runOnUiThread { this@MainActivity.openSettings() } }
+        @JavascriptInterface fun openSetup() { if (!ours()) return; runOnUiThread { showSetup() } }
+        @JavascriptInterface fun pickedMeta(): String = if (ours()) pickedMeta else "[]"
+        @JavascriptInterface fun saveBegin(name: String, mime: String) { if (!ours()) return;
             try { saveOut?.close() } catch (e: Exception) { }
             val f = File(cacheDir, "speichern.tmp")
             saveFile = f
@@ -365,8 +392,8 @@ class MainActivity : AppCompatActivity() {
             saveName = name.replace(Regex("""[\\/:*?"<>|]"""), "_").ifBlank { "Datei" }
             saveMime = mime.ifBlank { "application/octet-stream" }
         }
-        @JavascriptInterface fun saveChunk(b64: String) { saveOut?.write(Base64.decode(b64, Base64.DEFAULT)) }
-        @JavascriptInterface fun saveEnd() {
+        @JavascriptInterface fun saveChunk(b64: String) { if (!ours()) return; saveOut?.write(Base64.decode(b64, Base64.DEFAULT)) }
+        @JavascriptInterface fun saveEnd() { if (!ours()) return;
             try { saveOut?.close() } catch (e: Exception) { }
             saveOut = null
             runOnUiThread {
@@ -389,12 +416,28 @@ class MainActivity : AppCompatActivity() {
 
         web.webViewClient = object : WebViewClient() {
             override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? =
-                assets.shouldInterceptRequest(request.url)
+                if (request.url.host == ASSET_HOST) assets.shouldInterceptRequest(request.url) else null
+
+            override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
+                pageHost = Uri.parse(url ?: "").host ?: ""
+            }
+
+            override fun doUpdateVisitedHistory(view: WebView, url: String?, isReload: Boolean) {
+                pageHost = Uri.parse(url ?: "").host ?: ""
+            }
+
+            override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
+                if (request.isForMainFrame && request.url.host == WEB_HOST) {
+                    web.visibility = View.GONE
+                    offline.visibility = View.VISIBLE
+                }
+            }
 
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                 val uri = request.url
                 val scheme = uri.scheme?.lowercase().orEmpty()
-                if (uri.host == HOST) return false
+                if (uri.host == WEB_HOST && uri.path.orEmpty().startsWith("/familienstammbaum-app")) return false
+                if (uri.host == ASSET_HOST) return false
                 if (scheme == "blob" || scheme == "data" || scheme == "about" || scheme == "javascript") return false
                 openOutside(uri)
                 return true

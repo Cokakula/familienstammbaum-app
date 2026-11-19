@@ -1,8 +1,10 @@
 name: Android-App bauen
 
-# Die Android-App wird nicht mehr automatisch gebaut (alle nutzen die Webversion).
-# Bei Bedarf in GitHub unter «Actions» von Hand starten.
+# Die App zeigt die Webversion an. Neu gebaut wird sie nur, wenn sich am App-Teil etwas ändert.
 on:
+  push:
+    branches: [main]
+    paths: ['app/**', '.github/workflows/**', 'build.gradle.kts', 'settings.gradle.kts']
   workflow_dispatch:
 
 permissions:

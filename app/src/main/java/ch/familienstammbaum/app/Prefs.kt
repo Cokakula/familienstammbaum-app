@@ -65,6 +65,13 @@ object Prefs {
     fun cache(c: Context): String? = sp(c).getString("birthdays", null)?.let { Vault.open(it) }
     fun setCache(c: Context, json: String) { Vault.seal(json)?.let { sp(c).edit().putString("birthdays", it).apply() } }
 
+    /** Umstieg auf die Webversion in der App: einmalig den bisherigen Zugang übernehmen */
+    fun webMigrated(c: Context): Boolean = sp(c).getBoolean("webMigrated", false)
+    fun setWebMigrated(c: Context) { sp(c).edit().putBoolean("webMigrated", true).apply() }
+    fun oldSession(c: Context): String? = sp(c).getString("oldSess", null)?.let { Vault.open(it) }
+    fun setOldSession(c: Context, json: String) { Vault.seal(json)?.let { sp(c).edit().putString("oldSess", it).apply() } }
+    fun clearOldSession(c: Context) { sp(c).edit().remove("oldSess").apply() }
+
     fun lastNotified(c: Context): String? = sp(c).getString("lastNotified", null)
     fun setLastNotified(c: Context, value: String) { sp(c).edit().putString("lastNotified", value).apply() }
 }

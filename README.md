@@ -4,7 +4,7 @@
 
 Ende-zu-Ende-verschlüsselt: Alle Angaben und Fotos werden im Browser verschlüsselt, bevor sie zu Google gehen. Google speichert nur unlesbare Daten. Die Webversion liegt im Zweig `gh-pages` dieses Projekts.
 
-Die frühere Android-App (unten) wird nicht mehr weiterentwickelt.
+**Android-App (optional):** zeigt genau diese Webversion an und ist damit immer auf dem gleichen Stand. Dazu kommen Geburtstags-Erinnerungen im Hintergrund, die App-Sperre und das Speichern von Sicherungen. Download: https://github.com/Cokakula/familienstammbaum-app/releases/latest/download/Familienstammbaum.apk
 
 ---
 

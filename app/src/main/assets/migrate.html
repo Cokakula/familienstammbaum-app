@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<body style="background:#ECF0ED">
+<script>
+/* Einmalig nach dem Update: bisherigen Zugang dieses Geräts an die Webversion übergeben (bleibt auf dem Handy) */
+try { FSApp.migrateSession(localStorage.getItem('stammbaum.sess') || ''); } catch (e) { try { FSApp.migrateSession(''); } catch (e2) {} }
+</script>
+</body></html>

@@ -107,6 +107,32 @@
         </LinearLayout>
     </ScrollView>
 
+    <!-- Keine Verbindung -->
+    <LinearLayout
+        android:id="@+id/offline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/offline_text"
+            android:textColor="@color/ink"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/retryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/retry" />
+    </LinearLayout>
+
     <!-- App-Sperre: verdeckt den Stammbaum, bis Fingerabdruck oder PIN bestätigt sind -->
     <LinearLayout
         android:id="@+id/lock"

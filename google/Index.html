@@ -2267,7 +2267,7 @@ function openLink() { const ex = appLink(); return ex ? `${webBase()}?g=${encode
 function secretLink(kind, secret) { return `${openLink()}#${kind}=${secret}`; }
 function inviteText(link) {
   const t = curTree(); const n = t ? t.name : 'Familienstammbaum';
-  return `Du bist zum Familienstammbaum «${n}» eingeladen. Je ftuar në trungun familjar «${n}».\n\nÖffne den Link auf dem Handy oder Computer, auf dem du den Stammbaum benutzen möchtest. Tipp: danach im Browser «Zum Home-Bildschirm» bzw. «Zum Startbildschirm hinzufügen».\n\nDein persönlicher Link (funktioniert nur einmal, bitte nicht weitergeben):\n${link}`;
+  return `Du bist zum Familienstammbaum «${n}» eingeladen. Je ftuar në trungun familjar «${n}».\n\nÖffne den Link auf dem Handy oder Computer, auf dem du den Stammbaum benutzen möchtest. Tipp: danach im Browser «Zum Home-Bildschirm» bzw. «Zum Startbildschirm hinzufügen».\nAndroid, auf Wunsch als App mit Geburtstags-Erinnerungen: ${APK_URL} (dann den Link lange drücken → Teilen → Stammbaum)\n\nDein persönlicher Link (funktioniert nur einmal, bitte nicht weitergeben):\n${link}`;
 }
 function memberInitials(name) { const parts = String(name || '?').trim().split(/[\s@.]+/); return ((parts[0] || '?')[0] + ((parts[1] || '')[0] || '')).toUpperCase(); }
 function fmtSeen(s) { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || ''); return m ? `${m[3]}.${m[2]}.${m[1]}` : ''; }
@@ -2975,6 +2975,11 @@ async function boot() {
     try { cfg = JSON.parse(NATIVE.getConfig() || '{}'); } catch (e) { cfg = {}; }
     EXEC = cfg.exec || '';
     if (cfg.reset) clearSession();
+    /* Nach dem Update der App: bisherigen Zugang dieses Geräts übernehmen (bleibt auf dem Handy) */
+    if (cfg.sess) {
+      try { const old = JSON.parse(cfg.sess); if (old && old.secret && !LS.get('sess')) LS.set('sess', cfg.sess); } catch (e) {}
+      try { if (NATIVE.sessionImported) NATIVE.sessionImported(); } catch (e) {}
+    }
     if (cfg.link) { const L = linkParts(cfg.link); params = L.params; hash = L.hash; }
     if (cfg.person) params.p = cfg.person;
     if (!EXEC) { S.noGoogle = true; render(); return; }
