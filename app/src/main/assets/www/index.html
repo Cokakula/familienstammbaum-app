@@ -317,6 +317,30 @@ a.opt{color:var(--ink);text-decoration:none}
 .storage .ic{width:15px;height:15px;vertical-align:-2px;color:var(--accent)}
 .pick-btn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:52px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:600;text-align:left;cursor:pointer}
 .pick-btn .ic{width:18px;height:18px;color:var(--muted);flex:none}
+
+/* Beruf */
+.job-line{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-size:.93rem;font-weight:500;max-width:100%}
+.job-line .ic{width:17px;height:17px;flex:none;color:var(--accent)}
+.job-line span{overflow:hidden;text-overflow:ellipsis}
+/* Geburtstag heute: leuchtender, drehender Ring um das Foto, Torte als Abzeichen */
+.av.bday-glow{position:relative;overflow:visible;animation:bdayGlow 2.4s ease-in-out infinite}
+.av.bday-glow img{border-radius:50%}
+.av.bday-glow::before{content:"";position:absolute;inset:calc(var(--size) * -0.09 - 3px);border-radius:50%;pointer-events:none;z-index:1;
+  background:conic-gradient(from 0deg,#F2C14E,#F78154,#E15A97,#B28DFF,#5DB7DE,#7BD389,#F2C14E);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3.5px));mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3.5px));
+  animation:bdaySpin 3.2s linear infinite}
+.av.bday-glow::after{content:"🎂";position:absolute;top:calc(var(--size) * -0.12);right:calc(var(--size) * -0.12);z-index:2;font-size:max(13px,calc(var(--size) * .3));line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
+@keyframes bdaySpin{to{transform:rotate(360deg)}}
+@keyframes bdayGlow{0%,100%{box-shadow:0 0 0 2px var(--bg),0 0 10px 2px rgba(242,193,78,.55)}50%{box-shadow:0 0 0 2px var(--bg),0 0 24px 8px rgba(247,129,84,.55)}}
+.bday.today{background:linear-gradient(140deg,var(--warm-soft),color-mix(in srgb,#F2C14E 32%,var(--warm-soft)));box-shadow:inset 0 0 0 2px color-mix(in srgb,#F2C14E 70%,transparent)}
+.bday-chip.today{border:0;font:inherit;font-weight:700;font-size:.92rem;cursor:pointer;text-align:left;padding:8px 14px;border-radius:18px;
+  background:linear-gradient(90deg,color-mix(in srgb,#F2C14E 30%,var(--warm-soft)),color-mix(in srgb,#E15A97 18%,var(--warm-soft)));animation:bdayGlow 2.4s ease-in-out infinite}
+.bday-chip.today small{display:block;font-weight:600;font-size:.8rem;opacity:.85}
+.bday-chip .ic{flex:none}
+.bday-title{display:flex;align-items:center;gap:10px}
+.bday-title .ic{color:var(--warm);width:26px;height:26px}
+.fw-canvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:650}
+@media (prefers-reduced-motion:reduce){.av.bday-glow,.av.bday-glow::before,.bday-chip.today{animation:none}}
 </style>
 </head>
 <body>
@@ -524,6 +548,7 @@ const I = {
   target: sv('<circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>'),
   save: sv('<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>'),
   check: sv('<path d="M5 12.5l4.5 4.5L19 7.5"/>'),
+  job: sv('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7M3 12.5h18M10.5 12.5v1.5h3v-1.5"/>'),
   cake: sv('<path d="M4 20h16M5 20v-7h14v7M5 16.2c2 0 2-1.6 3.5-1.6s1.5 1.6 3.5 1.6 2-1.6 3.5-1.6 1.5 1.6 3.5 1.6M12 13v-3"/><path d="M12 5.5c.9.9.9 2.2 0 2.7-.9-.5-.9-1.8 0-2.7z"/>'),
   up: sv('<path d="M12 20V7M6.5 12.5L12 7l5.5 5.5"/><path d="M5 4h14"/>'),
   text: sv('<path d="M5 6h14M5 11h14M5 16h9"/>'),
@@ -658,10 +683,18 @@ async function pumpImgs() {
 new MutationObserver(hydrateSoon).observe(document.body, { childList: true, subtree: true });
 
 function avatarPhoto(p) { const ph = p && p.avatarPhotoId ? S.photos.get(p.avatarPhotoId) : null; return ph && ph.thumb ? ph : null; }
+/* Hat die Person heute Geburtstag? (29. Februar: in anderen Jahren am 28.) */
+function bdayToday(p) {
+  if (!p || isDead(p)) return false;
+  const b = parseIso(p.birthDate); if (!b || !b.m || !b.d) return false;
+  const t = new Date(); let d = b.d;
+  if (b.m === 2 && d === 29 && new Date(t.getFullYear(), 1, 29).getMonth() !== 1) d = 28;
+  return t.getMonth() + 1 === b.m && t.getDate() === d;
+}
 function avatar(p, size = 44) {
   if (!p) return `<span class="av" style="--size:${size}px"></span>`;
   const ph = avatarPhoto(p);
-  return `<span class="av${isDead(p) ? ' dead' : ''}" style="--size:${size}px;--h:${hue(p)}" aria-hidden="true">${esc(initials(p))}${ph ? imgTag(ph.thumb) : ''}</span>`;
+  return `<span class="av${isDead(p) ? ' dead' : ''}${bdayToday(p) ? ' bday-glow' : ''}" style="--size:${size}px;--h:${hue(p)}" aria-hidden="true">${esc(initials(p))}${ph ? imgTag(ph.thumb) : ''}</span>`;
 }
 
 /* ---------- Datumsangaben: gespeichert als JJJJ, JJJJ-MM oder JJJJ-MM-TT ---------- */
@@ -1205,7 +1238,8 @@ function textPrompt({ title, label, value = '', ok = 'Speichern', placeholder = 
 }
 
 /* Personenauswahl */
-function searchText(p) { return [p.firstName, p.lastName, p.birthName, p.birthPlace, p.address].filter(Boolean).join(' '); }
+function searchText(p) { return [p.firstName, p.lastName, p.birthName, p.birthPlace, p.address, p.job, p.employer].filter(Boolean).join(' '); }
+function jobLine(p) { return [p.job, p.employer].filter(Boolean).join(' · '); }
 function pickPerson({ title = 'Person wählen', exclude = new Set(), multi = false, selected = [] } = {}) {
   return new Promise(resolve => {
     const L = mkLayer('layer', 'picker');
@@ -1601,7 +1635,7 @@ function renderPeopleView(main) {
 }
 function rowHtml(p, home) {
   const me = myPersonId();
-  const sub = [p.id === me ? 'Du' : relLine(relation(home, p.id)), p.birthDate ? (isDead(p) ? lifeShort(p) : `* ${toInput(p.birthDate)}`) : lifeShort(p)].filter(Boolean).join(' · ');
+  const sub = [p.id === me ? 'Du' : relLine(relation(home, p.id)), p.job || '', p.birthDate ? (isDead(p) ? lifeShort(p) : `* ${toInput(p.birthDate)}`) : lifeShort(p)].filter(Boolean).join(' · ');
   return `<button type="button" class="row" data-open="${p.id}">${avatar(p, 48)}<span class="meta"><span class="t">${esc(fullName(p))}${p.id === home && !me ? ' <span class="star" aria-label="Hauptperson">★</span>' : ''}</span>${sub ? `<span class="s">${esc(sub)}</span>` : ''}</span>${I.chevR}</button>`;
 }
 function renderPeopleList() {
@@ -1611,7 +1645,7 @@ function renderPeopleList() {
   let html = '';
   if (!q) {
     const b = upcomingBirthdays(45).slice(0, 10);
-    if (b.length) html += `<h2 class="section-h">Nächste Geburtstage</h2><div class="bday-row">${b.map(x => `<button type="button" class="bday" data-open="${x.p.id}">${avatar(x.p, 40)}<span class="when">${x.days === 0 ? 'Heute' : x.days === 1 ? 'Morgen' : `in ${x.days} Tagen`}</span><span class="bn">${esc(fullName(x.p))}</span><span class="bs">wird ${x.age} · ${esc(x.label)}</span></button>`).join('')}</div>`;
+    if (b.length) html += `<h2 class="section-h">Nächste Geburtstage</h2><div class="bday-row">${b.map(x => `<button type="button" class="bday${x.days === 0 ? ' today' : ''}" data-open="${x.p.id}">${avatar(x.p, 40)}<span class="when">${x.days === 0 ? 'Heute 🎉' : x.days === 1 ? 'Morgen' : `in ${x.days} Tagen`}</span><span class="bn">${esc(fullName(x.p))}</span><span class="bs">wird ${x.age} · ${esc(x.label)}</span></button>`).join('')}</div>`;
   }
   const list = q ? all.filter(p => norm(searchText(p)).includes(q)) : all;
   html += `<h2 class="section-h">${q ? `${list.length} Treffer` : `${all.length} ${all.length === 1 ? 'Person' : 'Personen'}`}</h2>`;
@@ -1646,6 +1680,7 @@ function openPerson(id) {
   L.render = () => renderPersonSheet(L);
   L.el.addEventListener('click', e => onPersonClick(e, L));
   pushLayer(L);
+  if (bdayToday(P(id))) setTimeout(() => { const h = L.el.querySelector('.hero'); if (h && layers.includes(L)) fireworks(h); }, 380);
 }
 function mini(q, r) {
   const m = langMode();
@@ -1707,7 +1742,9 @@ function renderPersonSheet(L) {
       ${p.birthName && p.birthName !== p.lastName ? `<div class="bname">geb. ${esc(p.birthName)}</div>` : ''}
       ${relTag}
       ${lines.length ? `<div class="life">${lines.join('')}</div>` : ''}
-      ${bd ? `<span class="bday-chip">${I.cake}${bd.days === 0 ? `Hat heute Geburtstag und wird ${bd.age}` : bd.days === 1 ? `Wird morgen ${bd.age}` : `Wird in ${bd.days} Tagen ${bd.age}`}</span>` : ''}
+      ${jobLine(p) ? `<div class="job-line">${I.job}<span>${esc(jobLine(p))}</span></div>` : ''}
+      ${bd && bd.days === 0 ? `<button type="button" class="bday-chip today" data-act="party">${I.cake}<span>Hat heute Geburtstag und wird ${bd.age}!<small lang="sq">Gëzuar ditëlindjen!</small></span></button>`
+        : bd ? `<span class="bday-chip">${I.cake}${bd.days === 1 ? `Wird morgen ${bd.age}` : `Wird in ${bd.days} Tagen ${bd.age}`}</span>` : ''}
       <div class="quick">${quick}</div>
     </section>
     <h3 class="section-h">Kontakt</h3>${contact}
@@ -1741,6 +1778,7 @@ function onPersonClick(e, L) {
     case 'ancestors': return showInTree(id, 'vor');
     case 'sethome': return act(async () => { await updTree({ homePersonId: id }); toast(`${callName(P(id))} ist jetzt die Hauptperson`); });
     case 'setme': return act(() => setMe(id));
+    case 'party': return fireworks(t.closest('.hero') || null);
     case 'delete': return act(() => deletePerson(id));
   }
 }
@@ -1749,7 +1787,7 @@ function onPersonClick(e, L) {
 function personForm({ id = null, preset = {}, title = '' } = {}) {
   return new Promise(resolve => {
     const prev = id ? P(id) : null;
-    const base = { firstName: '', lastName: '', birthName: '', gender: '', birthDate: '', birthPlace: '', deceased: false, deathDate: '', phone: '', email: '', address: '', notes: '', parentIds: [], partnerIds: [] };
+    const base = { firstName: '', lastName: '', birthName: '', gender: '', birthDate: '', birthPlace: '', deceased: false, deathDate: '', job: '', employer: '', phone: '', email: '', address: '', notes: '', parentIds: [], partnerIds: [] };
     const v = Object.assign({}, base, prev ? JSON.parse(JSON.stringify(prev)) : {}, preset);
     v.parentIds = (v.parentIds || []).filter(x => S.people.has(x) && x !== id).slice(0, 2);
     v.partnerIds = (v.partnerIds || []).filter(x => S.people.has(x) && x !== id);
@@ -1770,6 +1808,10 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
         </div>
         <label class="check"><input type="checkbox" id="f-dec"> Verstorben</label>
         <div class="field" id="f-dd-wrap" hidden><label for="f-dd">Todestag</label><input id="f-dd" inputmode="decimal" autocomplete="off" placeholder="TT.MM.JJJJ oder JJJJ"></div>
+        <div class="form-sec"><h3 class="section-h">Beruf</h3>
+          <div class="field"><label for="f-job">Beruf / Tätigkeit</label><input id="f-job" autocomplete="off" autocapitalize="sentences" placeholder="z.B. Lehrerin, Elektriker, Studentin"><span class="hint">Bei Verstorbenen: der frühere Beruf</span></div>
+          <div class="field"><label for="f-emp">Arbeitgeber oder Arbeitsort</label><input id="f-emp" autocomplete="off" autocapitalize="words" placeholder="z.B. Spital Prizren, selbständig"></div>
+        </div>
         <div class="form-sec"><h3 class="section-h">Kontakt</h3>
           <div class="field"><label for="f-ph">Telefon</label><input id="f-ph" type="tel" autocomplete="off" placeholder="+41 79 123 45 67"></div>
           <div class="field"><label for="f-ad">Wohnadresse</label><textarea id="f-ad" rows="3" placeholder="Strasse Nr.&#10;PLZ Ort"></textarea></div>
@@ -1779,7 +1821,7 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
           <div class="field"><span class="lbl">Eltern</span><div class="slots" id="f-parents"></div></div>
           <div class="field"><span class="lbl">Partner/in</span><div class="slots" id="f-partners"></div></div>
         </div>
-        <div class="form-sec"><div class="field" style="margin-top:18px"><label for="f-no">Notizen</label><textarea id="f-no" rows="4" placeholder="Beruf, Erinnerungen, Geschichten …"></textarea></div></div>
+        <div class="form-sec"><div class="field" style="margin-top:18px"><label for="f-no">Notizen</label><textarea id="f-no" rows="4" placeholder="Erinnerungen, Geschichten …"></textarea></div></div>
         </div>
       </form>
       <div class="layer-foot"><button type="button" class="btn" data-act="cancel">Abbrechen</button><button type="button" class="btn primary" data-act="save">Speichern</button></div>`;
@@ -1787,6 +1829,7 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
     f('#f-first').value = v.firstName || ''; f('#f-last').value = v.lastName || ''; f('#f-bname').value = v.birthName || '';
     f('#f-bd').value = toInput(v.birthDate); f('#f-bp').value = v.birthPlace || '';
     f('#f-dec').checked = !!(v.deceased || v.deathDate); f('#f-dd').value = toInput(v.deathDate); f('#f-dd-wrap').hidden = !f('#f-dec').checked;
+    f('#f-job').value = v.job || ''; f('#f-emp').value = v.employer || '';
     f('#f-ph').value = v.phone || ''; f('#f-ad').value = v.address || ''; f('#f-em').value = v.email || ''; f('#f-no').value = v.notes || '';
     const paintGender = () => L.el.querySelectorAll('[data-g]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.g === (v.gender || ''))));
     paintGender();
@@ -1809,7 +1852,7 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
       const bd = parseDateInput(val('#f-bd')); if (bd === null) return setErr('#f-bd', 'Bitte als TT.MM.JJJJ oder nur das Jahr eingeben.');
       const dec = f('#f-dec').checked;
       const dd = dec ? parseDateInput(val('#f-dd')) : ''; if (dd === null) return setErr('#f-dd', 'Bitte als TT.MM.JJJJ oder nur das Jahr eingeben.');
-      const data = { firstName: first, lastName: last, birthName: val('#f-bname'), gender: v.gender || '', birthDate: bd, birthPlace: val('#f-bp'), deceased: dec, deathDate: dd || '', phone: val('#f-ph'), email: val('#f-em'), address: f('#f-ad').value.trim(), notes: f('#f-no').value.trim(), parentIds: v.parentIds.filter(x => S.people.has(x)), partnerIds: v.partnerIds.filter(x => S.people.has(x)) };
+      const data = { firstName: first, lastName: last, birthName: val('#f-bname'), gender: v.gender || '', birthDate: bd, birthPlace: val('#f-bp'), deceased: dec, deathDate: dd || '', job: val('#f-job'), employer: val('#f-emp'), phone: val('#f-ph'), email: val('#f-em'), address: f('#f-ad').value.trim(), notes: f('#f-no').value.trim(), parentIds: v.parentIds.filter(x => S.people.has(x)), partnerIds: v.partnerIds.filter(x => S.people.has(x)) };
       L.result = savePersonData(id, data, prev);
       toast(id ? 'Gespeichert' : `${callName(data)} wurde angelegt`);
       closeLayer(L);
@@ -2378,6 +2421,78 @@ async function rotateKeys() {
   } finally { S.busy = ''; hideBusy(); }
 }
 
+/* ---------- Geburtstag: Feuerwerk ---------- */
+let fwBusy = false;
+function fireworks(anchor) {
+  if (fwBusy || reduced) return;
+  fwBusy = true;
+  const cv = document.createElement('canvas'); cv.className = 'fw-canvas'; cv.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(cv);
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const W = innerWidth, H = innerHeight;
+  cv.width = W * dpr; cv.height = H * dpr;
+  const ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
+  const r = anchor ? anchor.getBoundingClientRect() : { left: 0, top: 0, width: W, height: H * 0.5 };
+  const cx = r.left + r.width / 2, cy = r.top + Math.min(r.height, 260) * 0.42;
+  const COLORS = ['#F2C14E', '#F78154', '#E15A97', '#5DB7DE', '#7BD389', '#FFFFFF', '#B28DFF'];
+  const parts = [], rockets = [];
+  const burst = (x, y) => {
+    const col = COLORS[(Math.random() * COLORS.length) | 0], col2 = COLORS[(Math.random() * COLORS.length) | 0];
+    const n = 46 + ((Math.random() * 20) | 0);
+    for (let i = 0; i < n; i++) {
+      const a = (Math.PI * 2 * i) / n + Math.random() * 0.2, sp = 2.2 + Math.random() * 3.2;
+      parts.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1, decay: 0.012 + Math.random() * 0.012, col: i % 3 ? col : col2, size: 1.6 + Math.random() * 1.8 });
+    }
+  };
+  const plan = [[0, -60, 0], [180, 70, -40], [360, -90, -70], [560, 40, 10], [760, -20, -100], [980, 100, -20]];
+  const t0 = performance.now();
+  plan.forEach(([d, dx, dy]) => rockets.push({ at: d, x: cx + dx, y: H + 10, tx: cx + dx + (Math.random() - 0.5) * 30, ty: Math.max(60, cy + dy), fired: false }));
+  let last = t0;
+  const step = now => {
+    const dt = Math.min(2.2, (now - last) / 16.7); last = now;
+    ctx.globalCompositeOperation = 'destination-out'; ctx.fillStyle = 'rgba(0,0,0,0.28)'; ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+    for (const k of rockets) {
+      if (now - t0 < k.at || k.done) continue;
+      const p = Math.min(1, (now - t0 - k.at) / 420);
+      const x = k.x + (k.tx - k.x) * p, y = k.y + (k.ty - k.y) * (1 - (1 - p) * (1 - p));
+      ctx.fillStyle = '#FFE8A3'; ctx.beginPath(); ctx.arc(x, y, 2.2, 0, Math.PI * 2); ctx.fill();
+      if (p >= 1) { k.done = true; burst(x, y); }
+    }
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const q = parts[i];
+      q.vx *= 0.985; q.vy = q.vy * 0.985 + 0.045 * dt; q.x += q.vx * dt; q.y += q.vy * dt; q.life -= q.decay * dt;
+      if (q.life <= 0) { parts.splice(i, 1); continue; }
+      ctx.globalAlpha = Math.max(0, q.life); ctx.fillStyle = q.col;
+      ctx.beginPath(); ctx.arc(q.x, q.y, q.size, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (now - t0 < 3600 || parts.length) requestAnimationFrame(step);
+    else { cv.remove(); fwBusy = false; }
+  };
+  requestAnimationFrame(step);
+  setTimeout(() => { if (cv.isConnected) { cv.remove(); fwBusy = false; } }, 7000);
+}
+/* Einmal am Tag beim Öffnen: wer heute Geburtstag hat */
+function birthdayGreeting() {
+  if (!S.loaded || layers.length) return;
+  const today = isoOf(new Date());
+  const list = [...S.people.values()].filter(bdayToday);
+  if (!list.length || LS.get('bdayGreeted') === `${today}|${S.treeId}`) return;
+  LS.set('bdayGreeted', `${today}|${S.treeId}`);
+  const ref = refId();
+  const who = list.map(p => {
+    const r = p.id === myPersonId() ? null : relation(ref, p.id);
+    const b = parseIso(p.birthDate);
+    return `<button type="button" class="opt" data-v="${esc(p.id)}">${avatar(p, 46)}<span>${esc(p.id === myPersonId() ? 'Du' : fullName(p))}<small>${esc([r ? relLine(r) : '', b && b.y ? `wird ${new Date().getFullYear() - b.y}` : ''].filter(Boolean).join(' · '))}</small></span></button>`;
+  }).join('');
+  const mine = list.some(p => p.id === myPersonId());
+  setTimeout(() => fireworks(null), 250);
+  dialog(`<div class="dlg-title bday-title">${I.cake} ${mine && list.length === 1 ? 'Alles Gute zum Geburtstag!' : 'Heute hat Geburtstag'}</div>
+    <div class="dlg-text" lang="sq">Gëzuar ditëlindjen!</div>${who}
+    <button type="button" class="opt muted" data-v="__cancel">Schliessen</button>`).then(v => { if (v && S.people.has(v)) openPerson(v); });
+}
+
 /* ---------- «Ich» im Stammbaum ---------- */
 function linkedName(meta) {
   const id = meta && meta.me && S.treeId ? meta.me[S.treeId] : null;
@@ -2553,6 +2668,7 @@ function buildGedcom() {
     if (p.birthDate || p.birthPlace) { out.push('1 BIRT'); if (p.birthDate) out.push(`2 DATE ${gedDate(p.birthDate)}`); if (p.birthPlace) out.push(`2 PLAC ${tx(p.birthPlace)}`); }
     if (isDead(p)) { out.push(p.deathDate ? '1 DEAT' : '1 DEAT Y'); if (p.deathDate) out.push(`2 DATE ${gedDate(p.deathDate)}`); }
     if (p.address || p.phone || p.email) { out.push('1 RESI'); if (p.address) out.push(...multi(2, 'ADDR', p.address)); if (p.phone) out.push(`2 PHON ${tx(p.phone)}`); if (p.email) out.push(`2 EMAIL ${tx(p.email)}`); }
+    if (p.job) { out.push(`1 OCCU ${tx(p.job)}`); if (p.employer) out.push(`2 CORP ${tx(p.employer)}`); }
     if (p.notes) out.push(...multi(1, 'NOTE', p.notes));
     fams.forEach((f, k) => { if (f.kids.includes(p.id)) out.push(`1 FAMC ${fid.get(k)}`); if (f.ids.includes(p.id)) out.push(`1 FAMS ${fid.get(k)}`); });
   });
@@ -2765,7 +2881,7 @@ async function load(initial) {
       if (pp) { if (pp.treeId !== S.treeId) switchTree(pp.treeId); setTimeout(() => openPerson(pp.id), 60); }
     }
     if (S.legacyLeft && S.isAdmin && !S.migrating && !S.claimFlow) setTimeout(offerMigration, 500);
-    else if (!S.claimFlow && !S.migrating) setTimeout(maybeAskMe, 700);
+    else if (!S.claimFlow && !S.migrating) setTimeout(() => { maybeAskMe().then(birthdayGreeting); }, 700);
   } catch (e) {
     console.warn(e);
     if (e && e.code === 'no_google') S.noGoogle = true;
