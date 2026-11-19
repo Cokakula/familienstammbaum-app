@@ -315,6 +315,8 @@ a.opt{color:var(--ink);text-decoration:none}
 .busy{position:fixed;inset:0;z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:32px;text-align:center;background:color-mix(in srgb,var(--bg) 94%,transparent);color:var(--ink);font-weight:500}
 .busy[hidden]{display:none}
 .storage .ic{width:15px;height:15px;vertical-align:-2px;color:var(--accent)}
+.pick-btn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:52px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:600;text-align:left;cursor:pointer}
+.pick-btn .ic{width:18px;height:18px;color:var(--muted);flex:none}
 </style>
 </head>
 <body>
@@ -728,6 +730,9 @@ function slugify(s) { return norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/
 function sortedTrees() { return [...G.trees.values()].sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0)); }
 function curTree() { return G.trees.get(S.treeId) || null; }
 function homeId() { const h = curTree()?.homePersonId; return h && S.people.has(h) ? h : null; }
+/* Die eigene Person dieses Mitglieds (pro Stammbaum). Alle Bezeichnungen richten sich nach ihr, sonst nach der Hauptperson. */
+function myPersonId() { const m = S.me && S.me.meta && S.me.meta.me; const id = m && S.treeId ? m[S.treeId] : null; return id && S.people.has(id) ? id : null; }
+function refId() { return myPersonId() || homeId(); }
 function firstPersonId() { let best = null; for (const p of S.people.values()) if (!best || (p.createdAt || 0) < (best.createdAt || 0)) best = p; return best ? best.id : null; }
 function validId(id) { return id && S.people.has(id) ? id : null; }
 function byName(a, b) { return (a.lastName || '').localeCompare(b.lastName || '', 'de') || (a.firstName || '').localeCompare(b.firstName || '', 'de'); }
@@ -1346,9 +1351,9 @@ function onMainClick(e) {
       const name = $('#w-name').value.trim() || 'Unsere Familie';
       switchTree(createTree(name));
       const pid = await personForm({ title: 'Erste Person, z.B. du selbst' });
-      if (pid) openPerson(pid);
+      if (pid) { await askIsMe(pid); openPerson(pid); }
     });
-    case 'add-first': return act(async () => { const id = await personForm({ title: 'Erste Person, z.B. du selbst' }); if (id) openPerson(id); });
+    case 'add-first': return act(async () => { const id = await personForm({ title: 'Erste Person, z.B. du selbst' }); if (id) { await askIsMe(id); openPerson(id); } });
   }
 }
 
@@ -1439,7 +1444,7 @@ function layoutAncestors(fid) {
   return { nodes, links, couples, w: maxX + NODE_W, h: (maxGen + 1) * (NODE_H + GAP_Y) - GAP_Y, rootId: fid };
 }
 function treeSubject() {
-  const base = homeId() || firstPersonId();
+  const base = refId() || firstPersonId();
   if (S.treeMode === 'vor') return validId(S.vorPerson) || base;
   return validId(S.nachRoot) || topAncestor(base);
 }
@@ -1455,7 +1460,7 @@ function renderTreeView(main) {
         <button type="button" data-z="in" aria-label="Vergrössern">${I.plus}</button>
         <button type="button" data-z="out" aria-label="Verkleinern">${I.minus}</button>
         <button type="button" data-z="fit" aria-label="Ganzen Baum zeigen">${I.fit}</button>
-        <button type="button" data-z="home" aria-label="Zur Hauptperson">${I.target}</button>
+        <button type="button" data-z="home" aria-label="Zu mir bzw. zur Hauptperson">${I.target}</button>
       </div></div>`, true);
     bindTree();
   }
@@ -1465,7 +1470,7 @@ function renderTreeView(main) {
   $('#treePersonChip').innerHTML = `${avatar(sp, 34)}<span>${S.treeMode === 'vor' ? 'Von' : 'Ab'} ${esc(fullName(sp))}</span>${I.chevD}`;
   const lay = S.treeMode === 'vor' ? layoutAncestors(subj) : layoutDescendants(subj);
   S.lay = lay;
-  const home = homeId();
+  const home = refId();
   const W = lay.w + PAD * 2, H = lay.h + PAD * 2;
   const world = $('#treeWorld');
   world.style.width = W + 'px'; world.style.height = H + 'px';
@@ -1527,7 +1532,7 @@ function zoomBtn(z) {
   if (z === 'out') zoomAt(1 / 1.3, r.width / 2, r.height / 2, true);
   if (z === 'fit') fitTree(true);
   if (z === 'home') {
-    const h = homeId();
+    const h = refId();
     if (h && S.lay.nodes.has(h)) centerOn(h, Math.max(S.T.k, 0.85));
     else if (h) { S.treeMode = 'nach'; S.nachRoot = topAncestor(h); S.centerTarget = h; renderMain(); }
     else centerOn(S.lay.rootId, 0.85);
@@ -1595,12 +1600,13 @@ function renderPeopleView(main) {
   renderPeopleList();
 }
 function rowHtml(p, home) {
-  const sub = [relLine(relation(home, p.id)), p.birthDate ? (isDead(p) ? lifeShort(p) : `* ${toInput(p.birthDate)}`) : lifeShort(p)].filter(Boolean).join(' · ');
-  return `<button type="button" class="row" data-open="${p.id}">${avatar(p, 48)}<span class="meta"><span class="t">${esc(fullName(p))}${p.id === home ? ' <span class="star" aria-label="Hauptperson">★</span>' : ''}</span>${sub ? `<span class="s">${esc(sub)}</span>` : ''}</span>${I.chevR}</button>`;
+  const me = myPersonId();
+  const sub = [p.id === me ? 'Du' : relLine(relation(home, p.id)), p.birthDate ? (isDead(p) ? lifeShort(p) : `* ${toInput(p.birthDate)}`) : lifeShort(p)].filter(Boolean).join(' · ');
+  return `<button type="button" class="row" data-open="${p.id}">${avatar(p, 48)}<span class="meta"><span class="t">${esc(fullName(p))}${p.id === home && !me ? ' <span class="star" aria-label="Hauptperson">★</span>' : ''}</span>${sub ? `<span class="s">${esc(sub)}</span>` : ''}</span>${I.chevR}</button>`;
 }
 function renderPeopleList() {
   const el = $('#plist'); if (!el) return;
-  const all = sortedPeople(); const home = homeId();
+  const all = sortedPeople(); const home = refId();
   const q = norm(S.q);
   let html = '';
   if (!q) {
@@ -1653,11 +1659,13 @@ function renderPersonSheet(L) {
   L.el.setAttribute('aria-label', fullName(p));
   const idx = layers.indexOf(L);
   const stacked = idx > 0 && layers[idx - 1].kind === 'person';
-  const home = homeId(), isHome = home === p.id;
+  const home = homeId(), isHome = home === p.id, me = myPersonId(), ref = me || home;
   L.head.innerHTML = `${stacked ? `<button type="button" class="icon-btn" data-act="back" aria-label="Zurück">${I.back}</button>` : `<button type="button" class="icon-btn" data-act="back" aria-label="Schliessen">${I.close}</button>`}<span class="grow"></span>${stacked ? `<button type="button" class="icon-btn" data-act="closeall" aria-label="Alle schliessen">${I.close}</button>` : ''}${S.canWrite ? `<button type="button" class="icon-btn" data-act="edit" aria-label="Bearbeiten">${I.edit}</button>` : ''}`;
 
-  const hp = P(home);
-  const relTag = isHome ? `<span class="rel-tag">${I.star} Hauptperson</span>` : relTagHtml(relation(home, p.id), hp ? callName(hp) : '');
+  const hp = P(ref);
+  const relTag = p.id === me ? `<span class="rel-tag">${I.userc} Das bist du</span>`
+    : !me && isHome ? `<span class="rel-tag">${I.star} Hauptperson</span>`
+    : relTagHtml(relation(ref, p.id), me ? 'dir' : hp ? callName(hp) : '');
   const age = ageInfo(p);
   const lines = [];
   if (p.birthDate || p.birthPlace) lines.push(`<span><span class="sym">*</span>${esc([fmtDate(p.birthDate, true), p.birthPlace].filter(Boolean).join(', '))}</span>`);
@@ -1708,7 +1716,7 @@ function renderPersonSheet(L) {
     <div class="sec-row"><h3 class="section-h">Fotos${photos.length ? ` · ${photos.length}` : ''}</h3>${S.canWrite ? `<button type="button" class="mini-btn" data-upload="${p.id}">${I.camera} Hinzufügen</button>` : ''}</div>
     ${photos.length ? `<div class="grid">${photos.map((ph, i) => `<button type="button" data-pphoto="${i}" aria-label="${esc(ph.caption || 'Foto öffnen')}">${imgTag(ph.thumb)}</button>`).join('')}</div>` : '<p class="empty-note">Noch keine Fotos zugeordnet.</p>'}
     ${p.notes ? `<h3 class="section-h">Notizen</h3><div class="card notes">${esc(p.notes)}</div>` : ''}
-    ${S.canWrite ? `<div class="foot-acts">${!isHome ? `<button type="button" class="btn block" data-act="sethome">${I.target} Als Hauptperson festlegen</button>` : ''}<button type="button" class="btn danger block" data-act="delete">${I.trash} Person löschen</button></div>` : ''}`;
+    <div class="foot-acts">${p.id !== me && S.me ? `<button type="button" class="btn block" data-act="setme">${I.userc} Das bin ich</button>` : ''}${S.canWrite && !isHome ? `<button type="button" class="btn block" data-act="sethome">${I.target} Als Hauptperson festlegen</button>` : ''}${S.canWrite ? `<button type="button" class="btn danger block" data-act="delete">${I.trash} Person löschen</button>` : ''}</div>`;
 }
 function onPersonClick(e, L) {
   const t = e.target.closest('[data-act],[data-open],[data-add],[data-pphoto],[data-upload],[data-copy]');
@@ -1732,6 +1740,7 @@ function onPersonClick(e, L) {
     case 'intree': return showInTree(id, 'nach');
     case 'ancestors': return showInTree(id, 'vor');
     case 'sethome': return act(async () => { await updTree({ homePersonId: id }); toast(`${callName(P(id))} ist jetzt die Hauptperson`); });
+    case 'setme': return act(() => setMe(id));
     case 'delete': return act(() => deletePerson(id));
   }
 }
@@ -2125,8 +2134,9 @@ async function openTreeMenu() {
     ${S.canWrite ? `<button type="button" class="opt" data-v="new">${I.plus}<span>Neuen Stammbaum anlegen</span></button>` : ''}
     ${t && S.canWrite ? `<div class="dlg-sep"></div>
       <button type="button" class="opt" data-v="rename">${I.edit}<span>Umbenennen</span></button>
-      <button type="button" class="opt" data-v="home">${I.target}<span>Hauptperson<small>${esc(h ? fullName(h) : 'Noch nicht festgelegt')}</small></span></button>` : ''}
+      <button type="button" class="opt" data-v="home">${I.target}<span>Hauptperson<small>${esc(h ? fullName(h) : 'Noch nicht festgelegt')} · für alle, die sich noch nicht gewählt haben</small></span></button>` : ''}
     <div class="dlg-sep"></div>
+    ${t ? `<button type="button" class="opt" data-v="me">${I.userc}<span>Ich im Stammbaum<small>${esc(myPersonId() ? fullName(P(myPersonId())) + ' – alle Bezeichnungen aus deiner Sicht' : 'Noch nicht gewählt – Bezeichnungen gelten für die Hauptperson')}</small></span></button>` : ''}
     ${S.isAdmin ? `<button type="button" class="opt" data-v="members">${I.people}<span>Mitglieder &amp; Zugriff<small>Einladen, Rechte vergeben, Notfall-Schlüssel</small></span></button>
       <button type="button" class="opt" data-v="backup">${I.save}<span>Sicherung aufs Gerät<small>Verschlüsselt, mit allen Fotos. Lesbar nur mit dem Notfall-Schlüssel</small></span></button>
       <button type="button" class="opt" data-v="restore">${I.up}<span>Sicherung einspielen</span></button>` : `<div class="storage">Deine Rechte: ${esc(ROLE_DE[S.role] || 'Ansehen')}</div>`}
@@ -2144,6 +2154,7 @@ async function openTreeMenu() {
   if (!v) return;
   if (v.startsWith('tree:')) { switchTree(v.slice(5)); return; }
   if (v === 'glossary') return openGlossary();
+  if (v === 'me') { const id = await pickPerson({ title: 'Wer bist du im Stammbaum?' }); if (id) await setMe(id); return; }
   if (v === 'appsettings') { if (NATIVE && NATIVE.openSettings) NATIVE.openSettings(); return; }
   if (v === 'reload') { await flush(); await load(false); toast('Aktualisiert'); return; }
   if (S.isAdmin && v === 'members') return openMembers();
@@ -2195,13 +2206,13 @@ async function loadCreds() {
   const r = await api('apiCreds');
   if (r.url) S.execUrl = r.url;
   const list = [];
-  for (const c of r.creds) list.push(Object.assign({}, c, { name: (await FSC.decMeta(c.id, c.m)).name || '' }));
+  for (const c of r.creds) { const meta = await FSC.decMeta(c.id, c.m); list.push(Object.assign({}, c, { meta, name: meta.name || '' })); }
   return list;
 }
-async function createInvite(name, role, replaceId) {
+async function createInvite(name, role, replaceId, me) {
   const secret = FSC.b64u(FSC.rnd(32));
   const c = await FSC.makeCred(secret, FSC.curKey(), replaceId);
-  c.m = await FSC.encMeta(c.id, { name });
+  c.m = await FSC.encMeta(c.id, me && Object.keys(me).length ? { name, me } : { name });
   await api('apiAddCred', Object.assign(credOut(c), { r: role, s: 'inv' }));
   return { id: c.id, name, role, link: secretLink('i', secret) };
 }
@@ -2220,7 +2231,7 @@ async function openMembers() {
       <p class="gl-note">Jede Einladung funktioniert nur einmal. Danach gilt der Zugang nur auf dem Gerät, auf dem sie geöffnet wurde. Ein weitergeleiteter Link ist dann wertlos.</p>
       <h3 class="section-h">Mitglieder</h3>
       <div class="card list">
-        ${rows.map(m => `<button type="button" class="row" data-member="${esc(m.id)}"><span class="av" style="--size:44px;--h:${hue({ id: m.id })}">${m.id === S.me.id ? I.star : esc(memberInitials(m.name))}</span><span class="meta"><span class="t">${esc(m.id === S.me.id ? `${m.name || 'Du'} (du, dieses Gerät)` : m.name || 'Ohne Namen')}</span><span class="s">${esc(m.s === 'inv' ? 'Einladung noch nicht geöffnet' : m.l ? 'zuletzt ' + fmtSeen(m.l) : 'aktiv')}</span></span><span class="role-pill r-${esc(m.r)}">${esc(ROLE_DE[m.r] || m.r)}</span></button>`).join('')}
+        ${rows.map(m => `<button type="button" class="row" data-member="${esc(m.id)}"><span class="av" style="--size:44px;--h:${hue({ id: m.id })}">${m.id === S.me.id ? I.star : esc(memberInitials(m.name))}</span><span class="meta"><span class="t">${esc(m.id === S.me.id ? `${m.name || 'Du'} (du, dieses Gerät)` : m.name || 'Ohne Namen')}</span><span class="s">${esc([linkedName(m.meta), m.s === 'inv' ? 'Einladung noch nicht geöffnet' : m.l ? 'zuletzt ' + fmtSeen(m.l) : 'aktiv'].filter(Boolean).join(' · '))}</span></span><span class="role-pill r-${esc(m.r)}">${esc(ROLE_DE[m.r] || m.r)}</span></button>`).join('')}
       </div>
       <h3 class="section-h">Notfall-Schlüssel</h3>
       <div class="card" style="padding:14px 16px">
@@ -2239,7 +2250,7 @@ async function openMembers() {
       if (b.dataset.act === 'invite') { const r = await inviteForm(); if (r) { await refresh(); await shareDialog(r); } return; }
       if (b.dataset.act === 'selfinvite') {
         const me = L.data.find(c => c.id === S.me.id);
-        const r = await createInvite(`${(me && me.name) || 'Ich'} (weiteres Gerät)`, S.role);
+        const r = await createInvite(`${(me && me.name) || 'Ich'} (weiteres Gerät)`, S.role, undefined, (S.me.meta && S.me.meta.me) || {});
         await refresh(); await shareDialog(r, true); return;
       }
       if (b.dataset.act === 'newrec') {
@@ -2259,11 +2270,12 @@ async function openMembers() {
 function inviteForm() {
   return new Promise(resolve => {
     const L = mkLayer('layer', 'form');
-    let role = 'view';
+    let role = 'edit', who = '';
     L.result = null; L.onClose = () => resolve(L.result);
     L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="cancel" aria-label="Abbrechen">${I.close}</button><h2>Person einladen</h2></div>
       <form class="layer-body narrow" novalidate><div>
-        <div class="field"><label for="i-name">Name</label><input id="i-name" autocomplete="off" autocapitalize="words" placeholder="z.B. Arta"><span class="hint">Nur für dich als Admin sichtbar, ebenfalls verschlüsselt.</span></div>
+        <div class="field"><span class="lbl">Wer ist das im Stammbaum?</span><button type="button" class="pick-btn" data-act="who"><span data-who>Person wählen (empfohlen)</span>${I.chevR}</button><span class="hint">Dann sieht die Person Vater, Mutter, Cousin usw. gleich aus ihrer eigenen Sicht. Sie kann das später auch selbst wählen.</span></div>
+        <div class="field"><label for="i-name">Name</label><input id="i-name" autocomplete="off" autocapitalize="words" placeholder="z.B. Arta"><span class="hint">Nur für Admins sichtbar, ebenfalls verschlüsselt.</span></div>
         <div class="field"><span class="lbl" id="i-r-l">Rechte</span><div class="segctl seg3" role="group" aria-labelledby="i-r-l">${['view', 'edit', 'admin'].map(r => `<button type="button" data-role="${r}">${ROLE_DE[r]}</button>`).join('')}</div><span class="hint" data-roleinfo></span></div>
       </div></form>
       <div class="layer-foot"><button type="button" class="btn" data-act="cancel">Abbrechen</button><button type="button" class="btn primary" data-act="save">Einladung erstellen</button></div>`;
@@ -2274,12 +2286,19 @@ function inviteForm() {
       const b = e.target.closest('[data-act],[data-role]'); if (!b) return;
       if (b.dataset.role) { role = b.dataset.role; return paint(); }
       if (b.dataset.act === 'cancel') return closeLayer(L);
+      if (b.dataset.act === 'who') {
+        return act(async () => {
+          const id = await pickPerson({ title: 'Wer ist das im Stammbaum?' }); if (!id) return;
+          who = id; f('[data-who]').textContent = fullName(P(id));
+          if (!f('#i-name').value.trim()) f('#i-name').value = fullName(P(id));
+        });
+      }
       if (b.dataset.act !== 'save') return;
       L.el.querySelectorAll('.errmsg').forEach(x => x.remove()); L.el.querySelectorAll('.field.err').forEach(x => x.classList.remove('err'));
       const name = f('#i-name').value.trim();
       if (!name) { const fl = f('#i-name').closest('.field'); fl.classList.add('err'); fl.insertAdjacentHTML('beforeend', '<span class="errmsg">Bitte einen Namen eingeben.</span>'); f('#i-name').focus(); return; }
       b.disabled = true; b.textContent = 'Wird verschlüsselt …';
-      createInvite(name, role).then(r => { L.result = r; closeLayer(L); }).catch(err => { b.disabled = false; b.textContent = 'Einladung erstellen'; handleErr(err); });
+      createInvite(name, role, undefined, who ? { [S.treeId]: who } : {}).then(r => { L.result = r; closeLayer(L); }).catch(err => { b.disabled = false; b.textContent = 'Einladung erstellen'; handleErr(err); });
     });
     pushLayer(L); paint();
   });
@@ -2304,15 +2323,22 @@ async function memberDialog(m) {
     ${self ? '<div class="dlg-text">Deine eigenen Rechte kannst du nicht ändern.</div>' : ['view', 'edit', 'admin'].map(r => `<button type="button" class="opt" data-v="role:${r}">${m.r === r ? I.check : '<span class="ic-sp"></span>'}<span>${ROLE_DE[r]}<small>${ROLE_INFO[r]}</small></span></button>`).join('')}
     ${self ? '' : `<div class="dlg-sep"></div>
     <button type="button" class="opt" data-v="rename">${I.edit}<span>Namen ändern</span></button>
+    <button type="button" class="opt" data-v="who">${I.userc}<span>Person im Stammbaum<small>${esc(linkedName(m.meta) || 'Noch nicht zugeordnet')}</small></span></button>
     <button type="button" class="opt" data-v="reinvite">${I.refresh}<span>Neue Einladung erstellen<small>Z.B. bei neuem Handy. Das bisherige Gerät wird ausgesperrt.</small></span></button>
     <button type="button" class="opt danger" data-v="remove">${I.trash}<span>Zugriff entfernen</span></button>`}
     <button type="button" class="opt muted" data-v="__cancel">Schliessen</button>`, { map: x => (x === '__cancel' ? null : x) });
   if (!v) return false;
   if (v.startsWith('role:')) { const role = v.slice(5); if (role === m.r) return false; await api('apiUpdCred', m.id, { r: role }); toast(`${who}: ${ROLE_DE[role]}`); return true; }
-  if (v === 'rename') { const name = await textPrompt({ title: 'Namen ändern', label: 'Name', value: m.name || '' }); if (!name) return false; await api('apiUpdCred', m.id, { m: await FSC.encMeta(m.id, { name }) }); return true; }
+  if (v === 'rename') { const name = await textPrompt({ title: 'Namen ändern', label: 'Name', value: m.name || '' }); if (!name) return false; await api('apiUpdCred', m.id, { m: await FSC.encMeta(m.id, Object.assign({}, m.meta, { name })) }); return true; }
+  if (v === 'who') {
+    const id = await pickPerson({ title: `Wer ist ${who} im Stammbaum?` }); if (!id) return false;
+    const meta = Object.assign({}, m.meta, { me: Object.assign({}, (m.meta && m.meta.me) || {}, { [S.treeId]: id }) });
+    await api('apiUpdCred', m.id, { m: await FSC.encMeta(m.id, meta) });
+    toast(`${who} sieht den Stammbaum jetzt aus der Sicht von ${callName(P(id))}`); return true;
+  }
   if (v === 'reinvite') {
     if (!await confirmDialog({ title: 'Neue Einladung erstellen?', text: `Das bisherige Gerät von ${who} hat danach keinen Zugriff mehr, und der Schlüssel wird erneuert. Du schickst ${who} den neuen Link.`, ok: 'Neue Einladung' })) return false;
-    const r = await createInvite(m.name, m.r, m.id);
+    const r = await createInvite(m.name, m.r, m.id, (m.meta && m.meta.me) || {});
     await rotateKeys(); await shareDialog(r); return true;
   }
   if (v === 'remove') {
@@ -2350,6 +2376,39 @@ async function rotateKeys() {
     syncNative();
     toast('Schlüssel erneuert');
   } finally { S.busy = ''; hideBusy(); }
+}
+
+/* ---------- «Ich» im Stammbaum ---------- */
+function linkedName(meta) {
+  const id = meta && meta.me && S.treeId ? meta.me[S.treeId] : null;
+  return id && S.people.has(id) ? 'im Stammbaum: ' + fullName(P(id)) : '';
+}
+async function setMe(id) {
+  if (!S.me || !S.people.has(id)) return;
+  const meta = Object.assign({}, S.me.meta || {}, { me: Object.assign({}, (S.me.meta && S.me.meta.me) || {}, { [S.treeId]: id }) });
+  if (!meta.name) meta.name = fullName(P(id));
+  await api('apiSetMyMeta', await FSC.encMeta(S.me.id, meta));
+  S.me.meta = meta; if (!S.me.name) S.me.name = meta.name;
+  S.nachRoot = null; S.vorPerson = null; S.centeredFor = null; S.centerTarget = id;
+  scheduleRender();
+  toast(`Alles wird jetzt aus der Sicht von ${callName(P(id))} angezeigt`);
+}
+async function askIsMe(id) {
+  if (!S.me || myPersonId()) return;
+  const ok = await confirmDialog({ title: `Bist du ${callName(P(id))}?`, text: 'Dann zeigt die App Vater, Mutter, Cousins usw. aus deiner Sicht. Du kannst das im Menü jederzeit ändern.', ok: 'Ja, das bin ich' });
+  if (ok) await setMe(id);
+}
+async function maybeAskMe() {
+  if (!S.loaded || !S.me || !S.treeId || myPersonId() || S.people.size < 2 || layers.length) return;
+  const flag = `askedMe.${S.treeId}.${S.me.id}`;
+  if (LS.get(flag)) return;
+  LS.set(flag, '1');
+  const v = await dialog(`<div class="dlg-title">Wer bist du im Stammbaum?</div>
+    <div class="dlg-text">Wähle dich selbst aus. Dann zeigt die App Vater, Mutter, Grosseltern, Cousins und alle anderen Bezeichnungen aus deiner Sicht, auf Deutsch und auf Shqip.</div>
+    <div class="dlg-btns"><button type="button" class="btn" data-v="__cancel">Später</button><button type="button" class="btn primary" data-v="pick">Mich auswählen</button></div>`);
+  if (v !== 'pick') return;
+  const id = await pickPerson({ title: 'Wer bist du im Stammbaum?' });
+  if (id) await act(() => setMe(id));
 }
 
 /* ---------- Notfall-Schlüssel ---------- */
@@ -2680,7 +2739,8 @@ async function load(initial) {
     const K = await FSC.openCred(sess.secret, d.cred);
     await FSC.setKeyring(K, d.chain || {});
     S.chain = d.chain || {};
-    S.me = { id: d.me.id, role: d.me.r, name: (await FSC.decMeta(d.me.id, d.cred.m)).name || '' };
+    const myMeta = await FSC.decMeta(d.me.id, d.cred.m);
+    S.me = { id: d.me.id, role: d.me.r, name: myMeta.name || '', meta: myMeta };
     S.role = d.me.r; S.canWrite = S.role !== 'view'; S.isAdmin = S.role === 'admin';
     const pend = [...Q.put].map(([id, kind]) => [id, kind, G[kind].get(id)]);
     const fresh = { trees: new Map(), people: new Map(), photos: new Map() };
@@ -2705,6 +2765,7 @@ async function load(initial) {
       if (pp) { if (pp.treeId !== S.treeId) switchTree(pp.treeId); setTimeout(() => openPerson(pp.id), 60); }
     }
     if (S.legacyLeft && S.isAdmin && !S.migrating && !S.claimFlow) setTimeout(offerMigration, 500);
+    else if (!S.claimFlow && !S.migrating) setTimeout(maybeAskMe, 700);
   } catch (e) {
     console.warn(e);
     if (e && e.code === 'no_google') S.noGoogle = true;
