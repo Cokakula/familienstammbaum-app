@@ -4,13 +4,13 @@
 
     <!-- Einrichtung -->
     <string name="setup_title">Familienstammbaum</string>
-    <string name="setup_text">Füge deinen persönlichen Stammbaum-Link ein. Du findest ihn in deiner Einladung per E-Mail oder WhatsApp. Als Admin nimmst du den Admin-Link aus «Mitglieder &amp; Zugriff».</string>
+    <string name="setup_text">Füge den Einladungslink ein, den du per WhatsApp oder E-Mail bekommen hast. Er funktioniert nur einmal; danach öffnet sich der Stammbaum hier direkt. Zum ersten Einrichten nimmst du die Adresse deiner Google-Web-App.</string>
     <string name="setup_tip">Tipp: In WhatsApp den Link lange drücken, dann «Teilen» und «Stammbaum» wählen.</string>
-    <string name="link_label">Stammbaum-Link</string>
+    <string name="link_label">Einladungslink oder Web-App-Adresse</string>
     <string name="link_invalid">Das ist kein Stammbaum-Link. Er beginnt mit https://script.google.com/macros/s/</string>
     <string name="paste">Aus Zwischenablage einfügen</string>
     <string name="open">Stammbaum öffnen</string>
-    <string name="link_saved">Stammbaum-Link gespeichert</string>
+    <string name="link_saved">Link übernommen</string>
     <string name="no_link_in_text">In diesem Text ist kein Stammbaum-Link.</string>
 
     <!-- Allgemein -->
@@ -46,8 +46,18 @@
     <string name="check_count">Geburtstage im Stammbaum: %1$d</string>
     <string name="check_next">Nächster Geburtstag: %1$s am %2$s</string>
     <string name="check_shown">Erinnerungen angezeigt: %1$d</string>
-    <string name="section_link">Stammbaum-Link</string>
-    <string name="no_link">Noch kein Link gespeichert</string>
-    <string name="change_link">Link ändern</string>
-    <string name="about_text">Die Daten liegen im Google-Konto des Stammbaums. Die App zeigt den Stammbaum und erinnert dich an Geburtstage, auch wenn sie geschlossen ist.</string>
+    <string name="section_link">Verbundener Stammbaum</string>
+    <string name="no_link">Noch kein Stammbaum verbunden</string>
+    <string name="change_link">Anderen Einladungslink verwenden</string>
+    <string name="about_text">Alle Angaben und Fotos sind Ende-zu-Ende-verschlüsselt. Google speichert nur unlesbare Daten. Entschlüsselt wird hier auf dem Handy. Die App erinnert dich an Geburtstage, auch wenn sie geschlossen ist.</string>
+
+    <!-- App-Sperre -->
+    <string name="section_privacy">Privatsphäre</string>
+    <string name="lock_switch">App-Sperre (Fingerabdruck oder PIN)</string>
+    <string name="lock_hint">Beim Öffnen und nach einer Minute im Hintergrund fragt die App nach Fingerabdruck, Gesicht oder PIN.</string>
+    <string name="lock_hint_none">Auf diesem Handy ist keine Displaysperre eingerichtet. Richte in den Android-Einstellungen eine PIN oder einen Fingerabdruck ein, damit die App-Sperre funktioniert.</string>
+    <string name="lock_title">Familienstammbaum</string>
+    <string name="lock_subtitle">Zum Öffnen entsperren</string>
+    <string name="lock_text">Der Stammbaum ist gesperrt.</string>
+    <string name="unlock">Entsperren</string>
 </resources>

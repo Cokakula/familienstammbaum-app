@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -31,6 +32,8 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var linkValue: TextView
     private lateinit var permissionHint: View
     private lateinit var checkResult: TextView
+    private lateinit var lockSwitch: MaterialSwitch
+    private lateinit var lockHint: TextView
 
     private val askNotifications = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         // Hat Android den Dialog nicht mehr gezeigt, geht es nur noch über die System-Einstellungen
@@ -59,6 +62,10 @@ class SettingsActivity : AppCompatActivity() {
         linkValue = findViewById(R.id.linkValue)
         permissionHint = findViewById(R.id.permissionHint)
         checkResult = findViewById(R.id.checkResult)
+        lockSwitch = findViewById(R.id.lockSwitch)
+        lockHint = findViewById(R.id.lockHint)
+        lockSwitch.isChecked = Prefs.lockOn(this)
+        lockSwitch.setOnCheckedChangeListener { _, on -> Prefs.setLockOn(this, on); refresh() }
 
         reminders.isChecked = Prefs.remindersOn(this)
         dayBefore.isChecked = Prefs.dayBefore(this)
@@ -117,7 +124,11 @@ class SettingsActivity : AppCompatActivity() {
     private fun refresh() {
         val on = Prefs.remindersOn(this)
         timeValue.text = String.format(Locale.GERMAN, "%02d:%02d Uhr", Prefs.hour(this), Prefs.minute(this))
-        linkValue.text = Prefs.link(this)?.let { Links.masked(it) } ?: getString(R.string.no_link)
+        linkValue.text = Prefs.exec(this)?.let { Links.masked(it) } ?: getString(R.string.no_link)
+        val canLock = BiometricManager.from(this).canAuthenticate(
+            BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+        ) == BiometricManager.BIOMETRIC_SUCCESS
+        lockHint.setText(if (canLock) R.string.lock_hint else R.string.lock_hint_none)
         permissionHint.visibility = if (on && !Birthdays.canNotify(this)) View.VISIBLE else View.GONE
         timeRow.isEnabled = on
         timeRow.alpha = if (on) 1f else 0.5f

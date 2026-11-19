@@ -20,7 +20,9 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import org.json.JSONObject
+import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.time.Duration
@@ -30,6 +32,9 @@ import java.time.Year
 import java.time.format.TextStyle
 import java.util.Locale
 import java.util.concurrent.TimeUnit
+import javax.crypto.Cipher
+import javax.crypto.spec.GCMParameterSpec
+import javax.crypto.spec.SecretKeySpec
 
 data class Birthday(
     val id: String,
@@ -83,20 +88,55 @@ object Birthdays {
         return out
     }
 
-    /** Holt die Geburtstage aus dem Google-Stammbaum. null, wenn es gerade nicht ging. */
+    /**
+     * Holt die verschlüsselten Einträge aus Google und entschlüsselt die Personen hier auf dem Handy.
+     * null, wenn es gerade nicht ging (dann gilt die zuletzt bekannte Liste).
+     */
     fun fetch(context: Context): List<Birthday>? {
-        val link = Prefs.link(context) ?: return null
+        val s = Prefs.session(context) ?: return null
         return try {
-            val conn = URL(Links.birthdaysUrl(link)).openConnection() as HttpURLConnection
-            conn.connectTimeout = 20_000
-            conn.readTimeout = 40_000
-            conn.instanceFollowRedirects = true
-            conn.setRequestProperty("Accept", "application/json")
-            val text = conn.inputStream.bufferedReader().use { it.readText() }
-            conn.disconnect()
-            if (!JSONObject(text).optBoolean("ok")) return null
-            Prefs.setCache(context, text)
-            parse(text)
+            val sess = JSONObject(s)
+            val keysObj = sess.getJSONObject("keys")
+            val keys = HashMap<Int, ByteArray>()
+            keysObj.keys().forEach { k -> keys[k.toInt()] = EntryCrypto.unb64u(keysObj.getString(k)) }
+            val body = JSONObject().put("fn", "apiLoad").put("args", JSONArray().put(sess.getString("a"))).toString()
+            val res = JSONObject(Net.post(sess.getString("exec"), body))
+            if (!res.optBoolean("ok")) return null
+            val r = res.getJSONObject("r")
+            if (r.optBoolean("denied")) { Prefs.clearSession(context); return emptyList() }
+            val e = r.optJSONArray("e") ?: return null
+            val trees = HashMap<String, String>()
+            val people = ArrayList<JSONObject>()
+            for (i in 0 until e.length()) {
+                val row = e.getJSONArray(i)
+                val id = row.getString(0)
+                val txt = EntryCrypto.decrypt(keys, id, row.getString(1))
+                if (txt == null) {
+                    if (EntryCrypto.version(row.getString(1)) !in keys) return null   // neuer Schlüssel: App einmal öffnen
+                    continue
+                }
+                val o = JSONObject(txt)
+                when (o.optString("k")) {
+                    "t" -> trees[id] = o.optString("name")
+                    "p" -> { o.put("id", id); people.add(o) }
+                }
+            }
+            val out = JSONArray()
+            for (p in people) {
+                if (p.optBoolean("deceased") || p.optString("deathDate").isNotEmpty()) continue
+                val bd = p.optString("birthDate")
+                if (!DATE.matches(bd)) continue
+                val first = p.optString("firstName")
+                val last = p.optString("lastName")
+                val name = listOf(first, last).filter { it.isNotBlank() }.joinToString(" ").ifBlank { "Ohne Namen" }
+                out.put(
+                    JSONObject().put("id", p.optString("id")).put("name", name).put("firstName", first.ifBlank { last.ifBlank { name } })
+                        .put("birthDate", bd).put("phone", p.optString("phone")).put("tree", trees[p.optString("treeId")] ?: "")
+                )
+            }
+            val json = JSONObject().put("ok", true).put("people", out).toString()
+            Prefs.setCache(context, json)
+            parse(json)
         } catch (e: Exception) {
             null
         }
@@ -207,7 +247,7 @@ object Birthdays {
     /** Plant die tägliche Prüfung zur gewählten Uhrzeit */
     fun schedule(context: Context, update: Boolean) {
         val wm = WorkManager.getInstance(context)
-        if (!Prefs.remindersOn(context) || Prefs.link(context) == null) {
+        if (!Prefs.remindersOn(context) || Prefs.exec(context) == null) {
             wm.cancelUniqueWork(WORK)
             return
         }
@@ -237,12 +277,62 @@ object Birthdays {
 class BirthdayWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         val c = applicationContext
-        if (Prefs.remindersOn(c) && Prefs.link(c) != null) {
+        if (Prefs.remindersOn(c) && Prefs.exec(c) != null) {
             val list = withContext(Dispatchers.IO) { Birthdays.load(c) }
             Birthdays.notifyDue(c, list, LocalDate.now(), force = false)
         }
         // Falls Android die Prüfung stark verschoben hat: wieder auf die gewünschte Uhrzeit legen
         if (Birthdays.minutesOff(c) > 120) Birthdays.schedule(c, update = true)
         return Result.success()
+    }
+}
+
+/** Entschlüsselt Einträge des Stammbaums (gleiches Format wie in der Oberfläche: v<Version>:<IV+Daten, base64url>) */
+object EntryCrypto {
+    private val ENTRY = Regex("""^v(\d+):([A-Za-z0-9_-]+)$""")
+
+    fun unb64u(s: String): ByteArray = java.util.Base64.getUrlDecoder().decode(s)
+
+    fun version(d: String): Int = ENTRY.find(d)?.groupValues?.get(1)?.toIntOrNull() ?: -1
+
+    fun decrypt(keys: Map<Int, ByteArray>, id: String, d: String): String? {
+        val m = ENTRY.find(d) ?: return null
+        val key = keys[m.groupValues[1].toInt()] ?: return null
+        return try {
+            val data = unb64u(m.groupValues[2])
+            if (data.size < 28) return null
+            val c = Cipher.getInstance("AES/GCM/NoPadding")
+            c.init(Cipher.DECRYPT_MODE, SecretKeySpec(key, "AES"), GCMParameterSpec(128, data, 0, 12))
+            c.updateAAD("e|$id".toByteArray(Charsets.UTF_8))
+            String(c.doFinal(data, 12, data.size - 12), Charsets.UTF_8)
+        } catch (e: Exception) {
+            null
+        }
+    }
+}
+
+/** Anfrage an die Google-Web-App. Google antwortet mit einer Weiterleitung, die hier von Hand gefolgt wird. */
+object Net {
+    fun post(url: String, body: String): String {
+        var conn = URL(url).openConnection() as HttpURLConnection
+        conn.instanceFollowRedirects = false
+        conn.requestMethod = "POST"
+        conn.doOutput = true
+        conn.connectTimeout = 20_000
+        conn.readTimeout = 90_000
+        conn.setRequestProperty("Content-Type", "text/plain;charset=utf-8")
+        conn.outputStream.use { it.write(body.toByteArray(Charsets.UTF_8)) }
+        var code = conn.responseCode
+        if (code in 300..399) {
+            val next = URL(conn.url, conn.getHeaderField("Location") ?: throw IOException("Weiterleitung ohne Ziel"))
+            conn.disconnect()
+            conn = next.openConnection() as HttpURLConnection
+            conn.instanceFollowRedirects = true
+            conn.connectTimeout = 20_000
+            conn.readTimeout = 90_000
+            code = conn.responseCode
+        }
+        if (code !in 200..299) { conn.disconnect(); throw IOException("HTTP $code") }
+        return conn.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }.also { conn.disconnect() }
     }
 }
