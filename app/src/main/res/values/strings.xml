@@ -22,6 +22,11 @@
 
     <!-- Erinnerungen -->
     <string name="channel_name">Geburtstage</string>
+    <string name="backup_channel">Erinnerung an die Sicherung</string>
+    <string name="backup_title">Zeit für eine Sicherung</string>
+    <string name="backup_text_days">Die letzte Sicherung des Familienstammbaums ist %1$d Tage alt. Tippe hier, um eine neue zu erstellen.</string>
+    <string name="backup_text_never">Vom Familienstammbaum gibt es noch keine Sicherung. Tippe hier, um eine zu erstellen.</string>
+    <string name="mic_denied">Ohne Mikrofon-Erlaubnis kann die App keine Sprachaufnahmen machen.</string>
     <string name="channel_description">Erinnerungen an Geburtstage aus dem Stammbaum</string>
     <string name="bday_today_title">Heute hat %1$s Geburtstag</string>
     <string name="bday_tomorrow_title">Morgen hat %1$s Geburtstag</string>

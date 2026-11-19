@@ -74,6 +74,8 @@ object Prefs {
 
     fun lastNotified(c: Context): String? = sp(c).getString("lastNotified", null)
     fun setLastNotified(c: Context, value: String) { sp(c).edit().putString("lastNotified", value).apply() }
+    fun backupNotified(c: Context): Long = sp(c).getLong("backupNotified", 0L)
+    fun setBackupNotified(c: Context, value: Long) { sp(c).edit().putLong("backupNotified", value).apply() }
 }
 
 /** Verschlüsselt kleine Texte mit einem Schlüssel, der den Android-Schlüsselspeicher nie verlässt */

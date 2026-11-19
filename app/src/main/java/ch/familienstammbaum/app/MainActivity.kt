@@ -18,6 +18,8 @@ import android.provider.OpenableColumns
 import android.util.Base64
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.webkit.GeolocationPermissions
+import android.webkit.PermissionRequest
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
@@ -54,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_PERSON = "person"
+        const val EXTRA_BACKUP = "backup"
         const val ACTION_SETUP = "ch.familienstammbaum.app.SETUP"
         /** Die App zeigt die Webversion an: immer derselbe Stand wie im Browser */
         private const val WEB_HOST = "cokakula.github.io"
@@ -76,6 +79,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var prompt: BiometricPrompt
 
     @Volatile private var pendingPerson: String? = null
+    @Volatile private var pendingBackup = false
+    private var pendingWebPerm: PermissionRequest? = null
+    private var pendingGeo: Pair<String, GeolocationPermissions.Callback>? = null
     @Volatile private var pickedMeta: String = "[]"
     private var fileCallback: ValueCallback<Array<Uri>>? = null
     private var pendingPick: Intent? = null
@@ -119,6 +125,22 @@ class MainActivity : AppCompatActivity() {
             } catch (e: Exception) { false }
             runOnUiThread { finishSave(ok) }
         }.start()
+    }
+
+    /* Mikrofon für Sprachaufnahmen (Erinnerungen) */
+    private val askMic = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        val req = pendingWebPerm
+        pendingWebPerm = null
+        if (req != null) {
+            if (granted) req.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE)) else { req.deny(); Toast.makeText(this, R.string.mic_denied, Toast.LENGTH_LONG).show() }
+        }
+    }
+
+    /* Standort, z.B. für den Ort eines Grabes */
+    private val askLocation = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { res ->
+        val g = pendingGeo
+        pendingGeo = null
+        if (g != null) g.second.invoke(g.first, res.values.any { it }, false)
     }
 
     private val askNotifications = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -224,6 +246,7 @@ class MainActivity : AppCompatActivity() {
         }
         val person = intent?.getStringExtra(EXTRA_PERSON)
         if (person != null) { pendingPerson = person; showWeb(true); return }
+        if (intent?.getBooleanExtra(EXTRA_BACKUP, false) == true) { intent?.removeExtra(EXTRA_BACKUP); pendingBackup = true; showWeb(true); return }
         if (initial || web.visibility != View.VISIBLE) {
             if (Prefs.exec(this) != null) showWeb(initial) else showSetup()
         }
@@ -361,6 +384,7 @@ class MainActivity : AppCompatActivity() {
             Prefs.pending(ctx)?.let { o.put("link", it) }
             pendingPerson?.let { o.put("person", it) }
             pendingPerson = null
+            if (pendingBackup) { o.put("backup", true); pendingBackup = false }
             if (Prefs.reset(ctx)) { o.put("reset", true); Prefs.clearReset(ctx) }
             return o.toString()
         }
@@ -411,6 +435,8 @@ class MainActivity : AppCompatActivity() {
         s.setSupportMultipleWindows(true)
         s.javaScriptCanOpenWindowsAutomatically = false
         s.allowFileAccess = false
+        s.setGeolocationEnabled(true)
+        s.mediaPlaybackRequiresUserGesture = false
         s.userAgentString = s.userAgentString + " FamilienstammbaumApp/2"
         web.addJavascriptInterface(Bridge(), "FSApp")
 
@@ -458,12 +484,12 @@ class MainActivity : AppCompatActivity() {
                 val pick = Intent(Intent.ACTION_GET_CONTENT).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)
                     type = when {
-                        accept.any { it.contains("zip") } -> "*/*"
+                        accept.any { it.contains("zip") || it.contains("ged") } -> "*/*"
                         mimes.size == 1 -> mimes[0]
                         images -> "image/*"
                         else -> "*/*"
                     }
-                    if (mimes.size > 1 && !accept.any { it.contains("zip") }) putExtra(Intent.EXTRA_MIME_TYPES, mimes.toTypedArray())
+                    if (mimes.size > 1 && !accept.any { it.contains("zip") || it.contains("ged") }) putExtra(Intent.EXTRA_MIME_TYPES, mimes.toTypedArray())
                     putExtra(Intent.EXTRA_ALLOW_MULTIPLE, fileChooserParams.mode == WebChromeClient.FileChooserParams.MODE_OPEN_MULTIPLE)
                 }
                 pickedMeta = "[]"
@@ -478,6 +504,35 @@ class MainActivity : AppCompatActivity() {
                     launchPicker(pick)
                 }
                 return true
+            }
+
+            /* Mikrofon nur für die eigene Webseite, nach Rückfrage bei Android */
+            override fun onPermissionRequest(request: PermissionRequest) {
+                runOnUiThread {
+                    val audio = PermissionRequest.RESOURCE_AUDIO_CAPTURE
+                    if (request.origin.host != WEB_HOST || !request.resources.contains(audio)) { request.deny(); return@runOnUiThread }
+                    if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                        request.grant(arrayOf(audio))
+                    } else {
+                        pendingWebPerm?.deny()
+                        pendingWebPerm = request
+                        askMic.launch(Manifest.permission.RECORD_AUDIO)
+                    }
+                }
+            }
+
+            override fun onPermissionRequestCanceled(request: PermissionRequest) {
+                if (pendingWebPerm == request) pendingWebPerm = null
+            }
+
+            override fun onGeolocationPermissionsShowPrompt(origin: String, callback: GeolocationPermissions.Callback) {
+                if (Uri.parse(origin).host != WEB_HOST) { callback.invoke(origin, false, false); return }
+                val fine = ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                val coarse = ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                if (fine || coarse) { callback.invoke(origin, true, false); return }
+                pendingGeo?.let { it.second.invoke(it.first, false, false) }
+                pendingGeo = origin to callback
+                askLocation.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
             }
 
             /* Links mit target="_blank" (Telefon, WhatsApp, E-Mail, Karte) gehen an andere Apps */

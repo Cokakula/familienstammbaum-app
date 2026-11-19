@@ -275,6 +275,76 @@ body.has-full #app{visibility:hidden}
 @keyframes spin{to{transform:rotate(360deg)}}
 .toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,16px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:14px;font-size:.92rem;font-weight:500;width:max-content;max-width:calc(100% - 32px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:1000;box-shadow:var(--shadow)}
 .toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.has-act{pointer-events:auto;display:flex;align-items:center;gap:14px;padding:8px 8px 8px 18px}
+.toast-btn{color:var(--accent-soft);font-weight:700;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.12);flex:none}
+.trash-row{display:flex;align-items:center;gap:12px;padding:10px 12px}
+.trash-row .meta{flex:1;min-width:0;display:flex;flex-direction:column}
+.trash-row .t{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trash-row .s{font-size:.8rem;color:var(--muted)}
+.av.trash-ph{overflow:hidden;border-radius:10px}
+.av.trash-ph img{border-radius:10px}
+.author-note{color:var(--muted);font-size:.8rem;text-align:center;margin:18px 8px 0}
+.inrow{display:flex;gap:8px;align-items:center}
+.inrow input{flex:1;min-width:0}
+.slot-wrap{display:flex;flex-direction:column;gap:6px}
+.marr{display:flex;gap:6px;align-items:center;padding-left:6px}
+.marr input{flex:1;min-width:0;height:40px;font-size:.9rem}
+.marr input[data-mp]{flex:.8}
+.marr-ic{color:var(--accent);display:grid;place-items:center}
+.marr-ic .ic{width:20px;height:20px}
+.marr .errmsg{flex-basis:100%}
+.marr{flex-wrap:wrap}
+.hint-btn.soft{background:var(--surface);border-style:solid}
+.news-banner{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;margin:4px 0 14px;border-radius:16px;background:var(--accent-soft);color:var(--ink)}
+.news-banner>.ic:first-child{width:26px;height:26px;color:var(--accent);flex:none}
+.news-banner span{flex:1;display:flex;flex-direction:column;font-weight:700}
+.news-banner small{font-weight:500;color:var(--muted);font-size:.84rem}
+.news-banner.warn{background:var(--warm-soft)}
+.news-banner.warn>.ic:first-child{color:var(--warm)}
+.kin-pair{display:flex;align-items:center;gap:8px;justify-content:center;margin:8px 0 16px}
+.kin-pick{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 6px;border-radius:16px;background:var(--surface);border:1px solid var(--line);font-weight:600;font-size:.9rem;text-align:center;min-width:0}
+.kin-res{padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.kin-rel{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.kin-who{font-size:.86rem;color:var(--muted)}
+.kin-note{margin:0;font-size:.92rem;display:flex;gap:8px;align-items:flex-start}
+.kin-note .ic{width:19px;height:19px;flex:none;color:var(--accent);margin-top:1px}
+.kin-path{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:20px}
+.kin-node{display:flex;align-items:center;gap:12px;width:100%;max-width:420px;padding:8px 12px;border-radius:14px;background:var(--surface);border:1px solid var(--line);text-align:left}
+.kin-node .n{font-weight:600;flex:1;min-width:0}
+.kin-node .r{font-size:.8rem;color:var(--accent);font-weight:600;text-align:right}
+.kin-step{font-size:.78rem;color:var(--muted);padding:3px 0 3px 14px;border-left:2px solid var(--branch);margin:2px 0}
+.story{padding:14px 16px;margin-bottom:10px;display:flex;flex-direction:column;gap:10px}
+.st-title{font-weight:700}
+.st-text{white-space:pre-line;line-height:1.5}
+.st-with{font-size:.84rem;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.st-chip{padding:4px 10px;border-radius:12px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:.82rem}
+.st-foot{display:flex;align-items:center;gap:4px;font-size:.8rem;color:var(--muted)}
+.st-foot>span{flex:1}
+.icon-btn.sm{width:38px;height:38px}
+.icon-btn.sm .ic{width:19px;height:19px}
+.audio-btn{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;min-height:44px;padding:0 16px 0 8px;border-radius:22px;background:var(--accent);color:#fff;font-weight:600;font-size:.9rem}
+.audio-btn .ic{width:28px;height:28px;padding:5px;border-radius:50%;background:rgba(255,255,255,.2)}
+.audio-btn.playing{background:var(--warm)}
+.rec-box{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.rec-btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 18px 0 10px;border-radius:24px;border:1px solid var(--line);background:var(--surface);font-weight:600}
+.rec-btn .ic{width:30px;height:30px;padding:6px;border-radius:50%;background:#C8463D;color:#fff}
+.rec-btn.on{border-color:#C8463D;color:#C8463D}
+.rec-btn.on .ic{animation:recp 1.2s ease-in-out infinite}
+@keyframes recp{50%{opacity:.45}}
+.rec-have{display:inline-flex;align-items:center;gap:6px;font-size:.9rem;color:var(--muted)}
+.rec-have .ic{width:18px;height:18px}
+.lb-tags{position:absolute;pointer-events:none}
+.lb-tags[hidden]{display:none!important}
+.ftag{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;display:flex;flex-direction:column;align-items:center;gap:3px}
+.ftag .dot{width:14px;height:14px;border-radius:50%;border:2px solid #fff;background:rgba(43,90,76,.75);box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.ftag .nm{background:rgba(0,0,0,.66);color:#fff;font-size:.78rem;font-weight:600;padding:3px 8px;border-radius:9px;white-space:nowrap}
+.lb-stage.tagging{cursor:crosshair}
+.lb-stage.tagging .ftag .dot{background:#E8A33D}
+.lb-taghint{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:rgba(0,0,0,.7);color:#fff;font-size:.84rem;padding:7px 12px;border-radius:12px;pointer-events:none;white-space:nowrap}
+.lb-toggle{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;color:#CFE3D9;font-size:.88rem;min-height:34px}
+.lb-toggle .ic{width:18px;height:18px}
+.dlg-text.warn{background:var(--warm-soft);border-radius:12px;padding:10px 12px;font-size:.88rem}
+
 
 /* Google-Version: Bilder laden nach, Speicherstatus */
 .av{position:relative}
@@ -564,6 +634,18 @@ const I = {
   sheet: sv('<rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M4 9h16M4 15h16M10 9v12"/>'),
   folder: sv('<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'),
   refresh: sv('<path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/>'),
+  rings: sv('<circle cx="9" cy="14" r="5.5"/><circle cx="15" cy="14" r="5.5"/><path d="M10 5l2-2 2 2"/>'),
+  grave: sv('<path d="M7 21V10a5 5 0 0 1 10 0v11M5 21h14M12 9v6M9.5 11.5h5"/>'),
+  home: sv('<path d="M4 11l8-7 8 7M6 9.5V20h12V9.5"/>'),
+  link: sv('<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>'),
+  mic: sv('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>'),
+  play: sv('<path d="M8 5.5v13l10.5-6.5z"/>'),
+  stop: sv('<rect x="6.5" y="6.5" width="11" height="11" rx="2"/>'),
+  book: sv('<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20"/>'),
+  spark: sv('<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"/>'),
+  cal: sv('<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
+  poster: sv('<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="8" r="2"/><circle cx="8" cy="15" r="2"/><circle cx="16" cy="15" r="2"/><path d="M12 10v2.5M8 13v-.5h8v.5"/>'),
+  tag: sv('<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/>'),
 };
 const ART = `<svg class="art" viewBox="0 0 260 170" aria-hidden="true">
   <g fill="none" stroke="var(--branch)" stroke-width="2.6" stroke-linecap="round">
@@ -579,12 +661,15 @@ const ART = `<svg class="art" viewBox="0 0 260 170" aria-hidden="true">
 </svg>`;
 
 /* ---------- Zustand ---------- */
-const G = { trees: new Map(), people: new Map(), photos: new Map(), links: {} };
+const G = { trees: new Map(), people: new Map(), photos: new Map(), stories: new Map(), links: {} };
+const TRASH = new Map();   /* gelöschte Einträge (30 Tage wiederherstellbar): id -> { kind, o } */
+const TRASH_DAYS = 30;
 const S = {
   noGoogle: false, loaded: false, loadError: null, slow: false,
   canWrite: false, isAdmin: false, role: 'view', auth: '', me: null, denied: false, needClaim: false, legacy: false, legacyKey: '', legacyLeft: false, setup: false, execUrl: '', busy: '', trees: G.trees, treeId: null, people: new Map(), photos: new Map(),
   view: 'baum', treeMode: 'nach', nachRoot: null, vorPerson: null, focusId: null, centerTarget: null,
   T: { x: 0, y: 0, k: 0.85 }, centeredFor: null, lay: null, q: '', photoFilter: 'all', uploadFor: null,
+  stories: new Map(), prevSeen: new Map(), newsHidden: new Set(),
 };
 
 /* ---------- Hilfen ---------- */
@@ -1096,11 +1181,24 @@ function saveSession(x) { LS.set('sess', JSON.stringify(Object.assign({ exec: EX
 function clearSession() { try { localStorage.removeItem('stammbaum.sess'); } catch (e) {} S.auth = ''; try { NATIVE && NATIVE.clearSession && NATIVE.clearSession(); } catch (e) {} idb.clear(); }
 
 /* Änderungen werden sofort angezeigt und kurz danach verschlüsselt an Google geschickt */
-const KIND_CODE = { trees: 't', people: 'p', photos: 'f' };
-const CODE_KIND = { t: 'trees', p: 'people', f: 'photos' };
+const KIND_CODE = { trees: 't', people: 'p', photos: 'f', stories: 's' };
+const CODE_KIND = { t: 'trees', p: 'people', f: 'photos', s: 'stories' };
 const Q = { put: new Map(), del: new Set(), blobs: new Set() };
 function hasPending() { return Q.put.size > 0 || Q.del.size > 0 || Q.blobs.size > 0; }
-function put(kind, o) { G[kind].set(o.id, o); Q.put.set(o.id, kind); Q.del.delete(o.id); if (kind === 'photos') noteBlobKeys(o); }
+function myName() { return (S.me && (S.me.name || (myPersonId() && callName(P(myPersonId()))))) || ''; }
+let quietPut = false;   /* Sicherung/Übernahme: Autor und Zeit nicht überschreiben */
+function put(kind, o) {
+  if (kind !== 'trees' && !quietPut) { o = Object.assign({}, o, { updatedBy: myName(), updatedByCred: (S.me && S.me.id) || '', updatedAt: Date.now() }); if (!o.createdBy && !o.createdAt) { o.createdAt = Date.now(); o.createdBy = myName(); } else if (!o.createdBy && Date.now() - (o.createdAt || 0) < 5000) o.createdBy = myName(); }
+  G[kind].set(o.id, o); TRASH.delete(o.id); Q.put.set(o.id, kind); Q.del.delete(o.id); if (kind === 'photos') noteBlobKeys(o);
+}
+/* In den Papierkorb (30 Tage wiederherstellbar) */
+function trash(kind, id, extra) {
+  const o = G[kind].get(id); if (!o) return;
+  G[kind].delete(id);
+  TRASH.set(id, { kind, o: Object.assign({}, o, extra || {}, { _del: Date.now(), _by: myName() }) });
+  Q.put.set(id, kind); Q.del.delete(id);
+}
+function entryFor(id, kind) { return G[kind].get(id) || (TRASH.has(id) ? TRASH.get(id).o : null); }
 function remove(kind, id) { G[kind].delete(id); Q.put.delete(id); Q.del.add(id); }
 async function encryptEntry(kind, o) { const { id, ...rest } = o; return [id, await FSC.enc(id, Object.assign({ k: KIND_CODE[kind] }, rest))]; }
 async function commitEntries(putArr, dels) {
@@ -1114,6 +1212,8 @@ function rebuild() {
   S.trees = G.trees;
   S.people = new Map([...G.people].filter(([, p]) => p.treeId === tid));
   S.photos = new Map([...G.photos].filter(([, p]) => p.treeId === tid));
+  S.stories = new Map([...G.stories].filter(([, p]) => p.treeId === tid));
+  markSeen();
 }
 function changed() { rebuild(); scheduleRender(); flushSoon(); }
 async function upd(id, patch) { const c = G.people.get(id); if (!c) return; put('people', { ...c, ...patch, updatedAt: Date.now() }); changed(); }
@@ -1130,7 +1230,7 @@ async function flush() {
   Q.put.clear(); Q.del.clear(); Q.blobs.clear();
   flushing = (async () => {
     const putArr = [];
-    for (const [id, kind] of ids) { const o = G[kind].get(id); if (o) putArr.push(await encryptEntry(kind, o)); }
+    for (const [id, kind] of ids) { const o = entryFor(id, kind); if (o) putArr.push(await encryptEntry(kind, o)); }
     await commitEntries(putArr, dels);
     if (blobs.length) await api('apiDelBlobs', blobs);
   })().then(() => { saveFailed = false; syncNative(); }, e => {
@@ -1165,7 +1265,7 @@ async function act(fn) { try { await fn(); } catch (e) { handleErr(e); } }
 
 let toastTimer = 0;
 function toast(msg, sticky) {
-  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  const t = $('#toast'); t.textContent = msg; t.classList.remove('has-act'); t.classList.add('show');
   clearTimeout(toastTimer); if (!sticky) toastTimer = setTimeout(() => t.classList.remove('show'), 3400);
 }
 async function copyText(s) {
@@ -1274,7 +1374,19 @@ function textPrompt({ title, label, value = '', ok = 'Speichern', placeholder = 
 }
 
 /* Personenauswahl */
-function searchText(p) { return [p.firstName, p.lastName, p.birthName, p.birthPlace, p.address, p.job, p.employer].filter(Boolean).join(' '); }
+function searchText(p) { return [p.firstName, p.lastName, p.birthName, p.nickname, p.birthPlace, p.originPlace, p.fis, p.address, p.job, p.employer].filter(Boolean).join(' '); }
+/* Ort aus Koordinaten "47.1, 8.2" oder einem Google-Maps-Link */
+function parseGeo(raw) {
+  const t = String(raw || '').trim(); if (!t) return '';
+  const m = t.match(/@(-?\d{1,2}\.\d+),\s*(-?\d{1,3}\.\d+)/) || t.match(/[?&](?:q|query|ll)=(-?\d{1,2}\.\d+),\s*(-?\d{1,3}\.\d+)/) || t.match(/^(-?\d{1,2}[.,]\d+)\s*[,; ]\s*(-?\d{1,3}[.,]\d+)$/);
+  if (!m) return null;
+  const la = parseFloat(m[1].replace(',', '.')), lo = parseFloat(m[2].replace(',', '.'));
+  if (!(Math.abs(la) <= 90 && Math.abs(lo) <= 180)) return null;
+  return `${la.toFixed(6)},${lo.toFixed(6)}`;
+}
+function geoMaps(g) { return 'https://www.google.com/maps/search/?api=1&query=' + g; }
+function marriageOf(p, q) { const m = p && p.marriages && p.marriages[q]; return m && (m.date || m.place) ? m : null; }
+function fmtWhen(ts) { if (!ts) return ''; const d = new Date(ts); const iso = isoOf(d); const today = isoOf(new Date()); const y = isoOf(new Date(Date.now() - 864e5)); const hm = `${pad(d.getHours())}:${pad(d.getMinutes())}`; return iso === today ? `heute ${hm}` : iso === y ? `gestern ${hm}` : fmtDate(iso, true); }
 function jobLine(p) { return [p.job, p.employer].filter(Boolean).join(' · '); }
 function pickPerson({ title = 'Person wählen', exclude = new Set(), multi = false, selected = [] } = {}) {
   return new Promise(resolve => {
@@ -1402,6 +1514,8 @@ function onMainClick(e) {
   if (t.dataset.mode) { S.treeMode = t.dataset.mode; LS.set('mode', S.treeMode); return renderMain(); }
   if (t.dataset.z) return zoomBtn(t.dataset.z);
   switch (t.dataset.act) {
+    case 'news': return openNews();
+    case 'backup-now': return act(backupToDevice);
     case 'retry-load': S.loadError = null; render(); return load(true);
     case 'claim': return act(async () => {
       t.disabled = true;
@@ -1712,6 +1826,7 @@ function renderPeopleList() {
   const q = norm(S.q);
   let html = '';
   if (!q) {
+    html += backupBanner() + newsBanner();
     const b = upcomingBirthdays(45).slice(0, 10);
     if (b.length) html += `<h2 class="section-h">Nächste Geburtstage</h2><div class="bday-row">${b.map(x => `<button type="button" class="bday${x.days === 0 ? ' today' : ''}" data-open="${x.p.id}">${avatar(x.p, 40)}<span class="when">${x.days === 0 ? 'Heute 🎉' : x.days === 1 ? 'Morgen' : `in ${x.days} Tagen`}</span><span class="bn">${esc(fullName(x.p))}</span><span class="bs">wird ${x.age} · ${esc(x.label)}</span></button>`).join('')}</div>`;
   }
@@ -1772,7 +1887,7 @@ function renderPersonSheet(L) {
   const age = ageInfo(p);
   const lines = [];
   if (p.birthDate || p.birthPlace) lines.push(`<span><span class="sym">*</span>${esc([fmtDate(p.birthDate, true), p.birthPlace].filter(Boolean).join(', '))}</span>`);
-  if (isDead(p)) lines.push(`<span><span class="sym">†</span>${esc(p.deathDate ? fmtDate(p.deathDate, true) : 'verstorben')}</span>`);
+  if (isDead(p)) lines.push(`<span><span class="sym">†</span>${esc([p.deathDate ? fmtDate(p.deathDate, true) : 'verstorben', p.deathPlace].filter(Boolean).join(', '))}</span>`);
   if (age) lines.push(`<span class="age">${age.exact ? '' : 'ca. '}${age.years} Jahre${isDead(p) ? ' alt geworden' : ''}</span>`);
   const bd = upcomingBirthdays(30).find(x => x.p.id === p.id);
   const photos = photosOf(p.id);
@@ -1789,6 +1904,10 @@ function renderPersonSheet(L) {
   if (p.phone) kv.push(`<div class="kv"><div class="k">Telefon</div><div class="v num">${esc(p.phone)}</div><div class="acts"><a class="mini-btn" href="tel:${esc(tel)}" target="_blank" rel="noopener">${I.phone} Anrufen</a><button type="button" class="mini-btn" data-copy="${esc(p.phone)}">${I.copy} Kopieren</button></div></div>`);
   if (p.address) kv.push(`<div class="kv"><div class="k">Wohnadresse</div><div class="v">${esc(p.address)}</div><div class="acts"><a class="mini-btn" href="${esc(mapsUrl(p.address))}" target="_blank" rel="noopener">${I.map} In Google Maps</a><button type="button" class="mini-btn" data-copy="${esc(p.address)}">${I.copy} Kopieren</button></div></div>`);
   if (p.email) kv.push(`<div class="kv"><div class="k">E-Mail</div><div class="v">${esc(p.email)}</div><div class="acts"><a class="mini-btn" href="mailto:${esc(p.email)}" target="_blank" rel="noopener">${I.mail} Schreiben</a><button type="button" class="mini-btn" data-copy="${esc(p.email)}">${I.copy} Kopieren</button></div></div>`);
+  const more = [];
+  if (p.originPlace || p.fis) more.push(`<div class="kv"><div class="k">Herkunft</div><div class="v">${esc([p.originPlace, p.fis ? `Fis ${p.fis}` : ''].filter(Boolean).join(' · '))}</div>${p.originPlace ? `<div class="acts"><a class="mini-btn" href="${esc(mapsUrl(p.originPlace))}" target="_blank" rel="noopener">${I.map} Karte</a></div>` : ''}</div>`);
+  partnersOf(p).forEach(q => { const m = marriageOf(p, q.id) || marriageOf(q, p.id); if (m) more.push(`<div class="kv"><div class="k">Hochzeit mit ${esc(callName(q))}</div><div class="v">${esc([fmtDate(m.date, true), m.place].filter(Boolean).join(', '))}</div></div>`); });
+  if (isDead(p) && (p.grave || p.graveGeo)) more.push(`<div class="kv"><div class="k">Grab</div><div class="v">${esc(p.grave || 'Standort gespeichert')}</div><div class="acts">${p.graveGeo ? `<a class="mini-btn" href="${esc(geoMaps(p.graveGeo))}" target="_blank" rel="noopener">${I.map} Hinführen</a>` : p.grave ? `<a class="mini-btn" href="${esc(mapsUrl(p.grave))}" target="_blank" rel="noopener">${I.map} Karte</a>` : ''}</div></div>`);
   const contact = kv.length ? `<div class="card">${kv.join('')}</div>` : S.canWrite ? `<button type="button" class="card hint-card" data-act="edit">${I.phone}<span>Telefonnummer und Wohnadresse ergänzen</span></button>` : '<p class="empty-note">Keine Kontaktangaben.</p>';
 
   const parents = parentsOf(p), partners = partnersOf(p), sibs = siblingsOf(p), kids = childrenOf(p.id);
@@ -1807,7 +1926,7 @@ function renderPersonSheet(L) {
     <section class="hero">
       ${heroAv}
       <h1>${esc(fullName(p))}</h1>
-      ${p.birthName && p.birthName !== p.lastName ? `<div class="bname">geb. ${esc(p.birthName)}</div>` : ''}
+      ${p.nickname || (p.birthName && p.birthName !== p.lastName) ? `<div class="bname">${esc([p.nickname ? `«${p.nickname}»` : '', p.birthName && p.birthName !== p.lastName ? `geb. ${p.birthName}` : ''].filter(Boolean).join(' · '))}</div>` : ''}
       ${relTag}
       ${lines.length ? `<div class="life">${lines.join('')}</div>` : ''}
       ${jobLine(p) ? `<div class="job-line">${I.job}<span>${esc(jobLine(p))}</span></div>` : ''}
@@ -1816,18 +1935,26 @@ function renderPersonSheet(L) {
       <div class="quick">${quick}</div>
     </section>
     <h3 class="section-h">Kontakt</h3>${contact}
+    ${more.length ? `<h3 class="section-h">Weitere Angaben</h3><div class="card">${more.join('')}</div>` : ''}
     <h3 class="section-h">Familie</h3>
     ${fam ? `<div class="card fam">${fam}</div>` : '<p class="empty-note">Noch keine Verwandten erfasst.</p>'}
     ${S.canWrite ? partners.filter(q => sharedCands(p.id, q.id).length).map(q => `<button type="button" class="hint-btn" data-act="sharekids" data-q="${esc(q.id)}">${I.people}<span>Kinder auch ${esc(callName(q))} zuordnen?<small>${sharedCands(p.id, q.id).length} ${sharedCands(p.id, q.id).length === 1 ? 'Kind hat' : 'Kinder haben'} erst einen Elternteil</small></span></button>`).join('') : ''}
+    ${S.people.size > 1 ? `<button type="button" class="hint-btn soft" data-act="howrel">${I.link}<span>Wie sind wir verwandt?<small>${p.id === ref ? 'Verwandtschaft zu einer anderen Person herausfinden' : `Verbindung zwischen ${esc(callName(p))} und ${hp ? esc(p.id === me ? 'jemand anderem' : me ? 'dir' : callName(hp)) : 'jemand anderem'}`}</small></span></button>` : ''}
     <div class="sec-row"><h3 class="section-h">Fotos${photos.length ? ` · ${photos.length}` : ''}</h3>${S.canWrite ? `<button type="button" class="mini-btn" data-upload="${p.id}">${I.camera} Hinzufügen</button>` : ''}</div>
     ${photos.length ? `<div class="grid">${photos.map((ph, i) => `<button type="button" data-pphoto="${i}" aria-label="${esc(ph.caption || 'Foto öffnen')}">${imgTag(ph.thumb)}</button>`).join('')}</div>` : '<p class="empty-note">Noch keine Fotos zugeordnet.</p>'}
     ${p.notes ? `<h3 class="section-h">Notizen</h3><div class="card notes">${esc(p.notes)}</div>` : ''}
+    ${storiesSection(p)}
+    ${p.createdBy || p.updatedBy ? `<p class="author-note">${esc([p.createdBy ? `Erfasst von ${p.createdBy}${p.createdAt ? ', ' + fmtWhen(p.createdAt) : ''}` : '', p.updatedBy && p.updatedAt && (p.updatedAt - (p.createdAt || 0) > 60000 || p.updatedBy !== p.createdBy) ? `zuletzt geändert von ${p.updatedBy}, ${fmtWhen(p.updatedAt)}` : ''].filter(Boolean).join(' · '))}</p>` : ''}
     <div class="foot-acts">${p.id !== me && S.me ? `<button type="button" class="btn block" data-act="setme">${I.userc} Das bin ich</button>` : ''}${S.canWrite && !isHome ? `<button type="button" class="btn block" data-act="sethome">${I.target} Als Hauptperson festlegen</button>` : ''}${S.canWrite ? `<button type="button" class="btn danger block" data-act="delete">${I.trash} Person löschen</button>` : ''}</div>`;
 }
 function onPersonClick(e, L) {
-  const t = e.target.closest('[data-act],[data-open],[data-add],[data-pphoto],[data-upload],[data-copy]');
+  const t = e.target.closest('[data-act],[data-open],[data-add],[data-pphoto],[data-upload],[data-copy],[data-play],[data-sedit],[data-sdel]');
   if (!t || !L.el.contains(t)) return;
   const id = L.id;
+  if (t.dataset.play) return act(() => playStory(t.dataset.play));
+  if (t.dataset.sedit && S.canWrite) return act(() => storyForm({ id: t.dataset.sedit }));
+  if (t.dataset.sdel && S.canWrite) return act(() => deleteStory(t.dataset.sdel));
+  if (t.dataset.act === 'story-add' && S.canWrite) return act(() => storyForm({ personIds: [id] }));
   if (t.dataset.open) return openPerson(t.dataset.open);
   if (t.dataset.add) return act(() => addRelative(id, t.dataset.add));
   if (t.dataset.pphoto !== undefined) return openLightbox(photosOf(id).map(x => x.id), +t.dataset.pphoto);
@@ -1849,6 +1976,7 @@ function onPersonClick(e, L) {
     case 'setme': return act(() => setMe(id));
     case 'party': return fireworks(t.closest('.hero') || null);
     case 'sharekids': return act(() => offerSharedChildren(id, t.dataset.q, true));
+    case 'howrel': return act(() => openKinship(id));
     case 'delete': return act(() => deletePerson(id));
   }
 }
@@ -1857,10 +1985,12 @@ function onPersonClick(e, L) {
 function personForm({ id = null, preset = {}, title = '' } = {}) {
   return new Promise(resolve => {
     const prev = id ? P(id) : null;
-    const base = { firstName: '', lastName: '', birthName: '', gender: '', birthDate: '', birthPlace: '', deceased: false, deathDate: '', job: '', employer: '', phone: '', email: '', address: '', notes: '', parentIds: [], partnerIds: [] };
+    const base = { firstName: '', lastName: '', birthName: '', nickname: '', gender: '', birthDate: '', birthPlace: '', originPlace: '', fis: '', deceased: false, deathDate: '', deathPlace: '', grave: '', graveGeo: '', job: '', employer: '', phone: '', email: '', address: '', notes: '', parentIds: [], partnerIds: [], marriages: {} };
     const v = Object.assign({}, base, prev ? JSON.parse(JSON.stringify(prev)) : {}, preset);
     v.parentIds = (v.parentIds || []).filter(x => S.people.has(x) && x !== id).slice(0, 2);
     v.partnerIds = (v.partnerIds || []).filter(x => S.people.has(x) && x !== id);
+    v.marriages = Object.assign({}, v.marriages || {});
+    v.partnerIds.forEach(q => { if (!v.marriages[q] && P(q) && marriageOf(P(q), id)) v.marriages[q] = Object.assign({}, P(q).marriages[id]); });
     const L = mkLayer('layer', 'form');
     L.result = null; L.onClose = () => resolve(L.result);
     L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="cancel" aria-label="Abbrechen">${I.close}</button><h2>${esc(title || (prev ? 'Person bearbeiten' : 'Neue Person'))}</h2></div>
@@ -1870,14 +2000,30 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
           <div class="field"><label for="f-first">Vorname</label><input id="f-first" autocomplete="off" autocapitalize="words" enterkeyhint="next"></div>
           <div class="field"><label for="f-last">Nachname</label><input id="f-last" autocomplete="off" autocapitalize="words" enterkeyhint="next"></div>
         </div>
-        <div class="field"><label for="f-bname">Geburtsname, falls anders</label><input id="f-bname" autocomplete="off" autocapitalize="words"></div>
+        <div class="two">
+          <div class="field"><label for="f-bname">Geburtsname, falls anders</label><input id="f-bname" autocomplete="off" autocapitalize="words"></div>
+          <div class="field"><label for="f-nick">Spitzname</label><input id="f-nick" autocomplete="off" autocapitalize="words" placeholder="z.B. Gjyshi Ali"></div>
+        </div>
         <div class="field"><span class="lbl" id="f-g-l">Geschlecht</span><div class="segctl" role="group" aria-labelledby="f-g-l"><button type="button" data-g="w">weiblich</button><button type="button" data-g="m">männlich</button><button type="button" data-g="d">divers</button><button type="button" data-g="">offen</button></div></div>
         <div class="two">
           <div class="field"><label for="f-bd">Geburtstag</label><input id="f-bd" inputmode="decimal" autocomplete="off" placeholder="TT.MM.JJJJ"><span class="hint">oder nur das Jahr</span></div>
           <div class="field"><label for="f-bp">Geburtsort</label><input id="f-bp" autocomplete="off" autocapitalize="words"></div>
         </div>
         <label class="check"><input type="checkbox" id="f-dec"> Verstorben</label>
-        <div class="field" id="f-dd-wrap" hidden><label for="f-dd">Todestag</label><input id="f-dd" inputmode="decimal" autocomplete="off" placeholder="TT.MM.JJJJ oder JJJJ"></div>
+        <div id="f-dd-wrap" hidden>
+          <div class="two">
+            <div class="field"><label for="f-dd">Todestag</label><input id="f-dd" inputmode="decimal" autocomplete="off" placeholder="TT.MM.JJJJ oder JJJJ"></div>
+            <div class="field"><label for="f-dp">Todesort</label><input id="f-dp" autocomplete="off" autocapitalize="words"></div>
+          </div>
+          <div class="field"><label for="f-gr">Grab</label><input id="f-gr" autocomplete="off" autocapitalize="sentences" placeholder="z.B. Friedhof Prizren, Feld 3"></div>
+          <div class="field"><label for="f-gg">Standort des Grabes</label><div class="inrow"><input id="f-gg" autocomplete="off" autocapitalize="off" placeholder="Google-Maps-Link oder 42.21, 20.74"><button type="button" class="mini-btn" data-act="geo">${I.map} Hier</button></div><span class="hint">«Hier» nimmt deinen aktuellen Standort, z.B. wenn du am Grab stehst</span></div>
+        </div>
+        <div class="form-sec"><h3 class="section-h">Herkunft</h3>
+          <div class="two">
+            <div class="field"><label for="f-or">Herkunftsort / Dorf</label><input id="f-or" autocomplete="off" autocapitalize="words" placeholder="z.B. Gjonaj, Has"></div>
+            <div class="field"><label for="f-fis">Fis / Vëllazëri</label><input id="f-fis" autocomplete="off" autocapitalize="words" placeholder="z.B. Krasniqi"></div>
+          </div>
+        </div>
         <div class="form-sec"><h3 class="section-h">Beruf</h3>
           <div class="field"><label for="f-job">Beruf / Tätigkeit</label><input id="f-job" autocomplete="off" autocapitalize="sentences" placeholder="z.B. Lehrerin, Elektriker, Studentin"><span class="hint">Bei Verstorbenen: der frühere Beruf</span></div>
           <div class="field"><label for="f-emp">Arbeitgeber oder Arbeitsort</label><input id="f-emp" autocomplete="off" autocapitalize="words" placeholder="z.B. Spital Prizren, selbständig"></div>
@@ -1899,6 +2045,7 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
     f('#f-first').value = v.firstName || ''; f('#f-last').value = v.lastName || ''; f('#f-bname').value = v.birthName || '';
     f('#f-bd').value = toInput(v.birthDate); f('#f-bp').value = v.birthPlace || '';
     f('#f-dec').checked = !!(v.deceased || v.deathDate); f('#f-dd').value = toInput(v.deathDate); f('#f-dd-wrap').hidden = !f('#f-dec').checked;
+    f('#f-nick').value = v.nickname || ''; f('#f-dp').value = v.deathPlace || ''; f('#f-gr').value = v.grave || ''; f('#f-gg').value = v.graveGeo || ''; f('#f-or').value = v.originPlace || ''; f('#f-fis').value = v.fis || '';
     f('#f-job').value = v.job || ''; f('#f-emp').value = v.employer || '';
     f('#f-ph').value = v.phone || ''; f('#f-ad').value = v.address || ''; f('#f-em').value = v.email || ''; f('#f-no').value = v.notes || '';
     const paintGender = () => L.el.querySelectorAll('[data-g]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.g === (v.gender || ''))));
@@ -1906,10 +2053,15 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
     const slot = (q, attr, i, word) => `<div class="slot">${avatar(q, 42)}<span class="t">${esc(fullName(q))}<small>${esc(word)}</small></span><button type="button" class="icon-btn" ${attr}="${i}" aria-label="${esc(fullName(q))} entfernen">${I.close}</button></div>`;
     const paintSlots = () => {
       f('#f-parents').innerHTML = v.parentIds.map((x, i) => slot(P(x), 'data-rm-parent', i, gw(P(x), 'Vater', 'Mutter', 'Elternteil'))).join('') + (v.parentIds.length < 2 ? `<button type="button" class="slot empty" data-act="add-parent">${I.plus} Elternteil wählen</button>` : '');
-      f('#f-partners').innerHTML = v.partnerIds.map((x, i) => slot(P(x), 'data-rm-partner', i, gw(P(x), 'Partner', 'Partnerin', 'Partner/in'))).join('') + `<button type="button" class="slot empty" data-act="add-partner">${I.plus} Partner/in wählen</button>`;
+      f('#f-partners').innerHTML = v.partnerIds.map((x, i) => { const m = v.marriages[x] || {}; return `<div class="slot-wrap">${slot(P(x), 'data-rm-partner', i, gw(P(x), 'Partner', 'Partnerin', 'Partner/in'))}<div class="marr"><span class="marr-ic">${I.rings}</span><input data-md="${esc(x)}" inputmode="decimal" autocomplete="off" placeholder="Hochzeit TT.MM.JJJJ" aria-label="Hochzeitsdatum mit ${esc(callName(P(x)))}" value="${esc(toInput(m.date) || m.date || '')}"><input data-mp="${esc(x)}" autocomplete="off" autocapitalize="words" placeholder="Ort" aria-label="Hochzeitsort" value="${esc(m.place || '')}"></div></div>`; }).join('') + `<button type="button" class="slot empty" data-act="add-partner">${I.plus} Partner/in wählen</button>`;
     };
     paintSlots();
     L.el.querySelector('form').addEventListener('submit', e => e.preventDefault());
+    L.el.addEventListener('input', e => {
+      const t = e.target; const q = t.dataset.md || t.dataset.mp; if (!q) return;
+      const m = v.marriages[q] = Object.assign({}, v.marriages[q] || {});
+      if (t.dataset.md) m.date = t.value.trim(); else m.place = t.value.trim();
+    });
     f('#f-dec').addEventListener('change', () => { f('#f-dd-wrap').hidden = !f('#f-dec').checked; });
     ['#f-bd', '#f-dd'].forEach(s => f(s).addEventListener('blur', () => { const r = parseDateInput(f(s).value); if (r) f(s).value = toInput(r); }));
     const clearErr = () => { L.el.querySelectorAll('.field.err').forEach(x => x.classList.remove('err')); L.el.querySelectorAll('.errmsg').forEach(x => x.remove()); };
@@ -1922,7 +2074,14 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
       const bd = parseDateInput(val('#f-bd')); if (bd === null) return setErr('#f-bd', 'Bitte als TT.MM.JJJJ oder nur das Jahr eingeben.');
       const dec = f('#f-dec').checked;
       const dd = dec ? parseDateInput(val('#f-dd')) : ''; if (dd === null) return setErr('#f-dd', 'Bitte als TT.MM.JJJJ oder nur das Jahr eingeben.');
-      const data = { firstName: first, lastName: last, birthName: val('#f-bname'), gender: v.gender || '', birthDate: bd, birthPlace: val('#f-bp'), deceased: dec, deathDate: dd || '', job: val('#f-job'), employer: val('#f-emp'), phone: val('#f-ph'), email: val('#f-em'), address: f('#f-ad').value.trim(), notes: f('#f-no').value.trim(), parentIds: v.parentIds.filter(x => S.people.has(x)), partnerIds: v.partnerIds.filter(x => S.people.has(x)) };
+      const gg = dec ? parseGeo(val('#f-gg')) : ''; if (gg === null) return setErr('#f-gg', 'Bitte einen Google-Maps-Link oder Koordinaten wie 42.21, 20.74 eingeben.');
+      const marriages = {};
+      for (const q of v.partnerIds.filter(x => S.people.has(x))) {
+        const m = v.marriages[q] || {}; if (!m.date && !m.place) continue;
+        const md = parseDateInput(m.date || ''); if (md === null) { const inp = L.el.querySelector(`[data-md="${CSS.escape(q)}"]`); inp.closest('.field').classList.add('err'); inp.insertAdjacentHTML('afterend', '<span class="errmsg">Hochzeit als TT.MM.JJJJ oder Jahr</span>'); inp.focus(); return; }
+        marriages[q] = { date: md || '', place: m.place || '' };
+      }
+      const data = { firstName: first, lastName: last, birthName: val('#f-bname'), nickname: val('#f-nick'), gender: v.gender || '', birthDate: bd, birthPlace: val('#f-bp'), originPlace: val('#f-or'), fis: val('#f-fis'), deceased: dec, deathDate: dd || '', deathPlace: dec ? val('#f-dp') : '', grave: dec ? val('#f-gr') : '', graveGeo: gg || '', marriages, job: val('#f-job'), employer: val('#f-emp'), phone: val('#f-ph'), email: val('#f-em'), address: f('#f-ad').value.trim(), notes: f('#f-no').value.trim(), parentIds: v.parentIds.filter(x => S.people.has(x)), partnerIds: v.partnerIds.filter(x => S.people.has(x)) };
       L.result = savePersonData(id, data, prev);
       const newParts = id ? data.partnerIds.filter(x => !((prev && prev.partnerIds) || []).includes(x)) : [];
       if (newParts.length) setTimeout(async () => { for (const q of newParts) await offerSharedChildren(id, q); }, 450);
@@ -1937,6 +2096,7 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
       switch (b.dataset.act) {
         case 'cancel': return closeLayer(L);
         case 'save': return save();
+        case 'geo': return act(async () => { const g = await currentGeo(); if (g) { f('#f-gg').value = g; toast('Standort übernommen'); } });
         case 'add-parent': return act(async () => { const ex = new Set([id, ...v.parentIds].filter(Boolean)); if (id) descendantsOf(id).forEach(x => ex.add(x)); const r = await pickPerson({ title: 'Elternteil wählen', exclude: ex }); if (r && v.parentIds.length < 2) { v.parentIds.push(r); paintSlots(); } });
         case 'add-partner': return act(async () => { const r = await pickPerson({ title: 'Partner/in wählen', exclude: new Set([id, ...v.partnerIds].filter(Boolean)) }); if (r) { v.partnerIds.push(r); paintSlots(); } });
       }
@@ -1978,6 +2138,15 @@ function savePersonData(id, data, prev) {
   const before = new Set(prev?.partnerIds || []), after = new Set(data.partnerIds);
   for (const q of after) if (!before.has(q)) addPartnerRef(q, id);
   for (const q of before) if (!after.has(q)) removePartnerRef(q, id);
+  if (data.marriages) {
+    for (const q of new Set([...before, ...after])) {
+      const c = G.people.get(q); if (!c) continue;
+      const want = after.has(q) ? data.marriages[q] : null, have = (c.marriages || {})[id] || null;
+      if (JSON.stringify(want || null) === JSON.stringify(have)) continue;
+      const mm = Object.assign({}, c.marriages || {}); if (want) mm[id] = want; else delete mm[id];
+      put('people', { ...G.people.get(q), marriages: mm });
+    }
+  }
   const pp = data.parentIds;
   if (pp.length === 2 && pp.join() !== (prev?.parentIds || []).join()) { rebuild(); if (!arePartners(pp[0], pp[1])) { addPartnerRef(pp[0], pp[1]); addPartnerRef(pp[1], pp[0]); } }
   const t = curTree();
@@ -2042,8 +2211,15 @@ function linkRelative(pid, kind, rid, quiet) {
 }
 async function deletePerson(id) {
   const p = P(id); if (!p) return;
-  const ok = await confirmDialog({ title: `${fullName(p)} löschen?`, text: 'Die Person wird aus dem Stammbaum entfernt und Verknüpfungen zu Eltern, Partnern und Kindern werden gelöst. Fotos bleiben erhalten.', ok: 'Löschen', danger: true });
+  const ok = await confirmDialog({ title: `${fullName(p)} löschen?`, text: `Die Person kommt in den Papierkorb und kann ${TRASH_DAYS} Tage lang wiederhergestellt werden, samt Verknüpfungen zu Eltern, Partnern und Kindern. Fotos bleiben erhalten.`, ok: 'Löschen', danger: true });
   if (!ok) return;
+  const t0 = curTree();
+  const links = {
+    kids: [...G.people.values()].filter(q => (q.parentIds || []).includes(id)).map(q => q.id),
+    partners: [...G.people.values()].filter(q => (q.partnerIds || []).includes(id)).map(q => q.id),
+    photos: [...G.photos.values()].filter(ph => (ph.personIds || []).includes(id)).map(ph => ph.id),
+    home: !!(t0 && t0.homePersonId === id),
+  };
   for (const q of [...G.people.values()]) {
     if (q.id === id) continue;
     const patch = {};
@@ -2053,13 +2229,13 @@ async function deletePerson(id) {
   }
   for (const ph of [...G.photos.values()]) if ((ph.personIds || []).includes(id)) put('photos', { ...ph, personIds: ph.personIds.filter(x => x !== id) });
   const t = curTree(); if (t && t.homePersonId === id) put('trees', { ...t, homePersonId: '' });
-  remove('people', id);
+  trash('people', id, { _links: links });
   if (S.nachRoot === id) S.nachRoot = null;
   if (S.vorPerson === id) S.vorPerson = null;
   if (S.focusId === id) S.focusId = null;
   changed();
   await closeTrailing('person');
-  toast(`${fullName(p)} wurde gelöscht`);
+  toastUndo(`${fullName(p)} ist im Papierkorb`, () => restoreEntry(id));
 }
 
 /* ---------- Fotos hochladen (verschlüsselt nach Google Drive) ---------- */
@@ -2175,7 +2351,10 @@ function openLightbox(ids, index) {
   L.render = () => renderLightbox(L);
   L.step = d => { if (L.ids.length < 2) return; L.index = (L.index + d + L.ids.length) % L.ids.length; L.render(); };
   L.el.addEventListener('click', e => onLbClick(e, L));
-  L.el.addEventListener('pointerdown', e => { if (!e.target.closest('.lb-stage') || e.target.closest('.lb-nav')) return; L.sx = e.clientX; L.sy = e.clientY; });
+  L.showTags = true;
+  L.el.addEventListener('pointerdown', e => { if (L.tagMode || !e.target.closest('.lb-stage') || e.target.closest('.lb-nav')) return; L.sx = e.clientX; L.sy = e.clientY; });
+  L.onResize = () => placeTags(L); window.addEventListener('resize', L.onResize);
+  const oc = L.onClose; L.onClose = () => { window.removeEventListener('resize', L.onResize); if (oc) oc(); };
   L.el.addEventListener('pointerup', e => { if (L.sx == null) return; const dx = e.clientX - L.sx, dy = e.clientY - L.sy; L.sx = null; if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) L.step(dx < 0 ? 1 : -1); });
   L.el.addEventListener('pointercancel', () => { L.sx = null; });
   pushLayer(L);
@@ -2187,16 +2366,21 @@ function renderLightbox(L) {
   const ph = S.photos.get(L.ids[L.index]);
   const ppl = (ph.personIds || []).map(P).filter(Boolean);
   const tu = IMG.get(ph.thumb);
+  const tags = (ph.tags || []).filter(t => S.people.has(t.pid));
   L.el.innerHTML = `
     <div class="lb-top"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><span class="count">${L.index + 1} / ${L.ids.length}</span><span style="width:48px"></span></div>
-    <div class="lb-stage" data-thumb="${esc(ph.thumb)}"${tu ? ` style="background-image:url('${tu}')"` : ''}>${imgTag(ph.full, { big: true, alt: ph.caption || 'Foto', lazy: false })}
+    <div class="lb-stage${L.tagMode ? ' tagging' : ''}" data-thumb="${esc(ph.thumb)}"${tu ? ` style="background-image:url('${tu}')"` : ''}>${imgTag(ph.full, { big: true, alt: ph.caption || 'Foto', lazy: false })}
+      <div class="lb-tags"${L.showTags || L.tagMode ? '' : ' hidden'}>${tags.map((t, i) => `<button type="button" class="ftag" data-ftag="${i}" style="left:${(t.x * 100).toFixed(2)}%;top:${(t.y * 100).toFixed(2)}%"><span class="dot"></span><span class="nm">${esc(callName(P(t.pid)))}</span></button>`).join('')}</div>
+      ${L.tagMode ? '<div class="lb-taghint">Tippe auf ein Gesicht und wähle die Person</div>' : ''}
       ${L.ids.length > 1 ? `<button type="button" class="lb-nav prev" data-act="prev" aria-label="Vorheriges Foto">${I.back}</button><button type="button" class="lb-nav next" data-act="next" aria-label="Nächstes Foto">${I.chevR}</button>` : ''}</div>
     <div class="lb-info">
       ${ph.caption ? `<div class="lb-cap">${esc(ph.caption)}</div>` : ''}
       ${ph.date ? `<div class="lb-date">${esc(fmtDate(ph.date, true))}</div>` : ''}
       ${(() => { const pl = placeOf(ph); return pl ? `<a class="lb-place" href="${esc(pl.url)}" target="_blank" rel="noopener">${I.map}<span>${esc(pl.label)}</span></a>` : ''; })()}
       <div class="lb-chips">${ppl.length ? ppl.map(p => `<button type="button" class="lb-chip" data-open="${p.id}">${avatar(p, 30)}${esc(fullName(p))}</button>`).join('') : '<span class="lb-none">Noch keiner Person zugeordnet</span>'}</div>
-      ${S.canWrite ? `<div class="lb-acts">
+      ${tags.length && !L.tagMode ? `<button type="button" class="lb-toggle" data-act="showtags">${I.tag}<span>${L.showTags ? 'Namen ausblenden' : `Namen anzeigen (${tags.length})`}</span></button>` : ''}
+      ${S.canWrite && L.tagMode ? `<div class="lb-acts"><button type="button" data-act="tagdone"><span class="qi">${I.check}</span>Fertig</button></div>` : S.canWrite ? `<div class="lb-acts">
+        <button type="button" data-act="faces"><span class="qi">${I.tag}</span>Markieren</button>
         <button type="button" data-act="tag"><span class="qi">${I.people}</span>Personen</button>
         <button type="button" data-act="avatar"><span class="qi">${I.userc}</span>Profilbild</button>
         <button type="button" data-act="edit"><span class="qi">${I.text}</span>Angaben</button>
@@ -2204,16 +2388,56 @@ function renderLightbox(L) {
       </div>` : ''}
     </div>`;
   if (!tu) hydrateSoon();
+  const im = L.el.querySelector('.lb-stage img');
+  if (im) { if (im.complete && im.naturalWidth) placeTags(L); im.addEventListener('load', () => placeTags(L)); }
+}
+/* Namensschilder genau über das angezeigte Bild legen */
+function placeTags(L) {
+  const st = L.el.querySelector('.lb-stage'), im = st && st.querySelector('img'), ov = st && st.querySelector('.lb-tags');
+  if (!ov) return;
+  if (!im || !im.getAttribute('src') || !im.naturalWidth) { ov.style.display = 'none'; return; }
+  const a = st.getBoundingClientRect(), b = im.getBoundingClientRect();
+  Object.assign(ov.style, { display: '', left: (b.left - a.left) + 'px', top: (b.top - a.top) + 'px', width: b.width + 'px', height: b.height + 'px' });
+}
+async function tagAt(L, ph, ev) {
+  const im = L.el.querySelector('.lb-stage img');
+  if (!im || !im.naturalWidth) { toast('Das Foto lädt noch …'); return; }
+  const r = im.getBoundingClientRect();
+  const x = (ev.clientX - r.left) / r.width, y = (ev.clientY - r.top) / r.height;
+  if (x < 0 || x > 1 || y < 0 || y > 1) return;
+  const pid = await pickPerson({ title: 'Wer ist das?' });
+  if (!pid) return;
+  const cur = S.photos.get(ph.id) || ph;
+  const tags = (cur.tags || []).filter(t => t.pid !== pid && S.people.has(t.pid));
+  tags.push({ pid, x: +x.toFixed(4), y: +y.toFixed(4) });
+  const ids = [...new Set([...(cur.personIds || []).filter(id => S.people.has(id)), pid])];
+  await updPhoto(ph.id, { tags, personIds: ids });
+  L.render();
+  toast(`${callName(P(pid))} markiert`);
 }
 function onLbClick(e, L) {
-  const t = e.target.closest('[data-act],[data-open]'); if (!t) return;
+  const t = e.target.closest('[data-act],[data-open],[data-ftag]');
+  if (L.tagMode && S.canWrite && !t && e.target.closest('.lb-stage')) { const ph0 = S.photos.get(L.ids[L.index]); if (ph0) act(() => tagAt(L, ph0, e)); return; }
+  if (!t) return;
+  if (t.dataset.ftag !== undefined) {
+    const ph1 = S.photos.get(L.ids[L.index]); const tg = ph1 && (ph1.tags || []).filter(x => S.people.has(x.pid))[+t.dataset.ftag]; if (!tg) return;
+    if (!L.tagMode) return openPerson(tg.pid);
+    return act(async () => {
+      const v = await actionSheet(fullName(P(tg.pid)), [{ label: 'Markierung entfernen', value: 'rm', icon: I.trash }, { label: 'Profil öffnen', value: 'open', icon: I.userc }]);
+      if (v === 'open') return openPerson(tg.pid);
+      if (v === 'rm') { await updPhoto(ph1.id, { tags: (ph1.tags || []).filter(x => x !== tg) }); L.render(); }
+    });
+  }
+  if (t.dataset.act === 'showtags') { L.showTags = !L.showTags; return L.render(); }
+  if (t.dataset.act === 'faces') { L.tagMode = true; return L.render(); }
+  if (t.dataset.act === 'tagdone') { L.tagMode = false; L.showTags = true; return L.render(); }
   if (t.dataset.open) return openPerson(t.dataset.open);
   if (t.dataset.act === 'close') return closeLayer(L);
   if (t.dataset.act === 'prev') return L.step(-1);
   if (t.dataset.act === 'next') return L.step(1);
   const ph = S.photos.get(L.ids[L.index]); if (!ph || !S.canWrite) return;
   switch (t.dataset.act) {
-    case 'tag': return act(async () => { const ids = await pickPerson({ title: 'Wer ist auf dem Foto?', multi: true, selected: (ph.personIds || []).filter(x => S.people.has(x)) }); if (ids) { await updPhoto(ph.id, { personIds: ids }); toast(ids.length ? `${ids.length} ${ids.length === 1 ? 'Person' : 'Personen'} zugeordnet` : 'Zuordnung entfernt'); } });
+    case 'tag': return act(async () => { const ids = await pickPerson({ title: 'Wer ist auf dem Foto?', multi: true, selected: (ph.personIds || []).filter(x => S.people.has(x)) }); if (ids) { await updPhoto(ph.id, { personIds: ids, tags: (ph.tags || []).filter(x => ids.includes(x.pid)) }); toast(ids.length ? `${ids.length} ${ids.length === 1 ? 'Person' : 'Personen'} zugeordnet` : 'Zuordnung entfernt'); } });
     case 'avatar': return act(() => setAvatarFromPhoto(ph));
     case 'edit': return act(() => editPhoto(ph));
     case 'del': return act(() => deletePhoto(ph));
@@ -2249,12 +2473,13 @@ async function editPhoto(ph) {
   if (res) { await updPhoto(ph.id, res); toast('Gespeichert'); }
 }
 async function deletePhoto(ph) {
-  const ok = await confirmDialog({ title: 'Foto löschen?', text: 'Das Foto wird bei allen zugeordneten Personen entfernt. Die verschlüsselte Datei landet im Papierkorb von Google Drive.', ok: 'Löschen', danger: true });
+  const ok = await confirmDialog({ title: 'Foto löschen?', text: `Das Foto kommt in den Papierkorb und kann ${TRASH_DAYS} Tage lang wiederhergestellt werden.`, ok: 'Löschen', danger: true });
   if (!ok) return;
-  for (const p of [...G.people.values()]) if (p.avatarPhotoId === ph.id) put('people', { ...p, avatarPhotoId: '', updatedAt: Date.now() });
-  remove('photos', ph.id);
+  const avatars = [];
+  for (const p of [...G.people.values()]) if (p.avatarPhotoId === ph.id) { avatars.push(p.id); put('people', { ...p, avatarPhotoId: '' }); }
+  trash('photos', ph.id, { _links: { avatars } });
   changed();
-  dropPhotoFiles(ph);
+  toastUndo('Foto im Papierkorb', () => restoreEntry(ph.id));
   toast('Foto gelöscht');
 }
 
@@ -2276,11 +2501,17 @@ async function openTreeMenu() {
       <button type="button" class="opt" data-v="rename">${I.edit}<span>Umbenennen</span></button>
       <button type="button" class="opt" data-v="home">${I.target}<span>Hauptperson<small>${esc(h ? fullName(h) : 'Noch nicht festgelegt')} · für alle, die sich noch nicht gewählt haben</small></span></button>` : ''}
     <div class="dlg-sep"></div>
+    ${t ? `<button type="button" class="opt" data-v="kin">${I.link}<span>Wie sind wir verwandt?<small>Verwandtschaft zwischen zwei Personen</small></span></button>
+      <button type="button" class="opt" data-v="news">${I.spark}<span>Neu im Stammbaum<small>${(() => { const n = newsItems().length; return n ? `${n} ${n === 1 ? 'Änderung' : 'Änderungen'} seit deinem letzten Besuch` : 'Was andere zuletzt ergänzt haben'; })()}</small></span></button>` : ''}
     ${t ? `<button type="button" class="opt" data-v="me">${I.userc}<span>Ich im Stammbaum<small>${esc(myPersonId() ? fullName(P(myPersonId())) + ' – alle Bezeichnungen aus deiner Sicht' : 'Noch nicht gewählt – Bezeichnungen gelten für die Hauptperson')}</small></span></button>` : ''}
     ${S.isAdmin ? `<button type="button" class="opt" data-v="members">${I.people}<span>Mitglieder &amp; Zugriff<small>Einladen, Rechte vergeben, Notfall-Schlüssel</small></span></button>
-      <button type="button" class="opt" data-v="backup">${I.save}<span>Sicherung aufs Gerät<small>Verschlüsselt, mit allen Fotos. Lesbar nur mit dem Notfall-Schlüssel</small></span></button>
+      <button type="button" class="opt" data-v="backup">${I.save}<span>Sicherung aufs Gerät<small>${lastBackupAt() ? `Letzte: ${esc(fmtDate(isoOf(new Date(lastBackupAt())), true))}${backupDue() ? ' – fällig' : ''}` : 'Noch keine Sicherung'} · verschlüsselt, mit allen Fotos</small></span></button>
       <button type="button" class="opt" data-v="restore">${I.up}<span>Sicherung einspielen</span></button>` : `<div class="storage">Deine Rechte: ${esc(ROLE_DE[S.role] || 'Ansehen')}</div>`}
+    ${S.canWrite ? `<button type="button" class="opt" data-v="trash">${I.trash}<span>Papierkorb<small>${(() => { const n = [...TRASH.values()].filter(e => !e.o.treeId || e.o.treeId === S.treeId).length; return n ? `${n} ${n === 1 ? 'Eintrag' : 'Einträge'}, ${TRASH_DAYS} Tage wiederherstellbar` : 'leer'; })()}</small></span></button>` : ''}
+    ${t ? `<button type="button" class="opt" data-v="poster">${I.poster}<span>Als Poster (PDF)<small>Aktuelle Baumansicht zum Ausdrucken</small></span></button>
+      <button type="button" class="opt" data-v="ics">${I.cal}<span>Geburtstage in den Kalender<small>Kalenderdatei fürs iPhone und andere Kalender</small></span></button>` : ''}
     ${t && S.canWrite ? `<button type="button" class="opt" data-v="gedcom">${I.text}<span>GEDCOM-Datei exportieren<small>Unverschlüsselt, z.B. für Ahnenblatt oder MyHeritage</small></span></button>` : ''}
+    ${S.canWrite ? `<button type="button" class="opt" data-v="gedimport">${I.up}<span>Aus MyHeritage / Ancestry importieren<small>GEDCOM-Datei (.ged) einlesen</small></span></button>` : ''}
     ${IN_APP ? `<button type="button" class="opt" data-v="appsettings">${I.cake}<span>App-Einstellungen<small>Geburtstags-Erinnerungen und App-Sperre</small></span></button>` : ''}
     <button type="button" class="opt" data-v="glossary">${I.text}<span>Verwandtschaft &amp; Sprache<small>Bezeichnungen auf Deutsch und Shqip (Kosova)</small></span></button>
     <button type="button" class="opt" data-v="reload">${I.refresh}<span>Neu laden<small>Änderungen von anderen Geräten holen</small></span></button>
@@ -2294,6 +2525,10 @@ async function openTreeMenu() {
   if (!v) return;
   if (v.startsWith('tree:')) { switchTree(v.slice(5)); return; }
   if (v === 'glossary') return openGlossary();
+  if (v === 'kin') return openKinship(null);
+  if (v === 'poster') return exportPoster();
+  if (v === 'ics') return exportCalendar();
+  if (v === 'news') return openNews();
   if (v === 'me') { const id = await pickPerson({ title: 'Wer bist du im Stammbaum?' }); if (id) await setMe(id); return; }
   if (v === 'appsettings') { if (NATIVE && NATIVE.openSettings) NATIVE.openSettings(); return; }
   if (v === 'reload') { await flush(); await load(false); toast('Aktualisiert'); return; }
@@ -2305,6 +2540,8 @@ async function openTreeMenu() {
   if (v === 'rename') { const name = await textPrompt({ title: 'Stammbaum umbenennen', label: 'Name', value: t.name || '' }); if (name) await updTree({ name }); return; }
   if (v === 'home') { const id = await pickPerson({ title: 'Hauptperson wählen' }); if (id) { await updTree({ homePersonId: id }); S.nachRoot = null; S.vorPerson = null; S.centeredFor = null; toast(`${callName(P(id))} ist jetzt die Hauptperson`); } return; }
   if (v === 'gedcom') return exportGedcom();
+  if (v === 'trash') return openTrash();
+  if (v === 'gedimport') return pickGedFile();
   if (v === 'delete' && S.isAdmin) return deleteTree();
 }
 async function deleteTree() {
@@ -2314,6 +2551,8 @@ async function deleteTree() {
   if (!ok) return;
   const tid = S.treeId;
   for (const ph of [...G.photos.values()]) if (ph.treeId === tid) { remove('photos', ph.id); dropPhotoFiles(ph); }
+  for (const st of [...G.stories.values()]) if (st.treeId === tid) { remove('stories', st.id); if (st.audio) Q.blobs.add(st.audio); }
+  for (const [id, e] of [...TRASH]) if (e.o.treeId === tid) finalDelete(id);
   for (const p of [...G.people.values()]) if (p.treeId === tid) remove('people', p.id);
   remove('trees', tid);
   LS.set('tree', '');
@@ -2510,13 +2749,378 @@ async function rotateKeys() {
       const ms = {};
       for (const c of r.creds) if (metas[c.id] && Object.keys(metas[c.id]).length) ms[c.id] = await FSC.encMeta(c.id, metas[c.id]);
       const putArr = [];
-      for (const kind of ['trees', 'people', 'photos']) for (const o of G[kind].values()) putArr.push(await encryptEntry(kind, o));
+      for (const kind of ['trees', 'people', 'photos', 'stories']) for (const o of G[kind].values()) putArr.push(await encryptEntry(kind, o));
+      for (const [, e] of TRASH) putArr.push(await encryptEntry(e.kind, e.o));
       await api('apiRotate', { from: old.v, to: nk.v, chain, kws, ms, put: putArr });
       S.chain = newChain;
     } catch (e) { await FSC.setKeyring(old, oldChain); throw e; }
     syncNative();
     toast('Schlüssel erneuert');
   } finally { S.busy = ''; hideBusy(); }
+}
+
+function currentGeo() {
+  return new Promise(res => {
+    if (!navigator.geolocation) { toast('Standort ist auf diesem Gerät nicht verfügbar'); return res(null); }
+    toast('Standort wird ermittelt …', true);
+    navigator.geolocation.getCurrentPosition(p => { $('#toast').classList.remove('show'); res(`${p.coords.latitude.toFixed(6)},${p.coords.longitude.toFixed(6)}`); },
+      e => { toast(e && e.code === 1 ? 'Standort nicht erlaubt. Du kannst auch einen Google-Maps-Link einfügen.' : 'Standort nicht gefunden'); res(null); },
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 });
+  });
+}
+/* ---------- Neu im Stammbaum (seit dem letzten Besuch auf diesem Gerät) ---------- */
+function seenMap() { try { return JSON.parse(LS.get('seen') || '{}') || {}; } catch (e) { return {}; } }
+function markSeen() {
+  const tid = S.treeId;
+  if (!tid || !S.loaded || S.prevSeen.has(tid)) return;
+  const m = seenMap(); S.prevSeen.set(tid, m[tid] || 0);
+  m[tid] = Date.now(); LS.set('seen', JSON.stringify(m));
+}
+function byOther(o) {
+  if (!o || !o.updatedBy && !o.updatedByCred) return false;
+  if (S.me && o.updatedByCred) return o.updatedByCred !== S.me.id;
+  return o.updatedBy !== myName();
+}
+function newsItems(since) {
+  if (since == null) since = S.prevSeen.get(S.treeId) || 0;
+  if (!since) return [];
+  const out = [];
+  const add = (kind, o, what) => out.push({ kind, o, what, at: o.updatedAt || o._del || 0, by: what === 'del' ? o._by : o.updatedBy });
+  S.people.forEach(p => { if ((p.updatedAt || 0) > since && byOther(p)) add('people', p, (p.createdAt || 0) > since ? 'new' : 'chg'); });
+  S.photos.forEach(ph => { if ((ph.updatedAt || ph.createdAt || 0) > since && byOther(ph)) add('photos', ph, (ph.createdAt || 0) > since ? 'new' : 'chg'); });
+  S.stories.forEach(st => { if ((st.updatedAt || 0) > since && byOther(st)) add('stories', st, (st.createdAt || 0) > since ? 'new' : 'chg'); });
+  TRASH.forEach(e => { if (e.o.treeId === S.treeId && (e.o._del || 0) > since && e.o._by && e.o._by !== myName()) out.push({ kind: e.kind, o: e.o, what: 'del', at: e.o._del, by: e.o._by }); });
+  return out.sort((a, b) => b.at - a.at);
+}
+function newsSummary(items) {
+  const c = (k, w) => items.filter(x => x.kind === k && (!w || x.what === w)).length;
+  const parts = [];
+  const np = c('people', 'new'), cp = c('people', 'chg'), nf = c('photos', 'new'), ns = c('stories', 'new'), nd = items.filter(x => x.what === 'del').length;
+  if (np) parts.push(`${np} neue ${np === 1 ? 'Person' : 'Personen'}`);
+  if (nf) parts.push(`${nf} ${nf === 1 ? 'Foto' : 'Fotos'}`);
+  if (ns) parts.push(`${ns} ${ns === 1 ? 'Erinnerung' : 'Erinnerungen'}`);
+  if (cp) parts.push(`${cp} ${cp === 1 ? 'Änderung' : 'Änderungen'}`);
+  if (nd) parts.push(`${nd} gelöscht`);
+  return parts.join(', ') || `${items.length} Änderungen`;
+}
+function newsBanner() {
+  if (S.newsHidden.has(S.treeId)) return '';
+  const items = newsItems(); if (!items.length) return '';
+  const who = [...new Set(items.map(x => x.by).filter(Boolean))].slice(0, 3);
+  return `<button type="button" class="news-banner" data-act="news">${I.spark}<span>Neu seit deinem letzten Besuch<small>${esc(newsSummary(items))}${who.length ? ` · von ${esc(who.join(', '))}` : ''}</small></span>${I.chevR}</button>`;
+}
+function openNews() {
+  const L = mkLayer('layer', 'news');
+  let since = S.prevSeen.get(S.treeId) || 0, items = newsItems(since), wide = false;
+  if (!items.length) { since = Date.now() - 30 * 864e5; items = newsItems(since); wide = true; }
+  const label = { new: 'neu', chg: 'geändert', del: 'gelöscht' };
+  const row = x => {
+    const o = x.o;
+    const head = x.kind === 'people' ? avatar(o, 44) : x.kind === 'photos' ? `<span class="av trash-ph" style="--size:44px">${o.thumb ? imgTag(o.thumb) : ''}</span>` : `<span class="av" style="--size:44px">${o.audio ? I.mic : I.book}</span>`;
+    const t = x.kind === 'people' ? fullName(o) : x.kind === 'photos' ? (o.caption || 'Foto' + ((o.personIds || []).filter(id => S.people.has(id)).length ? ' mit ' + (o.personIds || []).map(P).filter(Boolean).map(callName).join(', ') : '')) : (o.text ? o.text.slice(0, 70) : 'Sprachaufnahme');
+    const sub = [label[x.what], x.by ? 'von ' + x.by : '', fmtWhen(x.at)].filter(Boolean).join(' · ');
+    const attr = x.what === 'del' ? 'data-act="trash"' : x.kind === 'people' ? `data-open="${esc(o.id)}"` : x.kind === 'photos' ? `data-nphoto="${esc(o.id)}"` : `data-open="${esc(((o.personIds || []).find(id => S.people.has(id))) || '')}"`;
+    return `<button type="button" class="row" ${attr}>${head}<span class="meta"><span class="t">${esc(t)}</span><span class="s">${esc(sub)}</span></span>${I.chevR}</button>`;
+  };
+  L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><h2>Neu im Stammbaum</h2></div>
+    <div class="layer-body narrow"><p class="gl-note">${wide ? 'Änderungen von anderen in den letzten 30 Tagen.' : `Seit deinem letzten Besuch (${esc(fmtWhen(since))}).`}</p>
+    ${items.length ? `<div class="card list">${items.slice(0, 200).map(row).join('')}</div>` : '<p class="empty-note">Keine Änderungen von anderen.</p>'}</div>`;
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-act],[data-open],[data-nphoto]'); if (!b) return;
+    if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.act === 'trash') return openTrash();
+    if (b.dataset.open) return openPerson(b.dataset.open);
+    if (b.dataset.nphoto) return openLightbox([b.dataset.nphoto], 0);
+  });
+  S.newsHidden.add(S.treeId);
+  pushLayer(L);
+}
+
+/* ---------- Wie sind wir verwandt? ---------- */
+function kinPath(a, b) {
+  if (!S.people.has(a) || !S.people.has(b)) return null;
+  const dist = new Map([[a, 0]]), prev = new Map(), done = new Set();
+  const nb = id => { const p = P(id); const out = []; (p.parentIds || []).forEach(x => { if (S.people.has(x)) out.push([x, 1]); }); childrenOf(id).forEach(c => out.push([c.id, 1])); partnersOf(p).forEach(q => out.push([q.id, 1.6])); return out; };
+  for (;;) {
+    let u = null, du = Infinity;
+    for (const [k, v] of dist) if (!done.has(k) && v < du) { u = k; du = v; }
+    if (u === null) return null;
+    if (u === b) break;
+    done.add(u);
+    for (const [v, w] of nb(u)) { const nd = du + w; if (nd < (dist.has(v) ? dist.get(v) : Infinity)) { dist.set(v, nd); prev.set(v, u); } }
+  }
+  const path = [b]; while (path[0] !== a) path.unshift(prev.get(path[0]));
+  return path;
+}
+function ancDepths(id) { const m = new Map([[id, 0]]); const st = [id]; while (st.length) { const x = st.shift(); (P(x)?.parentIds || []).forEach(y => { if (S.people.has(y) && !m.has(y)) { m.set(y, m.get(x) + 1); st.push(y); } }); } return m; }
+function commonAncestors(a, b) {
+  const da = ancDepths(a), db = ancDepths(b); let best = Infinity, out = [];
+  da.forEach((d, id) => { if (!db.has(id) || id === a || id === b) return; const s2 = d + db.get(id); if (s2 < best) { best = s2; out = [id]; } else if (s2 === best) out.push(id); });
+  return out;
+}
+function openKinship(fromId) {
+  const ref = refId();
+  let a = ref && fromId && fromId !== ref ? ref : (fromId || ref), b = ref && fromId && fromId !== ref ? fromId : null;
+  const L = mkLayer('layer', 'kin');
+  const pickBtn = (id, k) => `<button type="button" class="kin-pick" data-pick="${k}">${id ? avatar(P(id), 54) : `<span class="av" style="--size:54px">${I.plus}</span>`}<span>${id ? esc(fullName(P(id))) : 'Person wählen'}</span></button>`;
+  const relBlock = (x, y) => { const r = relation(x, y); return r ? `<div class="kin-rel"><span class="kin-who">${esc(callName(P(y)))} ist für ${esc(callName(P(x)))}</span>${relTagHtml(r, '')}</div>` : ''; };
+  const draw = () => {
+    let res = '';
+    if (a && b && a === b) res = '<p class="empty-note">Das ist dieselbe Person.</p>';
+    else if (a && b) {
+      const path = kinPath(a, b);
+      if (!path) res = `<div class="card kin-res"><p class="empty-note" style="margin:0">Zwischen den beiden gibt es im Stammbaum keine Verbindung.</p></div>`;
+      else {
+        const ca = commonAncestors(a, b).filter(x => x !== a && x !== b);
+        const blood = path.length > 1 && ancDepths(a).size && ca.length;
+        const r1 = relBlock(a, b), r2 = relBlock(b, a);
+        res = `<div class="card kin-res">${r1}${r2}${!r1 && !r2 ? `<p class="kin-note">Die beiden sind über ${path.length - 2} ${path.length - 2 === 1 ? 'Person' : 'Personen'} miteinander verbunden.</p>` : ''}
+          ${ca.length ? `<p class="kin-note">${I.tree} Gemeinsame Vorfahren: <b>${esc(ca.map(x => fullName(P(x))).join(' und '))}</b></p>` : blood ? '' : path.some((x, i) => i && partnersOf(P(path[i - 1])).some(q => q.id === x)) ? `<p class="kin-note">${I.rings} Verwandt durch Heirat</p>` : ''}
+        </div>
+        <h3 class="section-h">Verbindung · ${path.length - 1} ${path.length - 1 === 1 ? 'Schritt' : 'Schritte'}</h3>
+        <div class="kin-path">${path.map((id, i) => { const r = i ? relation(a, id) : null; return `${i ? `<span class="kin-step">${esc(stepWord(path[i - 1], id))}</span>` : ''}<button type="button" class="kin-node" data-open="${esc(id)}">${avatar(P(id), 44)}<span class="n">${esc(fullName(P(id)))}</span>${i === 0 ? '<span class="r">Start</span>' : r ? `<span class="r">${esc(relLine(r))}</span>` : ''}</button>`; }).join('')}</div>`;
+      }
+    }
+    L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><h2>Wie sind wir verwandt?</h2></div>
+      <div class="layer-body narrow"><div class="kin-pair">${pickBtn(a, 'a')}<button type="button" class="icon-btn" data-act="swap" aria-label="Tauschen">${I.refresh}</button>${pickBtn(b, 'b')}</div>${res}</div>`;
+  };
+  L.el.addEventListener('click', e => {
+    const t = e.target.closest('[data-act],[data-pick],[data-open]'); if (!t) return;
+    if (t.dataset.act === 'close') return closeLayer(L);
+    if (t.dataset.act === 'swap') { [a, b] = [b, a]; return draw(); }
+    if (t.dataset.open) return openPerson(t.dataset.open);
+    if (t.dataset.pick) return act(async () => { const id = await pickPerson({ title: t.dataset.pick === 'a' ? 'Erste Person' : 'Zweite Person' }); if (!id) return; if (t.dataset.pick === 'a') a = id; else b = id; draw(); });
+  });
+  pushLayer(L); draw();
+  if (a && !b) setTimeout(() => act(async () => { const id = await pickPerson({ title: `${callName(P(a))} und …`, exclude: new Set([a]) }); if (id) { b = id; draw(); } }), 60);
+}
+function stepWord(x, y) {
+  const px = P(x), py = P(y);
+  if ((py.parentIds || []).includes(x)) return gw(py, 'Sohn', 'Tochter', 'Kind');
+  if ((px.parentIds || []).includes(y)) return gw(py, 'Vater', 'Mutter', 'Elternteil');
+  return gw(py, 'Partner', 'Partnerin', 'Partner/in');
+}
+
+/* ---------- Erinnerungen und Sprachaufnahmen (verschlüsselt) ---------- */
+const AUD = new Map();
+let audioEl = null, audioFor = '';
+function storiesOf(pid) { return [...S.stories.values()].filter(st => (st.personIds || []).includes(pid)).sort((x, y) => (y.date || '').localeCompare(x.date || '') || (y.createdAt || 0) - (x.createdAt || 0)); }
+function fmtDur(s) { s = Math.round(s || 0); return `${Math.floor(s / 60)}:${pad(s % 60)}`; }
+function storyCard(st, pid) {
+  const others = (st.personIds || []).filter(x => x !== pid && S.people.has(x)).map(P);
+  return `<div class="card story">
+    ${st.title ? `<div class="st-title">${esc(st.title)}</div>` : ''}
+    ${st.text ? `<div class="st-text">${esc(st.text)}</div>` : ''}
+    ${st.audio ? `<button type="button" class="audio-btn${audioFor === st.id ? ' playing' : ''}" data-play="${esc(st.id)}">${audioFor === st.id ? I.stop : I.play}<span>Sprachaufnahme${st.dur ? ` · ${fmtDur(st.dur)}` : ''}</span></button>` : ''}
+    ${others.length ? `<div class="st-with">Mit ${others.map(q => `<button type="button" class="st-chip" data-open="${esc(q.id)}">${esc(callName(q))}</button>`).join('')}</div>` : ''}
+    <div class="st-foot"><span>${esc([st.date ? fmtDate(st.date, true) : '', st.createdBy ? 'erzählt/erfasst von ' + st.createdBy : ''].filter(Boolean).join(' · '))}</span>${S.canWrite ? `<button type="button" class="icon-btn sm" data-sedit="${esc(st.id)}" aria-label="Bearbeiten">${I.edit}</button><button type="button" class="icon-btn sm" data-sdel="${esc(st.id)}" aria-label="Löschen">${I.trash}</button>` : ''}</div>
+  </div>`;
+}
+function storiesSection(p) {
+  const list = storiesOf(p.id);
+  if (!list.length && !S.canWrite) return '';
+  return `<div class="sec-row"><h3 class="section-h">Erinnerungen${list.length ? ` · ${list.length}` : ''}</h3>${S.canWrite ? `<button type="button" class="mini-btn" data-act="story-add">${I.mic} Erzählen</button>` : ''}</div>
+    ${list.length ? list.map(st => storyCard(st, p.id)).join('') : '<p class="empty-note">Geschichten und Erinnerungen, auch als Sprachaufnahme, z.B. wie die Grossmutter von früher erzählt.</p>'}`;
+}
+async function audioUrl(st) {
+  if (AUD.has(st.audio)) return AUD.get(st.audio);
+  let bytes = await idb.get(st.audio);
+  if (!bytes) { const r = await api('apiGetBlobs', [st.audio]); bytes = r && r[st.audio] ? FSC.unb64(r[st.audio]) : null; if (bytes) idb.put(st.audio, bytes); }
+  if (!bytes) throw { code: 'user', message: 'Die Aufnahme wurde nicht gefunden.' };
+  const plain = await FSC.decBlob(st.audio, st.ak, bytes);
+  const u = URL.createObjectURL(new Blob([plain], { type: st.mime || 'audio/mp4' }));
+  AUD.set(st.audio, u); return u;
+}
+function stopAudio() { if (audioEl) { audioEl.pause(); audioEl = null; } const was = audioFor; audioFor = ''; if (was) paintAudio(was); }
+function paintAudio(id) { document.querySelectorAll(`[data-play="${CSS.escape(id)}"]`).forEach(b => { const on = audioFor === id; b.classList.toggle('playing', on); b.querySelector('svg').outerHTML = on ? I.stop : I.play; }); }
+async function playStory(id) {
+  const st = S.stories.get(id); if (!st || !st.audio) return;
+  if (audioFor === id) return stopAudio();
+  stopAudio();
+  audioFor = id; paintAudio(id);
+  try {
+    const u = await audioUrl(st); if (audioFor !== id) return;
+    audioEl = new Audio(u); audioEl.onended = () => { if (audioFor === id) stopAudio(); };
+    await audioEl.play();
+  } catch (e) { audioFor = ''; paintAudio(id); throw e.code ? e : { code: 'user', message: 'Die Aufnahme lässt sich auf diesem Gerät nicht abspielen.' }; }
+}
+function recMime() {
+  if (!window.MediaRecorder) return null;
+  return ['audio/mp4;codecs=mp4a.40.2', 'audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus'].find(t => { try { return MediaRecorder.isTypeSupported(t); } catch (e) { return false; } }) || '';
+}
+function storyForm({ id = null, personIds = [] } = {}) {
+  return new Promise(resolve => {
+    const prev = id ? S.stories.get(id) : null;
+    const v = { title: prev?.title || '', text: prev?.text || '', date: prev?.date || '', personIds: [...(prev?.personIds || personIds)].filter(x => S.people.has(x)) };
+    let rec = null, chunks = [], recBlob = null, recDur = 0, recStart = 0, tick = 0, dropAudio = false, stream = null, testAudio = null;
+    const L = mkLayer('layer', 'story');
+    L.result = null;
+    const stopAll = () => { clearInterval(tick); try { if (rec && rec.state !== 'inactive') rec.stop(); } catch (e) {} if (stream) stream.getTracks().forEach(t => t.stop()); stream = null; if (testAudio) testAudio.pause(); };
+    L.onClose = () => { stopAll(); resolve(L.result); };
+    const hasOld = prev && prev.audio && !dropAudio;
+    L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="cancel" aria-label="Abbrechen">${I.close}</button><h2>${prev ? 'Erinnerung bearbeiten' : 'Neue Erinnerung'}</h2></div>
+      <form class="layer-body narrow" novalidate>
+        <div class="field"><label for="s-title">Titel (freiwillig)</label><input id="s-title" autocomplete="off" autocapitalize="sentences" placeholder="z.B. Die Hochzeit in Gjakova"></div>
+        <div class="field"><label for="s-text">Erinnerung</label><textarea id="s-text" rows="6" autocapitalize="sentences" placeholder="Was weisst du darüber? Wer hat es erzählt?"></textarea></div>
+        <div class="field"><span class="lbl">Sprachaufnahme</span><div class="rec-box" id="s-rec"></div><span class="hint">Bis 5 Minuten. Wird verschlüsselt gespeichert.</span></div>
+        <div class="field"><label for="s-date">Wann war das? (freiwillig)</label><input id="s-date" inputmode="decimal" autocomplete="off" placeholder="TT.MM.JJJJ oder Jahr"></div>
+        <div class="field"><span class="lbl">Wer kommt darin vor?</span><div class="slots" id="s-ppl"></div></div>
+      </form>
+      <div class="layer-foot"><button type="button" class="btn" data-act="cancel">Abbrechen</button><button type="button" class="btn primary" data-act="save">Speichern</button></div>`;
+    const f = q => L.el.querySelector(q);
+    f('#s-title').value = v.title; f('#s-text').value = v.text; f('#s-date').value = toInput(v.date);
+    const paintPpl = () => { f('#s-ppl').innerHTML = v.personIds.map((x, i) => `<div class="slot">${avatar(P(x), 42)}<span class="t">${esc(fullName(P(x)))}</span><button type="button" class="icon-btn" data-rm="${i}" aria-label="Entfernen">${I.close}</button></div>`).join('') + `<button type="button" class="slot empty" data-act="ppl">${I.plus} Person wählen</button>`; };
+    const paintRec = () => {
+      const box = f('#s-rec');
+      if (rec && rec.state === 'recording') { box.innerHTML = `<button type="button" class="rec-btn on" data-act="rec-stop">${I.stop}<span>Stopp · <b class="rec-t">${fmtDur((Date.now() - recStart) / 1000)}</b></span></button>`; return; }
+      if (recBlob) { box.innerHTML = `<button type="button" class="audio-btn" data-act="rec-play">${I.play}<span>Neue Aufnahme · ${fmtDur(recDur)}</span></button><button type="button" class="mini-btn" data-act="rec-del">${I.trash} Verwerfen</button>`; return; }
+      if (prev && prev.audio && !dropAudio) { box.innerHTML = `<span class="rec-have">${I.mic} Aufnahme ${prev.dur ? fmtDur(prev.dur) : ''} gespeichert</span><button type="button" class="mini-btn" data-act="rec-start">${I.mic} Neu aufnehmen</button><button type="button" class="mini-btn" data-act="rec-old-del">${I.trash} Entfernen</button>`; return; }
+      box.innerHTML = recMime() === null ? '<span class="hint">Aufnehmen geht auf diesem Gerät nicht.</span>' : `<button type="button" class="rec-btn" data-act="rec-start">${I.mic}<span>Aufnahme starten</span></button>`;
+    };
+    paintPpl(); paintRec();
+    L.el.querySelector('form').addEventListener('submit', e => e.preventDefault());
+    const startRec = async () => {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw { code: 'user', message: 'Aufnehmen geht auf diesem Gerät nicht.' };
+      try { stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } }); }
+      catch (e) { throw { code: 'user', message: 'Das Mikrofon ist nicht erlaubt. Bitte in den Einstellungen das Mikrofon für die App oder den Browser erlauben.' }; }
+      const mt = recMime();
+      rec = mt ? new MediaRecorder(stream, { mimeType: mt, audioBitsPerSecond: 48000 }) : new MediaRecorder(stream);
+      chunks = [];
+      rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+      rec.onstop = () => { recDur = (Date.now() - recStart) / 1000; recBlob = new Blob(chunks, { type: (rec.mimeType || mt || 'audio/mp4').split(';')[0] }); clearInterval(tick); if (stream) stream.getTracks().forEach(t => t.stop()); stream = null; paintRec(); };
+      recStart = Date.now(); rec.start(1000);
+      tick = setInterval(() => { const t = f('.rec-t'); if (t) t.textContent = fmtDur((Date.now() - recStart) / 1000); if (Date.now() - recStart > 300000) rec.stop(); }, 500);
+      paintRec();
+    };
+    const save = async () => {
+      if (rec && rec.state === 'recording') { rec.stop(); await new Promise(r => setTimeout(r, 300)); }
+      const title = f('#s-title').value.trim(), text = f('#s-text').value.trim();
+      const date = parseDateInput(f('#s-date').value.trim());
+      if (date === null) { toast('Datum bitte als TT.MM.JJJJ oder Jahr'); f('#s-date').focus(); return; }
+      if (!text && !title && !recBlob && !(prev && prev.audio && !dropAudio)) { toast('Bitte etwas schreiben oder aufnehmen.'); return; }
+      if (!v.personIds.length) { toast('Bitte mindestens eine Person wählen.'); return; }
+      const o = Object.assign({}, prev || { id: newId(), treeId: S.treeId }, { title, text, date: date || '', personIds: v.personIds });
+      if (recBlob || dropAudio) { if (prev && prev.audio) Q.blobs.add(prev.audio); delete o.audio; delete o.ak; delete o.dur; delete o.mime; }
+      if (recBlob) {
+        showBusy('Aufnahme wird verschlüsselt …');
+        try { const up = await encryptAndUpload(recBlob); o.audio = up.id; o.ak = up.key; o.dur = Math.round(recDur); o.mime = recBlob.type; idb.put(up.id, up.data); } finally { hideBusy(); }
+      }
+      put('stories', o); changed();
+      L.result = o.id; toast(prev ? 'Gespeichert' : 'Erinnerung gespeichert');
+      closeLayer(L);
+    };
+    L.el.addEventListener('click', e => {
+      const b = e.target.closest('[data-act],[data-rm]'); if (!b) return;
+      if (b.dataset.rm !== undefined) { v.personIds.splice(+b.dataset.rm, 1); return paintPpl(); }
+      switch (b.dataset.act) {
+        case 'cancel': return closeLayer(L);
+        case 'save': return act(save);
+        case 'ppl': return act(async () => { const ids = await pickPerson({ title: 'Wer kommt darin vor?', multi: true, selected: v.personIds }); if (ids) { v.personIds = ids; paintPpl(); } });
+        case 'rec-start': return act(startRec);
+        case 'rec-stop': if (rec) rec.stop(); return;
+        case 'rec-play': if (testAudio) { testAudio.pause(); testAudio = null; return; } testAudio = new Audio(URL.createObjectURL(recBlob)); testAudio.onended = () => { testAudio = null; }; testAudio.play().catch(() => toast('Abspielen geht hier nicht')); return;
+        case 'rec-del': recBlob = null; return paintRec();
+        case 'rec-old-del': dropAudio = true; return paintRec();
+      }
+    });
+    pushLayer(L);
+  });
+}
+async function deleteStory(id) {
+  const st = S.stories.get(id); if (!st) return;
+  if (!await confirmDialog({ title: 'Erinnerung löschen?', text: `Sie kommt in den Papierkorb und kann ${TRASH_DAYS} Tage lang wiederhergestellt werden.`, ok: 'Löschen', danger: true })) return;
+  if (audioFor === id) stopAudio();
+  trash('stories', id); changed();
+  toastUndo('Erinnerung im Papierkorb', () => restoreEntry(id));
+}
+
+/* ---------- Erinnerung an die Sicherung (für Admins, wenn die letzte über einen Monat alt ist) ---------- */
+const BACKUP_DAYS = 30;
+function lastBackupAt() { let m = +(LS.get('lastBackup') || 0) || 0; G.trees.forEach(t => { if ((t.lastBackup || 0) > m) m = t.lastBackup; }); return m; }
+function backupDue() {
+  if (!S.isAdmin || !S.loaded || !G.people.size) return null;
+  const last = lastBackupAt(), now = Date.now();
+  if (last && now - last < BACKUP_DAYS * 864e5) return null;
+  if (!last) { let first = now; G.people.forEach(p => { if (p.createdAt && p.createdAt < first) first = p.createdAt; }); if (now - first < 3 * 864e5) return null; }
+  return { last, days: last ? Math.floor((now - last) / 864e5) : 0 };
+}
+function backupText(d) { return d.last ? `Die letzte Sicherung ist ${d.days} Tage alt (${fmtDate(isoOf(new Date(d.last)), true)}).` : 'Es gibt noch keine Sicherung.'; }
+let backupAsked = false, backupTries = 0;
+async function maybeRemindBackup() {
+  if (backupAsked || S.migrating || S.claimFlow) return;
+  if (layers.length) { if (++backupTries < 12) setTimeout(() => { maybeRemindBackup().catch(() => {}); }, 15000); return; }
+  const d = backupDue(); if (!d) return;
+  if (!S.askBackup && Date.now() < (+(LS.get('bkSnooze') || 0) || 0)) return;
+  S.askBackup = false;
+  backupAsked = true;
+  const v = await dialog(`<div class="dlg-title">Zeit für eine Sicherung</div>
+    <div class="dlg-text">${esc(backupText(d))} Eine Sicherung auf deinem Gerät schützt den Stammbaum, falls beim Google-Konto etwas schiefgeht. Sie ist verschlüsselt und lässt sich nur mit dem Notfall-Schlüssel öffnen.</div>
+    <div class="dlg-btns"><button type="button" class="btn" data-v="later">In einer Woche</button><button type="button" class="btn primary" data-v="now">Jetzt sichern</button></div>`);
+  if (v === 'now') return act(backupToDevice);
+  LS.set('bkSnooze', String(Date.now() + 7 * 864e5));
+}
+function backupBanner() {
+  const d = backupDue(); if (!d) return '';
+  return `<button type="button" class="news-banner warn" data-act="backup-now">${I.save}<span>Sicherung fällig<small>${esc(backupText(d))}</small></span>${I.chevR}</button>`;
+}
+/* ---------- Papierkorb und Rückgängig ---------- */
+let undoTimer = 0;
+function toastUndo(msg, fn) {
+  const t = $('#toast');
+  t.innerHTML = `<span>${esc(msg)}</span><button type="button" class="toast-btn">Rückgängig</button>`;
+  t.classList.add('show', 'has-act');
+  t.querySelector('button').onclick = () => { t.classList.remove('show', 'has-act'); clearTimeout(undoTimer); act(fn); };
+  clearTimeout(toastTimer); clearTimeout(undoTimer);
+  undoTimer = setTimeout(() => t.classList.remove('show', 'has-act'), 7000);
+}
+async function restoreEntry(id) {
+  const e = TRASH.get(id); if (!e) return;
+  const { _del, _by, _links, ...o } = e.o;
+  TRASH.delete(id);
+  put(e.kind, o);
+  if (e.kind === 'people' && _links) {
+    (_links.kids || []).forEach(k => { const c = G.people.get(k); if (!c) return; const cur = (c.parentIds || []).filter(x => S.people.has(x)); if (!cur.includes(id) && cur.length < 2) put('people', { ...c, parentIds: [...cur, id] }); });
+    (_links.partners || []).forEach(q => { if (G.people.has(q)) { addPartnerRef(q, id); addPartnerRef(id, q); } });
+    (_links.photos || []).forEach(f => { const ph = G.photos.get(f); if (ph && !(ph.personIds || []).includes(id)) put('photos', { ...ph, personIds: [...(ph.personIds || []), id] }); });
+    const t = G.trees.get(o.treeId); if (_links.home && t && !t.homePersonId) put('trees', { ...t, homePersonId: id });
+  }
+  if (e.kind === 'photos' && _links) (_links.avatars || []).forEach(pid => { const p = G.people.get(pid); if (p && !p.avatarPhotoId) put('people', { ...p, avatarPhotoId: id }); });
+  rebuild(); changed();
+  toast(e.kind === 'people' ? `${fullName(o)} ist wieder da` : 'Wiederhergestellt');
+}
+function finalDelete(id) {
+  const e = TRASH.get(id); if (!e) return;
+  TRASH.delete(id); Q.put.delete(id); Q.del.add(id);
+  if (e.kind === 'photos') dropPhotoFiles(e.o);
+  if (e.kind === 'stories' && e.o.audio) { Q.blobs.add(e.o.audio); }
+  flushSoon();
+}
+function purgeTrash() {
+  const limit = Date.now() - TRASH_DAYS * 864e5;
+  [...TRASH.entries()].forEach(([id, e]) => { if ((e.o._del || 0) < limit) finalDelete(id); });
+}
+function trashLabel(e) {
+  const o = e.o;
+  if (e.kind === 'people') return { t: fullName(o), s: 'Person', av: avatar(o, 44) };
+  if (e.kind === 'photos') return { t: o.caption || 'Foto', s: 'Foto', av: `<span class="av trash-ph" style="--size:44px">${o.thumb ? imgTag(o.thumb) : ''}</span>` };
+  if (e.kind === 'stories') return { t: (o.text || 'Sprachaufnahme').slice(0, 60), s: 'Erinnerung', av: `<span class="av" style="--size:44px">${I.text}</span>` };
+  return { t: o.name || 'Eintrag', s: '', av: '' };
+}
+function openTrash() {
+  const L = mkLayer('layer', 'trash');
+  const draw = () => {
+    const items = [...TRASH.entries()].filter(([, e]) => !e.o.treeId || e.o.treeId === S.treeId).sort((a, b) => b[1].o._del - a[1].o._del);
+    L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><h2>Papierkorb</h2></div>
+      <div class="layer-body narrow"><p class="gl-note">Gelöschte Personen, Fotos und Erinnerungen bleiben ${TRASH_DAYS} Tage hier und werden dann endgültig gelöscht.</p>
+      ${items.length ? `<div class="card list">${items.map(([id, e]) => { const l = trashLabel(e); const days = Math.max(0, TRASH_DAYS - Math.floor((Date.now() - e.o._del) / 864e5)); return `<div class="row trash-row">${l.av}<span class="meta"><span class="t">${esc(l.t)}</span><span class="s">${esc([l.s, e.o._by ? 'gelöscht von ' + e.o._by : '', `noch ${days} ${days === 1 ? 'Tag' : 'Tage'}`].filter(Boolean).join(' · '))}</span></span><button type="button" class="mini-btn" data-restore="${esc(id)}">${I.refresh} Zurück</button>${S.isAdmin ? `<button type="button" class="icon-btn" data-final="${esc(id)}" aria-label="Endgültig löschen">${I.trash}</button>` : ''}</div>`; }).join('')}</div>` : '<p class="empty-note">Der Papierkorb ist leer.</p>'}</div>`;
+  };
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-act],[data-restore],[data-final]'); if (!b) return;
+    if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.restore) return act(async () => { await restoreEntry(b.dataset.restore); draw(); });
+    if (b.dataset.final) return act(async () => { if (await confirmDialog({ title: 'Endgültig löschen?', text: 'Das lässt sich nicht rückgängig machen.', ok: 'Endgültig löschen', danger: true })) { finalDelete(b.dataset.final); draw(); } });
+  });
+  pushLayer(L); draw();
 }
 
 /* ---------- Geburtstag: Feuerwerk ---------- */
@@ -2707,7 +3311,8 @@ async function migrateLegacy() {
     const L = await api('apiLegacyExport');
     if (L.none) { S.legacyLeft = false; return; }
     for (const t of L.trees || []) if (!G.trees.has(t.id)) put('trees', { id: t.id, name: t.name || 'Stammbaum', homePersonId: t.homePersonId || '', createdAt: t.createdAt || Date.now() });
-    for (const p of L.people || []) if (!G.people.has(p.id)) put('people', Object.assign({}, p, { updatedAt: p.updatedAt || Date.now() }));
+    quietPut = true;
+    try { for (const p of L.people || []) if (!G.people.has(p.id)) put('people', Object.assign({}, p, { updatedAt: p.updatedAt || Date.now() })); } finally { quietPut = false; }
     showBusy('Personen werden verschlüsselt …');
     await flush();
     if (hasPending()) throw { code: 'user', message: 'Speichern hat nicht geklappt. Bitte nochmals versuchen.' };
@@ -2761,10 +3366,14 @@ function buildGedcom() {
     out.push(`0 ${iid.get(p.id)} INDI`, `1 NAME ${tx(p.firstName)} /${tx(p.lastName)}/`);
     if (p.firstName) out.push(`2 GIVN ${tx(p.firstName)}`);
     if (p.lastName) out.push(`2 SURN ${tx(p.lastName)}`);
+    if (p.nickname) out.push(`2 NICK ${tx(p.nickname)}`);
     if (p.birthName && p.birthName !== p.lastName) out.push(`1 NAME ${tx(p.firstName)} /${tx(p.birthName)}/`, '2 TYPE birth');
     out.push(`1 SEX ${p.gender === 'm' ? 'M' : p.gender === 'w' ? 'F' : 'U'}`);
     if (p.birthDate || p.birthPlace) { out.push('1 BIRT'); if (p.birthDate) out.push(`2 DATE ${gedDate(p.birthDate)}`); if (p.birthPlace) out.push(`2 PLAC ${tx(p.birthPlace)}`); }
-    if (isDead(p)) { out.push(p.deathDate ? '1 DEAT' : '1 DEAT Y'); if (p.deathDate) out.push(`2 DATE ${gedDate(p.deathDate)}`); }
+    if (isDead(p)) { out.push(p.deathDate || p.deathPlace ? '1 DEAT' : '1 DEAT Y'); if (p.deathDate) out.push(`2 DATE ${gedDate(p.deathDate)}`); if (p.deathPlace) out.push(`2 PLAC ${tx(p.deathPlace)}`); }
+    if (isDead(p) && (p.grave || p.graveGeo)) { out.push('1 BURI'); if (p.grave) out.push(`2 PLAC ${tx(p.grave)}`); if (p.graveGeo) { const [la, lo] = p.graveGeo.split(','); if (!p.grave) out.push('2 PLAC Grab'); out.push('3 MAP', `4 LATI ${+la < 0 ? 'S' : 'N'}${Math.abs(+la)}`, `4 LONG ${+lo < 0 ? 'W' : 'E'}${Math.abs(+lo)}`); } }
+    if (p.originPlace) out.push(`1 FACT ${tx(p.originPlace)}`, '2 TYPE Herkunftsort');
+    if (p.fis) out.push(`1 FACT ${tx(p.fis)}`, '2 TYPE Fis');
     if (p.address || p.phone || p.email) { out.push('1 RESI'); if (p.address) out.push(...multi(2, 'ADDR', p.address)); if (p.phone) out.push(`2 PHON ${tx(p.phone)}`); if (p.email) out.push(`2 EMAIL ${tx(p.email)}`); }
     if (p.job) { out.push(`1 OCCU ${tx(p.job)}`); if (p.employer) out.push(`2 CORP ${tx(p.employer)}`); }
     if (p.notes) out.push(...multi(1, 'NOTE', p.notes));
@@ -2776,6 +3385,8 @@ function buildGedcom() {
     if (b && (P(a)?.gender === 'w' || P(b)?.gender === 'm')) [a, b] = [b, a];
     if (!b) out.push(P(a)?.gender === 'w' ? `1 WIFE ${iid.get(a)}` : `1 HUSB ${iid.get(a)}`);
     else out.push(`1 HUSB ${iid.get(a)}`, `1 WIFE ${iid.get(b)}`);
+    const mr = b ? (marriageOf(P(a), b) || marriageOf(P(b), a)) : null;
+    if (mr) { out.push('1 MARR'); if (mr.date) out.push(`2 DATE ${gedDate(mr.date)}`); if (mr.place) out.push(`2 PLAC ${tx(mr.place)}`); }
     f.kids.forEach(c => out.push(`1 CHIL ${iid.get(c)}`));
   });
   out.push('0 TRLR');
@@ -2800,6 +3411,317 @@ async function exportGedcom() {
   if (!ok) return;
   const done = await saveFile(`${slugify(t?.name)}-${isoOf(new Date())}.ged`, new Blob([buildGedcom()], { type: 'text/plain' }));
   if (done) toast('GEDCOM-Datei gespeichert');
+}
+
+const HELV = [278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584,761,556,0,222,556,333,1000,556,556,333,1000,667,333,1000,0,611,0,0,222,222,333,333,350,556,1000,333,1000,500,333,944,0,500,667,278,333,556,556,556,556,260,556,333,737,370,556,584,333,737,333,400,584,333,333,333,556,537,278,333,333,365,556,834,834,834,611,667,667,667,667,667,667,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,500,556,556,556,556,278,278,278,278,556,556,556,556,556,556,556,584,611,556,556,556,556,500,556,500];
+const HELVB = [278,333,474,556,556,889,722,238,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,333,333,584,584,584,611,975,722,722,722,722,667,611,778,722,278,556,722,611,833,722,778,667,778,722,667,611,722,667,944,667,667,611,333,278,333,584,556,333,556,611,556,611,556,333,611,611,278,278,556,278,889,611,611,611,611,389,556,333,611,556,778,556,556,500,389,280,389,584,761,556,0,278,556,500,1000,556,556,333,1000,667,333,1000,0,611,0,0,278,278,500,500,350,556,1000,333,1000,556,333,944,0,500,667,278,333,556,556,556,556,280,556,333,737,370,556,584,333,737,333,400,584,333,333,333,611,556,278,333,333,365,556,834,834,834,611,722,722,722,722,722,722,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,556,556,556,556,556,278,278,278,278,611,611,611,611,611,611,611,584,611,611,611,611,611,556,611,556];
+
+/* ---------- Stammbaum als Poster (PDF, Vektor, beliebig gross druckbar) ---------- */
+const WIN_HI = { 8364: 128, 8218: 130, 402: 131, 8222: 132, 8230: 133, 8224: 134, 8225: 135, 710: 136, 8240: 137, 352: 138, 8249: 139, 338: 140, 381: 142, 8216: 145, 8217: 146, 8220: 147, 8221: 148, 8226: 149, 8211: 150, 8212: 151, 732: 152, 8482: 153, 353: 154, 8250: 155, 339: 156, 382: 158, 376: 159 };
+function toWin(str) {
+  let o = '';
+  for (const ch of String(str || '')) {
+    const c = ch.codePointAt(0);
+    if (c >= 32 && c < 127 || c >= 160 && c < 256) o += ch;
+    else if (WIN_HI[c]) o += String.fromCharCode(WIN_HI[c]);
+    else { const b = ch.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); o += b && b.codePointAt(0) < 256 ? b : '?'; }
+  }
+  return o;
+}
+function pdfStr(w) { return '(' + w.replace(/[\\()]/g, m => '\\' + m) + ')'; }
+function textW(w, size, bold) { const t = bold ? HELVB : HELV; let n = 0; for (let i = 0; i < w.length; i++) { const c = w.charCodeAt(i); n += (c >= 32 ? t[c - 32] : 0) || 556; } return n * size / 1000; }
+function fitText(str, size, bold, maxW) { let w = toWin(str); if (textW(w, size, bold) <= maxW) return w; while (w.length > 1 && textW(w + '\x85', size, bold) > maxW) w = w.slice(0, -1); return w + '\x85'; }
+function hslRgb(h, s2, l) { s2 /= 100; l /= 100; const k = n => (n + h / 30) % 12, a = s2 * Math.min(l, 1 - l); const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))); return [f(0), f(8), f(4)]; }
+const rgb = (c, op) => c.map(x => x.toFixed(3)).join(' ') + ' ' + op;
+const hexRgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+function circlePath(cx, cy, r) { const k = 0.5523 * r; const f = n => n.toFixed(2); return `${f(cx + r)} ${f(cy)} m ${f(cx + r)} ${f(cy + k)} ${f(cx + k)} ${f(cy + r)} ${f(cx)} ${f(cy + r)} c ${f(cx - k)} ${f(cy + r)} ${f(cx - r)} ${f(cy + k)} ${f(cx - r)} ${f(cy)} c ${f(cx - r)} ${f(cy - k)} ${f(cx - k)} ${f(cy - r)} ${f(cx)} ${f(cy - r)} c ${f(cx + k)} ${f(cy - r)} ${f(cx + r)} ${f(cy - k)} ${f(cx + r)} ${f(cy)} c h`; }
+function svgPathToPdf(d, ox, oy) {
+  const tk = d.match(/[MLHVCZmlhvcz]|-?\d*\.?\d+(?:e-?\d+)?/g) || []; let i = 0, cmd = '', x = 0, y = 0; const out = []; const n = () => parseFloat(tk[i++]); const f = v => v.toFixed(2);
+  while (i < tk.length) {
+    if (/[A-Za-z]/.test(tk[i])) cmd = tk[i++];
+    switch (cmd) {
+      case 'M': x = n(); y = n(); out.push(`${f(x + ox)} ${f(y + oy)} m`); cmd = 'L'; break;
+      case 'L': x = n(); y = n(); out.push(`${f(x + ox)} ${f(y + oy)} l`); break;
+      case 'H': x = n(); out.push(`${f(x + ox)} ${f(y + oy)} l`); break;
+      case 'V': y = n(); out.push(`${f(x + ox)} ${f(y + oy)} l`); break;
+      case 'C': { const a = [n(), n(), n(), n(), n(), n()]; x = a[4]; y = a[5]; out.push(`${f(a[0] + ox)} ${f(a[1] + oy)} ${f(a[2] + ox)} ${f(a[3] + oy)} ${f(a[4] + ox)} ${f(a[5] + oy)} c`); break; }
+      case 'Z': case 'z': out.push('h'); break;
+      default: i++;
+    }
+  }
+  return out.join(' ');
+}
+function svgToPdf(svg, ox, oy, colors) {
+  const doc = new DOMParser().parseFromString(`<svg xmlns="http://www.w3.org/2000/svg">${svg}</svg>`, 'image/svg+xml');
+  const out = [];
+  const walk = (el, tx, ty) => {
+    for (const c of el.children) {
+      const tag = c.tagName.toLowerCase(), cls = c.getAttribute('class') || '';
+      if (tag === 'g') { const m = /translate\(\s*(-?[\d.]+)[ ,]+(-?[\d.]+)\s*\)/.exec(c.getAttribute('transform') || ''); walk(c, tx + (m ? +m[1] : 0), ty + (m ? +m[2] : 0)); }
+      else if (tag === 'path') out.push(`${rgb(cls === 'ring' ? colors.accent : colors.branch, 'RG')} ${cls === 'ring' ? 2 : 2.4} w ${svgPathToPdf(c.getAttribute('d') || '', tx, ty)} S`);
+      else if (tag === 'circle') out.push(`${rgb(cls === 'ring' ? colors.accent : colors.branch, 'RG')} 2 w ${circlePath(+c.getAttribute('cx') + tx, +c.getAttribute('cy') + ty, +c.getAttribute('r'))} S`);
+    }
+  };
+  walk(doc.documentElement, ox, oy);
+  return out.join('\n');
+}
+function jpegInfo(b) {
+  if (b[0] !== 0xFF || b[1] !== 0xD8) return null;
+  let i = 2;
+  while (i < b.length) {
+    if (b[i] !== 0xFF) { i++; continue; }
+    const m = b[i + 1]; const len = (b[i + 2] << 8) | b[i + 3];
+    if (m >= 0xC0 && m <= 0xCF && ![0xC4, 0xC8, 0xCC].includes(m)) return { h: (b[i + 5] << 8) | b[i + 6], w: (b[i + 7] << 8) | b[i + 8], c: b[i + 9] };
+    i += 2 + len;
+  }
+  return null;
+}
+async function thumbBytes(ids) {
+  const out = new Map(), miss = [];
+  for (const id of ids) { const c = await idb.get(id); if (c) out.set(id, c); else miss.push(id); }
+  for (let i = 0; i < miss.length; i += 10) {
+    showBusy(`Fotos werden geladen: ${Math.min(i + 10, miss.length)} von ${miss.length}`);
+    try { const r = await api('apiGetBlobs', miss.slice(i, i + 10)); for (const id of miss.slice(i, i + 10)) if (r && r[id]) { const b = FSC.unb64(r[id]); out.set(id, b); idb.put(id, b); } } catch (e) {}
+  }
+  const plain = new Map();
+  for (const [id, c] of out) { try { plain.set(id, await FSC.decBlob(id, BK.get(id), c)); } catch (e) {} }
+  return plain;
+}
+async function deflate(bytes) {
+  if (!window.CompressionStream) return null;
+  try { const cs = new CompressionStream('deflate'); const w = cs.writable.getWriter(); w.write(bytes); w.close(); return new Uint8Array(await new Response(cs.readable).arrayBuffer()); } catch (e) { return null; }
+}
+function latin1(str) { const u = new Uint8Array(str.length); for (let i = 0; i < str.length; i++) u[i] = str.charCodeAt(i) & 255; return u; }
+async function buildPosterPdf(lay, title, sub) {
+  const colors = { branch: hexRgb('#93ADA2'), accent: hexRgb('#2B5A4C'), ink: hexRgb('#16201B'), muted: hexRgb('#5A6862') };
+  const HEAD = 110, W = lay.w + PAD * 2, H = lay.h + PAD * 2 + HEAD;
+  const K = Math.min(0.75, 14000 / Math.max(W, H));           /* PDF-Seiten dürfen höchstens 200 Zoll gross sein */
+  const keys = [...lay.nodes.keys()];
+  const thumbs = new Map();
+  keys.forEach(k => { const p = P(String(k).split('#')[0]); const ph = avatarPhoto(p); if (ph && BK.has(ph.thumb)) thumbs.set(p.id, ph.thumb); });
+  const bytes = await thumbBytes([...new Set(thumbs.values())]);
+  const imgs = new Map(); let n = 0;
+  for (const [pid, fid] of thumbs) { const b = bytes.get(fid); const inf = b && jpegInfo(b); if (inf && (inf.c === 3 || inf.c === 1)) { if (!imgs.has(fid)) imgs.set(fid, { name: 'Im' + (++n), b, inf }); } else thumbs.delete(pid); }
+  const c = [];
+  c.push(`${K.toFixed(5)} 0 0 ${(-K).toFixed(5)} 0 ${(H * K).toFixed(2)} cm`);
+  c.push(`1 1 1 rg 0 0 ${W} ${H} re f`);
+  const text = (str, x, y, size, bold, col, align) => { const w = toWin(str); const tw = textW(w, size, bold); const xx = align === 'c' ? x - tw / 2 : x; c.push(`BT /${bold ? 'F2' : 'F1'} ${size} Tf ${rgb(col, 'rg')} 1 0 0 -1 ${xx.toFixed(2)} ${y.toFixed(2)} Tm ${pdfStr(w)} Tj ET`); };
+  text(title, PAD, 62, 30, true, colors.ink);
+  text(sub, PAD, 90, 13, false, colors.muted);
+  const ox = PAD, oy = PAD + HEAD;
+  c.push('1 J 1 j');
+  c.push(svgToPdf(lay.links.map(d => `<path class="ln" d="${d}"/>`).join('') + lay.couples.join('') + (lay.svgExtra || ''), ox, oy, colors));
+  (lay.labels || []).forEach(l => text(l.t, l.x + ox, Math.max(HEAD + 20, l.y + oy - 26), 14, true, colors.accent));
+  const home = refId();
+  lay.nodes.forEach((pos, key) => {
+    const id = String(key).split('#')[0], p = P(id), dup = lay.dups && lay.dups.has(key); if (!p) return;
+    const x = pos.x + ox, y = pos.y + oy, cx = x + NODE_W / 2, cy = y + AV_CY;
+    const h = hue(p), fill = hslRgb(h, 32, 88), dark = hslRgb(h, 36, 30);
+    const fid = thumbs.get(id), im = fid && imgs.get(fid);
+    if (im) {
+      const s2 = AV_R * 2, sc = Math.max(s2 / im.inf.w, s2 / im.inf.h), iw = im.inf.w * sc, ih = im.inf.h * sc;
+      c.push(`q ${circlePath(cx, cy, AV_R)} W n ${iw.toFixed(2)} 0 0 ${(-ih).toFixed(2)} ${(cx - iw / 2).toFixed(2)} ${(cy + ih / 2).toFixed(2)} cm /${im.name} Do Q`);
+    } else {
+      c.push(`${rgb(fill, 'rg')} ${circlePath(cx, cy, AV_R)} f`);
+      const ini = toWin(initials(p)); text(ini, cx, cy + 7, 19, true, dark, 'c');
+    }
+    c.push(`${rgb(id === home && !dup ? colors.accent : isDead(p) ? colors.muted : hexRgb('#C9D6D0'), 'RG')} ${id === home && !dup ? 3 : 1.5} w ${circlePath(cx, cy, AV_R + 1)} S`);
+    const l1 = p.firstName || (p.lastName ? '' : 'Ohne Namen'), l2 = p.firstName ? p.lastName || '' : p.lastName || '';
+    const nm = [l1, l2].filter(Boolean);
+    nm.forEach((t, i) => { const w = fitText(t, 11.5, true, NODE_W + 8); c.push(`BT /F2 11.5 Tf ${rgb(colors.ink, 'rg')} 1 0 0 -1 ${(cx - textW(w, 11.5, true) / 2).toFixed(2)} ${(y + 84 + i * 14).toFixed(2)} Tm ${pdfStr(w)} Tj ET`); });
+    const yr = dup ? 'siehe links' : lifeShort(p);
+    if (yr) { const w = fitText(yr, 9.5, false, NODE_W + 8); c.push(`BT /F1 9.5 Tf ${rgb(colors.muted, 'rg')} 1 0 0 -1 ${(cx - textW(w, 9.5, false) / 2).toFixed(2)} ${(y + 84 + nm.length * 14 + 2).toFixed(2)} Tm ${pdfStr(w)} Tj ET`); }
+  });
+  text('Familienstammbaum · ' + fmtDate(isoOf(new Date()), true), PAD, H - 26, 10, false, colors.muted);
+  const content = latin1(c.join('\n'));
+  const z = await deflate(content);
+  const objs = [];
+  const enc = s2 => latin1(s2);
+  objs.push(enc('<< /Type /Catalog /Pages 2 0 R >>'));
+  objs.push(enc('<< /Type /Pages /Kids [3 0 R] /Count 1 >>'));
+  const imgList = [...imgs.values()];
+  const xo = imgList.map((im, i) => `/${im.name} ${6 + i} 0 R`).join(' ');
+  const contentNo = 6 + imgList.length;
+  objs.push(enc(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${(W * K).toFixed(2)} ${(H * K).toFixed(2)}] /Resources << /Font << /F1 4 0 R /F2 5 0 R >>${xo ? ` /XObject << ${xo} >>` : ''} >> /Contents ${contentNo} 0 R >>`));
+  objs.push(enc('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>'));
+  objs.push(enc('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>'));
+  const stream = (dict, data) => { const head = enc(`<< ${dict} /Length ${data.length} >>\nstream\n`), tail = enc('\nendstream'); const u = new Uint8Array(head.length + data.length + tail.length); u.set(head); u.set(data, head.length); u.set(tail, head.length + data.length); return u; };
+  imgList.forEach(im => objs.push(stream(`/Type /XObject /Subtype /Image /Width ${im.inf.w} /Height ${im.inf.h} /ColorSpace /${im.inf.c === 1 ? 'DeviceGray' : 'DeviceRGB'} /BitsPerComponent 8 /Filter /DCTDecode`, im.b)));
+  objs.push(z ? stream('/Filter /FlateDecode', z) : stream('', content));
+  const parts = [enc('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n')]; let off = parts[0].length; const xref = [];
+  objs.forEach((o, i) => { xref.push(off); const h = enc(`${i + 1} 0 obj\n`), t = enc('\nendobj\n'); parts.push(h, o, t); off += h.length + o.length + t.length; });
+  const xs = off;
+  parts.push(enc(`xref\n0 ${objs.length + 1}\n0000000000 65535 f \n${xref.map(x => String(x).padStart(10, '0') + ' 00000 n \n').join('')}trailer\n<< /Size ${objs.length + 1} /Root 1 0 R /Info << /Producer (Familienstammbaum) /Title ${pdfStr(toWin(title))} >> >>\nstartxref\n${xs}\n%%EOF\n`));
+  return new Blob(parts, { type: 'application/pdf' });
+}
+async function exportPoster() {
+  if (!S.people.size) { toast('Der Stammbaum ist noch leer.'); return; }
+  const modeName = { nach: 'Nachkommen', vor: 'Vorfahren', beide: 'Beide Seiten' };
+  const subj = treeSubject();
+  const v = await dialog(`<div class="dlg-title">Stammbaum als Poster</div>
+    <div class="dlg-text">Es wird die aktuelle Ansicht als PDF gespeichert: <b>${esc(modeName[S.treeMode] || '')}</b> ${S.treeMode === 'vor' ? 'von' : 'ab'} <b>${esc(fullName(P(subj)))}</b>. Die Ansicht kannst du unter «Baum» ändern. Das PDF ist beliebig gross druckbar, z.B. im Copyshop als A1 oder A0.</div>
+    <div class="dlg-text warn">Das PDF ist nicht verschlüsselt. Es enthält Namen, Lebensdaten und Profilbilder.</div>
+    <div class="dlg-btns"><button type="button" class="btn" data-v="__cancel">Abbrechen</button><button type="button" class="btn primary" data-v="ok">PDF erstellen</button></div>`);
+  if (v !== 'ok') return;
+  const lay = S.treeMode === 'vor' ? layoutAncestors(subj) : S.treeMode === 'beide' ? layoutBothSides(subj) : layoutDescendants(subj);
+  const t = curTree();
+  let blob;
+  showBusy('Poster wird erstellt …');
+  try { const np = new Set([...lay.nodes.keys()].map(k => String(k).split('#')[0])).size; blob = await buildPosterPdf(lay, t?.name || 'Familienstammbaum', `${S.treeMode === 'vor' ? 'Vorfahren von' : S.treeMode === 'beide' ? 'Familie von' : 'Nachkommen ab'} ${fullName(P(subj))} · ${np} Personen`); }
+  finally { hideBusy(); }
+  const done = await saveFile(`${slugify(t?.name)}-poster.pdf`, blob);
+  if (done) toast('Poster gespeichert');
+}
+
+/* ---------- Geburtstage als Kalenderdatei (.ics), z.B. fürs iPhone ---------- */
+function icsEsc(t) { return String(t || '').replace(/\\/g, '\\\\').replace(/;/g, '\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n'); }
+function icsFold(line) { const b = new TextEncoder().encode(line); if (b.length <= 74) return line; const out = []; let cur = '', len = 0; for (const ch of line) { const l = new TextEncoder().encode(ch).length; if (len + l > (out.length ? 73 : 74)) { out.push(cur); cur = ''; len = 0; } cur += ch; len += l; } out.push(cur); return out.join('\r\n '); }
+function buildIcs(withWed) {
+  const t = curTree(); const now = new Date(); const ref = refId();
+  const stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+  const L2 = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Familienstammbaum//DE', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', `X-WR-CALNAME:${icsEsc('Geburtstage ' + (t?.name || ''))}`];
+  let count = 0;
+  const ev = (uid, iso, summary, desc) => {
+    const p = parseIso(iso); if (!p || !p.m || !p.d) return;
+    const y = p.y >= 1900 ? p.y : now.getFullYear();
+    const feb29 = p.m === 2 && p.d === 29;
+    L2.push('BEGIN:VEVENT', `UID:${uid}@familienstammbaum`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${y}${pad(p.m)}${pad(p.d)}`, feb29 ? 'RRULE:FREQ=YEARLY;BYMONTH=2;BYMONTHDAY=-1' : 'RRULE:FREQ=YEARLY', `SUMMARY:${icsEsc(summary)}`);
+    if (desc) L2.push(`DESCRIPTION:${icsEsc(desc)}`);
+    L2.push('TRANSP:TRANSPARENT', 'BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER:PT9H', `DESCRIPTION:${icsEsc(summary)}`, 'END:VALARM', 'END:VEVENT');
+    count++;
+  };
+  sortedPeople().forEach(p => {
+    if (isDead(p)) return;
+    const r = ref && p.id !== ref ? relation(ref, p.id) : null;
+    const yb = parseIso(p.birthDate)?.y;
+    ev('b-' + p.id, p.birthDate, `🎂 ${fullName(p)}`, [r ? relLine(r) : '', yb ? `Jahrgang ${yb}` : ''].filter(Boolean).join(' · '));
+  });
+  if (withWed) {
+    const seen = new Set();
+    sortedPeople().forEach(p => partnersOf(p).forEach(q => {
+      const k = [p.id, q.id].sort().join('+'); if (seen.has(k)) return; seen.add(k);
+      if (isDead(p) || isDead(q)) return;
+      const m = marriageOf(p, q.id) || marriageOf(q, p.id); if (!m || !m.date) return;
+      ev('h-' + k.replace('+', '-'), m.date, `💍 Hochzeitstag ${callName(p)} & ${callName(q)}`, [parseIso(m.date)?.y ? `Geheiratet ${parseIso(m.date).y}` : '', m.place].filter(Boolean).join(' · '));
+    }));
+  }
+  L2.push('END:VCALENDAR');
+  return { text: L2.map(icsFold).join('\r\n') + '\r\n', count };
+}
+async function exportCalendar() {
+  const v = await dialog(`<div class="dlg-title">Geburtstage in den Kalender</div>
+    <div class="dlg-text">Es entsteht eine Kalenderdatei mit allen Geburtstagen dieses Stammbaums, jedes Jahr wiederkehrend, mit Erinnerung am Morgen. ${IS_IOS ? 'Tippe danach auf die geladene Datei und wähle «Alle hinzufügen».' : 'Öffne die Datei danach mit deinem Kalender (z.B. Apple Kalender, Outlook oder Google Kalender im Browser unter Einstellungen → Importieren).'}</div>
+    <div class="dlg-form"><label class="check"><input type="checkbox" id="ics-wed" checked> Auch Hochzeitstage</label></div>
+    <div class="dlg-text warn">Im Kalender sind Namen und Geburtstage nicht mehr verschlüsselt. Bei einem Kalender mit Cloud-Abgleich liegen sie dann auch dort.</div>
+    <div class="dlg-btns"><button type="button" class="btn" data-v="__cancel">Abbrechen</button><button type="button" class="btn primary" data-v="ok">Datei erstellen</button></div>`,
+    { map: (x, el) => (x === 'ok' ? { wed: el.querySelector('#ics-wed').checked } : null) });
+  if (!v) return;
+  const r = buildIcs(v.wed);
+  if (!r.count) { toast('Keine Geburtstage mit Tag und Monat erfasst.'); return; }
+  const t = curTree();
+  const done = await saveFile(`geburtstage-${slugify(t?.name)}.ics`, new Blob([r.text], { type: 'text/calendar' }));
+  if (done) toast(`${r.count} Termine gespeichert`);
+}
+
+/* ---------- Import aus MyHeritage, Ancestry & Co. (GEDCOM) ---------- */
+const GED_MON = { JAN: 1, FEB: 2, MAR: 3, APR: 4, MAY: 5, JUN: 6, JUL: 7, AUG: 8, SEP: 9, OCT: 10, NOV: 11, DEC: 12 };
+function gedToIso(v) {
+  const t = String(v || '').toUpperCase().replace(/^(ABT|ABOUT|CAL|EST|BEF|AFT|FROM|TO|BET|INT)\.?\s+/, '').replace(/\s+(AND|TO)\s+.*$/, '').replace(/\(.*\)/, '').trim();
+  let m = /^(\d{1,2})\s+([A-Z]{3})\s+(\d{3,4})$/.exec(t); if (m && GED_MON[m[2]]) return `${m[3].padStart(4, '0')}-${pad(GED_MON[m[2]])}-${pad(+m[1])}`;
+  m = /^([A-Z]{3})\s+(\d{3,4})$/.exec(t); if (m && GED_MON[m[1]]) return `${m[2].padStart(4, '0')}-${pad(GED_MON[m[1]])}`;
+  m = /(\d{4})/.exec(t); return m ? m[1] : '';
+}
+function parseGedcom(text) {
+  const lines = text.replace(/^\uFEFF/, '').split(/\r\n|\r|\n/);
+  const root = { kids: [] }, stack = [root];
+  for (const raw of lines) {
+    const m = /^\s*(\d+)\s+(?:(@[^@]+@)\s+)?(\S+)(?:\s(.*))?$/.exec(raw); if (!m) continue;
+    const lvl = +m[1], node = { xref: m[2] || '', tag: m[3].toUpperCase(), val: m[4] || '', kids: [] };
+    if (node.tag === 'CONT' || node.tag === 'CONC') { const par = stack[lvl] ; if (par) par.val += (node.tag === 'CONT' ? '\n' : '') + node.val; continue; }
+    stack.length = lvl + 1; const par = stack[lvl]; if (!par) continue;
+    par.kids.push(node); stack[lvl + 1] = node;
+  }
+  const sub = (n, tag) => n.kids.find(k => k.tag === tag);
+  const subv = (n, ...path) => { let x = n; for (const t of path) { x = x && sub(x, t); } return x ? x.val.trim() : ''; };
+  const indi = new Map(), fam = [];
+  for (const r of root.kids) {
+    if (r.tag === 'INDI') {
+      const nm = sub(r, 'NAME'); const full = nm ? nm.val : '';
+      const sm = /\/([^/]*)\//.exec(full);
+      let first = (nm && subv(nm, 'GIVN')) || full.replace(/\/[^/]*\//, '').trim();
+      let last = (nm && subv(nm, 'SURN')) || (sm ? sm[1].trim() : '');
+      const names = r.kids.filter(k => k.tag === 'NAME');
+      const married = names.find(k => /married/i.test(subv(k, 'TYPE'))), birthN = names.find(k => /birth|maiden/i.test(subv(k, 'TYPE')));
+      let birthName = '';
+      if (birthN && birthN !== nm) { const b = /\/([^/]*)\//.exec(birthN.val); birthName = b ? b[1].trim() : ''; }
+      if (married && married !== nm) { const b = /\/([^/]*)\//.exec(married.val); if (b && b[1].trim() && b[1].trim() !== last) { birthName = birthName || last; last = b[1].trim(); } }
+      const sex = subv(r, 'SEX').toUpperCase();
+      const deat = sub(r, 'DEAT'), buri = sub(r, 'BURI'), resi = sub(r, 'RESI');
+      const facts = r.kids.filter(k => k.tag === 'FACT' || k.tag === 'EVEN' || k.tag === '_FIS');
+      const fact = re => { const f = facts.find(k => re.test(subv(k, 'TYPE'))); return f ? f.val.trim() : ''; };
+      const notes = r.kids.filter(k => k.tag === 'NOTE' && !/^@/.test(k.val)).map(k => k.val.trim()).filter(Boolean);
+      let graveGeo = '';
+      const map = buri && sub(buri, 'PLAC') && sub(sub(buri, 'PLAC'), 'MAP');
+      if (map) { const la = subv(map, 'LATI'), lo = subv(map, 'LONG'); const nn = s2 => (/^[SW]/i.test(s2) ? -1 : 1) * parseFloat(s2.replace(/^[NSEW]/i, '')); if (la && lo && isFinite(nn(la)) && isFinite(nn(lo))) graveGeo = `${nn(la).toFixed(6)},${nn(lo).toFixed(6)}`; }
+      indi.set(r.xref, {
+        firstName: first.replace(/\s+/g, ' ').trim(), lastName: last, birthName, nickname: (nm && subv(nm, 'NICK')) || '',
+        gender: sex === 'M' ? 'm' : sex === 'F' ? 'w' : '',
+        birthDate: gedToIso(subv(r, 'BIRT', 'DATE')), birthPlace: subv(r, 'BIRT', 'PLAC'),
+        deceased: !!deat, deathDate: deat ? gedToIso(subv(deat, 'DATE')) : '', deathPlace: deat ? subv(deat, 'PLAC') : '',
+        grave: buri ? subv(buri, 'PLAC').replace(/^Grab$/, '') : '', graveGeo,
+        job: subv(r, 'OCCU'), employer: subv(r, 'OCCU', 'CORP'),
+        phone: (resi && subv(resi, 'PHON')) || subv(r, 'PHON'), email: (resi && subv(resi, 'EMAIL')) || subv(r, 'EMAIL'),
+        address: ((resi && subv(resi, 'ADDR')) || subv(r, 'ADDR')).trim(),
+        originPlace: fact(/herkunft|origin/i), fis: fact(/^fis|clan|vëllazëri/i),
+        notes: notes.join('\n\n'),
+      });
+    } else if (r.tag === 'FAM') {
+      fam.push({ h: subv(r, 'HUSB'), w: subv(r, 'WIFE'), kids: r.kids.filter(k => k.tag === 'CHIL').map(k => k.val.trim()), marr: sub(r, 'MARR') ? { date: gedToIso(subv(r, 'MARR', 'DATE')), place: subv(r, 'MARR', 'PLAC') } : null });
+    }
+  }
+  return { indi, fam };
+}
+function pickGedFile() {
+  return new Promise(res => {
+    const inp = document.createElement('input');
+    inp.type = 'file'; inp.accept = '.ged,.gedcom,text/plain,application/octet-stream,*/*'; inp.hidden = true;
+    inp.addEventListener('change', () => { const f = inp.files && inp.files[0]; inp.remove(); res(f ? act(() => importGedcom(f)) : null); });
+    document.body.appendChild(inp); inp.click();
+  });
+}
+async function importGedcom(file) {
+  const buf = new Uint8Array(await file.arrayBuffer());
+  let text = new TextDecoder('utf-8').decode(buf);
+  if (/\uFFFD/.test(text)) text = new TextDecoder('windows-1252').decode(buf);
+  if (!/^\s*0\s+HEAD/m.test(text.slice(0, 2000))) throw { code: 'user', message: 'Das ist keine GEDCOM-Datei (.ged). In MyHeritage oder Ancestry kannst du den Stammbaum als GEDCOM exportieren.' };
+  const { indi, fam } = parseGedcom(text);
+  if (!indi.size) throw { code: 'user', message: 'In der Datei wurden keine Personen gefunden.' };
+  const src = (/^1\s+SOUR\s+(.+)$/m.exec(text) || [])[1] || '';
+  const srcName = /myheritage/i.test(src) ? 'MyHeritage' : /ancestry/i.test(src) ? 'Ancestry' : /familysearch/i.test(src) ? 'FamilySearch' : '';
+  const v = await dialog(`<div class="dlg-title">Stammbaum importieren</div>
+    <div class="dlg-text">${indi.size} Personen und ${fam.length} Familien${srcName ? ` aus ${srcName}` : ''} gefunden. Alles wird verschlüsselt gespeichert. Fotos aus der Datei werden nicht übernommen.</div>
+    <div class="dlg-form"><div class="field"><label for="g-name">Name des neuen Stammbaums</label><input id="g-name" value="${esc((file.name || 'Import').replace(/\.(ged|gedcom)$/i, ''))}"></div></div>
+    <div class="dlg-btns" style="flex-wrap:wrap"><button type="button" class="btn" data-v="__cancel">Abbrechen</button>${S.treeId && S.people.size ? '<button type="button" class="btn" data-v="here">In diesen Stammbaum</button>' : ''}<button type="button" class="btn primary" data-v="new">Als neuer Stammbaum</button></div>`,
+    { map: (x, el) => (x === 'new' || x === 'here' ? { where: x, name: el.querySelector('#g-name').value.trim() } : null) });
+  if (!v) return;
+  const tid = v.where === 'here' ? S.treeId : createTree(v.name || 'Import');
+  const ids = new Map(); indi.forEach((_, x) => ids.set(x, newId()));
+  const ppl = new Map();
+  indi.forEach((o, x) => ppl.set(ids.get(x), Object.assign({}, o, { id: ids.get(x), treeId: tid, avatarPhotoId: '', parentIds: [], partnerIds: [], marriages: {} })));
+  fam.forEach(f => {
+    const a = ids.get(f.h), b = ids.get(f.w);
+    if (a && b) { const pa = ppl.get(a), pb = ppl.get(b); if (!pa.partnerIds.includes(b)) pa.partnerIds.push(b); if (!pb.partnerIds.includes(a)) pb.partnerIds.push(a); if (f.marr && (f.marr.date || f.marr.place)) { pa.marriages[b] = { ...f.marr }; pb.marriages[a] = { ...f.marr }; } }
+    f.kids.forEach(k => { const c = ppl.get(ids.get(k)); if (!c) return; [a, b].filter(Boolean).forEach(pid => { if (!c.parentIds.includes(pid) && c.parentIds.length < 2) c.parentIds.push(pid); }); });
+  });
+  showBusy(`${ppl.size} Personen werden verschlüsselt …`);
+  try {
+    ppl.forEach(p => put('people', p));
+    const t = G.trees.get(tid);
+    if (t && !t.homePersonId) put('trees', { ...t, homePersonId: ids.values().next().value });
+    await flush();
+  } finally { hideBusy(); }
+  if (tid !== S.treeId) switchTree(tid); else changed();
+  toast(`${ppl.size} Personen importiert`);
 }
 
 /* ---------- Verschlüsselte Sicherung (ZIP) ---------- */
@@ -2864,6 +3786,7 @@ async function backupToDevice() {
     const box = await FSC.sealTo(rc.pub, FSC.TE.encode(JSON.stringify(ring)), 'sicherung');
     const ids = new Set();
     for (const ph of G.photos.values()) { if (ph.full) ids.add(ph.full); if (ph.thumb) ids.add(ph.thumb); }
+    for (const st of G.stories.values()) if (st.audio) ids.add(st.audio);
     const list = [...ids], files = [];
     for (let i = 0; i < list.length; i += 8) {
       showBusy(`Fotos werden gesichert: ${Math.min(i + 8, list.length)} von ${list.length}`);
@@ -2874,7 +3797,13 @@ async function backupToDevice() {
     const zip = makeZip([{ name: 'familienstammbaum.json', data: FSC.TE.encode(JSON.stringify(manifest)) }, ...files]);
     hideBusy();
     const ok = await saveFile(`Familienstammbaum-Sicherung-${isoOf(new Date())}.zip`, zip);
-    if (ok) toast(`Sicherung gespeichert (${fmtBytes(zip.size)}). Öffnen lässt sie sich nur mit dem Notfall-Schlüssel.`);
+    if (ok) {
+      const now = Date.now();
+      LS.set('lastBackup', String(now));
+      for (const t of [...G.trees.values()]) put('trees', { ...t, lastBackup: now });
+      changed();
+      toast(`Sicherung gespeichert (${fmtBytes(zip.size)}). Öffnen lässt sie sich nur mit dem Notfall-Schlüssel.`);
+    }
   } finally { hideBusy(); }
 }
 function pickBackupFile() {
@@ -2901,12 +3830,12 @@ async function restoreBackup(file) {
   } catch (e) { throw { code: 'user', message: 'Der Notfall-Schlüssel passt nicht zu dieser Sicherung.' }; }
   const objs = []; let bad = 0;
   for (const [id, x] of man.e || []) {
-    try { const o = await FSC.decWith(ring, id, x); const kind = CODE_KIND[o.k]; if (!kind) continue; delete o.k; o.id = id; objs.push([kind, o]); }
+    try { const o = await FSC.decWith(ring, id, x); const kind = CODE_KIND[o.k]; if (!kind || o._del) continue; delete o.k; o.id = id; objs.push([kind, o]); }
     catch (e) { bad++; }
   }
   const cnt = k => objs.filter(x => x[0] === k).length;
   const when = man.createdAt ? fmtDate(String(man.createdAt).slice(0, 10), true) : '';
-  const ok = await confirmDialog({ title: 'Sicherung einspielen?', text: `Sicherung${when ? ` vom ${when}` : ''}: ${cnt('trees')} Stammbäume, ${cnt('people')} Personen, ${cnt('photos')} Fotos. Einträge, die es schon gibt, werden durch die Sicherung ersetzt.${bad ? ` ${bad} Einträge waren nicht lesbar.` : ''}`, ok: 'Einspielen' });
+  const ok = await confirmDialog({ title: 'Sicherung einspielen?', text: `Sicherung${when ? ` vom ${when}` : ''}: ${cnt('trees')} Stammbäume, ${cnt('people')} Personen, ${cnt('photos')} Fotos${cnt('stories') ? `, ${cnt('stories')} Erinnerungen` : ''}. Einträge, die es schon gibt, werden durch die Sicherung ersetzt.${bad ? ` ${bad} Einträge waren nicht lesbar.` : ''}`, ok: 'Einspielen' });
   if (!ok) return;
   try {
     const blobIds = [...files.keys()].filter(n => n.startsWith('b/')).map(n => n.slice(2));
@@ -2916,7 +3845,7 @@ async function restoreBackup(file) {
     let n = 0;
     for (const id of up) { showBusy(`Fotos werden hochgeladen: ${++n} von ${up.length}`); await api('apiPutBlob', id, FSC.b64(files.get('b/' + id))); }
     showBusy('Einträge werden verschlüsselt gespeichert …');
-    for (const [kind, o] of objs) put(kind, o);
+    quietPut = true; try { for (const [kind, o] of objs) put(kind, o); } finally { quietPut = false; }
     await flush();
     if (hasPending()) throw { code: 'user', message: 'Speichern hat nicht geklappt. Bitte nochmals versuchen.' };
   } finally { hideBusy(); }
@@ -2956,16 +3885,17 @@ async function load(initial) {
     const myMeta = await FSC.decMeta(d.me.id, d.cred.m);
     S.me = { id: d.me.id, role: d.me.r, name: myMeta.name || '', meta: myMeta };
     S.role = d.me.r; S.canWrite = S.role !== 'view'; S.isAdmin = S.role === 'admin';
-    const pend = [...Q.put].map(([id, kind]) => [id, kind, G[kind].get(id)]);
-    const fresh = { trees: new Map(), people: new Map(), photos: new Map() };
+    const pend = [...Q.put].map(([id, kind]) => [id, kind, entryFor(id, kind)]);
+    const fresh = { trees: new Map(), people: new Map(), photos: new Map(), stories: new Map() };
+    TRASH.clear();
     let bad = 0;
     await Promise.all((d.e || []).map(async ([id, x]) => {
-      try { const o = await FSC.dec(id, x); const kind = CODE_KIND[o.k]; delete o.k; o.id = id; if (kind) fresh[kind].set(id, o); }
+      try { const o = await FSC.dec(id, x); const kind = CODE_KIND[o.k]; delete o.k; o.id = id; if (!kind) return; if (o._del) TRASH.set(id, { kind, o }); else fresh[kind].set(id, o); }
       catch (e) { bad++; }
     }));
-    G.trees = fresh.trees; G.people = fresh.people; G.photos = fresh.photos;
-    pend.forEach(([id, kind, o]) => { if (o) G[kind].set(id, o); });
-    Q.del.forEach(id => { G.trees.delete(id); G.people.delete(id); G.photos.delete(id); });
+    G.trees = fresh.trees; G.people = fresh.people; G.photos = fresh.photos; G.stories = fresh.stories;
+    pend.forEach(([id, kind, o]) => { if (!o) return; if (o._del) { G[kind].delete(id); TRASH.set(id, { kind, o }); } else { TRASH.delete(id); G[kind].set(id, o); } });
+    Q.del.forEach(id => { G.trees.delete(id); G.people.delete(id); G.photos.delete(id); G.stories.delete(id); TRASH.delete(id); });
     BK.clear(); G.photos.forEach(noteBlobKeys);
     if (bad) console.warn(bad + ' Einträge konnten nicht entschlüsselt werden');
     S.denied = false; S.needClaim = false; S.denyMsg = '';
@@ -2978,6 +3908,8 @@ async function load(initial) {
       const pp = G.people.get(S.openOnLoad); S.openOnLoad = null;
       if (pp) { if (pp.treeId !== S.treeId) switchTree(pp.treeId); setTimeout(() => openPerson(pp.id), 60); }
     }
+    if (S.canWrite) purgeTrash();
+    setTimeout(() => { maybeRemindBackup().catch(() => {}); }, 2500);
     if (S.legacyLeft && S.isAdmin && !S.migrating && !S.claimFlow) setTimeout(offerMigration, 500);
     else if (!S.claimFlow && !S.migrating) setTimeout(() => { maybeAskMe().then(birthdayGreeting); }, 700);
   } catch (e) {
@@ -3001,7 +3933,7 @@ function syncNative() {
   if (!NATIVE || !NATIVE.saveSession || !S.auth) return;
   try {
     const keys = {}; FSC.KR.raw.forEach((raw, v) => { keys[v] = FSC.b64u(raw); });
-    NATIVE.saveSession(JSON.stringify({ exec: EXEC, a: S.auth, cur: FSC.KR.cur, keys }));
+    NATIVE.saveSession(JSON.stringify({ exec: EXEC, a: S.auth, cur: FSC.KR.cur, keys, admin: !!S.isAdmin, lastBackup: lastBackupAt() }));
     const trees = {}; G.trees.forEach(t => { trees[t.id] = t.name || ''; });
     const people = [...G.people.values()].filter(p => !isDead(p) && /^\d{4}-\d{2}-\d{2}$/.test(p.birthDate || ''))
       .map(p => ({ id: p.id, name: fullName(p), firstName: callName(p), birthDate: p.birthDate, phone: p.phone || '', tree: trees[p.treeId] || '' }));
@@ -3049,6 +3981,7 @@ async function boot() {
     }
     if (cfg.link) { const L = linkParts(cfg.link); params = L.params; hash = L.hash; }
     if (cfg.person) params.p = cfg.person;
+    if (cfg.backup) S.askBackup = true;
     if (!EXEC) { S.noGoogle = true; render(); return; }
   } else if (HAS_GAS) {
     const loc = await gasLocation();

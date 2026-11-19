@@ -107,6 +107,9 @@ object Birthdays {
             val e = r.optJSONArray("e") ?: return null
             val trees = HashMap<String, String>()
             val people = ArrayList<JSONObject>()
+            var lastBackup = sess.optLong("lastBackup")
+            var firstCreated = 0L
+            var count = 0
             for (i in 0 until e.length()) {
                 val row = e.getJSONArray(i)
                 val id = row.getString(0)
@@ -116,9 +119,13 @@ object Birthdays {
                     continue
                 }
                 val o = JSONObject(txt)
+                if (o.has("_del")) continue          // im Papierkorb
                 when (o.optString("k")) {
-                    "t" -> trees[id] = o.optString("name")
-                    "p" -> { o.put("id", id); people.add(o) }
+                    "t" -> { trees[id] = o.optString("name"); lastBackup = maxOf(lastBackup, o.optLong("lastBackup")) }
+                    "p" -> {
+                        o.put("id", id); people.add(o); count++
+                        val c = o.optLong("createdAt"); if (c > 0 && (firstCreated == 0L || c < firstCreated)) firstCreated = c
+                    }
                 }
             }
             val out = JSONArray()
@@ -134,6 +141,7 @@ object Birthdays {
                         .put("birthDate", bd).put("phone", p.optString("phone")).put("tree", trees[p.optString("treeId")] ?: "")
                 )
             }
+            BackupReminder.check(context, sess.optBoolean("admin"), lastBackup, firstCreated, count)
             val json = JSONObject().put("ok", true).put("people", out).toString()
             Prefs.setCache(context, json)
             parse(json)
@@ -270,6 +278,42 @@ object Birthdays {
         val now = LocalDateTime.now()
         val target = now.toLocalDate().atTime(Prefs.hour(context), Prefs.minute(context))
         return kotlin.math.abs(Duration.between(target, now).toMinutes())
+    }
+}
+
+/** Meldet sich bei Admins, wenn die letzte Sicherung über einen Monat alt ist (höchstens einmal pro Woche) */
+object BackupReminder {
+    private const val CHANNEL = "sicherung"
+    private const val ID = 0x5EC0
+    private const val DAY = 86_400_000L
+
+    @SuppressLint("MissingPermission")
+    fun check(context: Context, admin: Boolean, last: Long, firstCreated: Long, count: Int) {
+        if (!admin || count == 0) return
+        val now = System.currentTimeMillis()
+        if (last > 0 && now - last < 30 * DAY) return
+        if (last == 0L && (firstCreated == 0L || now - firstCreated < 3 * DAY)) return
+        if (now - Prefs.backupNotified(context) < 7 * DAY) return
+        if (!Birthdays.canNotify(context)) return
+        val nm = context.getSystemService(NotificationManager::class.java) ?: return
+        if (nm.getNotificationChannel(CHANNEL) == null) {
+            nm.createNotificationChannel(NotificationChannel(CHANNEL, context.getString(R.string.backup_channel), NotificationManager.IMPORTANCE_DEFAULT))
+        }
+        val text = if (last > 0) context.getString(R.string.backup_text_days, ((now - last) / DAY).toInt()) else context.getString(R.string.backup_text_never)
+        val open = Intent(context, MainActivity::class.java).apply {
+            putExtra(MainActivity.EXTRA_BACKUP, true)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        val n = NotificationCompat.Builder(context, CHANNEL)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(context.getString(R.string.backup_title))
+            .setContentText(text)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(text))
+            .setContentIntent(PendingIntent.getActivity(context, ID, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+            .setAutoCancel(true)
+            .setColor(ContextCompat.getColor(context, R.color.accent))
+            .build()
+        try { NotificationManagerCompat.from(context).notify(ID, n); Prefs.setBackupNotified(context, now) } catch (e: SecurityException) {}
     }
 }
 
