@@ -341,6 +341,15 @@ a.opt{color:var(--ink);text-decoration:none}
 .bday-title .ic{color:var(--warm);width:26px;height:26px}
 .fw-canvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:650}
 @media (prefers-reduced-motion:reduce){.av.bday-glow,.av.bday-glow::before,.bday-chip.today{animation:none}}
+
+/* Gemeinsame Kinder zuordnen, Baum «Beide Seiten» */
+.hint-btn{display:flex;align-items:center;gap:12px;width:100%;margin:10px 0 0;padding:12px 14px;border-radius:14px;border:1.5px dashed var(--accent);background:var(--accent-soft);color:var(--ink);font:inherit;font-weight:600;text-align:left;cursor:pointer}
+.hint-btn .ic{width:22px;height:22px;color:var(--accent);flex:none}
+.hint-btn small{display:block;color:var(--muted);font-size:.82rem;font-weight:500;margin-top:2px}
+.side-lbl{position:absolute;z-index:1;font-family:'Young Serif',Georgia,serif;font-size:21px;line-height:1.2;color:var(--accent);white-space:nowrap;pointer-events:none}
+.node.dup{opacity:.7}
+.node.dup .av{outline:2px dashed var(--branch);outline-offset:3px}
+.tree-bar .seg button{white-space:nowrap}
 </style>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -1441,15 +1450,16 @@ function coupleGeom(lx, rx, y, straight) {
   return { svg: `<path class="cp" d="M${ax} ${top}C${ax} ${peak} ${bx} ${peak} ${bx} ${top}"/><circle class="ring" cx="${mx - 3.5}" cy="${my}" r="5.5"/><circle class="ring" cx="${mx + 3.5}" cy="${my}" r="5.5"/>`, start: { x: mx, y: y + NODE_H - 2 } };
 }
 function branchPath(sx, sy, ex, ey, by) { const my = (by + ey) / 2; return `M${sx} ${sy}V${by}C${sx} ${my} ${ex} ${my} ${ex} ${ey}`; }
-function layoutDescendants(rootId) {
+function layoutDescendants(rootId, stop) {
   const placed = new Set();
   function build(pid) {
     placed.add(pid);
     const p = P(pid);
+    if (stop && stop.has(pid) && pid !== rootId) return { pid, members: [pid], partners: [], children: [], rowW: NODE_W, kidsW: 0, width: NODE_W, dup: true };
     const kids = childrenOf(pid).filter(k => !placed.has(k.id));
     kids.forEach(k => placed.add(k.id));
     const partners = [];
-    const add = id => { if (id && id !== pid && S.people.has(id) && !placed.has(id) && !partners.includes(id)) partners.push(id); };
+    const add = id => { if (id && id !== pid && S.people.has(id) && !placed.has(id) && !partners.includes(id) && !(stop && stop.has(id))) partners.push(id); };
     (p.partnerIds || []).forEach(add);
     kids.forEach(k => (k.parentIds || []).forEach(add));
     partners.forEach(id => placed.add(id));
@@ -1487,7 +1497,32 @@ function layoutDescendants(rootId) {
   }
   const tree = build(rootId);
   place(tree, 0, 0);
-  return { nodes, links, couples, w: tree.width, h: (maxDepth + 1) * (NODE_H + GAP_Y) - GAP_Y, rootId };
+  const depthOf = id => { const n = nodes.get(id); return n ? Math.round(n.y / (NODE_H + GAP_Y)) : 0; };
+  return { nodes, links, couples, w: tree.width, h: (maxDepth + 1) * (NODE_H + GAP_Y) - GAP_Y, rootId, depthOf };
+}
+/* Beide Seiten: links die Familie des Vaters (ab ältestem Vorfahren), rechts die der Mutter. Wer links schon steht, erscheint rechts nur als Hinweis. */
+function layoutBothSides(id) {
+  const ps = sortParents(P(id)?.parentIds || []);
+  const fa = ps.find(x => P(x)?.gender !== 'w') || ps[0], mo = ps.find(x => x !== fa);
+  if (!fa && !mo) return layoutDescendants(topAncestor(id));
+  const A = layoutDescendants(topAncestor(fa || mo));
+  if (!mo || !fa) return A;
+  const rootB = topAncestor(mo);
+  if (A.nodes.has(rootB)) return A;
+  const B = layoutDescendants(rootB, new Set(A.nodes.keys()));
+  const step = NODE_H + GAP_Y;
+  const dA = A.depthOf(fa), dB = B.depthOf(mo);
+  const offA = Math.max(0, dB - dA) * step, offB = Math.max(0, dA - dB) * step;
+  const gap = 140, dx = A.w + gap;
+  const nodes = new Map(), dups = new Set();
+  A.nodes.forEach((n, k) => nodes.set(k, { x: n.x, y: n.y + offA }));
+  B.nodes.forEach((n, k) => { const key = nodes.has(k) ? k + '#2' : k; if (key !== k) dups.add(key); nodes.set(key, { x: n.x + dx, y: n.y + offB }); });
+  const g = (o, x, y) => `<g transform="translate(${x},${y})">${o.links.map(d => `<path class="ln" d="${d}"/>`).join('')}${o.couples.join('')}</g>`;
+  return {
+    nodes, links: [], couples: [], svgExtra: g(A, 0, offA) + g(B, dx, offB), dups,
+    labels: [{ x: 0, y: offA, t: `Vaterseite · ${callName(P(fa))}` }, { x: dx, y: offB, t: `Mutterseite · ${callName(P(mo))}` }],
+    w: dx + B.w, h: Math.max(A.h + offA, B.h + offB), rootId: id,
+  };
 }
 function layoutAncestors(fid) {
   const pos = new Map(), seen = new Set(), rel = [];
@@ -1519,13 +1554,14 @@ function layoutAncestors(fid) {
 function treeSubject() {
   const base = refId() || firstPersonId();
   if (S.treeMode === 'vor') return validId(S.vorPerson) || base;
+  if (S.treeMode === 'beide') return validId(S.famPerson) || base;
   return validId(S.nachRoot) || topAncestor(base);
 }
 function renderTreeView(main) {
   if (main.dataset.v !== 'baum') {
     setMain('baum', `<div class="tree-wrap">
       <div class="tree-bar">
-        <div class="seg" role="group" aria-label="Darstellung"><button type="button" data-mode="nach">Nachkommen</button><button type="button" data-mode="vor">Vorfahren</button></div>
+        <div class="seg" role="group" aria-label="Darstellung"><button type="button" data-mode="nach">Nachkommen</button><button type="button" data-mode="beide">Beide Seiten</button><button type="button" data-mode="vor">Vorfahren</button></div>
         <button type="button" class="chip" id="treePersonChip"></button>
       </div>
       <div class="tree-vp" id="treeVp" aria-label="Stammbaum: mit zwei Fingern zoomen, mit einem Finger verschieben"><div class="tree-world" id="treeWorld"></div></div>
@@ -1540,17 +1576,19 @@ function renderTreeView(main) {
   main.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === S.treeMode)));
   const subj = treeSubject();
   const sp = P(subj);
-  $('#treePersonChip').innerHTML = `${avatar(sp, 34)}<span>${S.treeMode === 'vor' ? 'Von' : 'Ab'} ${esc(fullName(sp))}</span>${I.chevD}`;
-  const lay = S.treeMode === 'vor' ? layoutAncestors(subj) : layoutDescendants(subj);
+  $('#treePersonChip').innerHTML = `${avatar(sp, 34)}<span>${S.treeMode === 'vor' ? 'Von' : S.treeMode === 'beide' ? 'Familie von' : 'Ab'} ${esc(fullName(sp))}</span>${I.chevD}`;
+  const lay = S.treeMode === 'vor' ? layoutAncestors(subj) : S.treeMode === 'beide' ? layoutBothSides(subj) : layoutDescendants(subj);
   S.lay = lay;
   const home = refId();
   const W = lay.w + PAD * 2, H = lay.h + PAD * 2;
   const world = $('#treeWorld');
   world.style.width = W + 'px'; world.style.height = H + 'px';
-  let html = `<svg class="tree-svg" width="${W}" height="${H}" aria-hidden="true"><g transform="translate(${PAD},${PAD})">${lay.links.map(d => `<path class="ln" d="${d}"/>`).join('')}${lay.couples.join('')}</g></svg>`;
-  lay.nodes.forEach((pos, id) => {
+  let html = `<svg class="tree-svg" width="${W}" height="${H}" aria-hidden="true"><g transform="translate(${PAD},${PAD})">${lay.links.map(d => `<path class="ln" d="${d}"/>`).join('')}${lay.couples.join('')}${lay.svgExtra || ''}</g></svg>`;
+  (lay.labels || []).forEach(l => { html += `<div class="side-lbl" style="left:${l.x + PAD}px;top:${Math.max(8, l.y + PAD - 46)}px">${esc(l.t)}</div>`; });
+  lay.nodes.forEach((pos, key) => {
+    const id = String(key).split('#')[0], dup = lay.dups && lay.dups.has(key);
     const p = P(id);
-    html += `<button type="button" class="node${id === home ? ' home' : ''}${id === S.focusId ? ' focus' : ''}" data-id="${id}" style="left:${pos.x + PAD}px;top:${pos.y + PAD}px" aria-label="${esc(fullName(p))}">${avatar(p, 62)}<span class="nm">${esc(p.firstName || '')}${p.firstName && p.lastName ? '<br>' : ''}${esc(p.lastName || (p.firstName ? '' : 'Ohne Namen'))}</span><span class="yr">${esc(lifeShort(p))}</span></button>`;
+    html += `<button type="button" class="node${id === home && !dup ? ' home' : ''}${id === S.focusId && !dup ? ' focus' : ''}${dup ? ' dup' : ''}" data-id="${id}" style="left:${pos.x + PAD}px;top:${pos.y + PAD}px" aria-label="${esc(fullName(p))}">${avatar(p, 62)}<span class="nm">${esc(p.firstName || '')}${p.firstName && p.lastName ? '<br>' : ''}${esc(p.lastName || (p.firstName ? '' : 'Ohne Namen'))}</span><span class="yr">${dup ? 'siehe links' : esc(lifeShort(p))}</span></button>`;
   });
   world.innerHTML = html;
   const key = `${S.treeId}|${S.treeMode}|${subj}`;
@@ -1651,9 +1689,9 @@ function bindTree() {
   vp.addEventListener('click', e => { if (e.detail === 0) { const n = e.target.closest('.node'); if (n) openPerson(n.dataset.id); } });
 }
 async function chooseTreePerson() {
-  const id = await pickPerson({ title: S.treeMode === 'vor' ? 'Vorfahren von …' : 'Stammbaum ab …' });
+  const id = await pickPerson({ title: S.treeMode === 'vor' ? 'Vorfahren von …' : S.treeMode === 'beide' ? 'Familie von …' : 'Stammbaum ab …' });
   if (!id) return;
-  if (S.treeMode === 'vor') S.vorPerson = id; else S.nachRoot = id;
+  if (S.treeMode === 'vor') S.vorPerson = id; else if (S.treeMode === 'beide') S.famPerson = id; else S.nachRoot = id;
   renderMain();
 }
 async function showInTree(id, mode) {
@@ -1789,6 +1827,7 @@ function renderPersonSheet(L) {
     <h3 class="section-h">Kontakt</h3>${contact}
     <h3 class="section-h">Familie</h3>
     ${fam ? `<div class="card fam">${fam}</div>` : '<p class="empty-note">Noch keine Verwandten erfasst.</p>'}
+    ${S.canWrite ? partners.filter(q => sharedCands(p.id, q.id).length).map(q => `<button type="button" class="hint-btn" data-act="sharekids" data-q="${esc(q.id)}">${I.people}<span>Kinder auch ${esc(callName(q))} zuordnen?<small>${sharedCands(p.id, q.id).length} ${sharedCands(p.id, q.id).length === 1 ? 'Kind hat' : 'Kinder haben'} erst einen Elternteil</small></span></button>`).join('') : ''}
     <div class="sec-row"><h3 class="section-h">Fotos${photos.length ? ` · ${photos.length}` : ''}</h3>${S.canWrite ? `<button type="button" class="mini-btn" data-upload="${p.id}">${I.camera} Hinzufügen</button>` : ''}</div>
     ${photos.length ? `<div class="grid">${photos.map((ph, i) => `<button type="button" data-pphoto="${i}" aria-label="${esc(ph.caption || 'Foto öffnen')}">${imgTag(ph.thumb)}</button>`).join('')}</div>` : '<p class="empty-note">Noch keine Fotos zugeordnet.</p>'}
     ${p.notes ? `<h3 class="section-h">Notizen</h3><div class="card notes">${esc(p.notes)}</div>` : ''}
@@ -1818,6 +1857,7 @@ function onPersonClick(e, L) {
     case 'sethome': return act(async () => { await updTree({ homePersonId: id }); toast(`${callName(P(id))} ist jetzt die Hauptperson`); });
     case 'setme': return act(() => setMe(id));
     case 'party': return fireworks(t.closest('.hero') || null);
+    case 'sharekids': return act(() => offerSharedChildren(id, t.dataset.q, true));
     case 'delete': return act(() => deletePerson(id));
   }
 }
@@ -1893,6 +1933,8 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
       const dd = dec ? parseDateInput(val('#f-dd')) : ''; if (dd === null) return setErr('#f-dd', 'Bitte als TT.MM.JJJJ oder nur das Jahr eingeben.');
       const data = { firstName: first, lastName: last, birthName: val('#f-bname'), gender: v.gender || '', birthDate: bd, birthPlace: val('#f-bp'), deceased: dec, deathDate: dd || '', job: val('#f-job'), employer: val('#f-emp'), phone: val('#f-ph'), email: val('#f-em'), address: f('#f-ad').value.trim(), notes: f('#f-no').value.trim(), parentIds: v.parentIds.filter(x => S.people.has(x)), partnerIds: v.partnerIds.filter(x => S.people.has(x)) };
       L.result = savePersonData(id, data, prev);
+      const newParts = id ? data.partnerIds.filter(x => !((prev && prev.partnerIds) || []).includes(x)) : [];
+      if (newParts.length) setTimeout(async () => { for (const q of newParts) await offerSharedChildren(id, q); }, 450);
       toast(id ? 'Gespeichert' : `${callName(data)} wurde angelegt`);
       closeLayer(L);
     };
@@ -1910,6 +1952,30 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
     });
     pushLayer(L);
   });
+}
+/* Kinder, bei denen nur ein Elternteil eingetragen ist: passen sie zu einem neuen Partner / einer neuen Partnerin? */
+function sharedCands(a, b) {
+  const single = id => childrenOf(id).filter(c => { const ps = (c.parentIds || []).filter(x => S.people.has(x)); return ps.length === 1 && ps[0] === id && c.id !== a && c.id !== b; });
+  return [...single(a).map(c => [c.id, b]), ...single(b).map(c => [c.id, a])];
+}
+async function offerSharedChildren(a, b, asked) {
+  const pa = P(a), pb = P(b);
+  if (!pa || !pb || !S.canWrite) return;
+  const cands = sharedCands(a, b);
+  if (!cands.length) { if (asked) toast('Es gibt keine Kinder mit nur einem eingetragenen Elternteil.'); return; }
+  const v = await dialog(`<div class="dlg-title">Gemeinsame Kinder?</div>
+    <div class="dlg-text">Bei ${cands.length === 1 ? 'diesem Kind' : 'diesen Kindern'} ist bisher nur ein Elternteil eingetragen. ${cands.length === 1 ? 'Ist es ein Kind' : 'Sind es Kinder'} von <b>${esc(callName(pa))}</b> und <b>${esc(callName(pb))}</b>?</div>
+    <div class="dlg-form">${cands.map(([cid], i) => `<label class="check"><input type="checkbox" data-i="${i}" checked> ${esc(fullName(P(cid)))}</label>`).join('')}</div>
+    <div class="dlg-btns"><button type="button" class="btn" data-v="__cancel">Nein</button><button type="button" class="btn primary" data-v="ok">Ja, zuordnen</button></div>`,
+    { map: (x, el) => (x === 'ok' ? [...el.querySelectorAll('input[data-i]:checked')].map(i => +i.dataset.i) : null) });
+  if (!v || !v.length) return;
+  v.forEach(i => {
+    const [cid, other] = cands[i]; const c = G.people.get(cid); if (!c) return;
+    const cur = (c.parentIds || []).filter(x => S.people.has(x));
+    if (!cur.includes(other) && cur.length < 2) put('people', { ...c, parentIds: [...cur, other], updatedAt: Date.now() });
+  });
+  rebuild(); changed();
+  toast(v.length === 1 ? 'Kind zugeordnet' : `${v.length} Kinder zugeordnet`);
 }
 function addPartnerRef(q, id) { const pq = G.people.get(q); if (!pq) return; const arr = pq.partnerIds || []; if (!arr.includes(id)) put('people', { ...pq, partnerIds: [...arr, id], updatedAt: Date.now() }); }
 function removePartnerRef(q, id) { const pq = G.people.get(q); if (!pq) return; const arr = pq.partnerIds || []; if (arr.includes(id)) put('people', { ...pq, partnerIds: arr.filter(x => x !== id), updatedAt: Date.now() }); }
@@ -1957,6 +2023,7 @@ async function addRelative(pid, kind) {
   const ft = { parent: g === 'm' ? `Vater von ${nm}` : g === 'w' ? `Mutter von ${nm}` : `Elternteil von ${nm}`, partner: titles.partner, child: titles.child, sibling: titles.sibling }[kind];
   const rid = await personForm({ preset, title: ft });
   if (rid && kind === 'parent') linkRelative(pid, 'parent', rid, true);
+  if (rid && kind === 'partner') await offerSharedChildren(pid, rid);
 }
 function linkRelative(pid, kind, rid, quiet) {
   const p = G.people.get(pid), r = G.people.get(rid); if (!p || !r) return;
@@ -1967,7 +2034,7 @@ function linkRelative(pid, kind, rid, quiet) {
     if (cur.length >= 2) { toast('Es sind schon zwei Elternteile eingetragen.'); return; }
     cur.push(rid); put('people', { ...p, parentIds: cur, updatedAt: Date.now() }); rebuild();
     if (cur.length === 2 && !arePartners(cur[0], cur[1])) { addPartnerRef(cur[0], cur[1]); addPartnerRef(cur[1], cur[0]); }
-  } else if (kind === 'partner') { addPartnerRef(pid, rid); addPartnerRef(rid, pid); }
+  } else if (kind === 'partner') { addPartnerRef(pid, rid); addPartnerRef(rid, pid); setTimeout(() => offerSharedChildren(pid, rid), 300); }
   else if (kind === 'child') {
     const cur = live(r.parentIds);
     if (cur.includes(pid)) return;
@@ -2544,7 +2611,7 @@ async function setMe(id) {
   if (!meta.name) meta.name = fullName(P(id));
   await api('apiSetMyMeta', await FSC.encMeta(S.me.id, meta));
   S.me.meta = meta; if (!S.me.name) S.me.name = meta.name;
-  S.nachRoot = null; S.vorPerson = null; S.centeredFor = null; S.centerTarget = id;
+  S.nachRoot = null; S.vorPerson = null; S.famPerson = null; S.centeredFor = null; S.centerTarget = id;
   scheduleRender();
   toast(`Alles wird jetzt aus der Sicht von ${callName(P(id))} angezeigt`);
 }
@@ -2876,7 +2943,7 @@ function pickTree() {
 function switchTree(id) {
   if (id === S.treeId) { rebuild(); scheduleRender(); return; }
   S.treeId = id;
-  S.nachRoot = S.vorPerson = S.focusId = null; S.centeredFor = null; S.q = '';
+  S.nachRoot = S.vorPerson = S.famPerson = S.focusId = null; S.centeredFor = null; S.q = '';
   if (id) LS.set('tree', id);
   rebuild(); scheduleRender();
 }
@@ -2976,7 +3043,7 @@ function forgetLink() {
 }
 async function boot() {
   S.view = ['baum', 'personen', 'fotos'].includes(LS.get('view')) ? LS.get('view') : 'baum';
-  S.treeMode = LS.get('mode') === 'vor' ? 'vor' : 'nach';
+  S.treeMode = ['vor', 'beide'].includes(LS.get('mode')) ? LS.get('mode') : 'nach';
   bindShell(); render();
   let params = {}, hash = {};
   if (IN_APP) {
