@@ -590,6 +590,18 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const NATIVE = window.FSApp || null;
 const IN_APP = !!NATIVE;
 const HAS_GAS = !!(window.google && google.script && google.script.run);
+/* Webversion (GitHub Pages): läuft unabhängig von Google, spricht die Google-Web-App direkt an */
+const WEB_URL = 'https://cokakula.github.io/familienstammbaum-app/';
+const IS_WEB = !IN_APP && !HAS_GAS && /^https?:$/.test(location.protocol);
+const IS_IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const STANDALONE = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+function execFromParam(g) {
+  if (!g) return '';
+  if (/^https?:\/\/[^\s]+$/.test(g)) return g;
+  return /^[A-Za-z0-9_-]{10,}$/.test(g) ? `https://script.google.com/macros/s/${g}/exec` : '';
+}
+function paramOfExec(exec) { const m = /^https:\/\/script\.google\.com\/macros\/s\/([A-Za-z0-9_-]+)\/exec$/.exec(exec || ''); return m ? m[1] : exec || ''; }
+function webBase() { return IS_WEB ? location.origin + location.pathname : WEB_URL; }
 const LS = {
   get(k) { try { return localStorage.getItem('stammbaum.' + k); } catch (e) { return null; } },
   set(k, v) { try { localStorage.setItem('stammbaum.' + k, v); } catch (e) {} },
@@ -1055,7 +1067,7 @@ function rawApi(fn, args) {
 function api(fn, ...args) { return rawApi(fn, [S.auth, ...args]); }
 
 /* Zugang dieses Geräts: nur das Geheimnis bleibt hier, Google bekommt nur seinen Prüfwert */
-function loadSession() { try { const x = JSON.parse(LS.get('sess') || 'null'); return x && x.secret && (!IN_APP || x.exec === EXEC) ? x : null; } catch (e) { return null; } }
+function loadSession() { try { const x = JSON.parse(LS.get('sess') || 'null'); return x && x.secret && (!(IN_APP || IS_WEB) || x.exec === EXEC) ? x : null; } catch (e) { return null; } }
 function saveSession(x) { LS.set('sess', JSON.stringify(Object.assign({ exec: EXEC }, x))); }
 function clearSession() { try { localStorage.removeItem('stammbaum.sess'); } catch (e) {} S.auth = ''; try { NATIVE && NATIVE.clearSession && NATIVE.clearSession(); } catch (e) {} idb.clear(); }
 
@@ -1327,6 +1339,8 @@ function renderMain() {
     return setMain('denied', stateHtml('Kein Zugriff', S.denyMsg || 'Öffne den Einladungslink, den du bekommen hast. Er funktioniert nur einmal, danach öffnet sich der Stammbaum auf diesem Gerät direkt.',
       `<div class="foot-acts" style="max-width:320px;margin:20px auto 0">${IN_APP ? `<button type="button" class="btn primary" data-act="paste-link">${I.copy} Einladungslink einfügen</button>` : ''}<button type="button" class="btn" data-act="recover">${I.target} Notfall-Schlüssel eingeben</button></div>`));
   }
+  if (S.noGoogle && IS_WEB) return setMain('na', stateHtml('Einladungslink öffnen', 'Öffne den Einladungslink, den du per WhatsApp oder E-Mail bekommen hast. Danach öffnet sich der Stammbaum hier direkt.'));
+  if (S.iosHint) return setMain('ios', stateHtml('Zum Home-Bildschirm hinzufügen', 'Tippe unten auf das Teilen-Symbol (Quadrat mit Pfeil nach oben) → «Zum Home-Bildschirm» → «Hinzufügen». Öffne den Stammbaum dann über das neue Symbol. Die Einladung wird erst dort eingelöst.', `<button type="button" class="btn" data-act="ios-browser">Doch hier im Browser öffnen</button>`));
   if (S.noGoogle) return setMain('na', IN_APP ? stateHtml('Kein Stammbaum verbunden', 'Füge den Einladungslink ein, den du bekommen hast.', `<button type="button" class="btn primary" data-act="paste-link">${I.copy} Einladungslink einfügen</button>`) : stateHtml('Als Google-Web-App öffnen', 'Diese Datei läuft als Google-Apps-Script-Web-App oder in der Familienstammbaum-App.'));
   if (!S.loaded && S.loadError) return setMain('err', stateHtml('Daten nicht erreichbar', 'Die Verbindung zu deinem Google-Konto hat nicht geklappt. Prüfe die Internetverbindung.', `<button type="button" class="btn primary" data-act="retry-load">${I.refresh} Erneut versuchen</button>`));
   if (!S.loaded) {
@@ -1381,6 +1395,7 @@ function onMainClick(e) {
     case 'recover': return act(enterRecoveryCode);
     case 'paste-link': if (NATIVE && NATIVE.openSetup) NATIVE.openSetup(); return;
     case 'restore': return act(pickBackupFile);
+    case 'ios-browser': try { sessionStorage.setItem('iosGo', '1'); } catch (e) {} location.reload(); return;
     case 'create-tree': return act(async () => {
       const name = $('#w-name').value.trim() || 'Unsere Familie';
       switchTree(createTree(name));
@@ -2233,10 +2248,11 @@ const credOut = c => ({ id: c.id, a: c.a, pub: c.pub, pk: c.pk, kw: c.kw, m: c.m
 function waLink(text) { return 'https://wa.me/?text=' + encodeURIComponent(text); }
 function mailLink(subject, text) { return 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text); }
 function appLink() { return EXEC || S.execUrl || ''; }
-function secretLink(kind, secret) { return `${appLink()}#${kind}=${secret}`; }
+function openLink() { const ex = appLink(); return ex ? `${webBase()}?g=${encodeURIComponent(paramOfExec(ex))}` : webBase(); }
+function secretLink(kind, secret) { return `${openLink()}#${kind}=${secret}`; }
 function inviteText(link) {
   const t = curTree(); const n = t ? t.name : 'Familienstammbaum';
-  return `Du bist zum Familienstammbaum «${n}» eingeladen. Je ftuar në trungun familjar «${n}».\n\nAndroid-App: ${APK_URL}\nIn der App «Einladungslink einfügen» wählen. Ohne App: Link im Browser öffnen.\n\nDein persönlicher Link (funktioniert nur einmal, bitte nicht weitergeben):\n${link}`;
+  return `Du bist zum Familienstammbaum «${n}» eingeladen. Je ftuar në trungun familjar «${n}».\n\niPhone oder Computer: Link einfach öffnen.\nAndroid: am besten mit der App ${APK_URL}\ndann den Link lange drücken → Teilen → Stammbaum.\n\nDein persönlicher Link (funktioniert nur einmal, bitte nicht weitergeben):\n${link}`;
 }
 function memberInitials(name) { const parts = String(name || '?').trim().split(/[\s@.]+/); return ((parts[0] || '?')[0] + ((parts[1] || '')[0] || '')).toUpperCase(); }
 function fmtSeen(s) { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || ''); return m ? `${m[3]}.${m[2]}.${m[1]}` : ''; }
@@ -2529,7 +2545,7 @@ async function maybeAskMe() {
 /* ---------- Notfall-Schlüssel ---------- */
 async function showRecoveryCode(code, first) {
   const nice = FSC.fmtCode(code);
-  const txt = `Familienstammbaum – Notfall-Schlüssel\n${nice}\n\nAdresse: ${appLink()}\n\nDamit kommst du als Admin an den Stammbaum und an jede Sicherungsdatei. Geheim halten.`;
+  const txt = `Familienstammbaum – Notfall-Schlüssel\n${nice}\n\nÖffnen: ${openLink()}\nGoogle-Web-App: ${appLink()}\n\nDamit kommst du als Admin an den Stammbaum und an jede Sicherungsdatei. Geheim halten.`;
   const ok = await dialog(`<div class="dlg-title">Dein Notfall-Schlüssel</div>
     <div class="dlg-text">Damit kommst du als Admin an den Stammbaum, auch wenn alle Geräte weg sind. Du brauchst ihn auch für Sicherungsdateien. Ohne ihn kann niemand die Daten wiederherstellen, auch Google nicht.</div>
     <div class="code-box" data-code>${esc(nice.slice(0, 19))}<br>${esc(nice.slice(20))}</div>
@@ -2930,6 +2946,7 @@ function linkParts(link) {
 function forgetLink() {
   try {
     if (IN_APP) { if (NATIVE.linkUsed) NATIVE.linkUsed(); }
+    else if (IS_WEB) history.replaceState(null, '', location.pathname + (EXEC ? '?g=' + encodeURIComponent(paramOfExec(EXEC)) : ''));
     else if (window.google && google.script && google.script.history) google.script.history.replace({ layer: 0 }, {}, '');
   } catch (e) {}
 }
@@ -2949,12 +2966,26 @@ async function boot() {
   } else if (HAS_GAS) {
     const loc = await gasLocation();
     params = (loc && loc.parameter) || {}; hash = hashParams(loc && loc.hash);
+  } else if (IS_WEB) {
+    new URLSearchParams(location.search).forEach((v, k) => { params[k] = v; });
+    hash = hashParams(location.hash);
+    EXEC = execFromParam(params.g) || LS.get('exec') || '';
+    if (!EXEC) { S.noGoogle = true; render(); return; }
+    LS.set('exec', EXEC);
   } else { S.noGoogle = true; render(); return; }
   /* erst nach dem Lesen der Adresse: Verlauf zurücksetzen (Google kann dabei die Adresse ändern) */
   try { if (GH) GH.replace({ layer: 0 }); else if (history.state && history.state.layer) history.replaceState(null, ''); } catch (e) {}
   S.openOnLoad = params.p || null;
   S.legacyKey = params.k || '';
   const kind = hash.i ? 'i' : hash.r ? 'r' : '';
+  /* iPhone: Home-Bildschirm-Apps haben eigenen Speicher. Die Einladung dort einlösen, wo man den Stammbaum künftig öffnet. */
+  let iosGo = false; try { iosGo = sessionStorage.getItem('iosGo') === '1'; } catch (e) {}
+  if (kind === 'i' && IS_WEB && IS_IOS && !STANDALONE && !iosGo && !loadSession()) {
+    const v = await dialog(`<div class="dlg-title">Auf dem iPhone als App?</div>
+      <div class="dlg-text">Du kannst den Stammbaum als Symbol auf den Home-Bildschirm legen. Dann öffnet er sich wie eine App. Die Einladung funktioniert nur einmal; löse sie dort ein, wo du den Stammbaum künftig öffnest.</div>
+      <div class="dlg-btns"><button type="button" class="btn" data-v="browser">Im Browser öffnen</button><button type="button" class="btn primary" data-v="home">Als App hinzufügen</button></div>`, { sticky: true });
+    if (v === 'home') { S.iosHint = true; render(); return; }
+  }
   if (kind) {
     let go = true;
     if (loadSession()) go = await confirmDialog({ title: kind === 'i' ? 'Einladung einlösen?' : 'Notfall-Schlüssel verwenden?', text: 'Dieses Gerät hat schon Zugriff auf einen Stammbaum. Der bisherige Zugang auf diesem Gerät wird dabei ersetzt.', ok: 'Einlösen' });

@@ -7,7 +7,7 @@
     <string name="setup_text">Füge den Einladungslink ein, den du per WhatsApp oder E-Mail bekommen hast. Er funktioniert nur einmal; danach öffnet sich der Stammbaum hier direkt. Zum ersten Einrichten nimmst du die Adresse deiner Google-Web-App.</string>
     <string name="setup_tip">Tipp: In WhatsApp den Link lange drücken, dann «Teilen» und «Stammbaum» wählen.</string>
     <string name="link_label">Einladungslink oder Web-App-Adresse</string>
-    <string name="link_invalid">Das ist kein Stammbaum-Link. Er beginnt mit https://script.google.com/macros/s/</string>
+    <string name="link_invalid">Das ist kein Stammbaum-Link. Kopiere den ganzen Einladungslink aus WhatsApp oder der E-Mail.</string>
     <string name="paste">Aus Zwischenablage einfügen</string>
     <string name="open">Stammbaum öffnen</string>
     <string name="link_saved">Link übernommen</string>

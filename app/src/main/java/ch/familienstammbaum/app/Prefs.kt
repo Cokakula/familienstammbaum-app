@@ -104,14 +104,23 @@ object Vault {
 
 /** Hilfen rund um Stammbaum-Links (Google-Web-App-Adresse, Geheimnis hinter dem #) */
 object Links {
-    private val PATTERN = Regex("""https://script\.google\.com/(?:a/macros/[^/\s]+/|macros/)s/[A-Za-z0-9_-]+/(?:exec|dev)(?:\?[^\s"'<>#]*)?(?:#[^\s"'<>]*)?""")
+    private val GAS = Regex("""https://script\.google\.com/(?:a/macros/[^/\s]+/|macros/)s/[A-Za-z0-9_-]+/(?:exec|dev)(?:\?[^\s"'<>#]*)?(?:#[^\s"'<>]*)?""")
+    /** Einladungslink der Webversion: https://<name>.github.io/familienstammbaum-app/?g=<Skript-ID>#i=… */
+    private val WEB = Regex("""https://[A-Za-z0-9-]+\.github\.io/[^\s"'<>?#]*\?(?:[^\s"'<>#]*&)?g=[^\s"'<>&#]+[^\s"'<>]*""")
+    private val SCRIPT_ID = Regex("""^[A-Za-z0-9_-]{10,}$""")
 
-    fun extract(text: String): String? = PATTERN.find(text)?.value?.trimEnd('.', ',', ';', ')', '!')
+    fun extract(text: String): String? = (GAS.find(text) ?: WEB.find(text))?.value?.trimEnd('.', ',', ';', ')', '!')
 
-    /** Nur die Adresse, ohne Parameter und ohne Geheimnis */
+    /** Nur die Adresse der Google-Web-App, ohne Parameter und ohne Geheimnis */
     fun base(link: String): String? {
         val l = extract(link) ?: return null
-        return l.substringBefore('#').substringBefore('?')
+        if (l.startsWith("https://script.google.com/")) return l.substringBefore('#').substringBefore('?')
+        val g = try { Uri.parse(l.substringBefore('#')).getQueryParameter("g") } catch (e: Exception) { null } ?: return null
+        return when {
+            g.startsWith("https://script.google.com/") -> g.substringBefore('#').substringBefore('?')
+            SCRIPT_ID.matches(g) -> "https://script.google.com/macros/s/$g/exec"
+            else -> null
+        }
     }
 
     fun masked(exec: String): String {
