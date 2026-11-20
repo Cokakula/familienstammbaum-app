@@ -78,6 +78,8 @@ object Prefs {
     fun memorialNotified(c: Context): String = sp(c).getString("memorialNotified", "") ?: ""
     fun setMemorialNotified(c: Context, value: String) { sp(c).edit().putString("memorialNotified", value).apply() }
     fun setBackupNotified(c: Context, value: Long) { sp(c).edit().putLong("backupNotified", value).apply() }
+    fun callsNotified(c: Context): String = sp(c).getString("callsNotified", "{}") ?: "{}"
+    fun setCallsNotified(c: Context, value: String) { sp(c).edit().putString("callsNotified", value).apply() }
 }
 
 /** Verschlüsselt kleine Texte mit einem Schlüssel, der den Android-Schlüsselspeicher nie verlässt */

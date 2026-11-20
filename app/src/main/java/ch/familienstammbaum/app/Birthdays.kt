@@ -150,7 +150,8 @@ object Birthdays {
             events.filter { DATE.matches(it.optString("date")) && it.optString("date") >= today }
                 .sortedBy { it.optString("date") + it.optString("time") }.take(8)
                 .forEach { e -> ev.put(JSONObject().put("title", e.optString("title")).put("date", e.optString("date")).put("time", e.optString("time")).put("place", e.optString("place")).put("tree", trees[e.optString("treeId")] ?: "")) }
-            val json = JSONObject().put("ok", true).put("people", out).put("events", ev).toString()
+            val calls = Prefs.cache(context)?.let { runCatching { JSONObject(it).optJSONArray("calls") }.getOrNull() } ?: JSONArray()
+            val json = JSONObject().put("ok", true).put("people", out).put("events", ev).put("calls", calls).toString()
             Prefs.setCache(context, json)
             FamilyWidget.refresh(context)
             parse(json)
@@ -368,6 +369,52 @@ object MemorialReminder {
     }
 }
 
+/** Anruf-Erinnerung: «Zeit, … anzurufen» (aus der zuletzt von der App übergebenen Liste, höchstens alle 3 Tage pro Person) */
+object CallReminder {
+    private const val CHANNEL = "anrufe"
+    private const val DAY = 86_400_000L
+
+    @SuppressLint("MissingPermission")
+    fun check(context: Context) {
+        val json = Prefs.cache(context) ?: return
+        val arr = runCatching { JSONObject(json).optJSONArray("calls") }.getOrNull() ?: return
+        if (arr.length() == 0 || !Birthdays.canNotify(context)) return
+        val now = System.currentTimeMillis()
+        val sent = runCatching { JSONObject(Prefs.callsNotified(context)) }.getOrNull() ?: JSONObject()
+        val nm = context.getSystemService(NotificationManager::class.java) ?: return
+        for (i in 0 until arr.length()) {
+            val o = arr.optJSONObject(i) ?: continue
+            val id = o.optString("id"); if (id.isEmpty()) continue
+            val every = o.optInt("every", 14)
+            val last = o.optLong("last")
+            if (now < last + every * DAY || now < o.optLong("snooze")) continue
+            if (now - sent.optLong(id) < 3 * DAY) continue
+            if (nm.getNotificationChannel(CHANNEL) == null) nm.createNotificationChannel(NotificationChannel(CHANNEL, context.getString(R.string.call_channel), NotificationManager.IMPORTANCE_DEFAULT))
+            val name = o.optString("name").ifBlank { "?" }
+            val days = ((now - last) / DAY).toInt()
+            val code = (id.hashCode() and 0x0FFFFFFF) + 11
+            val open = Intent(context, MainActivity::class.java).apply {
+                putExtra(MainActivity.EXTRA_PERSON, id)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
+            val b = NotificationCompat.Builder(context, CHANNEL)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(context.getString(R.string.call_title, name))
+                .setContentText(context.getString(R.string.call_text, days))
+                .setContentIntent(PendingIntent.getActivity(context, code, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+                .setAutoCancel(true)
+                .setColor(ContextCompat.getColor(context, R.color.accent))
+            val phone = o.optString("phone").filter { it.isDigit() || it == '+' }
+            if (phone.length >= 6) {
+                b.addAction(0, context.getString(R.string.action_call),
+                    PendingIntent.getActivity(context, code + 1, Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone")), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+            }
+            try { NotificationManagerCompat.from(context).notify(code, b.build()); sent.put(id, now) } catch (e: SecurityException) { }
+        }
+        Prefs.setCallsNotified(context, sent.toString())
+    }
+}
+
 /** Läuft einmal am Tag im Hintergrund, auch wenn die App geschlossen ist */
 class BirthdayWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
@@ -375,6 +422,7 @@ class BirthdayWorker(context: Context, params: WorkerParameters) : CoroutineWork
         if (Prefs.remindersOn(c) && Prefs.exec(c) != null) {
             val list = withContext(Dispatchers.IO) { Birthdays.load(c) }
             Birthdays.notifyDue(c, list, LocalDate.now(), force = false)
+            CallReminder.check(c)
         }
         FamilyWidget.refresh(c)
         // Falls Android die Prüfung stark verschoben hat: wieder auf die gewünschte Uhrzeit legen

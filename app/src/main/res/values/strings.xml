@@ -82,4 +82,8 @@
     <string name="widget_bday_age">%1$s · %2$s wird %3$d</string>
     <string name="widget_bday">%1$s · %2$s hat Geburtstag</string>
     <string name="widget_event">%1$s · %2$s</string>
+    <!-- Anruf-Erinnerung -->
+    <string name="call_channel">Anruf-Erinnerungen</string>
+    <string name="call_title">Zeit, %1$s anzurufen</string>
+    <string name="call_text">Letzter Anruf vor %1$d Tagen</string>
 </resources>
