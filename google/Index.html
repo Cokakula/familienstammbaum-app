@@ -1002,11 +1002,11 @@ a.opt{color:var(--ink);text-decoration:none}
 .mini-row .rr-av{flex-direction:row;flex:none}
 .mini-row span.av{display:grid}
 /* ---------- Phase 8: Feiertage, Wichteln, Albanisch für die Kinder, Kerze ---------- */
-.hol-banner.hol-flag{background:linear-gradient(135deg,#FBE3E6,#F6D0D5)}.hol-banner.hol-indep{background:linear-gradient(135deg,#E3EBFB,#D3DFF6)}
+.hol-banner.hol-indep{background:linear-gradient(135deg,#E3EBFB,#D3DFF6)}
 .hol-banner.hol-xmas{background:linear-gradient(135deg,#E2F0E8,#D2E7DA)}.hol-banner.hol-easter{background:linear-gradient(135deg,#FFF6D8,#E9F4E4)}
 .hol-row{gap:12px}.hol-row>svg{width:22px;height:22px;flex:none;color:var(--accent)}.hol-row.off{opacity:.5}
 .hol-ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:1.35rem;flex:none}
-.hol-ic.hol-flag{background:#C8102E}.hol-ic.hol-indep{background:#2B55B5}.hol-ic.hol-xmas{background:#1F5A43}.hol-ic.hol-easter{background:#FFF1C2}
+.hol-ic.hol-indep{background:#2B55B5}.hol-ic.hol-xmas{background:#1F5A43}.hol-ic.hol-easter{background:#FFF1C2}
 .hol-set{padding:2px 14px}
 .w-banner{background:linear-gradient(135deg,#FCE9D6,#F8DCE6)}
 .w-head{display:flex;flex-wrap:wrap;gap:6px 16px;margin:6px 0 14px;color:var(--muted)}.w-head b{color:var(--ink)}
@@ -1111,8 +1111,6 @@ a.opt{color:var(--ink);text-decoration:none}
 :root[data-theme="dark"] .tree-world.life .node .nm,:root[data-theme="dark"] .tree-world.life .node .yr{background:rgba(15,22,17,.85)}:root[data-theme="dark"] .lt-gr{fill:#2C4A2A}:root[data-theme="dark"] .lt-name{fill:#A9CF8E}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tree-world.life .node .av{box-shadow:0 0 0 3px #0F1611,var(--shadow)}}
 :root[data-theme="dark"] .tree-world.life .node .av{box-shadow:0 0 0 3px #0F1611,var(--shadow)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hol-banner.hol-flag{background:#3A1418}}
-:root[data-theme="dark"] .hol-banner.hol-flag{background:#3A1418}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hol-banner.hol-indep{background:#15234A}}
 :root[data-theme="dark"] .hol-banner.hol-indep{background:#15234A}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hol-banner.hol-xmas{background:#12301F}}
@@ -4209,10 +4207,8 @@ function candleBanner() {
   return out.slice(0, 2).map(x => { const lit = candlesOf(x.p.id).some(c => c.d === today && S.me && c.updatedByCred === S.me.id); return `<button type="button" class="term-banner candle-banner" data-open="${esc(x.p.id)}">${avatar(x.p, 40)}<span class="tb-t"><b>${esc(fullName(x.p))}</b><small><span>${esc(x.txt)}</span> · <span>${esc(T(lit ? 'Kerze brennt' : 'Kerze anzünden'))}</span></small></span><span class="cb-ic">${candleSvg(lit)}</span></button>`; }).join('');
 }
 
-/* ---------- Feiertagsgrüsse: 28. November, 17. Februar, Weihnachten, Ostern ---------- */
+/* ---------- Feiertagsgrüsse: 17. Februar (Unabhängigkeit Kosovo), Weihnachten, Ostern ---------- */
 const HOLIDAYS = [
-  { k: 'flag', m: 11, d: 28, since: 1912, de: 'Tag der Flagge', sq: '28 Nëntori – Dita e Flamurit', short: '28 Nëntori', greetDe: 'Alles Gute zum 28. November!', greetSq: 'Gëzuar 28 Nëntorin!',
-    subDe: n => `${n} Jahre Unabhängigkeit Albaniens`, subSq: n => `${n} vjet Pavarësi`, wishDe: 'Mit Stolz und Liebe für unsere Heimat.', wishSq: 'Me krenari e dashuri për atdheun tonë.' },
   { k: 'indep', m: 2, d: 17, since: 2008, de: 'Unabhängigkeitstag Kosovo', sq: 'Dita e Pavarësisë së Kosovës', short: 'Pavarësia', greetDe: 'Alles Gute zum Unabhängigkeitstag!', greetSq: 'Gëzuar Ditën e Pavarësisë!',
     subDe: n => `${n} Jahre Kosovo`, subSq: n => `${n} vjet Kosovë e pavarur`, wishDe: 'Herzliche Grüsse von unserer ganzen Familie.', wishSq: 'Urime nga krejt familja jonë!' },
   { k: 'xmas', m: 12, d: 25, de: 'Weihnachten', sq: 'Krishtlindjet', short: 'Krishtlindjet', greetDe: 'Frohe Weihnachten!', greetSq: 'Gëzuar Krishtlindjet!',
@@ -4244,7 +4240,7 @@ function holBanner() {
   if (holSeen().includes(x.h.k + x.date)) return '';
   return `<button type="button" class="round-banner hol-banner hol-${x.h.k}" data-act="holcard" data-hk="${x.h.k}" data-hd="${x.date}"><span class="rb-ic">${HOL_IC[x.h.k]}</span><span class="rb-t"><b translate="no">${esc(x.h.short)}</b><small><span>${esc(x.inDays === 0 ? T('Heute') : inDaysText(x.inDays))}</span> · <span>${esc(T('Grusskarte an die Familie schicken'))}</span></small></span>${I.chevR}</button>`;
 }
-const HOL_IC = { flag: '🦅', indep: '⭐', xmas: '🎄', easter: '🥚' };
+const HOL_IC = { indep: '⭐', xmas: '🎄', easter: '🥚' };
 function openHolidays() {
   const L = mkLayer('layer', 'hol');
   L.live = true;
@@ -4297,7 +4293,6 @@ function pickPhoto(title) {
   });
 }
 const HOL_THEME = {
-  flag: { a: '#C8102E', b: '#8A0C1E', head: '#FFFFFF', head2: '#111111', ink: '#FFFFFF', soft: 'rgba(255,255,255,.85)', acc: '#111111' },
   indep: { a: '#2B55B5', b: '#1A3681', head: '#F2D27A', head2: '#FFFFFF', ink: '#FFFFFF', soft: 'rgba(255,255,255,.85)', acc: '#D0A650' },
   xmas: { a: '#1F5A43', b: '#0F3326', head: '#F4D27A', head2: '#FFFFFF', ink: '#FFFFFF', soft: 'rgba(255,255,255,.85)', acc: '#D6453D' },
   easter: { a: '#FFF8DF', b: '#E3F1DD', head: '#3E7A4A', head2: '#C2456F', ink: '#2E3B30', soft: '#4A5A4C', acc: '#E8A23A' },
@@ -4306,10 +4301,7 @@ function holDecor(x, k, W, H, th, hasImg) {
   let seed = k.length * 7919 + 13;
   const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
   const star = (cx, cy, r, fill) => { x.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * 0.42 : r; x.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr); } x.closePath(); x.fillStyle = fill; x.fill(); };
-  if (k === 'flag') {
-    x.fillStyle = '#111'; x.fillRect(0, 0, W, 18); x.fillRect(0, H - 18, W, 18);
-    if (hasImg) { x.save(); x.globalAlpha = 0.08; x.fillStyle = '#000'; x.font = '900 520px system-ui, sans-serif'; x.textAlign = 'center'; x.fillText('28', W / 2, H - 140); x.restore(); }
-  } else if (k === 'indep') {
+  if (k === 'indep') {
     for (let i = 0; i < 6; i++) { const dx = (i - 2.5) * 92; star(W / 2 + dx, 62 + Math.pow(Math.abs(dx) / 230, 2) * 34, 22, '#FFFFFF'); }
   } else if (k === 'xmas') {
     x.save(); x.globalAlpha = 0.5;
@@ -4351,7 +4343,6 @@ async function drawHolidayCard(x0, opt, img) {
     if (k === 'xmas') { x.fillStyle = '#2E7D57'; [[0, 150], [70, 200], [140, 250]].forEach(([dy, w]) => { x.beginPath(); x.moveTo(W / 2, cy - 170 + dy); x.lineTo(W / 2 - w, cy - 20 + dy); x.lineTo(W / 2 + w, cy - 20 + dy); x.closePath(); x.fill(); }); x.fillStyle = '#6B4A2B'; x.fillRect(W / 2 - 26, cy + 120, 52, 50); ['#D6453D', '#F4D27A', '#FFFFFF', '#D6453D', '#F4D27A'].forEach((col, i) => { x.beginPath(); x.arc(W / 2 + [-60, 50, -110, 120, 0][i], cy + [-30, 10, 90, 100, 60][i], 13, 0, Math.PI * 2); x.fillStyle = col; x.fill(); }); }
     else if (k === 'easter') { x.save(); x.translate(W / 2, cy); x.rotate(-0.12); x.beginPath(); x.ellipse(0, 0, 140, 185, 0, 0, Math.PI * 2); x.fillStyle = '#F2A7BF'; x.fill(); x.clip(); x.fillStyle = '#FFFFFF'; x.fillRect(-160, -40, 320, 26); x.fillStyle = '#F6D06B'; x.fillRect(-160, 10, 320, 34); x.fillStyle = '#9FD1E8'; x.fillRect(-160, 70, 320, 20); x.restore(); }
     else if (k === 'indep') { for (let i = 0; i < 6; i++) { const a = -Math.PI / 2 + i * Math.PI / 3; const r = 150, cx2 = W / 2 + Math.cos(a) * r, cy2 = cy + Math.sin(a) * r; x.beginPath(); for (let j = 0; j < 10; j++) { const b2 = -Math.PI / 2 + j * Math.PI / 5, rr = j % 2 ? 18 : 42; x.lineTo(cx2 + Math.cos(b2) * rr, cy2 + Math.sin(b2) * rr); } x.closePath(); x.fillStyle = '#FFFFFF'; x.fill(); } }
-    else if (k === 'flag') { x.save(); x.globalAlpha = 0.95; x.fillStyle = '#111'; x.font = '900 300px system-ui, sans-serif'; x.textAlign = 'center'; x.fillText('28', W / 2, cy + 110); x.restore(); }
     y = cy + 260;
   }
   if (sub) line(sub, 700, 44, th.acc === '#111111' ? '#FFFFFF' : th.acc, 70, 28);
@@ -7431,7 +7422,7 @@ async function openTreeMenu() {
       ${S.canWrite ? `<button type="button" class="opt" data-v="baby">${ICN7.baby}<span>Neues Baby<small>Mit Uhrzeit, Gewicht, Grösse und Geburtskarte</small></span></button>` : ''}
       <button type="button" class="opt" data-v="events">${I.cal}<span>Familientreffen<small>${(() => { const e2 = upcomingEvents(365)[0]; return e2 ? esc(e2.title + ' · ' + fmtDate(e2.date, true)) : 'Treffen planen, wer kommt, wer was mitbringt'; })()}</small></span></button>
       <button type="button" class="opt" data-v="round"><span class="ic-emoji">🎉</span><span>Runde Feste<small>Runde Geburtstage und Hochzeitsjubiläen</small></span></button>
-      <button type="button" class="opt" data-v="hol"><span class="ic-emoji">🎄</span><span>Feiertagsgrüsse<small>28 Nëntori, 17 Shkurt, Krishtlindjet, Pashkët</small></span></button>
+      <button type="button" class="opt" data-v="hol"><span class="ic-emoji">🎄</span><span>Feiertagsgrüsse<small>17 Shkurt, Krishtlindjet, Pashkët</small></span></button>
       <button type="button" class="opt" data-v="wichtel"><span class="ic-emoji">🎁</span><span>Wichteln<small>Auslosen, wer wen beschenkt, jeder sieht nur seinen Namen</small></span></button>
       <button type="button" class="opt" data-v="words"><span class="ic-emoji">🗣️</span><span>Albanisch für die Kinder<small>Wortkarten mit den Stimmen der Familie, Spiel</small></span></button>
       <button type="button" class="opt" data-v="calls">${I.phone}<span>Anruf-Erinnerungen<small>Regelmässig die Grosseltern und andere anrufen</small></span></button>
