@@ -190,8 +190,33 @@ object Birthdays {
             val tomorrow = today.plusDays(1)
             list.filter { it.isOn(tomorrow) }.forEach { if (post(context, it, tomorrow, false)) count++ }
         }
+        /* Runde Geburtstage: zwei Wochen vorher Bescheid geben, damit Zeit für ein Fest bleibt */
+        val in14 = today.plusDays(14)
+        list.filter { it.isOn(in14) && it.ageOn(in14) in ROUND_AGES }.forEach { if (postRound(context, it, in14)) count++ }
         Prefs.setLastNotified(context, stamp)
         return count
+    }
+
+    private val ROUND_AGES = setOf(18, 20, 25, 30, 40, 50, 60, 65, 70, 75, 80, 85, 90, 95, 100)
+
+    @SuppressLint("MissingPermission")
+    private fun postRound(context: Context, b: Birthday, date: LocalDate): Boolean {
+        if (!canNotify(context)) return false
+        val age = b.ageOn(date)
+        val code = (b.id.hashCode() and 0x0FFFFFFF) + 3
+        val open = Intent(context, MainActivity::class.java).apply {
+            putExtra(MainActivity.EXTRA_PERSON, b.id)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        val n = NotificationCompat.Builder(context, CHANNEL)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(context.getString(R.string.round_title, b.firstName, age))
+            .setContentText(context.getString(R.string.round_text, formatDate(date)))
+            .setContentIntent(PendingIntent.getActivity(context, code, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+            .setAutoCancel(true)
+            .setColor(ContextCompat.getColor(context, R.color.accent))
+            .build()
+        return try { NotificationManagerCompat.from(context).notify(code, n); true } catch (e: SecurityException) { false }
     }
 
     @SuppressLint("MissingPermission")
