@@ -5,6 +5,8 @@
  *   Google Drive / FS /
  *     «FS Daten»  Tabelle mit verschlüsselten Einträgen (E), Zugängen (Z) und Foto-Verweisen (B)
  *     b/          verschlüsselte Fotos und Vorschaubilder (zufällige Dateinamen)
+ *     g/          verschlüsselte Gedenkseiten (lesbar nur mit dem Schlüssel aus dem Link)
+ *     Sicherungen/ automatische, verschlüsselte Sicherungen
  *
  * Ver- und entschlüsselt wird nur in der App bzw. im Browser der Familienmitglieder.
  * Der Schlüssel steht im Einladungslink hinter dem «#» und wird nie an Google gesendet.
@@ -31,11 +33,14 @@ const API_ = {
   apiCreds: apiCreds, apiAddCred: apiAddCred, apiSetMyMeta: apiSetMyMeta, apiUpdCred: apiUpdCred, apiDelCred: apiDelCred, apiRotate: apiRotate,
   apiStorage: apiStorage, apiLegacyExport: apiLegacyExport, apiLegacyImages: apiLegacyImages, apiLegacyPurge: apiLegacyPurge,
   apiVersion: apiVersion, apiSnapshots: apiSnapshots, apiSnapshotNow: apiSnapshotNow, apiSnapshotRestore: apiSnapshotRestore,
+  apiMemPut: apiMemPut, apiMemGet: apiMemGet, apiMemDel: apiMemDel,
 };
-const VERSION = 2;
+const VERSION = 3;
 const SNAP_DAYS = 7;      // automatische Sicherung höchstens einmal pro Woche (beim Öffnen durch ein Mitglied)
 const SNAP_KEEP = 12;     // so viele automatische Sicherungen bleiben erhalten (etwa drei Monate)
 const TRUSTED_RE = /^vt/; // Notfall-Schlüssel von Vertrauenspersonen (es kann mehrere geben)
+const MEM_RE = /^m[A-Za-z0-9_-]{20,40}$/; // Gedenkseiten
+const MEM_MAX = 8 * 1024 * 1024;
 
 /* ---------- Web-App ---------- */
 function doGet(e) {
@@ -623,4 +628,46 @@ function einrichten() {
   const s = st_();
   Logger.log('Ablage (nur verschlüsselte Daten): ' + s.dir.getUrl());
   Logger.log('Web-App: ' + (appUrl_() || '(erst nach dem Bereitstellen verfügbar)'));
+}
+
+/* ---------- Gedenkseiten ----------
+ * Verschlüsselt in der App; der Schlüssel steht nur im Link hinter dem «#». Lesen darf jede/r mit dem Link,
+ * ohne Anmeldung. Dieses Skript kann den Inhalt nicht lesen. Anlegen und löschen dürfen nur Mitglieder mit Bearbeiten-Rechten.
+ */
+function memMap_() { try { return JSON.parse(props_().getProperty('FS_MEM') || '{}'); } catch (e) { return {}; } }
+function memFolder_() { return folder_(props_(), 'FS_MEMDIR', st_().dir, 'g'); }
+function apiMemPut(a, id, b64) {
+  need_(a, 'edit');
+  id = String(id || '');
+  if (!MEM_RE.test(id)) throw new Error('Ungültige Gedenkseite.');
+  const bytes = Utilities.base64Decode(String(b64 || ''));
+  if (!bytes.length) throw new Error('Leere Datei.');
+  if (bytes.length > MEM_MAX) throw new Error('Die Gedenkseite ist zu gross.');
+  const l = lock_();
+  try {
+    const m = memMap_();
+    if (m[id]) { try { DriveApp.getFileById(m[id].f).setTrashed(true); } catch (e) { /* schon weg */ } }
+    const f = memFolder_().createFile(Utilities.newBlob(bytes, 'application/octet-stream', id));
+    m[id] = { f: f.getId(), t: now_() };
+    props_().setProperty('FS_MEM', JSON.stringify(m));
+  } finally { l.releaseLock(); }
+  return { ok: true };
+}
+function apiMemGet(id) {
+  id = String(id || '');
+  const m = MEM_RE.test(id) ? memMap_()[id] : null;
+  if (!m) throw new Error('Diese Gedenkseite gibt es nicht mehr.');
+  try { return { d: Utilities.base64Encode(DriveApp.getFileById(m.f).getBlob().getBytes()) }; }
+  catch (e) { throw new Error('Diese Gedenkseite gibt es nicht mehr.'); }
+}
+function apiMemDel(a, id) {
+  need_(a, 'edit');
+  id = String(id || '');
+  const l = lock_();
+  try {
+    const m = memMap_();
+    if (m[id]) { try { DriveApp.getFileById(m[id].f).setTrashed(true); } catch (e) { /* schon weg */ } delete m[id]; }
+    props_().setProperty('FS_MEM', JSON.stringify(m));
+  } finally { l.releaseLock(); }
+  return { ok: true };
 }

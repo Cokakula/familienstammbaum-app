@@ -9,4 +9,5 @@
     <color name="danger">#B3261E</color>
     <color name="hint_bg">#F6E7C8</color>
     <color name="icon_bg">#2B5A4C</color>
+    <color name="widget_bg">#F7FAF8</color>
 </resources>

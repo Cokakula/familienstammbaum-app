@@ -107,6 +107,7 @@ object Birthdays {
             val e = r.optJSONArray("e") ?: return null
             val trees = HashMap<String, String>()
             val people = ArrayList<JSONObject>()
+            val events = ArrayList<JSONObject>()
             var lastBackup = sess.optLong("lastBackup")
             var firstCreated = 0L
             var count = 0
@@ -122,6 +123,7 @@ object Birthdays {
                 if (o.has("_del")) continue          // im Papierkorb
                 when (o.optString("k")) {
                     "t" -> { trees[id] = o.optString("name"); lastBackup = maxOf(lastBackup, o.optLong("lastBackup")) }
+                    "e" -> events.add(o)
                     "p" -> {
                         o.put("id", id); people.add(o); count++
                         val c = o.optLong("createdAt"); if (c > 0 && (firstCreated == 0L || c < firstCreated)) firstCreated = c
@@ -143,8 +145,14 @@ object Birthdays {
             }
             BackupReminder.check(context, sess.optBoolean("admin"), lastBackup, firstCreated, count)
             if (sess.optBoolean("memorials")) MemorialReminder.check(context, people)
-            val json = JSONObject().put("ok", true).put("people", out).toString()
+            val today = LocalDate.now().toString()
+            val ev = JSONArray()
+            events.filter { DATE.matches(it.optString("date")) && it.optString("date") >= today }
+                .sortedBy { it.optString("date") + it.optString("time") }.take(8)
+                .forEach { e -> ev.put(JSONObject().put("title", e.optString("title")).put("date", e.optString("date")).put("time", e.optString("time")).put("place", e.optString("place")).put("tree", trees[e.optString("treeId")] ?: "")) }
+            val json = JSONObject().put("ok", true).put("people", out).put("events", ev).toString()
             Prefs.setCache(context, json)
+            FamilyWidget.refresh(context)
             parse(json)
         } catch (e: Exception) {
             null
@@ -368,6 +376,7 @@ class BirthdayWorker(context: Context, params: WorkerParameters) : CoroutineWork
             val list = withContext(Dispatchers.IO) { Birthdays.load(c) }
             Birthdays.notifyDue(c, list, LocalDate.now(), force = false)
         }
+        FamilyWidget.refresh(c)
         // Falls Android die Prüfung stark verschoben hat: wieder auf die gewünschte Uhrzeit legen
         if (Birthdays.minutesOff(c) > 120) Birthdays.schedule(c, update = true)
         return Result.success()

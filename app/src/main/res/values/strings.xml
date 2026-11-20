@@ -70,4 +70,16 @@
     <string name="lock_subtitle">Zum Öffnen entsperren</string>
     <string name="lock_text">Der Stammbaum ist gesperrt.</string>
     <string name="unlock">Entsperren</string>
+    <!-- Widget auf dem Startbildschirm -->
+    <string name="widget_name">Geburtstage und Treffen</string>
+    <string name="widget_desc">Die nächsten Geburtstage und Familientreffen</string>
+    <string name="widget_title">Familienstammbaum</string>
+    <string name="widget_empty">Öffne die App einmal, dann erscheinen hier die nächsten Geburtstage.</string>
+    <string name="widget_none">In den nächsten Wochen keine Geburtstage.</string>
+    <string name="widget_today">Heute</string>
+    <string name="widget_tomorrow">Morgen</string>
+    <string name="widget_in_days">In %1$d Tagen</string>
+    <string name="widget_bday_age">%1$s · %2$s wird %3$d</string>
+    <string name="widget_bday">%1$s · %2$s hat Geburtstag</string>
+    <string name="widget_event">%1$s · %2$s</string>
 </resources>

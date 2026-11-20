@@ -8,4 +8,5 @@
     <color name="muted">#9AABA3</color>
     <color name="danger">#F2B8B5</color>
     <color name="hint_bg">#3A3220</color>
+    <color name="widget_bg">#1A2420</color>
 </resources>

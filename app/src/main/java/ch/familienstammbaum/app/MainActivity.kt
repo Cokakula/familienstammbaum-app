@@ -3,6 +3,7 @@ package ch.familienstammbaum.app
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
+import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -15,6 +16,8 @@ import android.os.SystemClock
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.util.Base64
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -48,6 +51,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
+import java.util.Locale
 
 /**
  * Zeigt die Stammbaum-Oberfläche. Sie steckt in der App selbst (nicht bei Google) und entschlüsselt die Daten
@@ -94,6 +98,11 @@ class MainActivity : AppCompatActivity() {
     private var internalNav = false
     private var unlocked = false
     private var backgroundAt = 0L
+    /* Vorlesen mit der Android-Sprachausgabe */
+    private var tts: TextToSpeech? = null
+    @Volatile private var ttsReady = false
+    @Volatile private var ttsId = ""
+    @Volatile private var ttsLast = ""
 
     private val pickFiles = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val callback = fileCallback
@@ -188,7 +197,52 @@ class MainActivity : AppCompatActivity() {
 
         Birthdays.ensureChannel(this)
         Birthdays.schedule(this, update = false)
+        FamilyWidget.refresh(this)
         handleIntent(intent, initial = true)
+        initTts()
+    }
+
+    override fun onDestroy() {
+        try { tts?.stop(); tts?.shutdown() } catch (e: Exception) { }
+        tts = null
+        super.onDestroy()
+    }
+
+    /* ---------- Vorlesen ---------- */
+    private fun initTts() {
+        try {
+            tts = TextToSpeech(this) { status ->
+                ttsReady = status == TextToSpeech.SUCCESS
+                tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                    override fun onStart(utteranceId: String?) {}
+                    override fun onDone(utteranceId: String?) { if (utteranceId != null && utteranceId == ttsLast) ttsDone() }
+                    @Deprecated("Deprecated in Java")
+                    override fun onError(utteranceId: String?) { ttsDone() }
+                    override fun onError(utteranceId: String?, errorCode: Int) { ttsDone() }
+                })
+            }
+        } catch (e: Exception) { tts = null }
+    }
+
+    private fun ttsDone() {
+        val id = ttsId
+        ttsId = ""
+        runOnUiThread { web.evaluateJavascript("window.__ttsDone && window.__ttsDone(${JSONObject.quote(id)})", null) }
+    }
+
+    /** Langen Text an Satzenden in Stücke teilen, die die Sprachausgabe annimmt */
+    private fun ttsChunks(text: String, max: Int): List<String> {
+        val out = ArrayList<String>()
+        var rest = text.trim()
+        while (rest.length > max) {
+            var cut = rest.lastIndexOfAny(charArrayOf('.', '!', '?', '\n'), max)
+            if (cut < max / 3) cut = rest.lastIndexOf(' ', max)
+            if (cut < max / 3) cut = max - 1
+            out.add(rest.substring(0, cut + 1).trim())
+            rest = rest.substring(cut + 1).trim()
+        }
+        if (rest.isNotEmpty()) out.add(rest)
+        return out
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -395,7 +449,24 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread { Birthdays.schedule(this@MainActivity, update = false) }
         }
         @JavascriptInterface fun clearSession() { if (!ours()) return; Prefs.clearSession(this@MainActivity) }
-        @JavascriptInterface fun saveBirthdays(json: String) { if (!ours()) return; Prefs.setCache(this@MainActivity, json) }
+        @JavascriptInterface fun saveBirthdays(json: String) { if (!ours()) return; Prefs.setCache(this@MainActivity, json); FamilyWidget.refresh(this@MainActivity) }
+        /* Vorlesen: "ok", "nolang" (keine Stimme für die Sprache) oder "no" */
+        @JavascriptInterface fun speak(id: String, text: String, lang: String): String {
+            if (!ours()) return "no"
+            val t = tts ?: return "no"
+            if (!ttsReady) return "no"
+            val tries = if (lang == "sq") listOf(Locale("sq", "XK"), Locale("sq", "AL"), Locale("sq")) else listOf(Locale("de", "CH"), Locale.GERMANY, Locale.GERMAN)
+            val loc = tries.firstOrNull { t.isLanguageAvailable(it) >= TextToSpeech.LANG_AVAILABLE } ?: return "nolang"
+            t.setLanguage(loc)
+            t.setSpeechRate(0.92f)
+            val parts = ttsChunks(text, TextToSpeech.getMaxSpeechInputLength() - 20)
+            if (parts.isEmpty()) return "no"
+            ttsId = id
+            ttsLast = "$id#${parts.size - 1}"
+            parts.forEachIndexed { i, p -> t.speak(p, if (i == 0) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD, null, "$id#$i") }
+            return "ok"
+        }
+        @JavascriptInterface fun stopSpeak() { if (!ours()) return; ttsId = ""; ttsLast = ""; try { tts?.stop() } catch (e: Exception) { } }
         @JavascriptInterface fun http(id: Int, url: String, body: String) {
             if (!ours() || url != Prefs.exec(this@MainActivity)) { respond(id, false, "Ungültige Adresse"); return }
             Thread { try { respond(id, true, Net.post(url, body)) } catch (e: Exception) { respond(id, false, e.message ?: "Fehler") } }.start()
@@ -424,6 +495,28 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread {
                 val i = Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType(saveMime).putExtra(Intent.EXTRA_TITLE, saveName)
                 try { internalNav = true; createDoc.launch(i) } catch (e: ActivityNotFoundException) { internalNav = false; finishSave(false) }
+            }
+        }
+        /* Datei teilen, z.B. eine Glückwunschkarte per WhatsApp. Liegt nur kurz im App-Cache. */
+        @JavascriptInterface fun shareEnd(text: String) { if (!ours()) return;
+            try { saveOut?.close() } catch (e: Exception) { }
+            saveOut = null
+            val src = saveFile ?: return
+            runOnUiThread {
+                try {
+                    val dir = File(cacheDir, "teilen").apply { mkdirs(); listFiles()?.forEach { it.delete() } }
+                    val f = File(dir, saveName)
+                    src.renameTo(f)
+                    val uri = FileProvider.getUriForFile(this@MainActivity, "$packageName.dateien", f)
+                    val i = Intent(Intent.ACTION_SEND).setType(saveMime).putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    if (text.isNotBlank()) i.putExtra(Intent.EXTRA_TEXT, text)
+                    i.clipData = ClipData.newRawUri(saveName, uri)
+                    internalNav = true
+                    startActivity(Intent.createChooser(i, null))
+                } catch (e: Exception) {
+                    internalNav = false
+                    Toast.makeText(this@MainActivity, R.string.no_viewer, Toast.LENGTH_LONG).show()
+                }
             }
         }
         /* Datei mit einer passenden App ansehen (z.B. PDF-Betrachter). Liegt nur kurz im App-Cache. */
