@@ -42,7 +42,7 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%;margin:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:1rem;line-height:1.45;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 a{color:var(--accent)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -343,6 +343,126 @@ body.has-full #app{visibility:hidden}
 .lb-taghint{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:rgba(0,0,0,.7);color:#fff;font-size:.84rem;padding:7px 12px;border-radius:12px;pointer-events:none;white-space:nowrap}
 .lb-toggle{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;color:#CFE3D9;font-size:.88rem;min-height:34px}
 .lb-toggle .ic{width:18px;height:18px}
+html.fs-1{font-size:18px}
+html.fs-2{font-size:20.5px}
+html.fs-1 .node .nm,html.fs-2 .node .nm{font-size:13.5px}
+html.fs-1 .node .yr,html.fs-2 .node .yr{font-size:11.5px}
+html.fs-2 .icon-btn{min-width:50px;min-height:50px}
+html.fs-2 .row{min-height:66px}
+.dlg-sec{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:14px 8px 4px}
+.chips-row{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none}
+.chips-row::-webkit-scrollbar{display:none}
+.fchip{flex:none;padding:8px 14px;border-radius:18px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:.86rem;white-space:nowrap}
+.fchip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.linkish{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:2px;padding:0;text-align:left}
+.gap-row{display:flex;align-items:center;gap:8px;padding:8px 10px}
+.gap-row .meta{flex:1;min-width:0;display:flex;flex-direction:column}
+.gap-row .t{font-weight:600;color:var(--ink);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gap-row .s{font-size:.8rem;color:var(--muted)}
+.ask-preview{white-space:pre-line;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.9rem}
+.dup-card{padding:10px;margin-bottom:12px;display:flex;flex-direction:column;gap:4px}
+.dup-p{display:flex;align-items:center;gap:12px;padding:6px;border-radius:12px;text-align:left}
+.dup-p .meta{display:flex;flex-direction:column;min-width:0}
+.dup-p .t{font-weight:600}
+.dup-p .s{font-size:.8rem;color:var(--muted)}
+.dup-acts{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;padding-top:6px}
+.merge-form{display:flex;flex-direction:column;gap:12px}
+.merge-f{display:flex;flex-direction:column;gap:4px}
+.merge-f .lbl{font-size:.8rem;font-weight:700;color:var(--muted)}
+.radio{display:flex;align-items:center;gap:10px;min-height:40px}
+.chron{position:relative;padding-left:4px}
+.chron-dec{font-family:var(--font-head,inherit);font-size:1.15rem;margin:18px 0 8px;color:var(--accent)}
+.chron-ev{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;margin-bottom:6px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.chron-y{flex:none;width:76px;font-size:.78rem;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.chron-ic{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.chron-ic .ic{width:18px;height:18px}
+.k-death .chron-ic{background:#ECEAE6;color:#5A5650}
+.k-wed .chron-ic{background:var(--warm-soft);color:var(--warm)}
+.chron-ev .meta{flex:1;min-width:0;display:flex;flex-direction:column}
+.chron-ev .t{font-weight:600;font-size:.92rem}
+.chron-ev .s{font-size:.78rem;color:var(--muted)}
+.chron-th{flex:none;width:44px;height:44px;border-radius:9px;overflow:hidden;background:var(--line)}
+.chron-th img{width:100%;height:100%;object-fit:cover}
+.layer.fmap{display:flex;flex-direction:column}
+.map-chips{padding:4px 16px 8px}
+.map-host{position:relative;flex:1;min-height:300px;overflow:hidden;background:#E8EEEA;touch-action:none;user-select:none}
+.map-host.pick{flex:1}
+.map-tiles img{position:absolute;width:256px;height:256px;max-width:none;pointer-events:none}
+.map-marks{position:absolute;inset:0;pointer-events:none}
+.map-pin{position:absolute;transform:translate(-50%,-100%);pointer-events:auto;width:36px;height:36px;border-radius:50% 50% 50% 0;rotate:-45deg;display:grid;place-items:center;background:var(--accent);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.3);border:2px solid #fff}
+.map-pin>*{rotate:45deg}
+.map-pin .ic{width:18px;height:18px}
+.map-pin.k-grave{background:#5A5650}
+.map-pin.k-photo{background:#3A6F9E}
+.map-pin.k-home{background:var(--warm)}
+.map-pin.many{border-radius:50%;rotate:0deg;transform:translate(-50%,-50%);background:#16201B;width:38px;height:38px}
+.map-pin.many>*{rotate:0deg}
+.map-pin b{font-size:.85rem}
+.map-zoom{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:6px}
+.map-zoom button{width:44px;height:44px;border-radius:12px;background:var(--surface);box-shadow:0 1px 5px rgba(0,0,0,.25);display:grid;place-items:center}
+.map-attr{position:absolute;right:6px;bottom:4px;font-size:.68rem;background:rgba(255,255,255,.85);padding:1px 6px;border-radius:6px;color:#333}
+.map-cross{position:absolute;left:50%;top:50%;width:34px;height:34px;transform:translate(-50%,-50%);pointer-events:none}
+.map-cross::before,.map-cross::after{content:'';position:absolute;background:#C8463D;box-shadow:0 0 0 1px #fff}
+.map-cross::before{left:16px;top:0;width:2px;height:34px}
+.map-cross::after{top:16px;left:0;height:2px;width:34px}
+.map-card{position:absolute;left:10px;right:10px;bottom:calc(14px + env(safe-area-inset-bottom));max-height:45%;overflow:auto;background:var(--surface);border-radius:18px;box-shadow:0 6px 24px rgba(0,0,0,.25);padding:6px}
+.map-card .row{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:8px}
+.map-card .meta{flex:1;min-width:0;display:flex;flex-direction:column}
+.map-card .t{font-weight:600}
+.map-card .s{font-size:.8rem;color:var(--muted)}
+.map-card-x{float:right}
+.layer.mappick{display:flex;flex-direction:column}
+.map-results{background:var(--surface);border-bottom:1px solid var(--line);max-height:40%;overflow:auto}
+.map-results .row{display:flex;width:100%;text-align:left;padding:10px 16px}
+.map-results .meta{display:flex;flex-direction:column}
+.map-results .s{font-size:.78rem;color:var(--muted)}
+.map-results .hint{padding:12px 16px}
+.map-note{font-size:.78rem;color:var(--muted);margin:6px 16px}
+.geo-btn{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:.84rem;color:var(--accent);font-weight:600;min-height:36px}
+.geo-btn .ic{width:17px;height:17px}
+.geo-btn.on{color:var(--warm)}
+.doc-row{display:flex;align-items:center;gap:4px;padding:4px 8px 4px 4px}
+.doc-open{flex:1;display:flex;align-items:center;gap:12px;text-align:left;padding:6px;min-width:0}
+.doc-open .meta{display:flex;flex-direction:column;min-width:0}
+.doc-open .t{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.doc-open .s{font-size:.8rem;color:var(--muted)}
+.av.doc-ic{background:var(--accent-soft);color:var(--accent);border-radius:10px}
+.doc-stage img{max-width:100%;max-height:100%;object-fit:contain}
+.react{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.react-b{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:18px;background:var(--bg);border:1px solid var(--line);font-size:.86rem;font-weight:600;color:var(--muted)}
+.react-b .ic{width:18px;height:18px}
+.react-b.on{color:#C8463D;border-color:#F1C9C5;background:#FDF0EE}
+.react-b.on .ic{fill:#C8463D}
+.react-b[disabled]{opacity:.7}
+.react-who{font-size:.78rem;color:var(--muted)}
+.react.dark .react-b{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.18);color:#E6F0EB}
+.react.dark .react-b.on{background:rgba(200,70,61,.3);color:#FFD2CC}
+.react.dark .react-who{color:#CFE3D9}
+.layer.comments{display:flex;flex-direction:column}
+.cm-thumb{width:96px;height:96px;border-radius:14px;overflow:hidden;margin:4px auto 10px}
+.cm-thumb img{width:100%;height:100%;object-fit:cover}
+.cm-hearts{display:flex;align-items:center;gap:6px;font-size:.86rem;color:#C8463D}
+.cm-hearts .ic{width:17px;height:17px;fill:#C8463D}
+.cm{display:flex;gap:10px;margin:10px 0}
+.cm-av{flex:none;width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:.78rem}
+.cm-b{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:8px 10px}
+.cm-h{display:flex;align-items:center;gap:6px;font-size:.84rem}
+.cm-h span{color:var(--muted);font-size:.78rem;flex:1}
+.cm-t{white-space:pre-line;margin-top:2px}
+.cm-form{display:flex;gap:8px;align-items:flex-end;padding:10px 16px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--surface)}
+.cm-form textarea{flex:1;min-height:44px;resize:none;font:inherit}
+.bday.mem .bs{color:var(--muted)}
+.big-check{flex-wrap:wrap}
+.big-check small{flex-basis:100%;padding-left:34px;color:var(--muted);font-size:.8rem;margin-top:-8px}
+.hist{padding:12px 14px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.hist-h{font-size:.9rem}
+.hist-d{display:flex;flex-direction:column;gap:4px;font-size:.86rem}
+.hist-d>div{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.hist-d .k{font-weight:700;color:var(--muted);min-width:88px}
+.hist-d .from{text-decoration:line-through;color:var(--muted)}
+.hist-d .to{font-weight:600}
+.hist-d .ic{width:14px;height:14px;color:var(--muted)}
+.hist .mini-btn{align-self:flex-start}
 .dlg-text.warn{background:var(--warm-soft);border-radius:12px;padding:10px 12px;font-size:.88rem}
 
 
@@ -605,6 +725,10 @@ const FSC = (() => {
   };
 })();
 
+/* Oberfläche auf Shqip: automatisch erzeugt aus i18n/sq*.tsv */
+const SQ_EXACT = {"Januar": "Janar", "Februar": "Shkurt", "März": "Mars", "April": "Prill", "Mai": "Maj", "Juni": "Qershor", "Juli": "Korrik", "August": "Gusht", "September": "Shtator", "Oktober": "Tetor", "November": "Nëntor", "Dezember": "Dhjetor", "Link einfügen": "Ngjit linkun", "Einladungslink oder Adresse der Google-Web-App": "Linku i ftesës ose adresa e Google Web-App", "Öffnen": "Hap", "Das ist kein Stammbaum-Link. Kopiere den ganzen Link aus WhatsApp oder der E-Mail.": "Ky nuk është link i trungut familjar. Kopjo krejt linkun nga WhatsApp ose nga e-maili.", "Unbekannt": "I panjohur", "Ohne Namen": "Pa emër", "Beides": "Të dyja", "Deutsch": "Gjermanisht", "Normal": "Normale", "Gross": "E madhe", "Sehr gross": "Shumë e madhe", "und als Mitteilung": "dhe si njoftim", "Sprache & Darstellung": "Gjuha dhe pamja", "Schriftgrösse auf diesem Gerät": "Madhësia e shkronjave në këtë pajisje", "Gedenktage anzeigen": "Shfaq ditët përkujtimore", "Bezeichnungen anzeigen": "Shfaq emërtimet", "Die albanischen Bezeichnungen sind in kosovarischer Alltagsform, zum Beispiel": "Emërtimet shqip janë në formën e përditshme kosovare, për shembull", "Ungültige Antwort": "Përgjigje e pavlefshme", "Fehler": "Gabim", "Keine Verbindung. Die Änderung bleibt auf diesem Gerät gespeichert und wird später hochgeladen.": "Nuk ka lidhje. Ndryshimi mbetet i ruajtur në këtë pajisje dhe ngarkohet më vonë.", "Speichern in Google ist fehlgeschlagen. Tippe oben auf «Erneut speichern».": "Ruajtja në Google dështoi. Prek lart «Ruaje përsëri».", "Erneut speichern": "Ruaje përsëri", "Speichert": "Po ruhet", "Das hat nicht geklappt. Bitte nochmals versuchen.": "Nuk funksionoi. Të lutem provo përsëri.", "Keine Verbindung zu Google. Prüfe die Internetverbindung.": "Nuk ka lidhje me Google. Kontrollo lidhjen me internet.", "Dein Google-Speicher ist voll.": "Hapësira jote në Google është plot.", "Kopiert": "U kopjua", "Kopieren ist hier nicht möglich.": "Kopjimi nuk është i mundur këtu.", "Abbrechen": "Anulo", "Speichern": "Ruaj", "Person wählen": "Zgjidh personin", "Fertig": "Gati", "Keine passende Person gefunden.": "Nuk u gjet asnjë person i përshtatshëm.", "Deine Änderungen werden hochgeladen, sobald wieder Internet da ist.": "Ndryshimet e tua ngarkohen sapo të ketë sërish internet.", "Stammbaum": "Trungu familjar", "Familienstammbaum": "Trungu familjar", "Du kannst diesen Stammbaum ansehen. Zum Ändern braucht es mehr Rechte vom Admin.": "Mund ta shikosh këtë trung familjar. Për ta ndryshuar të duhen më shumë të drejta nga admini.", "Verschlüsselung einrichten": "Konfiguro enkriptimin", "Öffne den Stammbaum einmal mit deinem bisherigen Admin-Link. Dann werden deine Daten verschlüsselt übernommen.": "Hape trungun një herë me linkun tënd të deritanishëm të adminit. Pastaj të dhënat merren të enkriptuara.", "Jetzt verschlüsseln": "Enkripto tani", "Willkommen": "Mirë se erdhe", "Deine bisherigen Personen und Fotos werden auf diesem Gerät verschlüsselt und neu gespeichert. Danach löscht die App die unverschlüsselten Daten bei Google.": "Personat dhe fotot e tua enkriptohen në këtë pajisje dhe ruhen sërish. Pastaj aplikacioni i fshin të dhënat e paenkriptuara te Google.", "Bisherige Einladungslinks funktionieren danach nicht mehr. Du lädst die Familie neu ein.": "Linqet e vjetra të ftesës pastaj nuk funksionojnë më. E fton familjen përsëri.", "Du richtest den Familienstammbaum ein. Dieses Gerät wird als": "Po e konfiguron trungun familjar. Kjo pajisje ruhet si", "Admin": "Admin", "gespeichert. Danach lädst du Familienmitglieder per WhatsApp oder E-Mail ein.": ". Pastaj i fton anëtarët e familjes me WhatsApp ose e-mail.", "Als Admin einrichten": "Konfiguro si admin", "Alles wird Ende-zu-Ende-verschlüsselt. Google speichert nur unlesbare Daten. Lesen können sie nur du und die Personen, die du einlädst.": "Gjithçka enkriptohet nga skaji në skaj. Google ruan vetëm të dhëna të palexueshme. Mund t'i lexosh vetëm ti dhe personat që i fton.", "Dein Name": "Emri yt", "Kein Zugriff": "Pa qasje", "Öffne den Einladungslink, den du bekommen hast. Er funktioniert nur einmal, danach öffnet sich der Stammbaum auf diesem Gerät direkt.": "Hap linkun e ftesës që e ke marrë. Funksionon vetëm një herë, pastaj trungu hapet drejtpërdrejt në këtë pajisje.", "Einladungslink einfügen": "Ngjit linkun e ftesës", "Notfall-Schlüssel eingeben": "Shkruaj çelësin e emergjencës", "Einladungslink öffnen": "Hap linkun e ftesës", "Öffne den Einladungslink, den du per WhatsApp oder E-Mail bekommen hast. Danach öffnet sich der Stammbaum hier direkt.": "Hap linkun e ftesës që e ke marrë me WhatsApp ose e-mail. Pastaj trungu hapet drejtpërdrejt këtu.", "Zum Home-Bildschirm hinzufügen": "Shto në ekranin kryesor", "Tippe unten auf das Teilen-Symbol (Quadrat mit Pfeil nach oben) → «Zum Home-Bildschirm» → «Hinzufügen». Öffne den Stammbaum dann über das neue Symbol. Die Einladung wird erst dort eingelöst.": "Prek poshtë simbolin e ndarjes (katror me shigjetë lart) → «Në ekranin kryesor» → «Shto». Pastaj hape trungun nga simboli i ri. Ftesa përdoret vetëm atje.", "Doch hier im Browser öffnen": "Megjithatë hape këtu në shfletues", "Kein Stammbaum verbunden": "Asnjë trung familjar i lidhur", "Füge den Einladungslink ein, den du bekommen hast.": "Ngjit linkun e ftesës që e ke marrë.", "Als Google-Web-App öffnen": "Hape si Google Web-App", "Diese Datei läuft als Google-Apps-Script-Web-App oder in der Familienstammbaum-App.": "Ky skedar punon si Google Apps Script Web-App ose në aplikacionin e trungut familjar.", "Daten nicht erreichbar": "Të dhënat nuk arrihen", "Die Verbindung zu deinem Google-Konto hat nicht geklappt. Prüfe die Internetverbindung.": "Lidhja me llogarinë tënde Google nuk funksionoi. Kontrollo lidhjen me internet.", "Erneut versuchen": "Provo përsëri", "Beim ersten Start legt Google die Ablage an. Das dauert einen Moment …": "Në nisjen e parë Google krijon hapësirën. Kjo zgjat një çast …", "Stammbaum wird geladen und entschlüsselt …": "Trungu po ngarkohet dhe dekriptohet …", "Noch niemand im Stammbaum": "Ende askush në trung", "Beginne mit dir selbst. Danach fügst du über deine Karte Eltern, Partner, Geschwister und Kinder hinzu.": "Fillo me veten. Pastaj nga karta jote shton prindërit, partnerin, vëllezërit e motrat dhe fëmijët.", "Hier wurden noch keine Personen erfasst.": "Këtu ende nuk janë regjistruar persona.", "Erste Person anlegen": "Krijo personin e parë", "Noch kein Stammbaum": "Ende asnjë trung familjar", "Hier wurde noch kein Stammbaum angelegt.": "Këtu ende nuk është krijuar asnjë trung familjar.", "Sicherung einspielen": "Rikthe kopjen rezervë", "Eure Familie, Generation für Generation": "Familja juaj, brez pas brezi", "Erfasse Personen mit Geburtstag, Wohnadresse und Telefonnummer, verbinde Eltern, Partner und Kinder und ordne jeder Person beliebig viele Fotos zu.": "Regjistro persona me ditëlindje, adresë dhe numër telefoni, lidh prindërit, partnerët dhe fëmijët dhe çdo personi caktoji sa foto të duash.", "Alles wird verschlüsselt in deinem Google-Konto gespeichert. Lesen können es nur du und die Personen, die du einlädst.": "Gjithçka ruhet e enkriptuar në llogarinë tënde Google. Mund ta lexosh vetëm ti dhe personat që i fton.", "Name des Stammbaums": "Emri i trungut familjar", "Stammbaum anlegen": "Krijo trungun familjar", "Du bist jetzt Admin. Einladungen findest du im Menü oben.": "Tani je admin. Ftesat i gjen në menynë lart.", "Unsere Familie": "Familja jonë", "Erste Person, z.B. du selbst": "Personi i parë, p.sh. ti vetë", "Nachkommen": "Pasardhësit", "Beide Seiten": "Të dyja anët", "Vorfahren": "Paraardhësit", "Von": "Nga", "Familie von": "Familja e", "Vorfahren von …": "Paraardhësit e …", "Familie von …": "Familja e …", "Stammbaum ab …": "Trungu nga …", "Heute 🎉": "Sot 🎉", "Morgen": "Nesër", "Nächste Geburtstage": "Ditëlindjet e ardhshme", "Person": "Person", "Personen": "Persona", "Niemand gefunden.": "Nuk u gjet askush.", "Fotos hinzufügen": "Shto foto", "Foto öffnen": "Hap foton", "Alle Fotos sind mindestens einer Person zugeordnet.": "Të gjitha fotot i janë caktuar së paku një personi.", "Noch keine Fotos. Lade Familienfotos hoch und ordne sie danach einer oder mehreren Personen zu.": "Ende nuk ka foto. Ngarko foto familjare dhe pastaj caktoji një ose më shumë personave.", "Diese Person wurde gelöscht.": "Ky person është fshirë.", "Das bist du": "Ky je ti", "Hauptperson": "Personi kryesor", "Anrufen": "Telefono", "Karte": "Harta", "Im Baum": "Në trung", "Telefon": "Telefoni", "Kopieren": "Kopjo", "Wohnadresse": "Adresa e banimit", "In Google Maps": "Në Google Maps", "E-Mail": "E-mail", "Schreiben": "Shkruaj", "Herkunft": "Prejardhja", "Standort gespeichert": "Vendndodhja u ruajt", "Hinführen": "Udhëzimet", "Grab": "Varri", "Telefonnummer und Wohnadresse ergänzen": "Shto numrin e telefonit dhe adresën", "Keine Kontaktangaben.": "Nuk ka të dhëna kontakti.", "Eltern": "Prindërit", "Kinder": "Fëmijët", "Fotos ansehen": "Shiko fotot", "Foto hinzufügen": "Shto foto", "Profilbild": "Fotoja e profilit", "Weitere Angaben": "Të dhëna të tjera", "Noch keine Verwandten erfasst.": "Ende nuk janë regjistruar të afërm.", "Kind hat": "fëmijë ka", "Kinder haben": "fëmijë kanë", "Verwandtschaft zu einer anderen Person herausfinden": "Gjej lidhjen farefisnore me një person tjetër", "Wie sind wir verwandt?": "Si jemi të afërm?", "Hinzufügen": "Shto", "Noch keine Fotos zugeordnet.": "Ende nuk ka foto të caktuara.", "Notizen": "Shënime", "Das bin ich": "Ky jam unë", "Als Hauptperson festlegen": "Cakto si person kryesor", "Person löschen": "Fshi personin", "Kontakt": "Kontakti", "Familie": "Familja", "Person bearbeiten": "Ndrysho personin", "Neue Person": "Person i ri", "Vorname": "Emri", "Nachname": "Mbiemri", "Geburtsname, falls anders": "Mbiemri i lindjes, nëse ndryshon", "Spitzname": "Nofka", "Geschlecht": "Gjinia", "männlich": "mashkull", "weiblich": "femër", "divers": "tjetër", "Geburtstag": "Ditëlindja", "oder nur das Jahr": "ose vetëm viti", "Geburtsort": "Vendi i lindjes", "Verstorben": "I/E ndjerë", "Todestag": "Data e vdekjes", "Todesort": "Vendi i vdekjes", "Standort des Grabes": "Vendndodhja e varrit", "Hier": "Këtu", "«Hier» nimmt deinen aktuellen Standort, z.B. wenn du am Grab stehst": "«Këtu» merr vendndodhjen tënde aktuale, p.sh. kur je te varri", "Herkunftsort / Dorf": "Vendi i prejardhjes / fshati", "Fis / Vëllazëri": "Fisi / Vëllazëria", "Beruf": "Profesioni", "Beruf / Tätigkeit": "Profesioni / puna", "Bei Verstorbenen: der frühere Beruf": "Te të ndjerët: profesioni i dikurshëm", "Arbeitgeber oder Arbeitsort": "Punëdhënësi ose vendi i punës", "Auf der Karte gesetzt · ändern": "Vendosur në hartë · ndrysho", "Auf Karte setzen (für die Familienkarte)": "Vendose në hartë (për hartën e familjes)", "Elternteil wählen": "Zgjidh prindin", "Partner/in wählen": "Zgjidh partnerin/partneren", "Bitte mindestens Vor- oder Nachnamen eingeben.": "Të lutem shkruaj së paku emrin ose mbiemrin.", "Bitte als TT.MM.JJJJ oder nur das Jahr eingeben.": "Të lutem shkruaje si DD.MM.VVVV ose vetëm vitin.", "Bitte einen Google-Maps-Link oder Koordinaten wie 42.21, 20.74 eingeben.": "Të lutem shkruaj një link të Google Maps ose koordinata si 42.21, 20.74.", "Hochzeit als TT.MM.JJJJ oder Jahr": "Martesa si DD.MM.VVVV ose viti", "Gespeichert": "U ruajt", "Standort übernommen": "Vendndodhja u mor", "Grab auf der Karte": "Varri në hartë", "Herkunftsort": "Vendi i prejardhjes", "Wohnort": "Vendbanimi", "Es gibt keine Kinder mit nur einem eingetragenen Elternteil.": "Nuk ka fëmijë me vetëm një prind të regjistruar.", "diesem Kind": "këtij fëmije", "diesen Kindern": "këtyre fëmijëve", "Ist es ein Kind": "A është fëmijë", "Sind es Kinder": "A janë fëmijë", "Gemeinsame Kinder?": "Fëmijë të përbashkët?", "Nein": "Jo", "Ja, zuordnen": "Po, cakto", "Kind zugeordnet": "Fëmija u caktua", "Neuer Vater": "Babë i ri", "Neue Mutter": "Nënë e re", "Vorhandene Person wählen": "Zgjidh një person ekzistues", "Jemand, der schon im Stammbaum ist": "Dikush që është tashmë në trung", "Neue Person anlegen": "Krijo person të ri", "Es sind schon zwei Elternteile eingetragen.": "Tashmë janë regjistruar dy prindër.", "Verknüpft": "U lidh", "Löschen": "Fshi", "Ohne Internet können keine Fotos, Aufnahmen oder Dokumente hochgeladen werden. Bitte später nochmals versuchen.": "Pa internet nuk mund të ngarkohen foto, incizime ose dokumente. Të lutem provo më vonë.", "Bitte Bilddateien wählen (JPG oder PNG).": "Të lutem zgjidh fotografi (JPG ose PNG).", "Ohne Internet können keine Fotos hochgeladen werden. Bitte später nochmals versuchen.": "Pa internet nuk mund të ngarkohen foto. Të lutem provo më vonë.", "Foto wird verschlüsselt gespeichert …": "Fotoja po ruhet e enkriptuar …", "Foto gespeichert": "Fotoja u ruajt", "Format wird nicht unterstützt, bitte JPG oder PNG verwenden.": "Formati nuk mbështetet, të lutem përdor JPG ose PNG.", "Keine Verbindung zu Google.": "Nuk ka lidhje me Google.", "Bitte nochmals versuchen.": "Të lutem provo përsëri.", "Foto": "Foto", "Tippe auf ein Gesicht und wähle die Person": "Prek një fytyrë dhe zgjidh personin", "Noch keiner Person zugeordnet": "Ende nuk i është caktuar asnjë personi", "Namen ausblenden": "Fshih emrat", "Markieren": "Shëno", "Angaben": "Të dhënat", "Das Foto lädt noch …": "Fotoja ende po ngarkohet …", "Wer ist das?": "Kush është ky?", "Markierung entfernen": "Hiq shënimin", "Profil öffnen": "Hap profilin", "Wer ist auf dem Foto?": "Kush është në foto?", "Zuordnung entfernt": "Caktimi u hoq", "Profilbild für …": "Foto profili për …", "Der GPS-Standort aus dem Foto ist gespeichert (verschlüsselt).": "Vendndodhja GPS nga fotoja është ruajtur (e enkriptuar).", "Ohne GPS-Standort im Foto kannst du den Ort hier eintragen.": "Pa vendndodhje GPS në foto mund ta shkruash vendin këtu.", "GPS-Standort behalten": "Mbaje vendndodhjen GPS", "Angaben zum Foto": "Të dhënat e fotos", "Was ist zu sehen?": "Çfarë shihet?", "Datum": "Data", "Ort": "Vendi", "Datum bitte als TT.MM.JJJJ oder nur Jahr eingeben.": "Të lutem shkruaj datën si DD.MM.VVVV ose vetëm vitin.", "Foto löschen?": "Ta fshij foton?", "Foto im Papierkorb": "Fotoja është në kosh", "Neuen Stammbaum anlegen": "Krijo trung të ri familjar", "Noch nicht festgelegt": "Ende i pacaktuar", "Umbenennen": "Riemërto", "Änderung": "ndryshim", "Änderungen": "ndryshime", "Was andere zuletzt ergänzt haben": "Çfarë kanë shtuar të tjerët së fundi", "Nichts fehlt": "Nuk mungon asgjë", "Entdecken": "Zbulo", "Verwandtschaft zwischen zwei Personen": "Lidhja farefisnore mes dy personave", "Neu im Stammbaum": "E re në trung", "Familienchronik": "Kronika e familjes", "Geburten, Hochzeiten, Fotos und Erinnerungen nach Jahren": "Lindje, martesa, foto dhe kujtime sipas viteve", "Familienkarte": "Harta e familjes", "Herkunft, Wohnorte, Gräber und Fotoorte": "Prejardhja, vendbanimet, varret dhe vendet e fotove", "Lücken füllen": "Plotëso boshllëqet", "Doppelte Personen": "Persona të dyfishtë", "Ähnliche Einträge finden und zusammenführen": "Gjej regjistrime të ngjashme dhe bashkoji", "Einstellungen und Verwaltung": "Cilësimet dhe administrimi", "– alle Bezeichnungen aus deiner Sicht": "– të gjitha emërtimet nga këndvështrimi yt", "Noch nicht gewählt – Bezeichnungen gelten für die Hauptperson": "Ende e pazgjedhur – emërtimet vlejnë për personin kryesor", "Ich im Stammbaum": "Unë në trung", "– fällig": "– duhet bërë", "Noch keine Sicherung": "Ende asnjë kopje rezervë", "Mitglieder & Zugriff": "Anëtarët dhe qasja", "Einladen, Rechte vergeben, Notfall-Schlüssel": "Fto, jep të drejta, çelësi i emergjencës", "Sicherung aufs Gerät": "Kopje rezervë në pajisje", "Ansehen": "Shiko", "Eintrag": "regjistrim", "Einträge": "regjistrime", "Papierkorb": "Koshi", "Ausdrucken und teilen": "Printo dhe ndaj", "Als Poster (PDF)": "Si poster (PDF)", "Aktuelle Baumansicht zum Ausdrucken": "Pamja aktuale e trungut për printim", "Familienbuch (PDF)": "Libri i familjes (PDF)", "Eine Seite pro Person mit Foto, Familie und Erinnerungen": "Një faqe për person me foto, familje dhe kujtime", "Geburtstage in den Kalender": "Ditëlindjet në kalendar", "Kalenderdatei fürs iPhone und andere Kalender": "Skedar kalendari për iPhone dhe kalendarë të tjerë", "GEDCOM-Datei exportieren": "Eksporto skedarin GEDCOM", "Unverschlüsselt, z.B. für Ahnenblatt oder MyHeritage": "Pa enkriptim, p.sh. për Ahnenblatt ose MyHeritage", "Aus MyHeritage / Ancestry importieren": "Importo nga MyHeritage / Ancestry", "App-Einstellungen": "Cilësimet e aplikacionit", "Geburtstags-Erinnerungen und App-Sperre": "Kujtesat e ditëlindjeve dhe kyçja e aplikacionit", "Google-Speicher wird geprüft …": "Po kontrollohet hapësira në Google …", "Stammbaum löschen": "Fshi trungun familjar", "Stammbäume": "Trungjet familjare", "Bezeichnungen Deutsch/Shqip, Schriftgrösse, Gedenktage": "Emërtimet gjermanisht/shqip, madhësia e shkronjave, ditët përkujtimore", "Neu laden": "Ringarko", "Änderungen von anderen Geräten holen": "Merr ndryshimet nga pajisjet e tjera", "Schliessen": "Mbyll", "Wer bist du im Stammbaum?": "Kush je ti në trung?", "Aktualisiert": "U përditësua", "Neuer Stammbaum": "Trung i ri familjar", "Name": "Emri", "z.B. Familie Meier": "p.sh. Familja Berisha", "Anlegen": "Krijo", "Stammbaum umbenennen": "Riemërto trungun", "Hauptperson wählen": "Zgjidh personin kryesor", "Fotos": "Fotot", "Endgültig löschen": "Fshi përfundimisht", "Stammbaum gelöscht": "Trungu u fshi", "Bearbeiten": "Ndrysho", "Kann alles ansehen, aber nichts ändern.": "Mund të shikojë gjithçka, por nuk ndryshon asgjë.", "Kann Personen und Fotos hinzufügen und ändern.": "Mund të shtojë dhe ndryshojë persona dhe foto.", "Kann zusätzlich Mitglieder einladen und Rechte vergeben.": "Mund edhe të ftojë anëtarë dhe të japë të drejta.", "Mitglieder werden geladen …": "Anëtarët po ngarkohen …", "Einladung noch nicht geöffnet": "Ftesa ende nuk është hapur", "Noch keiner vorhanden.": "Ende nuk ka asnjë.", "Person einladen": "Fto një person", "Auf weiterem Gerät öffnen": "Hape në një pajisje tjetër", "Jede Einladung funktioniert nur einmal. Danach gilt der Zugang nur auf dem Gerät, auf dem sie geöffnet wurde. Ein weitergeleiteter Link ist dann wertlos.": "Çdo ftesë funksionon vetëm një herë. Pastaj qasja vlen vetëm në pajisjen ku u hap. Një link i përcjellë pastaj nuk vlen më.", "Mitglieder": "Anëtarët", "Notfall-Schlüssel": "Çelësi i emergjencës", "Neuen Notfall-Schlüssel erstellen": "Krijo çelës të ri emergjence", "Sicherheit": "Siguria", "Alle Angaben und Fotos sind Ende-zu-Ende-verschlüsselt. Google sieht nur unlesbare Daten. Entfernst du jemanden, wird der Schlüssel automatisch erneuert.": "Të gjitha të dhënat dhe fotot janë të enkriptuara nga skaji në skaj. Google sheh vetëm të dhëna të palexueshme. Nëse heq dikë, çelësi ripërtërihet automatikisht.", "Schlüssel jetzt erneuern": "Ripërtëri çelësin tani", "Ich": "Unë", "Neuen Notfall-Schlüssel erstellen?": "Të krijoj çelës të ri emergjence?", "Der bisherige Notfall-Schlüssel funktioniert danach nicht mehr. Ältere Sicherungsdateien öffnest du weiterhin mit dem Notfall-Schlüssel, der damals galt.": "Çelësi i deritanishëm pastaj nuk funksionon më. Kopjet rezervë më të vjetra i hap me çelësin që vlente atëherë.", "Neu erstellen": "Krijo të ri", "Schlüssel erneuern?": "Ta ripërtërij çelësin?", "Alle Angaben werden mit einem neuen Schlüssel verschlüsselt. Alle Mitglieder behalten ihren Zugang.": "Të gjitha të dhënat enkriptohen me një çelës të ri. Të gjithë anëtarët e mbajnë qasjen.", "Erneuern": "Ripërtëri", "Die Mitglieder konnten nicht geladen werden.": "Anëtarët nuk mund të ngarkoheshin.", "Wer ist das im Stammbaum?": "Kush është ky në trung?", "Person wählen (empfohlen)": "Zgjidh personin (e rekomanduar)", "Dann sieht die Person Vater, Mutter, Cousin usw. gleich aus ihrer eigenen Sicht. Sie kann das später auch selbst wählen.": "Atëherë personi sheh babanë, nënën, kushëririn etj. menjëherë nga këndvështrimi i vet. Mund ta zgjedhë edhe vetë më vonë.", "Nur für Admins sichtbar, ebenfalls verschlüsselt.": "E dukshme vetëm për adminët, gjithashtu e enkriptuar.", "Rechte": "Të drejtat", "Einladung erstellen": "Krijo ftesën", "Bitte einen Namen eingeben.": "Të lutem shkruaj një emër.", "Wird verschlüsselt …": "Po enkriptohet …", "Link für dein weiteres Gerät": "Linku për pajisjen tënde tjetër", "Einladung bereit": "Ftesa është gati", "Öffne diesen Link im Browser des anderen Geräts.": "Hape këtë link në shfletuesin e pajisjes tjetër.", "Einladung zum Familienstammbaum": "Ftesë në trungun familjar", "Teilen …": "Ndaj …", "Mitglied": "Anëtar", "Du (dieses Gerät)": "Ti (kjo pajisje)", "zuletzt geöffnet am": "hapur së fundi më", "Deine eigenen Rechte kannst du nicht ändern.": "Të drejtat e tua nuk mund t'i ndryshosh.", "Noch nicht zugeordnet": "Ende i pacaktuar", "Namen ändern": "Ndrysho emrin", "Person im Stammbaum": "Personi në trung", "Neue Einladung erstellen": "Krijo ftesë të re", "Z.B. bei neuem Handy. Das bisherige Gerät wird ausgesperrt.": "P.sh. kur ke telefon të ri. Pajisja e deritanishme përjashtohet.", "Zugriff entfernen": "Hiq qasjen", "Neue Einladung erstellen?": "Të krijoj ftesë të re?", "Neue Einladung": "Ftesë e re", "Der Zugang funktioniert danach nicht mehr, und der Schlüssel wird erneuert. Die Daten im Stammbaum bleiben erhalten.": "Qasja pastaj nuk funksionon më dhe çelësi ripërtërihet. Të dhënat në trung mbeten.", "Entfernen": "Hiq", "Schlüssel wird erneuert …": "Çelësi po ripërtërihet …", "Bitte zuerst speichern (keine Verbindung).": "Të lutem ruaj fillimisht (nuk ka lidhje).", "Schlüssel erneuert": "Çelësi u ripërtëri", "Standort ist auf diesem Gerät nicht verfügbar": "Vendndodhja nuk është e disponueshme në këtë pajisje", "Standort wird ermittelt …": "Po gjendet vendndodhja …", "Standort nicht erlaubt. Du kannst auch einen Google-Maps-Link einfügen.": "Vendndodhja nuk lejohet. Mund të ngjitësh edhe një link të Google Maps.", "Standort nicht gefunden": "Vendndodhja nuk u gjet", "Erinnerung": "kujtim", "Erinnerungen": "Kujtimet", "Kommentar": "koment", "Kommentare": "komente", "Dokument": "Dokument", "Dokumente": "Dokumentet", "Neu seit deinem letzten Besuch": "E re që nga vizita jote e fundit", "geändert": "ndryshuar", "gelöscht": "fshirë", "neu": "e re", "zu einem Foto": "te një foto", "zu einer Erinnerung": "te një kujtim", "neues Dokument": "dokument i ri", "Sprachaufnahme": "Incizim zëri", "Änderungen von anderen in den letzten 30 Tagen.": "Ndryshimet e të tjerëve në 30 ditët e fundit.", "Keine Änderungen von anderen.": "Nuk ka ndryshime nga të tjerët.", "Das ist dieselbe Person.": "Ky është i njëjti person.", "Zwischen den beiden gibt es im Stammbaum keine Verbindung.": "Mes këtyre dyve nuk ka lidhje në trung.", "Gemeinsame Vorfahren:": "Paraardhës të përbashkët:", "Verwandt durch Heirat": "Të afërm nga martesa", "Schritt": "hap", "Schritte": "hapa", "Start": "Fillimi", "Erste Person": "Personi i parë", "Zweite Person": "Personi i dytë", "Mit": "Me", "erzählt/erfasst von": "treguar/regjistruar nga", "Erzählen": "Trego", "Geschichten und Erinnerungen, auch als Sprachaufnahme, z.B. wie die Grossmutter von früher erzählt.": "Histori dhe kujtime, edhe si incizim zëri, p.sh. si tregon gjyshja për të kaluarën.", "Die Aufnahme wurde nicht gefunden.": "Incizimi nuk u gjet.", "Die Aufnahme lässt sich auf diesem Gerät nicht abspielen.": "Incizimi nuk mund të luhet në këtë pajisje.", "Erinnerung bearbeiten": "Ndrysho kujtimin", "Neue Erinnerung": "Kujtim i ri", "Titel (freiwillig)": "Titulli (sipas dëshirës)", "Bis 5 Minuten. Wird verschlüsselt gespeichert.": "Deri në 5 minuta. Ruhet i enkriptuar.", "Wann war das? (freiwillig)": "Kur ishte kjo? (sipas dëshirës)", "Wer kommt darin vor?": "Kush përmendet?", "Stopp ·": "Ndalo ·", "Verwerfen": "Hidhe", "Neu aufnehmen": "Inçizo përsëri", "Aufnehmen geht auf diesem Gerät nicht.": "Incizimi nuk funksionon në këtë pajisje.", "Aufnahme starten": "Fillo incizimin", "Das Mikrofon ist nicht erlaubt. Bitte in den Einstellungen das Mikrofon für die App oder den Browser erlauben.": "Mikrofoni nuk lejohet. Të lutem lejoje mikrofonin për aplikacionin ose shfletuesin te cilësimet.", "Datum bitte als TT.MM.JJJJ oder Jahr": "Data si DD.MM.VVVV ose viti", "Bitte etwas schreiben oder aufnehmen.": "Të lutem shkruaj ose inçizo diçka.", "Bitte mindestens eine Person wählen.": "Të lutem zgjidh së paku një person.", "Aufnahme wird verschlüsselt …": "Incizimi po enkriptohet …", "Erinnerung gespeichert": "Kujtimi u ruajt", "Abspielen geht hier nicht": "Luajtja nuk funksionon këtu", "Erinnerung löschen?": "Ta fshij kujtimin?", "Erinnerung im Papierkorb": "Kujtimi është në kosh", "Es gibt noch keine Sicherung.": "Ende nuk ka kopje rezervë.", "Zeit für eine Sicherung": "Koha për një kopje rezervë", "In einer Woche": "Pas një jave", "Jetzt sichern": "Bëj kopjen tani", "Sicherung fällig": "Kopja rezervë duhet bërë", "Geburtstag fehlt": "Mungon ditëlindja", "Nur das Geburtsjahr": "Vetëm viti i lindjes", "Eltern fehlen": "Mungojnë prindërit", "Todestag fehlt": "Mungon data e vdekjes", "Kein Foto": "Pa foto", "Geschlecht fehlt": "Mungon gjinia", "Mann": "Burri", "Frau": "Gruaja", "Fragen": "Pyet", "Keine Lücken – alles erfasst.": "Nuk ka boshllëqe – gjithçka është regjistruar.", "Was im Stammbaum noch fehlt. Mit «Fragen» schickst du die Frage per WhatsApp an jemanden aus der Familie.": "Çfarë mungon ende në trung. Me «Pyet» ia dërgon pyetjen me WhatsApp dikujt nga familja.", "Ausgeblendet": "U fsheh", "Frage an die Familie": "Pyetje për familjen", "Kopieren geht hier nicht": "Kopjimi nuk funksionon këtu", "Eltern:": "Prindërit:", "Partner:": "Partneri:", "keine weiteren Angaben": "pa të dhëna të tjera", "Verschiedene Personen": "Persona të ndryshëm", "Zusammenführen": "Bashkoji", "Keine doppelten Personen gefunden.": "Nuk u gjetën persona të dyfishtë.", "Personen mit gleichem oder sehr ähnlichem Namen und passenden Lebensdaten. Beim Zusammenführen bleiben alle Fotos, Erinnerungen und Verknüpfungen erhalten.": "Persona me emër të njëjtë ose shumë të ngjashëm dhe data të përputhshme. Gjatë bashkimit ruhen të gjitha fotot, kujtimet dhe lidhjet.", "Geburtsname": "Mbiemri i lindjes", "Fis": "Fisi", "Arbeitgeber": "Punëdhënësi", "Adresse": "Adresa", "Wähle, welche Angabe stimmt:": "Zgjidh cila e dhënë është e saktë:", "Zusammenführen rückgängig gemacht": "Bashkimi u anulua", "Alles": "Të gjitha", "Wohnorte": "Vendbanimet", "Gräber": "Varret", "Noch keine Orte mit Standort. Auf die Karte kommen Fotos mit GPS, Gräber mit Standort und Herkunftsorte und Wohnadressen, bei denen du im Formular «Auf Karte» gewählt hast.": "Ende nuk ka vende me vendndodhje. Në hartë dalin fotot me GPS, varret me vendndodhje dhe vendet e prejardhjes e adresat për të cilat ke zgjedhur «Në hartë» në formular.", "Ort wählen": "Zgjidh vendin", "Karte verschieben, bis das Kreuz auf dem Ort steht. Die Suche schickt nur den eingegebenen Ortsnamen an OpenStreetMap.": "Lëviz hartën derisa kryqi të jetë mbi vendin. Kërkimi i dërgon OpenStreetMap vetëm emrin e vendit që shkruan.", "Mein Standort": "Vendndodhja ime", "Übernehmen": "Merre", "Suche …": "Po kërkoj …", "Nichts gefunden.": "Nuk u gjet asgjë.", "Suche geht gerade nicht. Du kannst die Karte auch von Hand verschieben.": "Kërkimi nuk funksionon tani. Mund ta lëvizësh hartën edhe me dorë.", "Ort suchen oder Google-Maps-Link einfügen": "Kërko vendin ose ngjit linkun e Google Maps", "Bild": "Foto", "Alte Briefe, Urkunden, Zeugnisse oder Ausweise der Verstorbenen als Foto oder PDF, verschlüsselt.": "Letra të vjetra, certifikata, dëftesa ose letërnjoftime të të ndjerëve si foto ose PDF, të enkriptuara.", "Dokument bearbeiten": "Ndrysho dokumentin", "Dokument speichern": "Ruaj dokumentin", "Bezeichnung": "Emërtimi", "Datum (freiwillig)": "Data (sipas dëshirës)", "Dokument löschen?": "Ta fshij dokumentin?", "Dokument im Papierkorb": "Dokumenti është në kosh", "Bitte ein Bild oder ein PDF wählen.": "Të lutem zgjidh një foto ose një PDF.", "Dokument wird verschlüsselt …": "Dokumenti po enkriptohet …", "Dokument gespeichert": "Dokumenti u ruajt", "Die Datei wurde nicht gefunden.": "Skedari nuk u gjet.", "Dokument wird entschlüsselt …": "Dokumenti po dekriptohet …", "z.B. Geburtsurkunde, Brief aus Deutschland": "p.sh. certifikata e lindjes, letër nga Gjermania", "Kommentieren": "Komento", "Noch keine Kommentare.": "Ende nuk ka komente.", "Senden": "Dërgo", "Kommentar löschen?": "Ta fshij komentin?", "Kommentar schreiben, z.B. «Das war 1985 in Gjakova!»": "Shkruaj një koment, p.sh. «Kjo ishte më 1985 në Gjakovë!»", "Heute": "Sot", "Jahr": "vit", "Jahren": "vitesh", "Gedenktage": "Ditët përkujtimore", "Standort Grab": "Vendndodhja e varrit", "Karte Herkunft": "Harta e prejardhjes", "Karte Wohnort": "Harta e vendbanimit", "Jemand": "Dikush", "Keine Änderung an den Angaben": "Asnjë ndryshim në të dhëna", "Fassung davor wiederherstellen": "Rikthe versionin e mëparshëm", "Noch keine früheren Fassungen. Sie entstehen, sobald jemand die Angaben ändert.": "Ende nuk ka versione të mëparshme. Krijohen sapo dikush i ndryshon të dhënat.", "Frühere Fassungen der Angaben. Beim Wiederherstellen bleiben Eltern, Partner, Kinder und Fotos unverändert.": "Versionet e mëparshme të të dhënave. Gjatë rikthimit prindërit, partnerët, fëmijët dhe fotot mbeten të pandryshuar.", "Diese Fassung wiederherstellen?": "Ta rikthej këtë version?", "Wiederherstellen": "Rikthe", "Fassung wiederhergestellt": "Versioni u rikthye", "Foto mit": "Foto me", "Geburt": "Lindja", "Hochzeit": "Martesa", "Tod": "Vdekja", "Noch keine Ereignisse mit Datum. Geburtstage, Hochzeiten und Fotos mit Datum erscheinen hier.": "Ende nuk ka ngjarje me datë. Ditëlindjet, martesat dhe fotot me datë shfaqen këtu.", "Rückgängig": "Anulo", "Wiederhergestellt": "U rikthye", "gelöscht von": "fshirë nga", "Tag": "ditë", "Tage": "ditë", "Zurück": "Rikthe", "Der Papierkorb ist leer.": "Koshi është bosh.", "Endgültig löschen?": "Ta fshij përfundimisht?", "Das lässt sich nicht rückgängig machen.": "Kjo nuk mund të anulohet.", "Alles Gute zum Geburtstag!": "Gëzuar ditëlindjen!", "Heute hat Geburtstag": "Sot ka ditëlindjen", "im Stammbaum:": "në trung:", "Dann zeigt die App Vater, Mutter, Cousins usw. aus deiner Sicht. Du kannst das im Menü jederzeit ändern.": "Atëherë aplikacioni e shfaq babanë, nënën, kushërinjtë etj. nga këndvështrimi yt. Mund ta ndryshosh kurdo në meny.", "Ja, das bin ich": "Po, ky jam unë", "Wähle dich selbst aus. Dann zeigt die App Vater, Mutter, Grosseltern, Cousins und alle anderen Bezeichnungen aus deiner Sicht, auf Deutsch und auf Shqip.": "Zgjidh veten. Atëherë aplikacioni e shfaq babanë, nënën, gjyshërit, kushërinjtë dhe të gjitha emërtimet e tjera nga këndvështrimi yt, gjermanisht dhe shqip.", "Später": "Më vonë", "Mich auswählen": "Më zgjidh mua", "Dein Notfall-Schlüssel": "Çelësi yt i emergjencës", "Damit kommst du als Admin an den Stammbaum, auch wenn alle Geräte weg sind. Du brauchst ihn auch für Sicherungsdateien. Ohne ihn kann niemand die Daten wiederherstellen, auch Google nicht.": "Me të arrin si admin te trungu, edhe nëse të gjitha pajisjet janë humbur. Të duhet edhe për kopjet rezervë. Pa të askush nuk mund t'i rikthejë të dhënat, as Google.", "Bewahre ihn getrennt vom Handy auf, z.B. im Passwort-Manager oder ausgedruckt. Wer ihn hat, hat Admin-Zugriff.": "Ruaje veç nga telefoni, p.sh. në menaxherin e fjalëkalimeve ose të printuar. Kush e ka, ka qasje admini.", "Ich habe den Notfall-Schlüssel sicher aufbewahrt": "E kam ruajtur me siguri çelësin e emergjencës", "Weiter": "Vazhdo", "Bitte zuerst den Notfall-Schlüssel sichern und das Häkchen setzen.": "Të lutem ruaje fillimisht çelësin e emergjencës dhe vendos shenjën.", "Ohne gesicherten Notfall-Schlüssel: Erstelle im Menü unter «Mitglieder & Zugriff» einen neuen.": "Pa çelës emergjence të ruajtur: krijo një të ri në meny te «Anëtarët dhe qasja».", "Notfall-Schlüssel (32 Zeichen)": "Çelësi i emergjencës (32 shenja)", "Der Notfall-Schlüssel hat 32 Zeichen (Buchstaben und Ziffern 2–7).": "Çelësi i emergjencës ka 32 shenja (shkronja dhe shifra 2–7).", "Notfall-Schlüssel wird geprüft …": "Çelësi i emergjencës po kontrollohet …", "Zugriff wiederhergestellt": "Qasja u rikthye", "Dieser Notfall-Schlüssel ist nicht gültig.": "Ky çelës emergjence nuk është i vlefshëm.", "Dieser Einladungslink ist nicht mehr gültig. Er funktioniert nur einmal. Bitte frag nach einem neuen.": "Ky link ftese nuk është më i vlefshëm. Funksionon vetëm një herë. Të lutem kërko një të ri.", "Admin (über Notfall-Schlüssel)": "Admin (me çelësin e emergjencës)", "Übernahme fortsetzen?": "Ta vazhdoj marrjen e të dhënave?", "Bei Google liegen noch unverschlüsselte Daten aus der früheren Version. Sie werden jetzt verschlüsselt übernommen und danach gelöscht.": "Te Google ka ende të dhëna të paenkriptuara nga versioni i mëparshëm. Tani merren të enkriptuara dhe pastaj fshihen.", "Fortsetzen": "Vazhdo", "Bisherige Daten werden gelesen …": "Të dhënat e deritanishme po lexohen …", "Personen werden verschlüsselt …": "Personat po enkriptohen …", "Speichern hat nicht geklappt. Bitte nochmals versuchen.": "Ruajtja nuk funksionoi. Të lutem provo përsëri.", "Unverschlüsselte Daten werden bei Google gelöscht …": "Të dhënat e paenkriptuara po fshihen te Google …", "Alles verschlüsselt": "Gjithçka e enkriptuar", "Wichtig:": "E rëndësishme:", "Leere jetzt den Papierkorb in Google Drive (drive.google.com → Papierkorb → «Papierkorb leeren»). Erst dann sind auch die alten Kopien weg.": "Zbraze tani koshin në Google Drive (drive.google.com → Koshi → «Zbraz koshin»). Vetëm atëherë zhduken edhe kopjet e vjetra.", "GEDCOM-Datei exportieren?": "Ta eksportoj skedarin GEDCOM?", "Die Datei ist nicht verschlüsselt. Sie enthält Namen, Daten, Adressen und Telefonnummern dieses Stammbaums. Speichere sie nur an einem sicheren Ort.": "Skedari nuk është i enkriptuar. Përmban emra, data, adresa dhe numra telefoni të këtij trungu. Ruaje vetëm në një vend të sigurt.", "Exportieren": "Eksporto", "GEDCOM-Datei gespeichert": "Skedari GEDCOM u ruajt", "Der Stammbaum ist noch leer.": "Trungu është ende bosh.", "Familienbuch": "Libri i familjes", "Ein PDF mit einer Seite pro Person: Foto, Lebensdaten, Herkunft, Familie und Erinnerungen. Schön zum Ausdrucken oder Verschenken.": "Një PDF me një faqe për person: foto, datat e jetës, prejardhja, familja dhe kujtimet. I bukur për ta printuar ose dhuruar.", "Telefon, E-Mail und Adresse aufnehmen": "Përfshi telefonin, e-mailin dhe adresën", "Erinnerungen und Notizen aufnehmen": "Përfshi kujtimet dhe shënimet", "Das PDF ist nicht verschlüsselt.": "PDF-ja nuk është e enkriptuar.", "PDF erstellen": "Krijo PDF", "Familienbuch wird erstellt …": "Libri i familjes po krijohet …", "Familienbuch gespeichert": "Libri i familjes u ruajt", "Sprachaufnahme in der App": "Incizim zëri në aplikacion", "Inhalt": "Përmbajtja", "Stammbaum als Poster": "Trungu si poster", "Es wird die aktuelle Ansicht als PDF gespeichert:": "Pamja aktuale ruhet si PDF:", "Das PDF ist nicht verschlüsselt. Es enthält Namen, Lebensdaten und Profilbilder.": "PDF-ja nuk është e enkriptuar. Përmban emra, datat e jetës dhe fotot e profilit.", "Poster wird erstellt …": "Posteri po krijohet …", "Vorfahren von": "Paraardhësit e", "Nachkommen ab": "Pasardhësit nga", "Poster gespeichert": "Posteri u ruajt", "Geburtstage": "Ditëlindjet", "Tippe danach auf die geladene Datei und wähle «Alle hinzufügen».": "Pastaj prek skedarin e shkarkuar dhe zgjidh «Shtoji të gjitha».", "Öffne die Datei danach mit deinem Kalender (z.B. Apple Kalender, Outlook oder Google Kalender im Browser unter Einstellungen → Importieren).": "Pastaj hape skedarin me kalendarin tënd (p.sh. Apple Calendar, Outlook ose Google Calendar në shfletues te Cilësimet → Importo).", "Auch Hochzeitstage": "Edhe përvjetorët e martesës", "Auch Gedenktage (Todestage)": "Edhe ditët përkujtimore (përvjetorët e vdekjes)", "Im Kalender sind Namen und Geburtstage nicht mehr verschlüsselt. Bei einem Kalender mit Cloud-Abgleich liegen sie dann auch dort.": "Në kalendar emrat dhe ditëlindjet nuk janë më të enkriptuara. Te një kalendar me sinkronizim në cloud, ato ruhen edhe atje.", "Datei erstellen": "Krijo skedarin", "Keine Geburtstage mit Tag und Monat erfasst.": "Nuk ka ditëlindje me ditë dhe muaj.", "In der Datei wurden keine Personen gefunden.": "Në skedar nuk u gjetën persona.", "In diesen Stammbaum": "Në këtë trung", "Stammbaum importieren": "Importo trungun familjar", "Name des neuen Stammbaums": "Emri i trungut të ri", "Als neuer Stammbaum": "Si trung i ri", "Das ist keine Sicherungsdatei des Familienstammbaums.": "Ky nuk është skedar rezervë i trungut familjar.", "Die Sicherungsdatei ist beschädigt.": "Skedari rezervë është i dëmtuar.", "Sicherung wird vorbereitet …": "Kopja rezervë po përgatitet …", "Erstelle zuerst unter «Mitglieder & Zugriff» einen Notfall-Schlüssel.": "Krijo fillimisht një çelës emergjence te «Anëtarët dhe qasja».", "Das ist keine verschlüsselte Sicherung des Familienstammbaums.": "Kjo nuk është kopje rezervë e enkriptuar e trungut familjar.", "Notfall-Schlüssel der Sicherung": "Çelësi i emergjencës i kopjes rezervë", "Der Notfall-Schlüssel passt nicht zu dieser Sicherung.": "Çelësi i emergjencës nuk përputhet me këtë kopje rezervë.", "Sicherung einspielen?": "Ta rikthej kopjen rezervë?", "Einspielen": "Rikthe", "Einträge werden verschlüsselt gespeichert …": "Regjistrimet po ruhen të enkriptuara …", "Sicherung eingespielt": "Kopja rezervë u rikthye", "Dieses Gerät hat keinen Zugriff mehr. Bitte frag nach einer neuen Einladung.": "Kjo pajisje nuk ka më qasje. Të lutem kërko një ftesë të re.", "Aktualisieren hat nicht geklappt.": "Përditësimi nuk funksionoi.", "Auf dem iPhone als App?": "Si aplikacion në iPhone?", "Du kannst den Stammbaum als Symbol auf den Home-Bildschirm legen. Dann öffnet er sich wie eine App. Die Einladung funktioniert nur einmal; löse sie dort ein, wo du den Stammbaum künftig öffnest.": "Mund ta vendosësh trungun si simbol në ekranin kryesor. Atëherë hapet si aplikacion. Ftesa funksionon vetëm një herë; përdore atje ku do ta hapësh trungun në të ardhmen.", "Im Browser öffnen": "Hape në shfletues", "Als App hinzufügen": "Shto si aplikacion", "Einladung einlösen?": "Ta përdor ftesën?", "Notfall-Schlüssel verwenden?": "Ta përdor çelësin e emergjencës?", "Dieses Gerät hat schon Zugriff auf einen Stammbaum. Der bisherige Zugang auf diesem Gerät wird dabei ersetzt.": "Kjo pajisje ka tashmë qasje në një trung. Qasja e deritanishme në këtë pajisje zëvendësohet.", "Einlösen": "Përdore", "Einladung wird eingelöst …": "Ftesa po përdoret …", "Willkommen! Dieses Gerät hat jetzt Zugriff.": "Mirë se erdhe! Kjo pajisje tani ka qasje.", "Stammbaum wechseln und Einstellungen": "Ndrysho trungun dhe cilësimet", "Person hinzufügen": "Shto person", "Bereiche": "Pjesët", "Baum": "Trungu", "Schriftgrösse": "Madhësia e shkronjave", "Sprache der Bezeichnungen": "Gjuha e emërtimeve", "Name suchen": "Kërko emrin", "z.B. Mark": "p.sh. Arben", "Darstellung": "Pamja", "Stammbaum: mit zwei Fingern zoomen, mit einem Finger verschieben": "Trungu: zmadho me dy gishta, lëviz me një gisht", "Vergrössern": "Zmadho", "Verkleinern": "Zvogëlo", "Ganzen Baum zeigen": "Shfaq krejt trungun", "Zu mir bzw. zur Hauptperson": "Te unë ose te personi kryesor", "Person suchen": "Kërko personin", "Filter": "Filtri", "Alle schliessen": "Mbyll të gjitha", "z.B. Gjyshi Ali": "p.sh. Gjyshi Ali", "TT.MM.JJJJ oder JJJJ": "DD.MM.VVVV ose VVVV", "z.B. Friedhof Prizren, Feld 3": "p.sh. Varrezat e Prizrenit, fusha 3", "Google-Maps-Link oder 42.21, 20.74": "Link i Google Maps ose 42.21, 20.74", "z.B. Gjonaj, Has": "p.sh. Gjonaj, Has", "z.B. Krasniqi": "p.sh. Krasniqi", "z.B. Lehrerin, Elektriker, Studentin": "p.sh. mësuese, elektricist, studente", "z.B. Spital Prizren, selbständig": "p.sh. Spitali i Prizrenit, i vetëpunësuar", "Strasse Nr.&#10;PLZ Ort": "Rruga nr.&#10;Kodi postar, vendi", "Strasse Nr.\\nPLZ Ort": "Rruga nr.\\nKodi postar, vendi", "Erinnerungen, Geschichten …": "Kujtime, histori …", "Hochzeit TT.MM.JJJJ": "Martesa DD.MM.VVVV", "Hochzeitsort": "Vendi i martesës", "Vorheriges Foto": "Fotoja e mëparshme", "Nächstes Foto": "Fotoja tjetër", "z.B. Hochzeit von Anna und Peter in Bern": "p.sh. dasma e Anës dhe Arbenit në Prishtinë", "z.B. Prizren": "p.sh. Prizren", "Deutsch/Shqip, Schriftgrösse, Gedenktage": "Gjermanisht/shqip, madhësia e shkronjave, ditët përkujtimore", "z.B. Arta": "p.sh. Arta", "Einladungslink": "Linku i ftesës", "Tauschen": "Ndërro", "z.B. Die Hochzeit in Gjakova": "p.sh. Dasma në Gjakovë", "Was weisst du darüber? Wer hat es erzählt?": "Çfarë di për këtë? Kush e ka treguar?", "TT.MM.JJJJ oder Jahr": "DD.MM.VVVV ose viti", "Ausblenden": "Fshih", "Herz": "Zemër", "Reihenfolge umkehren": "Kthe renditjen", "Familienstammbaum ·": "Trungu familjar ·", "Import": "Import", "Einträge konnten nicht entschlüsselt werden": "Regjistrimet nuk mund të dekriptoheshin", "Partner/in": "Partneri/ja", "Partner": "Partneri", "Partnerin": "Partnerja", "Vater": "Babai", "Mutter": "Nëna", "Sohn": "Djali", "Tochter": "Çika", "Kind": "Fëmija", "Elternteil": "Prindi", "Geschwister": "Vëllezër e motra", "Kinder hinzufügen": "Shto fëmijë", "Sie": "Ajo", "und": "dhe", "Eltern und Vorfahren": "Prindërit dhe paraardhësit", "Kinder und Nachkommen": "Fëmijët dhe pasardhësit", "Neffen und Nichten": "Nipat dhe mbesat", "Onkel und Tanten": "Axhat, dajat, hallat dhe tezet", "Cousins und Cousinen": "Kushërinjtë dhe kushërirat", "Partner und Angeheiratete": "Partnerët dhe të afërmit nga martesa", "Stiefverwandte": "Të afërmit nga njerku/njerka", "alle Bezeichnungen aus deiner Sicht": "të gjitha emërtimet nga këndvështrimi yt", "Noch nicht gewählt": "Ende e pazgjedhur", "Bezeichnungen gelten für die Hauptperson": "emërtimet vlejnë për personin kryesor", "fällig": "duhet bërë"};
+const SQ_PATS = [["^(.*?)\\ Eine\\ Sicherung\\ auf\\ deinem\\ Gerät\\ schützt\\ den\\ Stammbaum,\\ falls\\ beim\\ Google\\-Konto\\ etwas\\ schiefgeht\\.\\ Sie\\ ist\\ verschlüsselt\\ und\\ lässt\\ sich\\ nur\\ mit\\ dem\\ Notfall\\-Schlüssel\\ öffnen\\.$", "{0} Një kopje rezervë në pajisjen tënde e mbron trungun nëse diçka shkon keq me llogarinë Google. Është e enkriptuar dhe hapet vetëm me çelësin e emergjencës.", [0]], ["^Die\\ Person\\ kommt\\ in\\ den\\ Papierkorb\\ und\\ kann\\ (.*?)\\ Tage\\ lang\\ wiederhergestellt\\ werden,\\ samt\\ Verknüpfungen\\ zu\\ Eltern,\\ Partnern\\ und\\ Kindern\\.\\ Fotos\\ bleiben\\ erhalten\\.$", "Personi shkon në kosh dhe mund të rikthehet brenda {0} ditëve, bashkë me lidhjet me prindërit, partnerët dhe fëmijët. Fotot mbeten.", [0]], ["^(.*?)\\ (.*?)\\ und\\ (.*?)\\ (.*?)\\ werden\\ gelöscht,\\ die\\ Fotodateien\\ landen\\ im\\ Papierkorb\\ von\\ Google\\ Drive\\.\\ Erstelle\\ vorher\\ eine\\ Sicherung,\\ falls\\ du\\ die\\ Angaben\\ behalten\\ möchtest\\.$", "{0} {1} dhe {2} {3} do të fshihen, skedarët e fotove shkojnë në koshin e Google Drive. Bëj më parë një kopje rezervë nëse do t'i ruash të dhënat.", [0, 1, 2, 3]], ["^(.*?)\\ sind\\ jetzt\\ verschlüsselt\\ gespeichert\\.\\ Die\\ unverschlüsselte\\ Tabelle\\ und\\ die\\ alten\\ Fotoordner\\ liegen\\ im\\ Papierkorb\\ von\\ Google\\ Drive\\.$", "{0} tani janë ruajtur të enkriptuara. Tabela e paenkriptuar dhe dosjet e vjetra të fotove janë në koshin e Google Drive.", [0]], ["^Es\\ entsteht\\ eine\\ Kalenderdatei\\ mit\\ allen\\ Geburtstagen\\ dieses\\ Stammbaums,\\ jedes\\ Jahr\\ wiederkehrend,\\ mit\\ Erinnerung\\ am\\ Morgen\\.\\ (.*?)$", "Krijohet një skedar kalendari me të gjitha ditëlindjet e këtij trungu, që përsëriten çdo vit, me kujtesë në mëngjes. {0}", [0]], ["^(.*?)\\ Er\\ funktioniert\\ nur\\ einmal\\.\\ Schliesst\\ du\\ dieses\\ Fenster,\\ ist\\ er\\ nicht\\ mehr\\ abrufbar;\\ dann\\ erstellst\\ du\\ einfach\\ einen\\ neuen\\.$", "{0} Funksionon vetëm një herë. Nëse e mbyll këtë dritare, nuk mund ta marrësh më; atëherë thjesht krijon një të ri.", [0]], ["^Das\\ bisherige\\ Gerät\\ von\\ (.*?)\\ hat\\ danach\\ keinen\\ Zugriff\\ mehr,\\ und\\ der\\ Schlüssel\\ wird\\ erneuert\\.\\ Du\\ schickst\\ (.*?)\\ den\\ neuen\\ Link\\.$", "Pajisja e deritanishme e {0} pastaj nuk ka më qasje dhe çelësi ripërtërihet. Ia dërgon {1} linkun e ri.", [0, 1]], ["^(.*?)\\ Personen\\ und\\ (.*?)\\ Familien(.*?)\\ gefunden\\.\\ Alles\\ wird\\ verschlüsselt\\ gespeichert\\.\\ Fotos\\ aus\\ der\\ Datei\\ werden\\ nicht\\ übernommen\\.$", "U gjetën {0} persona dhe {1} familje{2}. Gjithçka ruhet e enkriptuar. Fotot nga skedari nuk merren.", [0, 1, 2]], ["^Bisher\\ hatten\\ Zugriff:\\ (.*?)\\.\\ Ihre\\ alten\\ Links\\ funktionieren\\ nicht\\ mehr\\.\\ Lade\\ sie\\ unter\\ «Mitglieder\\ \\&\\ Zugriff»\\ neu\\ ein\\.$", "Deri tani kishin qasje: {0}. Linqet e tyre të vjetra nuk funksionojnë më. Ftoji përsëri te «Anëtarët dhe qasja».", [0]], ["^(.*?)\\ und\\ (.*?)\\ werden\\ zu\\ einer\\ Person\\.\\ Fotos,\\ Erinnerungen,\\ Eltern,\\ Partner\\ und\\ Kinder\\ beider\\ Einträge\\ bleiben\\ erhalten\\.(.*?)$", "{0} dhe {1} bëhen një person. Fotot, kujtimet, prindërit, partnerët dhe fëmijët e të dy regjistrimeve ruhen.{2}", [0, 1, 2]], ["^Sicherung(.*?):\\ (.*?)\\ Stammbäume,\\ (.*?)\\ Personen,\\ (.*?)\\ Fotos(.*?)\\.\\ Einträge,\\ die\\ es\\ schon\\ gibt,\\ werden\\ durch\\ die\\ Sicherung\\ ersetzt\\.(.*?)$", "Kopja rezervë{0}: {1} trungje, {2} persona, {3} foto{4}. Regjistrimet që ekzistojnë zëvendësohen nga kopja rezervë.{5}", [0, 1, 2, 3, 4, 5]], ["^Die\\ Angaben\\ von\\ (.*?)\\ werden\\ auf\\ den\\ Stand\\ vor\\ dieser\\ Änderung\\ gesetzt\\.\\ Die\\ jetzige\\ Fassung\\ bleibt\\ im\\ Verlauf\\.$", "Të dhënat e {0} kthehen në gjendjen para këtij ndryshimi. Versioni i tanishëm mbetet në historik.", [0]], ["^(.*?)Damit\\ kommst\\ du\\ als\\ Admin\\ an\\ den\\ Stammbaum\\ und\\ an\\ Sicherungsdateien,\\ auch\\ wenn\\ alle\\ Geräte\\ weg\\ sind\\.$", "{0}Me të arrin si admin te trungu dhe te kopjet rezervë, edhe nëse të gjitha pajisjet janë humbur.", [0]], ["^Gelöschte\\ Personen,\\ Fotos\\ und\\ Erinnerungen\\ bleiben\\ (.*?)\\ Tage\\ hier\\ und\\ werden\\ dann\\ endgültig\\ gelöscht\\.$", "Personat, fotot dhe kujtimet e fshira qëndrojnë këtu {0} ditë dhe pastaj fshihen përfundimisht.", [0]], ["^Das\\ Foto\\ kommt\\ in\\ den\\ Papierkorb\\ und\\ kann\\ (.*?)\\ Tage\\ lang\\ wiederhergestellt\\ werden\\.$", "Fotoja shkon në kosh dhe mund të rikthehet brenda {0} ditëve.", [0]], ["^Sicherung\\ gespeichert\\ \\((.*?)\\)\\.\\ Öffnen\\ lässt\\ sie\\ sich\\ nur\\ mit\\ dem\\ Notfall\\-Schlüssel\\.$", "Kopja rezervë u ruajt ({0}). Hapet vetëm me çelësin e emergjencës.", [0]], ["^Sie\\ kommt\\ in\\ den\\ Papierkorb\\ und\\ kann\\ (.*?)\\ Tage\\ lang\\ wiederhergestellt\\ werden\\.$", "Shkon në kosh dhe mund të rikthehet brenda {0} ditëve.", [0]], ["^Es\\ kommt\\ in\\ den\\ Papierkorb\\ und\\ kann\\ (.*?)\\ Tage\\ lang\\ wiederhergestellt\\ werden\\.$", "Shkon në kosh dhe mund të rikthehet brenda {0} ditëve.", [0]], ["^(.*?)\\ Fotos\\ konnten\\ nicht\\ gelesen\\ werden\\ und\\ wurden\\ nicht\\ übernommen\\.$", "{0} foto nuk mund të lexoheshin dhe nuk u morën.", [0]], ["^Bei\\ (.*?)\\ ist\\ bisher\\ nur\\ ein\\ Elternteil\\ eingetragen\\.\\ (.*?)\\ von$", "Te {0} deri tani është regjistruar vetëm një prind. {1} i/e", [0, 1]], ["^(.*?)\\ ·\\ für\\ alle,\\ die\\ sich\\ noch\\ nicht\\ gewählt\\ haben$", "{0} · për të gjithë që ende nuk e kanë zgjedhur veten", [0]], ["^(.*?)\\ sieht\\ den\\ Stammbaum\\ jetzt\\ aus\\ der\\ Sicht\\ von\\ (.*?)$", "{0} tani e sheh trungun nga këndvështrimi i {1}", [0, 1]], ["^Die\\ beiden\\ sind\\ über\\ (.*?)\\ (.*?)\\ miteinander\\ verbunden\\.$", "Të dy janë të lidhur nëpërmjet {0} {1}.", [0, 1]], ["^Alles\\ wird\\ jetzt\\ aus\\ der\\ Sicht\\ von\\ (.*?)\\ angezeigt$", "Gjithçka tani shfaqet nga këndvështrimi i {0}", [0]], ["^Foto\\ (.*?)\\ von\\ (.*?)\\ wird\\ verschlüsselt\\ gespeichert\\ …$", "Fotoja {0} nga {1} po ruhet e enkriptuar …", [0, 1]], ["^Ohne\\ Verbindung\\.\\ Du\\ siehst\\ den\\ Stand\\ von\\ (.*?)\\.(.*?)$", "Pa lidhje. Po sheh gjendjen nga {0}.{1}", [0, 1]], ["^Das\\ Dokument\\ ist\\ zu\\ gross\\ \\(höchstens\\ (.*?)\\)\\.$", "Dokumenti është shumë i madh (më së shumti {0}).", [0]], ["^Die\\ letzte\\ Sicherung\\ ist\\ (.*?)\\ Tage\\ alt\\ \\((.*?)\\)\\.$", "Kopja e fundit rezervë është {0} ditë e vjetër ({1}).", [0, 1]], ["^(.*?)\\ ·\\ verschlüsselt,\\ mit\\ allen\\ Fotos$", "{0} · e enkriptuar, me të gjitha fotot", [0]], ["^Fotos\\ werden\\ verschlüsselt:\\ (.*?)\\ von\\ (.*?)$", "Fotot po enkriptohen: {0} nga {1}", [0, 1]], ["^(.*?)\\ Personen\\ werden\\ verschlüsselt\\ …$", "{0} persona po enkriptohen …", [0]], ["^Hat\\ heute\\ Geburtstag\\ und\\ wird\\ (.*?)!$", "Sot ka ditëlindjen dhe mbush {0}!", [0]], ["^Fotos\\ werden\\ hochgeladen:\\ (.*?)\\ von\\ (.*?)$", "Fotot po ngarkohen: {0} nga {1}", [0, 1]], ["^Todestage\\ in\\ der\\ Personenliste(.*?)$", "Përvjetorët e vdekjes në listën e personave{0}", [0]], ["^Seit\\ deinem\\ letzten\\ Besuch\\ \\((.*?)\\)\\.$", "Që nga vizita jote e fundit ({0}).", [0]], ["^Schicke\\ (.*?)\\ diesen\\ Link\\.\\ Rechte:$", "Dërgoja {0} këtë link. Të drejtat:", [0]], ["^Fotos\\ werden\\ gesichert:\\ (.*?)\\ von\\ (.*?)$", "Fotot po ruhen: {0} nga {1}", [0, 1]], ["^(.*?)\\ Einträge\\ waren\\ nicht\\ lesbar\\.$", "{0} regjistrime nuk ishin të lexueshme.", [0]], ["^Google\\-Speicher:\\ (.*?)\\ von\\ (.*?)\\ belegt$", "Hapësira në Google: {0} nga {1} e zënë", [0, 1]], ["^(.*?)\\ hat\\ schon\\ zwei\\ Elternteile\\.$", "{0} ka tashmë dy prindër.", [0]], ["^(.*?)\\ (.*?)\\ seit\\ deinem\\ letzten\\ Besuch$", "{0} {1} që nga vizita jote e fundit", [0, 1]], ["^Fotos\\ werden\\ geladen:\\ (.*?)\\ von\\ (.*?)$", "Fotot po ngarkohen: {0} nga {1}", [0, 1]], ["^(.*?)\\ ist\\ jetzt\\ die\\ Hauptperson$", "{0} tani është personi kryesor", [0]], ["^(.*?)\\ (.*?),\\ (.*?)\\ Tage\\ wiederherstellbar$", "{0} {1}, të rikthyeshme brenda {2} ditëve", [0, 1, 2]], ["^Ende\\-zu\\-Ende\\-verschlüsselt(.*?)$", "E enkriptuar nga skaji në skaj{0}", [0]], ["^Verbindung\\ zwischen\\ (.*?)\\ und\\ (.*?)$", "Lidhja mes {0} dhe {1}", [0, 1]], ["^Google\\-Speicher:\\ (.*?)(.*?)\\ belegt$", "Hapësira në Google: {0}{1} e zënë", [0, 1]], ["^(.*?)\\ hat\\ keinen\\ Zugriff\\ mehr$", "{0} nuk ka më qasje", [0]], ["^(.*?)\\ (.*?)\\ erst\\ einen\\ Elternteil$", "{0} {1} vetëm një prind", [0, 1]], ["^zuletzt\\ geändert\\ von\\ (.*?),\\ (.*?)$", "ndryshuar së fundi nga {0}, {1}", [0, 1]], ["^Profilbild\\ von\\ (.*?)\\ gesetzt$", "Fotoja e profilit e {0} u vendos", [0]], ["^Kinder\\ auch\\ (.*?)\\ zuordnen\\?$", "T'ia caktoj fëmijët edhe {0}?", [0]], ["^Wer\\ ist\\ (.*?)\\ im\\ Stammbaum\\?$", "Kush është {0} në trung?", [0]], ["^Aufnahme\\ (.*?)\\ gespeichert$", "Incizimi {0} u ruajt", [0]], ["^(.*?)\\ Termine\\ gespeichert$", "{0} takime u ruajtën", [0]], ["^(.*?)\\ Personen\\ importiert$", "{0} persona u importuan", [0]], ["^(.*?)\\ \\(du,\\ dieses\\ Gerät\\)$", "{0} (ti, kjo pajisje)", [0]], ["^Hochzeitsdatum\\ mit\\ (.*?)$", "Data e martesës me {0}", [0]], ["^(.*?)\\ Kinder\\ zugeordnet$", "{0} fëmijë u caktuan", [0]], ["^(.*?)\\ ist\\ im\\ Papierkorb$", "{0} është në kosh", [0]], ["^(.*?)\\ Fotos\\ gespeichert$", "{0} foto u ruajtën", [0]], ["^(.*?)\\ Personen\\ ·\\ Stand\\ (.*?)$", "{0} persona · gjendja {1}", [0, 1]], ["^💍\\ Hochzeitstag\\ (.*?)\\ \\&\\ (.*?)$", "💍 Përvjetori i martesës {0} & {1}", [0, 1]], ["^(.*?)(.*?)\\ fehlgeschlagen\\.\\ (.*?)$", "{0}{1} dështuan. {2}", [0, 1, 2]], ["^Namen\\ anzeigen\\ \\((.*?)\\)$", "Shfaq emrat ({0})", [0]], ["^(.*?)\\ fehlende\\ Angaben$", "{0} të dhëna mungojnë", [0]], ["^(.*?)\\ \\(weiteres\\ Gerät\\)$", "{0} (pajisje tjetër)", [0]], ["^Geschwister\\ von\\ (.*?)$", "Vëllai/motra i/e {0}", [0]], ["^Neue\\ Aufnahme\\ ·\\ (.*?)$", "Incizim i ri · {0}", [0]], ["^(.*?)\\ zusammengeführt$", "{0} u bashkua", [0]], ["^Wird\\ in\\ (.*?)\\ Tagen\\ (.*?)$", "Pas {0} ditësh mbush {1}", [0, 1]], ["^(.*?)\\ wurde\\ angelegt$", "{0} u krijua", [0]], ["^Elternteil\\ von\\ (.*?)$", "Prindi i {0}", [0]], ["^Partner/in\\ von\\ (.*?)$", "Partneri/ja i/e {0}", [0]], ["^,\\ (.*?)\\ Erinnerungen$", ", {0} kujtime", [0]], ["^Mutterseite\\ ·\\ (.*?)$", "Ana e nënës · {0}", [0]], ["^Deine\\ Rechte:\\ (.*?)$", "Të drejtat e tua: {0}", [0]], ["^Verbindung\\ ·\\ (.*?)\\ (.*?)$", "Lidhja · {0} {1}", [0, 1]], ["^Sprachaufnahme(.*?)$", "Incizim zëri{0}", [0]], ["^(.*?)\\ ist\\ wieder\\ da$", "{0} është kthyer", [0]], ["^im\\ Stammbaum:\\ (.*?)$", "në trung: {0}", [0]], ["^Vaterseite\\ ·\\ (.*?)$", "Ana e babait · {0}", [0]], ["^Hochzeit\\ mit\\ (.*?)$", "Martesa me {0}", [0]], ["^(.*?)\\ gespeichert,$", "{0} u ruajtën,", [0]], ["^Erstellt\\ am\\ (.*?)\\.$", "Krijuar më {0}.", [0]], ["^hat\\ (.*?)\\ geändert$", "ka ndryshuar {0}", [0]], ["^(.*?)\\ (.*?)\\ ·\\ (.*?)\\ Personen$", "{0} {1} · {2} persona", [0, 1, 2]], ["^Ohne\\ Person\\ (.*?)$", "Pa person {0}", [0]], ["^Wird\\ morgen\\ (.*?)$", "Nesër mbush {0}", [0]], ["^Erfasst\\ von\\ (.*?)(.*?)$", "Regjistruar nga {0}{1}", [0, 1]], ["^(.*?)\\ (.*?)\\ zugeordnet$", "{0} {1} u caktua", [0, 1]], ["^Erinnerungen(.*?)$", "Kujtimet{0}", [0]], ["^Hochzeit\\ (.*?)\\ \\&\\ (.*?)$", "Martesa e {0} & {1}", [0, 1]], ["^🕯\\ Gedenktag\\ (.*?)$", "🕯 Dita përkujtimore {0}", [0]], ["^Tochter\\ von\\ (.*?)$", "Çika e {0}", [0]], ["^Mutter\\ von\\ (.*?)$", "Nëna e {0}", [0]], ["^«(.*?)»\\ angelegt$", "«{0}» u krijua", [0]], ["^«(.*?)»\\ löschen\\?$", "Ta fshij «{0}»?", [0]], ["^(.*?)\\ entfernen\\?$", "Ta heq {0}?", [0]], ["^(.*?)\\ Änderungen$", "{0} ndryshime", [0]], ["^·\\ Hochzeit\\ (.*?)$", "· martesa {0}", [0]], ["^Geheiratet\\ (.*?)$", "U martuan më {0}", [0]], ["^Verlauf\\ \\((.*?)\\)$", "Historiku ({0})", [0]], ["^Vater\\ von\\ (.*?)$", "Babai i {0}", [0]], ["^†\\ vor\\ (.*?)\\ (.*?)\\ ·\\ (.*?)$", "† para {0} {1} · {2}", [0, 1, 2]], ["^Verlauf\\ ·\\ (.*?)$", "Historiku · {0}", [0]], ["^(.*?)\\ gestorben$", "Vdiq {0}", [0]], ["^(.*?)\\ Jahre\\ alt$", "{0} vjeç", [0]], ["^(.*?)\\ entfernen$", "Hiq {0}", [0]], ["^in\\ (.*?)\\ Tagen$", "pas {0} ditësh", [0]], ["^Kind\\ von\\ (.*?)$", "Fëmija i/e {0}", [0]], ["^(.*?)\\ löschen\\?$", "Ta fshij {0}?", [0]], ["^(.*?)\\ markiert$", "{0} u shënua", [0]], ["^(.*?)\\ gelöscht$", "{0} të fshira", [0]], ["^(.*?)\\ ist\\ für\\ (.*?)$", "{0} është për {1}", [0, 1]], ["^Dokumente(.*?)$", "Dokumentet{0}", [0]], ["^Bist\\ du\\ (.*?)\\?$", "A je ti {0}?", [0]], ["^Jahrgang\\ (.*?)$", "Lindur më {0}", [0]], ["^(.*?)\\ Personen$", "{0} persona", [0]], ["^Sohn\\ von\\ (.*?)$", "Djali i {0}", [0]], ["^Mann\\ von\\ (.*?)$", "Burri i {0}", [0]], ["^Frau\\ von\\ (.*?)$", "Gruaja e {0}", [0]], ["^·\\ (.*?)\\ offen$", "· {0} të paruajtura", [0]], ["^gestern\\ (.*?)$", "dje {0}", [0]], ["^wird\\ (.*?)\\ ·\\ (.*?)$", "mbush {0} · {1}", [0, 1]], ["^(.*?)\\ Treffer$", "{0} rezultate", [0]], ["^Letzte:\\ (.*?)(.*?)$", "E fundit: {0}{1}", [0, 1]], ["^(.*?)\\ geboren$", "Lindi {0}", [0]], ["^zuletzt\\ (.*?)$", "së fundi {0}", [0]], ["^Offline(.*?)$", "Pa internet{0}", [0]], ["^Alle\\ ·\\ (.*?)$", "Të gjitha · {0}", [0]], ["^(.*?)\\ Kinder$", "{0} fëmijë", [0]], ["^(.*?)\\ (.*?)\\ und\\ (.*?)\\ (.*?)$", "{0} {1} dhe {2} {3}", [0, 1, 2, 3]], ["^(.*?)\\ Person$", "{0} person", [0]], ["^heute\\ (.*?)$", "sot {0}", [0]], ["^(.*?)(.*?)\\ Jahre(.*?)$", "{0}{1} vjeç{2}", [0, 1, 2]], ["^(.*?)\\ neue\\ (.*?)$", "{0} {1} të reja", [0, 1]], ["^·\\ von\\ (.*?)$", "· nga {0}", [0]], ["^(.*?)\\ und\\ …$", "{0} dhe …", [0]], ["^(.*?)\\ Fotos$", "{0} foto", [0]], ["^noch\\ (.*?)\\ (.*?)$", "edhe {0} {1}", [0, 1]], ["^(.*?)\\ Jahre$", "{0} vjeç", [0]], ["^Alle\\ (.*?)$", "Të gjitha {0}", [0]], ["^geb\\.\\ (.*?)$", "e lindur {0}", [0]], ["^Fotos(.*?)$", "Fotot{0}", [0]], ["^vor\\ (.*?)\\ (.*?)$", "para {0} {1}", [0, 1]], ["^wird\\ (.*?)$", "mbush {0}", [0]], ["^(.*?)\\ Jahr$", "{0} vjeç", [0]], ["^Fis\\ (.*?)$", "Fisi {0}", [0]], ["^aus\\ (.*?)$", "nga {0}", [0]], ["^vom\\ (.*?)$", "nga {0}", [0]]];
+
 
 /* ---------- Konstanten & Icons ---------- */
 const NODE_W = 96, NODE_H = 124, GAP_X = 20, PARTNER_GAP = 14, GAP_Y = 64, AV_R = 31, AV_CY = 4 + 31, PAD = 70;
@@ -655,6 +779,17 @@ const I = {
   cal: sv('<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
   poster: sv('<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="8" r="2"/><circle cx="8" cy="15" r="2"/><circle cx="16" cy="15" r="2"/><path d="M12 10v2.5M8 13v-.5h8v.5"/>'),
   tag: sv('<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/>'),
+  gap: sv('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5.5M12 16.2v.3"/>'),
+  merge: sv('<path d="M6 4v5a5 5 0 0 0 5 5h7M18 4v4M14 18l4-4-4-4"/>'),
+  clock: sv('<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/>'),
+  pin: sv('<path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>'),
+  heart: sv('<path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.2 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/>'),
+  chat: sv('<path d="M5 18.5V6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v7a2.5 2.5 0 0 1-2.5 2.5H9z"/>'),
+  doc: sv('<path d="M7 3h7l4 4v14H7zM14 3v4h4M9.5 12h6M9.5 15.5h6"/>'),
+  font: sv('<path d="M4 19l5-14 5 14M5.8 14h6.4M15 19l3-8 3 8M15.8 16.5h4.4"/>'),
+  candle: sv('<path d="M10 21V11h4v10M9 21h6M12 11V9M12 3c1.5 1.8 1.5 3.2 0 4-1.5-.8-1.5-2.2 0-4z"/>'),
+  history: sv('<path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4M12 8v4l3 2"/>'),
+  wifioff: sv('<path d="M3 3l18 18M8.5 16.5a5 5 0 0 1 7 0M5 13a10 10 0 0 1 5-2.6M14.5 10.6A10 10 0 0 1 19 13M2 9.5a15 15 0 0 1 4.5-2.7M10.5 5.6A15 15 0 0 1 22 9.5M12 20h.01"/>'),
 };
 const ART = `<svg class="art" viewBox="0 0 260 170" aria-hidden="true">
   <g fill="none" stroke="var(--branch)" stroke-width="2.6" stroke-linecap="round">
@@ -670,7 +805,8 @@ const ART = `<svg class="art" viewBox="0 0 260 170" aria-hidden="true">
 </svg>`;
 
 /* ---------- Zustand ---------- */
-const G = { trees: new Map(), people: new Map(), photos: new Map(), stories: new Map(), links: {} };
+const KINDS = ['trees', 'people', 'photos', 'stories', 'docs', 'comments', 'hearts', 'hist'];
+const G = { trees: new Map(), people: new Map(), photos: new Map(), stories: new Map(), docs: new Map(), comments: new Map(), hearts: new Map(), hist: new Map(), links: {} };
 const TRASH = new Map();   /* gelöschte Einträge (30 Tage wiederherstellbar): id -> { kind, o } */
 const TRASH_DAYS = 30;
 const S = {
@@ -678,7 +814,7 @@ const S = {
   canWrite: false, isAdmin: false, role: 'view', auth: '', me: null, denied: false, needClaim: false, legacy: false, legacyKey: '', legacyLeft: false, setup: false, execUrl: '', busy: '', trees: G.trees, treeId: null, people: new Map(), photos: new Map(),
   view: 'baum', treeMode: 'nach', nachRoot: null, vorPerson: null, focusId: null, centerTarget: null,
   T: { x: 0, y: 0, k: 0.85 }, centeredFor: null, lay: null, q: '', photoFilter: 'all', uploadFor: null,
-  stories: new Map(), prevSeen: new Map(), newsHidden: new Set(),
+  stories: new Map(), docs: new Map(), comments: new Map(), hearts: new Map(), hist: new Map(), prevSeen: new Map(), newsHidden: new Set(),
 };
 
 /* ---------- Hilfen ---------- */
@@ -753,6 +889,7 @@ const idb = (() => {
   };
 })();
 function noteBlobKeys(ph) { if (!ph) return; if (ph.full && ph.fk) BK.set(ph.full, ph.fk); if (ph.thumb && ph.tk) BK.set(ph.thumb, ph.tk); }
+function noteAnyKeys(kind, o) { if (kind === 'photos') noteBlobKeys(o); else if (kind === 'docs' && o.thumb && o.tk) BK.set(o.thumb, o.tk); }
 const jpeg = bytes => new Blob([bytes], { type: 'image/jpeg' });
 async function blobBytes(blob) { return new Uint8Array(await blob.arrayBuffer()); }
 function setImg(id, blob) { if (IMG.get(id)) return; IMG.set(id, blob ? URL.createObjectURL(blob) : ''); }
@@ -849,7 +986,10 @@ function parseDateInput(raw) {
   }
 }
 function toInput(iso) { const p = parseIso(iso); if (!p) return ''; return p.d ? `${pad(p.d)}.${pad(p.m)}.${p.y}` : p.m ? `${pad(p.m)}.${p.y}` : `${p.y}`; }
-function fmtDate(iso, long) { const p = parseIso(iso); if (!p) return ''; if (!long) return toInput(iso); return p.d ? `${p.d}. ${MONTHS[p.m - 1]} ${p.y}` : p.m ? `${MONTHS[p.m - 1]} ${p.y}` : `${p.y}`; }
+const MONTHS_SQ = ['janar', 'shkurt', 'mars', 'prill', 'maj', 'qershor', 'korrik', 'gusht', 'shtator', 'tetor', 'nëntor', 'dhjetor'];
+function MON() { return uiLang() === 'sq' ? MONTHS_SQ : MONTHS; }
+function dayMonth(d, m) { return uiLang() === 'sq' ? `${d} ${MONTHS_SQ[m - 1]}` : `${d}. ${MONTHS[m - 1]}`; }
+function fmtDate(iso, long) { const p = parseIso(iso); if (!p) return ''; if (!long) return toInput(iso); return p.d ? `${dayMonth(p.d, p.m)} ${p.y}` : p.m ? `${MON()[p.m - 1]} ${p.y}` : `${p.y}`; }
 function isoOf(d) { return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; }
 function gedDate(iso) { const p = parseIso(iso); if (!p) return ''; return p.d ? `${p.d} ${GED_M[p.m - 1]} ${p.y}` : p.m ? `${GED_M[p.m - 1]} ${p.y}` : `${p.y}`; }
 function ageInfo(p) {
@@ -880,7 +1020,7 @@ function upcomingBirthdays(maxDays) {
     const mkD = y => { let d = b.d; if (b.m === 2 && d === 29 && new Date(y, 1, 29).getMonth() !== 1) d = 28; return new Date(y, b.m - 1, d); };
     let next = mkD(t.getFullYear()); if (next < t) next = mkD(t.getFullYear() + 1);
     const days = Math.round((next - t) / 86400000);
-    if (days <= maxDays) res.push({ p, days, age: next.getFullYear() - b.y, label: `${b.d}. ${MONTHS[b.m - 1]}` });
+    if (days <= maxDays) res.push({ p, days, age: next.getFullYear() - b.y, label: dayMonth(b.d, b.m) });
   }
   return res.sort((a, b) => a.days - b.days);
 }
@@ -1111,7 +1251,7 @@ function relation(a, b) {
   }
   return null;
 }
-function langMode() { const v = LS.get('lang'); return v === 'de' || v === 'sq' ? v : 'both'; }
+function langMode() { const v = LS.get('lang'); return v === 'de' || v === 'sq' || v === 'both' ? v : uiLang() === 'sq' ? 'sq' : 'both'; }
 /* Kurzform für Listen: «Grossmutter / Gjyshja nga babai» */
 function relLine(r) {
   if (!r) return '';
@@ -1120,6 +1260,9 @@ function relLine(r) {
 }
 /* Langform fürs Personenblatt: zwei Zeilen, Deutsch mit Seite und Bezugsperson */
 function relTagHtml(r, refName) {
+  return relTagHtml0(r, refName).replace(/^<(\w+)/, '<$1 translate="no"');
+}
+function relTagHtml0(r, refName) {
   if (!r) return '';
   const m = langMode();
   const de = `${r.de}${r.deSide ? ' ' + r.deSide : ''}${refName && !r.noRef ? ` von ${refName}` : ''}`;
@@ -1143,20 +1286,77 @@ function openGlossary() {
   const paint = () => {
     const m = langMode();
     L.el.querySelector('[data-langs]').innerHTML = [['both', 'Beides'], ['de', 'Deutsch'], ['sq', 'Shqip']].map(([v, t]) => `<button type="button" data-lang="${v}" aria-pressed="${m === v}">${t}</button>`).join('');
+    const ul = uiLang();
+    L.el.querySelector('[data-uilang]').innerHTML = [['de', 'Deutsch'], ['sq', 'Shqip']].map(([v, t]) => `<button type="button" data-ui="${v}" aria-pressed="${ul === v}">${t}</button>`).join('');
+    const fs = fontScale();
+    L.el.querySelector('[data-fonts]').innerHTML = [['0', 'Normal'], ['1', 'Gross'], ['2', 'Sehr gross']].map(([v, t]) => `<button type="button" data-font="${v}" aria-pressed="${fs === v}">${t}</button>`).join('');
   };
-  L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><h2>Verwandtschaft &amp; Sprache</h2></div>
+  L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><h2>Sprache &amp; Darstellung</h2></div>
     <div class="layer-body narrow">
+      <div class="field" style="margin-top:4px"><span class="lbl" translate="no">Sprache der App · Gjuha e aplikacionit</span><div class="segctl" role="group" data-uilang translate="no"></div></div>
+      <div class="field" style="margin-top:4px"><span class="lbl">Schriftgrösse auf diesem Gerät</span><div class="segctl seg3" role="group" aria-label="Schriftgrösse" data-fonts></div></div>
+      <label class="check big-check"><input type="checkbox" data-mem${memorialsOn() ? ' checked' : ''}> Gedenktage anzeigen<small>Todestage in der Personenliste${IN_APP ? ' und als Mitteilung' : ''}</small></label>
       <div class="field" style="margin-top:4px"><span class="lbl">Bezeichnungen anzeigen</span><div class="segctl seg3" role="group" aria-label="Sprache der Bezeichnungen" data-langs></div></div>
       <p class="gl-note">Die albanischen Bezeichnungen sind in kosovarischer Alltagsform, zum Beispiel <span lang="sq">Axha</span> statt <span lang="sq">Xhaxhai</span>, <span lang="sq">Nana</span> statt <span lang="sq">Nëna</span> und <span lang="sq">Çika</span> statt <span lang="sq">Vajza</span>. Je nach Region im Kosovo kann es abweichen.</p>
       ${GLOSSARY.map(([h, rows]) => `<h3 class="section-h">${esc(h)}</h3><div class="card gl">${rows.map(([de, sq]) => `<div class="gl-row"><span class="gl-de">${esc(de)}</span><span class="gl-sq" lang="sq">${esc(sq)}</span></div>`).join('')}</div>`).join('')}
     </div>`;
   L.el.addEventListener('click', e => {
-    const b = e.target.closest('[data-lang],[data-act]'); if (!b) return;
+    const b = e.target.closest('[data-lang],[data-act],[data-font],[data-ui]'); if (!b) return;
     if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.ui) { setUiLang(b.dataset.ui); paint(); return; }
+    if (b.dataset.font !== undefined) { LS.set('fontScale', b.dataset.font); applyFont(); paint(); scheduleRender(); return; }
     LS.set('lang', b.dataset.lang); paint(); scheduleRender();
   });
+  L.el.querySelector('[data-mem]').addEventListener('change', e => { LS.set('memorials', e.target.checked ? '1' : '0'); syncNative(); scheduleRender(); });
   pushLayer(L); paint();
 }
+
+/* ---------- Oberfläche auf Shqip (Übersetzung der angezeigten Texte) ---------- */
+function uiLang() { const v = LS.get('ui'); if (v === 'sq' || v === 'de') return v; return /^sq\b/i.test(navigator.language || '') ? 'sq' : 'de'; }
+const SQ_RX = SQ_PATS.map(([r, t]) => [new RegExp(r), t]);
+function trCore(c) {
+  if (Object.prototype.hasOwnProperty.call(SQ_EXACT, c)) return SQ_EXACT[c];
+  for (const [re, tpl] of SQ_RX) { const m = re.exec(c); if (m) return tpl.replace(/\{(\d)\}/g, (_, i) => { const g = m[+i + 1] || ''; return Object.prototype.hasOwnProperty.call(SQ_EXACT, g) ? SQ_EXACT[g] : g.replace(/ und /g, ' dhe ').replace(/^ von /, ' nga '); }); }
+  for (const sep of [' · ', ' – ']) if (c.includes(sep)) { let any = false; const out = c.split(sep).map(x => { const r = trCore(x.trim()); if (r != null) { any = true; return r; } return x; }); if (any) return out.join(sep); }
+  return null;
+}
+function trText(t) { const m = /^(\s*)([\s\S]*?)(\s*)$/.exec(t); if (!m[2]) return t; const r = trCore(m[2]); return r == null ? t : m[1] + r + m[3]; }
+function T(t) { return uiLang() === 'sq' ? trText(String(t == null ? '' : t)) : t; }
+const TR_SKIP = 'script,style,textarea,input,[translate="no"],[lang="sq"]:not(html),.gl,.code-box,.st-text,.st-title,.cm-t,.notes,.lb-cap,.ask-preview,.node .nm,.hero h1,.bday .bn,.lb-chip,.st-chip,.link-box';
+const trDone = new WeakMap();
+function trNode(n) {
+  if (n.nodeType === 3) {
+    const v = n.nodeValue; if (!v || trDone.get(n) === v || !/[A-Za-zÄÖÜäöü]/.test(v)) return;
+    const p = n.parentElement; if (!p || p.closest(TR_SKIP)) return;
+    const r = trText(v); trDone.set(n, r); if (r !== v) n.nodeValue = r;
+    return;
+  }
+  if (n.nodeType !== 1) return;
+  const attrs = el => { if (el.closest('[translate="no"]')) return; for (const a of ['placeholder', 'aria-label', 'title']) { const v = el.getAttribute(a); if (v) { const r = trText(v); if (r !== v) el.setAttribute(a, r); } } };
+  attrs(n); if (n.querySelectorAll) n.querySelectorAll('[placeholder],[aria-label],[title]').forEach(attrs);
+  if (n.closest(TR_SKIP)) return;
+  const w = document.createTreeWalker(n, NodeFilter.SHOW_TEXT); let x; const list = []; while ((x = w.nextNode())) list.push(x); list.forEach(trNode);
+}
+let trObs = null;
+function applyUiLang() {
+  document.documentElement.lang = uiLang();
+  if (uiLang() !== 'sq') { if (trObs) { trObs.disconnect(); trObs = null; } return; }
+  trNode(document.body);
+  if (trObs) return;
+  trObs = new MutationObserver(ms => { for (const m of ms) { if (m.type === 'characterData') trNode(m.target); else if (m.type === 'attributes') { const v = m.target.getAttribute(m.attributeName); if (v && !m.target.closest('[translate="no"]')) { const r = trText(v); if (r !== v) m.target.setAttribute(m.attributeName, r); } } else m.addedNodes.forEach(trNode); } });
+  trObs.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['placeholder', 'aria-label', 'title'] });
+}
+function setUiLang(v) {
+  const was = uiLang(); LS.set('ui', v);
+  if (v === 'sq') { if (LS.get('lang') !== 'both') LS.set('lang', 'sq'); }
+  else if (LS.get('lang') === 'sq') LS.set('lang', 'both');
+  if (was === 'sq' && v !== 'sq') { location.reload(); return; }
+  applyUiLang(); scheduleRender();
+}
+function fontScale() { const v = LS.get('fontScale'); return v === '1' || v === '2' ? v : '0'; }
+function applyFont() { const r = document.documentElement; r.classList.toggle('fs-1', fontScale() === '1'); r.classList.toggle('fs-2', fontScale() === '2'); }
+applyFont();
+if (document.body) applyUiLang(); else document.addEventListener('DOMContentLoaded', applyUiLang);
 
 /* ---------- Verbindung zu Google ----------
  * Im Browser über Apps Script (google.script.run), in der Android-App über die Web-App-Adresse (die App leitet weiter).
@@ -1190,15 +1390,15 @@ function saveSession(x) { LS.set('sess', JSON.stringify(Object.assign({ exec: EX
 function clearSession() { try { localStorage.removeItem('stammbaum.sess'); } catch (e) {} S.auth = ''; try { NATIVE && NATIVE.clearSession && NATIVE.clearSession(); } catch (e) {} idb.clear(); }
 
 /* Änderungen werden sofort angezeigt und kurz danach verschlüsselt an Google geschickt */
-const KIND_CODE = { trees: 't', people: 'p', photos: 'f', stories: 's' };
-const CODE_KIND = { t: 'trees', p: 'people', f: 'photos', s: 'stories' };
+const KIND_CODE = { trees: 't', people: 'p', photos: 'f', stories: 's', docs: 'd', comments: 'c', hearts: 'h', hist: 'v' };
+const CODE_KIND = { t: 'trees', p: 'people', f: 'photos', s: 'stories', d: 'docs', c: 'comments', h: 'hearts', v: 'hist' };
 const Q = { put: new Map(), del: new Set(), blobs: new Set() };
 function hasPending() { return Q.put.size > 0 || Q.del.size > 0 || Q.blobs.size > 0; }
 function myName() { return (S.me && (S.me.name || (myPersonId() && callName(P(myPersonId()))))) || ''; }
 let quietPut = false;   /* Sicherung/Übernahme: Autor und Zeit nicht überschreiben */
 function put(kind, o) {
   if (kind !== 'trees' && !quietPut) { o = Object.assign({}, o, { updatedBy: myName(), updatedByCred: (S.me && S.me.id) || '', updatedAt: Date.now() }); if (!o.createdBy && !o.createdAt) { o.createdAt = Date.now(); o.createdBy = myName(); } else if (!o.createdBy && Date.now() - (o.createdAt || 0) < 5000) o.createdBy = myName(); }
-  G[kind].set(o.id, o); TRASH.delete(o.id); Q.put.set(o.id, kind); Q.del.delete(o.id); if (kind === 'photos') noteBlobKeys(o);
+  G[kind].set(o.id, o); TRASH.delete(o.id); Q.put.set(o.id, kind); Q.del.delete(o.id); noteAnyKeys(kind, o);
 }
 /* In den Papierkorb (30 Tage wiederherstellbar) */
 function trash(kind, id, extra) {
@@ -1221,7 +1421,7 @@ function rebuild() {
   S.trees = G.trees;
   S.people = new Map([...G.people].filter(([, p]) => p.treeId === tid));
   S.photos = new Map([...G.photos].filter(([, p]) => p.treeId === tid));
-  S.stories = new Map([...G.stories].filter(([, p]) => p.treeId === tid));
+  for (const k of ['stories', 'docs', 'comments', 'hearts', 'hist']) S[k] = new Map([...G[k]].filter(([, p]) => p.treeId === tid));
   markSeen();
 }
 function changed() { rebuild(); scheduleRender(); flushSoon(); }
@@ -1235,6 +1435,7 @@ async function flush() {
   clearTimeout(flushTimer);
   while (flushing) await flushing;
   if (!hasPending() || !S.auth) { paintSave(); return; }
+  if (S.offline) { storePending(); paintSave(); return; }
   const ids = [...Q.put], dels = [...Q.del], blobs = [...Q.blobs];
   Q.put.clear(); Q.del.clear(); Q.blobs.clear();
   flushing = (async () => {
@@ -1242,20 +1443,66 @@ async function flush() {
     for (const [id, kind] of ids) { const o = entryFor(id, kind); if (o) putArr.push(await encryptEntry(kind, o)); }
     await commitEntries(putArr, dels);
     if (blobs.length) await api('apiDelBlobs', blobs);
-  })().then(() => { saveFailed = false; syncNative(); }, e => {
-    console.warn(e); saveFailed = true;
+  })().then(() => { saveFailed = false; if (S.offline) { setOffline(false); setTimeout(() => load(false), 300); } if (!hasPending()) storePending(); syncNative(); }, e => {
+    console.warn(e);
     ids.forEach(([id, kind]) => { if (!Q.put.has(id) && !Q.del.has(id)) Q.put.set(id, kind); });
     dels.forEach(id => { if (!Q.put.has(id)) Q.del.add(id); });
     blobs.forEach(b => Q.blobs.add(b));
-    toast(e && (e.code === 'no_google' || e.code === 'net') ? 'Keine Verbindung zu Google.' : 'Speichern in Google ist fehlgeschlagen. Tippe oben auf «Erneut speichern».');
+    storePending();
+    if (isOffline(e)) { if (!S.offline) toast('Keine Verbindung. Die Änderung bleibt auf diesem Gerät gespeichert und wird später hochgeladen.'); setOffline(true, S.offlineSince || Date.now()); }
+    else { saveFailed = true; toast('Speichern in Google ist fehlgeschlagen. Tippe oben auf «Erneut speichern».'); }
   }).finally(() => { flushing = null; });
   paintSave();
   await flushing;
   if (hasPending() && !saveFailed) flushSoon(); else paintSave();
 }
+/* ---------- Ohne Internet: verschlüsselter Zwischenspeicher auf dem Gerät ---------- */
+function cacheKey(k) { return `${k}:${EXEC || 'gas'}`; }
+function isOffline(e) { return !navigator.onLine || !!(e && (e.code === 'net' || e.code === 'timeout' || e.name === 'TypeError')); }
+let offlineTimer = 0;
+function setOffline(on, since) {
+  const was = !!S.offline;
+  S.offline = !!on; S.offlineSince = on ? (since || Date.now()) : 0;
+  clearInterval(offlineTimer);
+  if (on) offlineTimer = setInterval(retryOnline, 30000);
+  paintSave();
+  if (was !== S.offline) scheduleRender();
+}
+async function retryOnline() {
+  if (!S.offline || !S.auth) return;
+  try { await rawApi('apiStatus', []); } catch (e) { return; }
+  setOffline(false);
+  if (hasPending()) await flush();
+  await load(false);
+}
+window.addEventListener('online', () => { setTimeout(retryOnline, 800); });
+/* Ungespeicherte Änderungen verschlüsselt im Gerät aufbewahren (für Neustart ohne Internet) */
+let pendTimer = 0;
+function storePending() {
+  clearTimeout(pendTimer);
+  pendTimer = setTimeout(async () => {
+    try {
+      if (!hasPending()) { await idb.put(cacheKey('pending'), null); return; }
+      const put = [];
+      for (const [id, kind] of Q.put) { const o = entryFor(id, kind); if (o) put.push(await encryptEntry(kind, o)); }
+      await idb.put(cacheKey('pending'), { put, del: [...Q.del], blobs: [...Q.blobs] });
+    } catch (e) { console.warn(e); }
+  }, 150);
+}
+async function restorePending() {
+  const pd = await idb.get(cacheKey('pending')); if (!pd || !pd.put) return;
+  for (const [id, x] of pd.put) {
+    if (Q.put.has(id)) continue;
+    try { const o = await FSC.dec(id, x); const kind = CODE_KIND[o.k]; delete o.k; o.id = id; if (!kind) continue; Q.put.set(id, kind); if (o._del) { G[kind].delete(id); TRASH.set(id, { kind, o }); } else { TRASH.delete(id); G[kind].set(id, o); } } catch (e) {}
+  }
+  (pd.del || []).forEach(id => { Q.del.add(id); KINDS.forEach(k => G[k].delete(id)); TRASH.delete(id); });
+  (pd.blobs || []).forEach(b => Q.blobs.add(b));
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && hasPending()) storePending(); });
 function dropPhotoFiles(ph) { if (!ph) return; [ph.full, ph.thumb].filter(Boolean).forEach(b => Q.blobs.add(b)); flushSoon(); }
 function paintSave() {
   const el = $('#saveState'); if (!el) return;
+  if (S.offline) { el.hidden = false; el.className = 'save-state off'; el.innerHTML = `${I.wifioff}<span>Offline${hasPending() ? ` · ${Q.put.size + Q.del.size} offen` : ''}</span>`; el.disabled = false; return; }
   if (saveFailed && hasPending()) { el.hidden = false; el.className = 'save-state err'; el.textContent = 'Erneut speichern'; el.disabled = false; }
   else if (flushing || hasPending()) { el.hidden = false; el.className = 'save-state'; el.innerHTML = '<span class="dot"></span>Speichert'; el.disabled = true; }
   else el.hidden = true;
@@ -1431,7 +1678,10 @@ function bindShell() {
   $('#tabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) setView(b.dataset.tab); });
   $('#addBtn').addEventListener('click', () => act(async () => { const id = await personForm({}); if (id) openPerson(id); }));
   $('#treeBtn').addEventListener('click', () => act(openTreeMenu));
-  $('#saveState').addEventListener('click', () => { saveFailed = false; flush(); });
+  $('#saveState').addEventListener('click', () => {
+    if (S.offline) { toast(`Ohne Verbindung. Du siehst den Stand von ${fmtWhen(S.offlineSince)}.${hasPending() ? ' Deine Änderungen werden hochgeladen, sobald wieder Internet da ist.' : ''}`); retryOnline(); return; }
+    saveFailed = false; flush();
+  });
   $('#main').addEventListener('click', onMainClick);
   $('#fileInput').addEventListener('change', e => { const files = [...(e.target.files || [])]; const pid = S.uploadFor; S.uploadFor = null; e.target.value = ''; if (files.length) act(() => uploadFiles(files, pid ? [pid] : [])); });
   document.addEventListener('visibilitychange', () => {
@@ -1839,6 +2089,7 @@ function renderPeopleList() {
     const b = upcomingBirthdays(45).slice(0, 10);
     if (b.length) html += `<h2 class="section-h">Nächste Geburtstage</h2><div class="bday-row">${b.map(x => `<button type="button" class="bday${x.days === 0 ? ' today' : ''}" data-open="${x.p.id}">${avatar(x.p, 40)}<span class="when">${x.days === 0 ? 'Heute 🎉' : x.days === 1 ? 'Morgen' : `in ${x.days} Tagen`}</span><span class="bn">${esc(fullName(x.p))}</span><span class="bs">wird ${x.age} · ${esc(x.label)}</span></button>`).join('')}</div>`;
   }
+  if (!q) html += memorialsHtml();
   const list = q ? all.filter(p => norm(searchText(p)).includes(q)) : all;
   html += `<h2 class="section-h">${q ? `${list.length} Treffer` : `${all.length} ${all.length === 1 ? 'Person' : 'Personen'}`}</h2>`;
   html += list.length ? `<div class="card list">${list.map(p => rowHtml(p, home)).join('')}</div>` : '<p class="empty-note">Niemand gefunden.</p>';
@@ -1953,13 +2204,20 @@ function renderPersonSheet(L) {
     ${photos.length ? `<div class="grid">${photos.map((ph, i) => `<button type="button" data-pphoto="${i}" aria-label="${esc(ph.caption || 'Foto öffnen')}">${imgTag(ph.thumb)}</button>`).join('')}</div>` : '<p class="empty-note">Noch keine Fotos zugeordnet.</p>'}
     ${p.notes ? `<h3 class="section-h">Notizen</h3><div class="card notes">${esc(p.notes)}</div>` : ''}
     ${storiesSection(p)}
-    ${p.createdBy || p.updatedBy ? `<p class="author-note">${esc([p.createdBy ? `Erfasst von ${p.createdBy}${p.createdAt ? ', ' + fmtWhen(p.createdAt) : ''}` : '', p.updatedBy && p.updatedAt && (p.updatedAt - (p.createdAt || 0) > 60000 || p.updatedBy !== p.createdBy) ? `zuletzt geändert von ${p.updatedBy}, ${fmtWhen(p.updatedAt)}` : ''].filter(Boolean).join(' · '))}</p>` : ''}
+    ${docsSection(p)}
+    ${p.createdBy || p.updatedBy ? `<p class="author-note">${esc([p.createdBy ? `Erfasst von ${p.createdBy}${p.createdAt ? ', ' + fmtWhen(p.createdAt) : ''}` : '', p.updatedBy && p.updatedAt && (p.updatedAt - (p.createdAt || 0) > 60000 || p.updatedBy !== p.createdBy) ? `zuletzt geändert von ${p.updatedBy}, ${fmtWhen(p.updatedAt)}` : ''].filter(Boolean).join(' · '))}${histOf(p.id).length ? ` · <button type="button" class="linkish" data-act="hist">Verlauf (${histOf(p.id).length})</button>` : ''}</p>` : histOf(p.id).length ? `<p class="author-note"><button type="button" class="linkish" data-act="hist">Verlauf (${histOf(p.id).length})</button></p>` : ''}
     <div class="foot-acts">${p.id !== me && S.me ? `<button type="button" class="btn block" data-act="setme">${I.userc} Das bin ich</button>` : ''}${S.canWrite && !isHome ? `<button type="button" class="btn block" data-act="sethome">${I.target} Als Hauptperson festlegen</button>` : ''}${S.canWrite ? `<button type="button" class="btn danger block" data-act="delete">${I.trash} Person löschen</button>` : ''}</div>`;
 }
 function onPersonClick(e, L) {
-  const t = e.target.closest('[data-act],[data-open],[data-add],[data-pphoto],[data-upload],[data-copy],[data-play],[data-sedit],[data-sdel]');
+  const t = e.target.closest('[data-act],[data-open],[data-add],[data-pphoto],[data-upload],[data-copy],[data-play],[data-sedit],[data-sdel],[data-doc],[data-dedit],[data-heart],[data-comments]');
   if (!t || !L.el.contains(t)) return;
   const id = L.id;
+  if (t.dataset.doc) return act(() => openDoc(t.dataset.doc));
+  if (t.dataset.dedit && S.canWrite) return act(() => docForm({ id: t.dataset.dedit }));
+  if (t.dataset.heart) return act(() => toggleHeart(t.dataset.heart));
+  if (t.dataset.comments) return openComments(t.dataset.comments);
+  if (t.dataset.act === 'doc-add' && S.canWrite) return act(async () => { const f = await pickDocFile(); if (f) await docForm({ personIds: [id], file: f }); });
+  if (t.dataset.act === 'hist') return openHistory(id);
   if (t.dataset.play) return act(() => playStory(t.dataset.play));
   if (t.dataset.sedit && S.canWrite) return act(() => storyForm({ id: t.dataset.sedit }));
   if (t.dataset.sdel && S.canWrite) return act(() => deleteStory(t.dataset.sdel));
@@ -2025,11 +2283,11 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
             <div class="field"><label for="f-dp">Todesort</label><input id="f-dp" autocomplete="off" autocapitalize="words"></div>
           </div>
           <div class="field"><label for="f-gr">Grab</label><input id="f-gr" autocomplete="off" autocapitalize="sentences" placeholder="z.B. Friedhof Prizren, Feld 3"></div>
-          <div class="field"><label for="f-gg">Standort des Grabes</label><div class="inrow"><input id="f-gg" autocomplete="off" autocapitalize="off" placeholder="Google-Maps-Link oder 42.21, 20.74"><button type="button" class="mini-btn" data-act="geo">${I.map} Hier</button></div><span class="hint">«Hier» nimmt deinen aktuellen Standort, z.B. wenn du am Grab stehst</span></div>
+          <div class="field"><label for="f-gg">Standort des Grabes</label><div class="inrow"><input id="f-gg" autocomplete="off" autocapitalize="off" placeholder="Google-Maps-Link oder 42.21, 20.74"><button type="button" class="mini-btn" data-act="geo">${I.target} Hier</button><button type="button" class="mini-btn" data-act="geo-gr">${I.pin} Karte</button></div><span class="hint">«Hier» nimmt deinen aktuellen Standort, z.B. wenn du am Grab stehst</span></div>
         </div>
         <div class="form-sec"><h3 class="section-h">Herkunft</h3>
           <div class="two">
-            <div class="field"><label for="f-or">Herkunftsort / Dorf</label><input id="f-or" autocomplete="off" autocapitalize="words" placeholder="z.B. Gjonaj, Has"></div>
+            <div class="field"><label for="f-or">Herkunftsort / Dorf</label><input id="f-or" autocomplete="off" autocapitalize="words" placeholder="z.B. Gjonaj, Has"><button type="button" class="geo-btn" data-act="geo-or"></button></div>
             <div class="field"><label for="f-fis">Fis / Vëllazëri</label><input id="f-fis" autocomplete="off" autocapitalize="words" placeholder="z.B. Krasniqi"></div>
           </div>
         </div>
@@ -2039,7 +2297,7 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
         </div>
         <div class="form-sec"><h3 class="section-h">Kontakt</h3>
           <div class="field"><label for="f-ph">Telefon</label><input id="f-ph" type="tel" autocomplete="off" placeholder="+41 79 123 45 67"></div>
-          <div class="field"><label for="f-ad">Wohnadresse</label><textarea id="f-ad" rows="3" placeholder="Strasse Nr.&#10;PLZ Ort"></textarea></div>
+          <div class="field"><label for="f-ad">Wohnadresse</label><textarea id="f-ad" rows="3" placeholder="Strasse Nr.&#10;PLZ Ort"></textarea><button type="button" class="geo-btn" data-act="geo-ad"></button></div>
           <div class="field"><label for="f-em">E-Mail</label><input id="f-em" type="email" autocomplete="off" autocapitalize="off"></div>
         </div>
         <div class="form-sec"><h3 class="section-h">Familie</h3>
@@ -2054,6 +2312,8 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
     f('#f-first').value = v.firstName || ''; f('#f-last').value = v.lastName || ''; f('#f-bname').value = v.birthName || '';
     f('#f-bd').value = toInput(v.birthDate); f('#f-bp').value = v.birthPlace || '';
     f('#f-dec').checked = !!(v.deceased || v.deathDate); f('#f-dd').value = toInput(v.deathDate); f('#f-dd-wrap').hidden = !f('#f-dec').checked;
+    const paintGeo = () => { [['#f-or', 'originGeo'], ['#f-ad', 'addressGeo']].forEach(([sel, k]) => { const b = f(sel).parentElement.querySelector('.geo-btn'); b.innerHTML = v[k] ? `${I.pin} Auf der Karte gesetzt · ändern` : `${I.pin} Auf Karte setzen (für die Familienkarte)`; b.classList.toggle('on', !!v[k]); }); };
+    paintGeo();
     f('#f-nick').value = v.nickname || ''; f('#f-dp').value = v.deathPlace || ''; f('#f-gr').value = v.grave || ''; f('#f-gg').value = v.graveGeo || ''; f('#f-or').value = v.originPlace || ''; f('#f-fis').value = v.fis || '';
     f('#f-job').value = v.job || ''; f('#f-emp').value = v.employer || '';
     f('#f-ph').value = v.phone || ''; f('#f-ad').value = v.address || ''; f('#f-em').value = v.email || ''; f('#f-no').value = v.notes || '';
@@ -2090,7 +2350,7 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
         const md = parseDateInput(m.date || ''); if (md === null) { const inp = L.el.querySelector(`[data-md="${CSS.escape(q)}"]`); inp.closest('.field').classList.add('err'); inp.insertAdjacentHTML('afterend', '<span class="errmsg">Hochzeit als TT.MM.JJJJ oder Jahr</span>'); inp.focus(); return; }
         marriages[q] = { date: md || '', place: m.place || '' };
       }
-      const data = { firstName: first, lastName: last, birthName: val('#f-bname'), nickname: val('#f-nick'), gender: v.gender || '', birthDate: bd, birthPlace: val('#f-bp'), originPlace: val('#f-or'), fis: val('#f-fis'), deceased: dec, deathDate: dd || '', deathPlace: dec ? val('#f-dp') : '', grave: dec ? val('#f-gr') : '', graveGeo: gg || '', marriages, job: val('#f-job'), employer: val('#f-emp'), phone: val('#f-ph'), email: val('#f-em'), address: f('#f-ad').value.trim(), notes: f('#f-no').value.trim(), parentIds: v.parentIds.filter(x => S.people.has(x)), partnerIds: v.partnerIds.filter(x => S.people.has(x)) };
+      const data = { firstName: first, lastName: last, birthName: val('#f-bname'), nickname: val('#f-nick'), gender: v.gender || '', birthDate: bd, birthPlace: val('#f-bp'), originPlace: val('#f-or'), fis: val('#f-fis'), deceased: dec, deathDate: dd || '', deathPlace: dec ? val('#f-dp') : '', grave: dec ? val('#f-gr') : '', graveGeo: gg || '', originGeo: v.originGeo || '', addressGeo: v.addressGeo || '', marriages, job: val('#f-job'), employer: val('#f-emp'), phone: val('#f-ph'), email: val('#f-em'), address: f('#f-ad').value.trim(), notes: f('#f-no').value.trim(), parentIds: v.parentIds.filter(x => S.people.has(x)), partnerIds: v.partnerIds.filter(x => S.people.has(x)) };
       L.result = savePersonData(id, data, prev);
       const newParts = id ? data.partnerIds.filter(x => !((prev && prev.partnerIds) || []).includes(x)) : [];
       if (newParts.length) setTimeout(async () => { for (const q of newParts) await offerSharedChildren(id, q); }, 450);
@@ -2106,6 +2366,8 @@ function personForm({ id = null, preset = {}, title = '' } = {}) {
         case 'cancel': return closeLayer(L);
         case 'save': return save();
         case 'geo': return act(async () => { const g = await currentGeo(); if (g) { f('#f-gg').value = g; toast('Standort übernommen'); } });
+        case 'geo-gr': return act(async () => { const g = await pickOnMap({ title: 'Grab auf der Karte', start: geoPair(parseGeo(f('#f-gg').value) || ''), query: f('#f-gr').value.trim() }); if (g !== undefined) f('#f-gg').value = g; });
+        case 'geo-or': case 'geo-ad': return act(async () => { const k = b.dataset.act === 'geo-or' ? 'originGeo' : 'addressGeo'; const q = (b.dataset.act === 'geo-or' ? f('#f-or').value : f('#f-ad').value).replace(/\s*\n\s*/g, ', ').trim(); const g = await pickOnMap({ title: b.dataset.act === 'geo-or' ? 'Herkunftsort' : 'Wohnort', start: geoPair(v[k]), query: q }); if (g !== undefined) { v[k] = g; paintGeo(); } });
         case 'add-parent': return act(async () => { const ex = new Set([id, ...v.parentIds].filter(Boolean)); if (id) descendantsOf(id).forEach(x => ex.add(x)); const r = await pickPerson({ title: 'Elternteil wählen', exclude: ex }); if (r && v.parentIds.length < 2) { v.parentIds.push(r); paintSlots(); } });
         case 'add-partner': return act(async () => { const r = await pickPerson({ title: 'Partner/in wählen', exclude: new Set([id, ...v.partnerIds].filter(Boolean)) }); if (r) { v.partnerIds.push(r); paintSlots(); } });
       }
@@ -2142,6 +2404,7 @@ function removePartnerRef(q, id) { const pq = G.people.get(q); if (!pq) return; 
 function linkPartners(a, b) { addPartnerRef(a, b); addPartnerRef(b, a); changed(); }
 function savePersonData(id, data, prev) {
   const now = Date.now();
+  if (id && prev && histDiff(histSnap(prev), histSnap({ ...prev, ...data })).length) recordHistory(prev);
   if (id) put('people', { ...G.people.get(id), ...data, updatedAt: now });
   else { id = newId(); put('people', { ...data, id, treeId: S.treeId, avatarPhotoId: '', createdAt: now, updatedAt: now }); }
   const before = new Set(prev?.partnerIds || []), after = new Set(data.partnerIds);
@@ -2302,6 +2565,7 @@ function exifInfo(buf) {
 /* In der Android-App liest die App den Standort beim Auswählen selbst (Android entfernt ihn sonst teilweise) */
 function nativePicked() { try { return NATIVE && NATIVE.pickedMeta ? JSON.parse(NATIVE.pickedMeta() || '[]') : []; } catch (e) { return []; } }
 async function encryptAndUpload(blob) {
+  if (S.offline) throw { code: 'user', message: 'Ohne Internet können keine Fotos, Aufnahmen oder Dokumente hochgeladen werden. Bitte später nochmals versuchen.' };
   const id = FSC.id(12);
   const { key, data } = await FSC.encBlob(id, await blobBytes(blob));
   await api('apiPutBlob', id, FSC.b64(data));
@@ -2310,6 +2574,7 @@ async function encryptAndUpload(blob) {
 async function uploadFiles(files, personIds) {
   const imgs = files.filter(f => /^image\//.test(f.type) || /\.(jpe?g|png|webp|gif|heic|heif)$/i.test(f.name));
   if (!imgs.length) { toast('Bitte Bilddateien wählen (JPG oder PNG).'); return; }
+  if (S.offline) { toast('Ohne Internet können keine Fotos hochgeladen werden. Bitte später nochmals versuchen.'); return; }
   const picked = nativePicked();
   let done = 0, failed = 0, firstId = null, lastErr = null;
   const tid = S.treeId;
@@ -2385,6 +2650,7 @@ function renderLightbox(L) {
     <div class="lb-info">
       ${ph.caption ? `<div class="lb-cap">${esc(ph.caption)}</div>` : ''}
       ${ph.date ? `<div class="lb-date">${esc(fmtDate(ph.date, true))}</div>` : ''}
+      ${L.tagMode ? '' : reactBar(ph.id, true)}
       ${(() => { const pl = placeOf(ph); return pl ? `<a class="lb-place" href="${esc(pl.url)}" target="_blank" rel="noopener">${I.map}<span>${esc(pl.label)}</span></a>` : ''; })()}
       <div class="lb-chips">${ppl.length ? ppl.map(p => `<button type="button" class="lb-chip" data-open="${p.id}">${avatar(p, 30)}${esc(fullName(p))}</button>`).join('') : '<span class="lb-none">Noch keiner Person zugeordnet</span>'}</div>
       ${tags.length && !L.tagMode ? `<button type="button" class="lb-toggle" data-act="showtags">${I.tag}<span>${L.showTags ? 'Namen ausblenden' : `Namen anzeigen (${tags.length})`}</span></button>` : ''}
@@ -2425,6 +2691,8 @@ async function tagAt(L, ph, ev) {
   toast(`${callName(P(pid))} markiert`);
 }
 function onLbClick(e, L) {
+  const rb = e.target.closest('[data-heart],[data-comments]');
+  if (rb) { if (rb.dataset.heart) act(async () => { await toggleHeart(rb.dataset.heart); L.render(); }); else openComments(rb.dataset.comments); return; }
   const t = e.target.closest('[data-act],[data-open],[data-ftag]');
   if (L.tagMode && S.canWrite && !t && e.target.closest('.lb-stage')) { const ph0 = S.photos.get(L.ids[L.index]); if (ph0) act(() => tagAt(L, ph0, e)); return; }
   if (!t) return;
@@ -2489,7 +2757,6 @@ async function deletePhoto(ph) {
   trash('photos', ph.id, { _links: { avatars } });
   changed();
   toastUndo('Foto im Papierkorb', () => restoreEntry(ph.id));
-  toast('Foto gelöscht');
 }
 
 /* ---------- Stammbäume verwalten ---------- */
@@ -2509,20 +2776,27 @@ async function openTreeMenu() {
     ${t && S.canWrite ? `<div class="dlg-sep"></div>
       <button type="button" class="opt" data-v="rename">${I.edit}<span>Umbenennen</span></button>
       <button type="button" class="opt" data-v="home">${I.target}<span>Hauptperson<small>${esc(h ? fullName(h) : 'Noch nicht festgelegt')} · für alle, die sich noch nicht gewählt haben</small></span></button>` : ''}
-    <div class="dlg-sep"></div>
-    ${t ? `<button type="button" class="opt" data-v="kin">${I.link}<span>Wie sind wir verwandt?<small>Verwandtschaft zwischen zwei Personen</small></span></button>
-      <button type="button" class="opt" data-v="news">${I.spark}<span>Neu im Stammbaum<small>${(() => { const n = newsItems().length; return n ? `${n} ${n === 1 ? 'Änderung' : 'Änderungen'} seit deinem letzten Besuch` : 'Was andere zuletzt ergänzt haben'; })()}</small></span></button>` : ''}
+    ${t ? `<div class="dlg-sec">Entdecken</div>
+      <button type="button" class="opt" data-v="kin">${I.link}<span>Wie sind wir verwandt?<small>Verwandtschaft zwischen zwei Personen</small></span></button>
+      <button type="button" class="opt" data-v="news">${I.spark}<span>Neu im Stammbaum<small>${(() => { const n = newsItems().length; return n ? `${n} ${n === 1 ? 'Änderung' : 'Änderungen'} seit deinem letzten Besuch` : 'Was andere zuletzt ergänzt haben'; })()}</small></span></button>
+      <button type="button" class="opt" data-v="chron">${I.clock}<span>Familienchronik<small>Geburten, Hochzeiten, Fotos und Erinnerungen nach Jahren</small></span></button>
+      <button type="button" class="opt" data-v="map">${I.pin}<span>Familienkarte<small>Herkunft, Wohnorte, Gräber und Fotoorte</small></span></button>
+      <button type="button" class="opt" data-v="gaps">${I.gap}<span>Lücken füllen<small>${(() => { const n = gapList().length; return n ? `${n} fehlende Angaben` : 'Nichts fehlt'; })()}</small></span></button>
+      <button type="button" class="opt" data-v="dupes">${I.merge}<span>Doppelte Personen<small>Ähnliche Einträge finden und zusammenführen</small></span></button>
+      <div class="dlg-sec">Einstellungen und Verwaltung</div>` : ''}
     ${t ? `<button type="button" class="opt" data-v="me">${I.userc}<span>Ich im Stammbaum<small>${esc(myPersonId() ? fullName(P(myPersonId())) + ' – alle Bezeichnungen aus deiner Sicht' : 'Noch nicht gewählt – Bezeichnungen gelten für die Hauptperson')}</small></span></button>` : ''}
     ${S.isAdmin ? `<button type="button" class="opt" data-v="members">${I.people}<span>Mitglieder &amp; Zugriff<small>Einladen, Rechte vergeben, Notfall-Schlüssel</small></span></button>
       <button type="button" class="opt" data-v="backup">${I.save}<span>Sicherung aufs Gerät<small>${lastBackupAt() ? `Letzte: ${esc(fmtDate(isoOf(new Date(lastBackupAt())), true))}${backupDue() ? ' – fällig' : ''}` : 'Noch keine Sicherung'} · verschlüsselt, mit allen Fotos</small></span></button>
       <button type="button" class="opt" data-v="restore">${I.up}<span>Sicherung einspielen</span></button>` : `<div class="storage">Deine Rechte: ${esc(ROLE_DE[S.role] || 'Ansehen')}</div>`}
     ${S.canWrite ? `<button type="button" class="opt" data-v="trash">${I.trash}<span>Papierkorb<small>${(() => { const n = [...TRASH.values()].filter(e => !e.o.treeId || e.o.treeId === S.treeId).length; return n ? `${n} ${n === 1 ? 'Eintrag' : 'Einträge'}, ${TRASH_DAYS} Tage wiederherstellbar` : 'leer'; })()}</small></span></button>` : ''}
-    ${t ? `<button type="button" class="opt" data-v="poster">${I.poster}<span>Als Poster (PDF)<small>Aktuelle Baumansicht zum Ausdrucken</small></span></button>
+    ${t ? `<div class="dlg-sec">Ausdrucken und teilen</div>
+      <button type="button" class="opt" data-v="poster">${I.poster}<span>Als Poster (PDF)<small>Aktuelle Baumansicht zum Ausdrucken</small></span></button>
+      <button type="button" class="opt" data-v="book">${I.book}<span>Familienbuch (PDF)<small>Eine Seite pro Person mit Foto, Familie und Erinnerungen</small></span></button>
       <button type="button" class="opt" data-v="ics">${I.cal}<span>Geburtstage in den Kalender<small>Kalenderdatei fürs iPhone und andere Kalender</small></span></button>` : ''}
     ${t && S.canWrite ? `<button type="button" class="opt" data-v="gedcom">${I.text}<span>GEDCOM-Datei exportieren<small>Unverschlüsselt, z.B. für Ahnenblatt oder MyHeritage</small></span></button>` : ''}
     ${S.canWrite ? `<button type="button" class="opt" data-v="gedimport">${I.up}<span>Aus MyHeritage / Ancestry importieren<small>GEDCOM-Datei (.ged) einlesen</small></span></button>` : ''}
     ${IN_APP ? `<button type="button" class="opt" data-v="appsettings">${I.cake}<span>App-Einstellungen<small>Geburtstags-Erinnerungen und App-Sperre</small></span></button>` : ''}
-    <button type="button" class="opt" data-v="glossary">${I.text}<span>Verwandtschaft &amp; Sprache<small>Bezeichnungen auf Deutsch und Shqip (Kosova)</small></span></button>
+    <button type="button" class="opt" data-v="glossary">${I.text}<span>Sprache &amp; Darstellung<small>Deutsch/Shqip, Schriftgrösse, Gedenktage</small></span></button>
     <button type="button" class="opt" data-v="reload">${I.refresh}<span>Neu laden<small>Änderungen von anderen Geräten holen</small></span></button>
     <div class="storage">${I.check} Ende-zu-Ende-verschlüsselt${S.isAdmin ? ' · <span data-storage>Google-Speicher wird geprüft …</span>' : ''}</div>
     ${t && S.isAdmin ? `<button type="button" class="opt danger" data-v="delete">${I.trash}<span>Stammbaum löschen</span></button>` : ''}
@@ -2535,7 +2809,12 @@ async function openTreeMenu() {
   if (v.startsWith('tree:')) { switchTree(v.slice(5)); return; }
   if (v === 'glossary') return openGlossary();
   if (v === 'kin') return openKinship(null);
+  if (v === 'chron') return openChronicle();
+  if (v === 'map') return openFamilyMap();
+  if (v === 'gaps') return openGaps();
+  if (v === 'dupes') return openDupes();
   if (v === 'poster') return exportPoster();
+  if (v === 'book') return exportBook();
   if (v === 'ics') return exportCalendar();
   if (v === 'news') return openNews();
   if (v === 'me') { const id = await pickPerson({ title: 'Wer bist du im Stammbaum?' }); if (id) await setMe(id); return; }
@@ -2561,6 +2840,8 @@ async function deleteTree() {
   const tid = S.treeId;
   for (const ph of [...G.photos.values()]) if (ph.treeId === tid) { remove('photos', ph.id); dropPhotoFiles(ph); }
   for (const st of [...G.stories.values()]) if (st.treeId === tid) { remove('stories', st.id); if (st.audio) Q.blobs.add(st.audio); }
+  for (const d of [...G.docs.values()]) if (d.treeId === tid) { remove('docs', d.id); if (d.blob) Q.blobs.add(d.blob); if (d.thumb) Q.blobs.add(d.thumb); }
+  for (const k of ['comments', 'hearts', 'hist']) for (const o of [...G[k].values()]) if (o.treeId === tid) remove(k, o.id);
   for (const [id, e] of [...TRASH]) if (e.o.treeId === tid) finalDelete(id);
   for (const p of [...G.people.values()]) if (p.treeId === tid) remove('people', p.id);
   remove('trees', tid);
@@ -2758,7 +3039,7 @@ async function rotateKeys() {
       const ms = {};
       for (const c of r.creds) if (metas[c.id] && Object.keys(metas[c.id]).length) ms[c.id] = await FSC.encMeta(c.id, metas[c.id]);
       const putArr = [];
-      for (const kind of ['trees', 'people', 'photos', 'stories']) for (const o of G[kind].values()) putArr.push(await encryptEntry(kind, o));
+      for (const kind of KINDS) for (const o of G[kind].values()) putArr.push(await encryptEntry(kind, o));
       for (const [, e] of TRASH) putArr.push(await encryptEntry(e.kind, e.o));
       await api('apiRotate', { from: old.v, to: nk.v, chain, kws, ms, put: putArr });
       S.chain = newChain;
@@ -2798,6 +3079,8 @@ function newsItems(since) {
   S.people.forEach(p => { if ((p.updatedAt || 0) > since && byOther(p)) add('people', p, (p.createdAt || 0) > since ? 'new' : 'chg'); });
   S.photos.forEach(ph => { if ((ph.updatedAt || ph.createdAt || 0) > since && byOther(ph)) add('photos', ph, (ph.createdAt || 0) > since ? 'new' : 'chg'); });
   S.stories.forEach(st => { if ((st.updatedAt || 0) > since && byOther(st)) add('stories', st, (st.createdAt || 0) > since ? 'new' : 'chg'); });
+  S.comments.forEach(c => { if ((c.createdAt || 0) > since && byOther(c)) add('comments', c, 'new'); });
+  S.docs.forEach(d => { if ((d.createdAt || 0) > since && byOther(d)) add('docs', d, 'new'); });
   TRASH.forEach(e => { if (e.o.treeId === S.treeId && (e.o._del || 0) > since && e.o._by && e.o._by !== myName()) out.push({ kind: e.kind, o: e.o, what: 'del', at: e.o._del, by: e.o._by }); });
   return out.sort((a, b) => b.at - a.at);
 }
@@ -2808,6 +3091,9 @@ function newsSummary(items) {
   if (np) parts.push(`${np} neue ${np === 1 ? 'Person' : 'Personen'}`);
   if (nf) parts.push(`${nf} ${nf === 1 ? 'Foto' : 'Fotos'}`);
   if (ns) parts.push(`${ns} ${ns === 1 ? 'Erinnerung' : 'Erinnerungen'}`);
+  const nc = c('comments'), nd2 = c('docs');
+  if (nc) parts.push(`${nc} ${nc === 1 ? 'Kommentar' : 'Kommentare'}`);
+  if (nd2) parts.push(`${nd2} ${nd2 === 1 ? 'Dokument' : 'Dokumente'}`);
   if (cp) parts.push(`${cp} ${cp === 1 ? 'Änderung' : 'Änderungen'}`);
   if (nd) parts.push(`${nd} gelöscht`);
   return parts.join(', ') || `${items.length} Änderungen`;
@@ -2825,6 +3111,8 @@ function openNews() {
   const label = { new: 'neu', chg: 'geändert', del: 'gelöscht' };
   const row = x => {
     const o = x.o;
+    if (x.kind === 'comments') { const tg = S.photos.get(o.on) || S.stories.get(o.on); return `<button type="button" class="row" data-cmt="${esc(o.on)}"><span class="av" style="--size:44px">${I.chat}</span><span class="meta"><span class="t">«${esc(o.text.slice(0, 80))}»</span><span class="s">${esc(['Kommentar' + (tg ? (S.photos.has(o.on) ? ' zu einem Foto' : ' zu einer Erinnerung') : ''), x.by ? 'von ' + x.by : '', fmtWhen(x.at)].filter(Boolean).join(' · '))}</span></span>${I.chevR}</button>`; }
+    if (x.kind === 'docs') return `<button type="button" class="row" data-open="${esc((o.personIds || []).find(id => S.people.has(id)) || '')}"><span class="av" style="--size:44px">${I.doc}</span><span class="meta"><span class="t">${esc(o.title || 'Dokument')}</span><span class="s">${esc(['neues Dokument', x.by ? 'von ' + x.by : '', fmtWhen(x.at)].filter(Boolean).join(' · '))}</span></span>${I.chevR}</button>`;
     const head = x.kind === 'people' ? avatar(o, 44) : x.kind === 'photos' ? `<span class="av trash-ph" style="--size:44px">${o.thumb ? imgTag(o.thumb) : ''}</span>` : `<span class="av" style="--size:44px">${o.audio ? I.mic : I.book}</span>`;
     const t = x.kind === 'people' ? fullName(o) : x.kind === 'photos' ? (o.caption || 'Foto' + ((o.personIds || []).filter(id => S.people.has(id)).length ? ' mit ' + (o.personIds || []).map(P).filter(Boolean).map(callName).join(', ') : '')) : (o.text ? o.text.slice(0, 70) : 'Sprachaufnahme');
     const sub = [label[x.what], x.by ? 'von ' + x.by : '', fmtWhen(x.at)].filter(Boolean).join(' · ');
@@ -2835,8 +3123,9 @@ function openNews() {
     <div class="layer-body narrow"><p class="gl-note">${wide ? 'Änderungen von anderen in den letzten 30 Tagen.' : `Seit deinem letzten Besuch (${esc(fmtWhen(since))}).`}</p>
     ${items.length ? `<div class="card list">${items.slice(0, 200).map(row).join('')}</div>` : '<p class="empty-note">Keine Änderungen von anderen.</p>'}</div>`;
   L.el.addEventListener('click', e => {
-    const b = e.target.closest('[data-act],[data-open],[data-nphoto]'); if (!b) return;
+    const b = e.target.closest('[data-act],[data-open],[data-nphoto],[data-cmt]'); if (!b) return;
     if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.cmt) return openComments(b.dataset.cmt);
     if (b.dataset.act === 'trash') return openTrash();
     if (b.dataset.open) return openPerson(b.dataset.open);
     if (b.dataset.nphoto) return openLightbox([b.dataset.nphoto], 0);
@@ -2922,6 +3211,7 @@ function storyCard(st, pid) {
     ${st.text ? `<div class="st-text">${esc(st.text)}</div>` : ''}
     ${st.audio ? `<button type="button" class="audio-btn${audioFor === st.id ? ' playing' : ''}" data-play="${esc(st.id)}">${audioFor === st.id ? I.stop : I.play}<span>Sprachaufnahme${st.dur ? ` · ${fmtDur(st.dur)}` : ''}</span></button>` : ''}
     ${others.length ? `<div class="st-with">Mit ${others.map(q => `<button type="button" class="st-chip" data-open="${esc(q.id)}">${esc(callName(q))}</button>`).join('')}</div>` : ''}
+    ${reactBar(st.id)}
     <div class="st-foot"><span>${esc([st.date ? fmtDate(st.date, true) : '', st.createdBy ? 'erzählt/erfasst von ' + st.createdBy : ''].filter(Boolean).join(' · '))}</span>${S.canWrite ? `<button type="button" class="icon-btn sm" data-sedit="${esc(st.id)}" aria-label="Bearbeiten">${I.edit}</button><button type="button" class="icon-btn sm" data-sdel="${esc(st.id)}" aria-label="Löschen">${I.trash}</button>` : ''}</div>
   </div>`;
 }
@@ -3072,6 +3362,557 @@ function backupBanner() {
   const d = backupDue(); if (!d) return '';
   return `<button type="button" class="news-banner warn" data-act="backup-now">${I.save}<span>Sicherung fällig<small>${esc(backupText(d))}</small></span>${I.chevR}</button>`;
 }
+/* ---------- Lücken füllen ---------- */
+const GAP_TYPES = [
+  { k: 'birth', t: 'Geburtstag fehlt', q: p => !p.birthDate, ask: n => `wann ${n} geboren ist`, sq: n => `kur ka lindur ${n}` },
+  { k: 'bday', t: 'Nur das Geburtsjahr', q: p => p.birthDate && /^\d{4}$/.test(p.birthDate) && !isDead(p), ask: n => `an welchem Tag ${n} Geburtstag hat`, sq: n => `cilën ditë e ka ditëlindjen ${n}` },
+  { k: 'parents', t: 'Eltern fehlen', q: p => !(p.parentIds || []).some(x => S.people.has(x)) && (childrenOf(p.id).length || siblingsOf(p).length || !partnersOf(p).length), ask: n => `wie die Eltern von ${n} hiessen`, sq: n => `si quheshin prindërit e ${n}` },
+  { k: 'death', t: 'Todestag fehlt', q: p => isDead(p) && !p.deathDate, ask: n => `wann ${n} gestorben ist`, sq: n => `kur ka vdekur ${n}` },
+  { k: 'photo', t: 'Kein Foto', q: p => !avatarPhoto(p) && !photosOf(p.id).length, ask: n => `ob du ein Foto von ${n} hast`, sq: n => `nëse ke një fotografi të ${n}` },
+  { k: 'gender', t: 'Geschlecht fehlt', q: p => !p.gender, ask: null },
+];
+function gapHidden() { try { return new Set(JSON.parse(LS.get('gapsHidden') || '[]')); } catch (e) { return new Set(); } }
+function gapList() {
+  const hid = gapHidden(), out = [];
+  for (const p of [...S.people.values()].sort(byBirth)) for (const g of GAP_TYPES) if (g.q(p) && !hid.has(g.k + ':' + p.id)) out.push({ g, p });
+  return out;
+}
+function whoIs(p) {
+  const par = parentsOf(p);
+  if (par.length) return `${gw(p, 'Sohn', 'Tochter', 'Kind')} von ${par.map(callName).join(' und ')}`;
+  const k = childrenOf(p.id); if (k.length) return `${gw(p, 'Vater', 'Mutter', 'Elternteil')} von ${k.slice(0, 2).map(callName).join(' und ')}`;
+  const pa = partnersOf(p); if (pa.length) return `${gw(p, 'Mann', 'Frau', 'Partner/in')} von ${callName(pa[0])}`;
+  return '';
+}
+function whoIsSq(p) {
+  const par = parentsOf(p);
+  if (par.length) return `${p.gender === 'w' ? 'vajza' : p.gender === 'm' ? 'djali' : 'fëmija'} i/e ${par.map(callName).join(' dhe ')}`;
+  const k = childrenOf(p.id); if (k.length) return `${p.gender === 'w' ? 'nëna' : p.gender === 'm' ? 'babai' : 'prindi'} i/e ${k.slice(0, 2).map(callName).join(' dhe ')}`;
+  const pa = partnersOf(p); if (pa.length) return `${p.gender === 'w' ? 'gruaja' : p.gender === 'm' ? 'burri' : 'partneri'} i/e ${callName(pa[0])}`;
+  return '';
+}
+function gapQuestion(g, p) {
+  const n = fullName(p) + (whoIs(p) ? ` (${whoIs(p)})` : ''), nq = fullName(p) + (whoIsSq(p) ? ` (${whoIsSq(p)})` : '');
+  return `Hallo! Ich ergänze unseren Familienstammbaum. Weisst du, ${g.ask(n)}?\nPërshëndetje! Po plotësoj trungun tonë familjar. A e di ${g.sq(nq)}?`;
+}
+function openGaps() {
+  const L = mkLayer('layer', 'gaps');
+  let filt = 'all';
+  const draw = () => {
+    const all = gapList(); const items = filt === 'all' ? all : all.filter(x => x.g.k === filt);
+    const cnt = k => all.filter(x => x.g.k === k).length;
+    L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><h2>Lücken füllen</h2></div>
+      <div class="layer-body narrow"><p class="gl-note">Was im Stammbaum noch fehlt. Mit «Fragen» schickst du die Frage per WhatsApp an jemanden aus der Familie.</p>
+      <div class="chips-row"><button type="button" class="fchip${filt === 'all' ? ' on' : ''}" data-f="all">Alle · ${all.length}</button>${GAP_TYPES.filter(g => cnt(g.k)).map(g => `<button type="button" class="fchip${filt === g.k ? ' on' : ''}" data-f="${g.k}">${esc(g.t)} · ${cnt(g.k)}</button>`).join('')}</div>
+      ${items.length ? `<div class="card list">${items.slice(0, 300).map(({ g, p }) => `<div class="row gap-row">${avatar(p, 44)}<span class="meta"><button type="button" class="t linkish" data-open="${esc(p.id)}">${esc(fullName(p))}</button><span class="s">${esc([g.t, whoIs(p)].filter(Boolean).join(' · '))}</span></span>
+        ${S.canWrite ? `<button type="button" class="mini-btn" data-fill="${esc(p.id)}">${I.edit}</button>` : ''}${g.ask ? `<button type="button" class="mini-btn" data-ask="${g.k}:${esc(p.id)}">${I.chat} Fragen</button>` : ''}<button type="button" class="icon-btn sm" data-hide="${g.k}:${esc(p.id)}" aria-label="Ausblenden">${I.close}</button></div>`).join('')}</div>` : '<p class="empty-note">Keine Lücken – alles erfasst.</p>'}</div>`;
+  };
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-act],[data-f],[data-open],[data-fill],[data-ask],[data-hide]'); if (!b) return;
+    if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.f) { filt = b.dataset.f; return draw(); }
+    if (b.dataset.open) return openPerson(b.dataset.open);
+    if (b.dataset.fill) return act(async () => { await personForm({ id: b.dataset.fill }); draw(); });
+    if (b.dataset.hide) { const h = gapHidden(); h.add(b.dataset.hide); LS.set('gapsHidden', JSON.stringify([...h])); toast('Ausgeblendet'); return draw(); }
+    if (b.dataset.ask) {
+      const [k, id] = b.dataset.ask.split(':'); const g = GAP_TYPES.find(x => x.k === k), p = P(id); if (!g || !p) return;
+      const text = gapQuestion(g, p);
+      return act(async () => {
+        const v = await dialog(`<div class="dlg-title">Frage an die Familie</div><div class="dlg-text ask-preview">${esc(text)}</div>
+          <div class="dlg-btns"><a class="btn primary" href="${esc(waLink(text))}" target="_blank" rel="noopener">${I.chat} WhatsApp</a>${IN_APP || navigator.share ? '<button type="button" class="btn" data-v="share">Teilen …</button>' : ''}<button type="button" class="btn" data-v="copy">${I.copy} Kopieren</button></div>
+          <div class="dlg-btns"><button type="button" class="btn" data-v="__cancel">Schliessen</button></div>`);
+        if (v === 'share') shareText(text);
+        if (v === 'copy') { try { await navigator.clipboard.writeText(text); toast('Kopiert'); } catch (e2) { toast('Kopieren geht hier nicht'); } }
+      });
+    }
+  });
+  pushLayer(L); draw();
+}
+
+/* ---------- Doppelte Personen finden und zusammenführen ---------- */
+function nameKey(x) { return norm(String(x || '')).replace(/ë/g, 'e').replace(/ç/g, 'c').replace(/[^a-z]/g, ''); }
+function lev(a, b) { if (a === b) return 0; if (Math.abs(a.length - b.length) > 2) return 9; const d = Array.from({ length: b.length + 1 }, (_, i) => i); for (let i = 1; i <= a.length; i++) { let prev = d[0]; d[0] = i; for (let j = 1; j <= b.length; j++) { const t = d[j]; d[j] = Math.min(d[j] + 1, d[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = t; } } return d[b.length]; }
+function dupScore(a, b) {
+  if (a.gender && b.gender && a.gender !== b.gender) return 0;
+  if ((a.parentIds || []).includes(b.id) || (b.parentIds || []).includes(a.id) || (a.partnerIds || []).includes(b.id)) return 0;
+  const fa = nameKey(a.firstName), fb = nameKey(b.firstName); if (!fa || !fb) return 0;
+  const lastsA = [a.lastName, a.birthName].map(nameKey).filter(Boolean), lastsB = [b.lastName, b.birthName].map(nameKey).filter(Boolean);
+  const lastOk = !lastsA.length || !lastsB.length || lastsA.some(x => lastsB.includes(x) || lev(x, lastsB[0]) <= 1);
+  if (!lastOk) return 0;
+  const fd = fa === fb ? 0 : lev(fa, fb); if (fd > (Math.min(fa.length, fb.length) >= 5 ? 1 : 0)) return 0;
+  const ya = parseIso(a.birthDate)?.y, yb = parseIso(b.birthDate)?.y;
+  if (ya && yb && Math.abs(ya - yb) > 1) return 0;
+  if (a.birthDate && b.birthDate && a.birthDate.length === 10 && b.birthDate.length === 10 && a.birthDate !== b.birthDate) return 0;
+  let sc = 50 - fd * 15;
+  if (ya && yb) sc += 25; if (a.birthDate && a.birthDate === b.birthDate) sc += 15;
+  if (lastsA.length && lastsB.length) sc += 10;
+  const pa = new Set(parentsOf(a).map(p => p.id)); if (parentsOf(b).some(p => pa.has(p.id))) sc += 20;
+  return sc;
+}
+function dupPairs() {
+  const t = curTree(), no = new Set((t && t.notDupes) || []), arr = [...S.people.values()], out = [];
+  const byFirst = new Map(); arr.forEach(p => { const k = nameKey(p.firstName).slice(0, 2); if (!k) return; if (!byFirst.has(k)) byFirst.set(k, []); byFirst.get(k).push(p); });
+  byFirst.forEach(list => { for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++) { const a = list[i], b = list[j]; const key = [a.id, b.id].sort().join('+'); if (no.has(key)) continue; const sc = dupScore(a, b); if (sc >= 45) out.push({ a, b, sc, key }); } });
+  return out.sort((x, y) => y.sc - x.sc);
+}
+function dupInfo(p) { return [lifeShort(p), p.birthPlace, parentsOf(p).length ? 'Eltern: ' + parentsOf(p).map(callName).join(', ') : '', partnersOf(p).length ? 'Partner: ' + partnersOf(p).map(callName).join(', ') : '', childrenOf(p.id).length ? `${childrenOf(p.id).length} Kinder` : '', photosOf(p.id).length ? `${photosOf(p.id).length} Fotos` : ''].filter(Boolean).join(' · '); }
+function openDupes() {
+  const L = mkLayer('layer', 'dupes');
+  const draw = () => {
+    const pairs = dupPairs();
+    L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><h2>Doppelte Personen</h2></div>
+      <div class="layer-body narrow"><p class="gl-note">Personen mit gleichem oder sehr ähnlichem Namen und passenden Lebensdaten. Beim Zusammenführen bleiben alle Fotos, Erinnerungen und Verknüpfungen erhalten.</p>
+      ${pairs.length ? pairs.slice(0, 100).map(x => `<div class="card dup-card">${[x.a, x.b].map(p => `<button type="button" class="dup-p" data-open="${esc(p.id)}">${avatar(p, 46)}<span class="meta"><span class="t">${esc(fullName(p))}</span><span class="s">${esc(dupInfo(p) || 'keine weiteren Angaben')}</span></span></button>`).join('')}
+        ${S.canWrite ? `<div class="dup-acts"><button type="button" class="btn" data-no="${esc(x.key)}">Verschiedene Personen</button><button type="button" class="btn primary" data-merge="${esc(x.a.id)}+${esc(x.b.id)}">${I.merge} Zusammenführen</button></div>` : ''}</div>`).join('') : '<p class="empty-note">Keine doppelten Personen gefunden.</p>'}</div>`;
+  };
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-act],[data-open],[data-no],[data-merge]'); if (!b) return;
+    if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.open) return openPerson(b.dataset.open);
+    if (b.dataset.no) { const t = curTree(); put('trees', { ...t, notDupes: [...new Set([...(t.notDupes || []), b.dataset.no])] }); changed(); return draw(); }
+    if (b.dataset.merge) { const [x, y] = b.dataset.merge.split('+'); return act(async () => { if (await mergeDialog(x, y)) draw(); }); }
+  });
+  pushLayer(L); draw();
+}
+const MERGE_FIELDS = [['firstName', 'Vorname'], ['lastName', 'Nachname'], ['birthName', 'Geburtsname'], ['nickname', 'Spitzname'], ['gender', 'Geschlecht'], ['birthDate', 'Geburtstag'], ['birthPlace', 'Geburtsort'], ['originPlace', 'Herkunftsort'], ['fis', 'Fis'], ['deathDate', 'Todestag'], ['deathPlace', 'Todesort'], ['grave', 'Grab'], ['job', 'Beruf'], ['employer', 'Arbeitgeber'], ['phone', 'Telefon'], ['email', 'E-Mail'], ['address', 'Adresse']];
+function fieldShow(k, v) { if (k === 'gender') return { m: 'männlich', w: 'weiblich', d: 'divers' }[v] || v; if (/Date$/.test(k)) return fmtDate(v, true); return v; }
+async function mergeDialog(aId, bId) {
+  let a = P(aId), b = P(bId); if (!a || !b) return false;
+  const conflicts = MERGE_FIELDS.filter(([k]) => a[k] && b[k] && String(a[k]) !== String(b[k]));
+  const v = await dialog(`<div class="dlg-title">Zusammenführen</div>
+    <div class="dlg-text">${esc(fullName(a))} und ${esc(fullName(b))} werden zu einer Person. Fotos, Erinnerungen, Eltern, Partner und Kinder beider Einträge bleiben erhalten.${conflicts.length ? ' Wähle, welche Angabe stimmt:' : ''}</div>
+    ${conflicts.length ? `<div class="dlg-form merge-form">${conflicts.map(([k, lbl]) => `<div class="merge-f"><span class="lbl">${esc(lbl)}</span><label class="radio"><input type="radio" name="m-${k}" value="a" checked> ${esc(fieldShow(k, a[k]))}</label><label class="radio"><input type="radio" name="m-${k}" value="b"> ${esc(fieldShow(k, b[k]))}</label></div>`).join('')}</div>` : ''}
+    <div class="dlg-btns"><button type="button" class="btn" data-v="__cancel">Abbrechen</button><button type="button" class="btn primary" data-v="ok">Zusammenführen</button></div>`,
+    { map: (x, el) => x === 'ok' ? Object.fromEntries(conflicts.map(([k]) => [k, el.querySelector(`input[name="m-${k}"]:checked`).value])) : null });
+  if (!v) return false;
+  await mergePeople(aId, bId, v);
+  return true;
+}
+async function mergePeople(aId, bId, pick) {
+  const a = P(aId), b = P(bId); if (!a || !b) return;
+  const snap = [];
+  const keep = (kind, o) => { if (!snap.some(x => x.o.id === o.id)) snap.push({ kind, o: JSON.parse(JSON.stringify(o)) }); };
+  const m = Object.assign({}, a);
+  MERGE_FIELDS.forEach(([k]) => { if (!m[k] && b[k]) m[k] = b[k]; else if (b[k] && pick && pick[k] === 'b') m[k] = b[k]; });
+  m.deceased = !!(a.deceased || b.deceased || m.deathDate);
+  if (!m.graveGeo && b.graveGeo) m.graveGeo = b.graveGeo;
+  m.notes = [a.notes, b.notes].filter(Boolean).filter((x, i, arr) => arr.indexOf(x) === i).join('\n\n');
+  m.parentIds = [...new Set([...(a.parentIds || []), ...(b.parentIds || [])])].filter(x => S.people.has(x) && x !== aId && x !== bId).slice(0, 2);
+  m.partnerIds = [...new Set([...(a.partnerIds || []), ...(b.partnerIds || [])])].filter(x => S.people.has(x) && x !== aId && x !== bId);
+  m.marriages = Object.assign({}, b.marriages || {}, a.marriages || {}); delete m.marriages[aId]; delete m.marriages[bId];
+  if (!m.avatarPhotoId && b.avatarPhotoId) m.avatarPhotoId = b.avatarPhotoId;
+  keep('people', a); keep('people', b);
+  for (const q of [...G.people.values()]) {
+    if (q.id === aId || q.id === bId) continue;
+    const pi = q.parentIds || [], pa = q.partnerIds || [], mm = q.marriages || {};
+    if (!pi.includes(bId) && !pa.includes(bId) && !mm[bId]) continue;
+    keep('people', q);
+    const n = { ...q, parentIds: [...new Set(pi.map(x => x === bId ? aId : x))], partnerIds: [...new Set(pa.map(x => x === bId ? aId : x))] };
+    if (mm[bId]) { n.marriages = Object.assign({}, mm); if (!n.marriages[aId]) n.marriages[aId] = mm[bId]; delete n.marriages[bId]; }
+    put('people', n);
+  }
+  for (const kind of ['photos', 'stories', 'docs', 'notes']) {
+    if (!G[kind]) continue;
+    for (const o of [...G[kind].values()]) {
+      const ids = o.personIds || []; const tags = o.tags || [];
+      if (!ids.includes(bId) && !tags.some(t => t.pid === bId)) continue;
+      keep(kind, o);
+      const n = { ...o, personIds: [...new Set(ids.map(x => x === bId ? aId : x))] };
+      if (tags.length) n.tags = tags.map(t => t.pid === bId ? { ...t, pid: aId } : t).filter((t, i, arr) => arr.findIndex(z => z.pid === t.pid) === i);
+      put(kind, n);
+    }
+  }
+  const t = curTree(); if (t && t.homePersonId === bId) { keep('trees', t); put('trees', { ...t, homePersonId: aId }); }
+  put('people', m);
+  trash('people', bId, { _mergedInto: aId });
+  if (myPersonId() === bId) await setMe(aId).catch(() => {});
+  if (S.nachRoot === bId) S.nachRoot = aId;
+  rebuild(); changed();
+  toastUndo(`${fullName(m)} zusammengeführt`, async () => {
+    TRASH.delete(bId);
+    snap.forEach(x => put(x.kind, x.o));
+    rebuild(); changed(); toast('Zusammenführen rückgängig gemacht');
+  });
+}
+
+/* ---------- Karte (OpenStreetMap-Kacheln, eigene kleine Kartenansicht) ---------- */
+const TILE = 256, TILE_URL = (z, x, y) => `https://tile.openstreetmap.org/${z}/${x}/${y}.png`;
+const lon2x = (lon, z) => (lon + 180) / 360 * TILE * 2 ** z;
+const lat2y = (lat, z) => { const r = lat * Math.PI / 180; return (1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2 * TILE * 2 ** z; };
+const x2lon = (x, z) => x / (TILE * 2 ** z) * 360 - 180;
+const y2lat = (y, z) => { const n = Math.PI - 2 * Math.PI * y / (TILE * 2 ** z); return 180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))); };
+function geoPair(g) { if (!g) return null; const [a, b] = String(g).split(',').map(Number); return isFinite(a) && isFinite(b) ? [a, b] : null; }
+function mapView(host, { points = [], pick = false, start = null, onTap = null } = {}) {
+  host.innerHTML = `<div class="map-tiles"></div><div class="map-marks"></div>${pick ? '<div class="map-cross"></div>' : ''}<div class="map-zoom"><button type="button" data-z="1" aria-label="Vergrössern">${I.plus}</button><button type="button" data-z="-1" aria-label="Verkleinern">${I.minus}</button></div><a class="map-attr" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a>`;
+  const tiles = host.querySelector('.map-tiles'), marks = host.querySelector('.map-marks');
+  const st = { z: 2, lat: 30, lon: 15 };
+  const size = () => ({ w: host.clientWidth || 360, h: host.clientHeight || 400 });
+  const fit = pts => {
+    if (!pts.length) return;
+    const { w, h } = size();
+    let la0 = 90, la1 = -90, lo0 = 180, lo1 = -180; pts.forEach(p => { la0 = Math.min(la0, p.lat); la1 = Math.max(la1, p.lat); lo0 = Math.min(lo0, p.lon); lo1 = Math.max(lo1, p.lon); });
+    let z = 16; while (z > 1 && (lon2x(lo1, z) - lon2x(lo0, z) > w - 80 || lat2y(la0, z) - lat2y(la1, z) > h - 100)) z--;
+    st.z = Math.min(z, 14); st.lat = (la0 + la1) / 2; st.lon = (lo0 + lo1) / 2;
+  };
+  if (start) { st.lat = start[0]; st.lon = start[1]; st.z = 14; } else fit(points);
+  const center = () => ({ cx: lon2x(st.lon, st.z), cy: lat2y(st.lat, st.z) });
+  const draw = () => {
+    const { w, h } = size(), { cx, cy } = center(), z = st.z, n = 2 ** z;
+    const x0 = Math.floor((cx - w / 2) / TILE), x1 = Math.floor((cx + w / 2) / TILE), y0 = Math.max(0, Math.floor((cy - h / 2) / TILE)), y1 = Math.min(n - 1, Math.floor((cy + h / 2) / TILE));
+    let html = '';
+    for (let ty = y0; ty <= y1; ty++) for (let tx = x0; tx <= x1; tx++) { const wx = ((tx % n) + n) % n; html += `<img alt="" draggable="false" onerror="this.style.visibility='hidden'" src="${TILE_URL(z, wx, ty)}" style="left:${Math.round(tx * TILE - cx + w / 2)}px;top:${Math.round(ty * TILE - cy + h / 2)}px">`; }
+    tiles.innerHTML = html;
+    const groups = [];
+    points.forEach(p => { const x = lon2x(p.lon, z) - cx + w / 2, y = lat2y(p.lat, z) - cy + h / 2; if (x < -40 || y < -40 || x > w + 40 || y > h + 40) return; const g = groups.find(q => Math.hypot(q.x - x, q.y - y) < 30); if (g) g.items.push(p); else groups.push({ x, y, items: [p] }); });
+    marks.innerHTML = groups.map((g, i) => `<button type="button" class="map-pin k-${g.items[0].k}${g.items.length > 1 ? ' many' : ''}" data-g="${i}" style="left:${g.x.toFixed(1)}px;top:${g.y.toFixed(1)}px">${g.items.length > 1 ? `<b>${g.items.length}</b>` : g.items[0].icon || I.pin}</button>`).join('');
+    marks._groups = groups;
+  };
+  const zoomAt = (dz, px, py) => {
+    const { w, h } = size(); const nz = Math.max(1, Math.min(18, st.z + dz)); if (nz === st.z) return;
+    const { cx, cy } = center(); const ax = cx + (px - w / 2), ay = cy + (py - h / 2);
+    const lon = x2lon(ax, st.z), lat = y2lat(ay, st.z);
+    st.z = nz; const nx = lon2x(lon, nz) - (px - w / 2), ny = lat2y(lat, nz) - (py - h / 2);
+    st.lon = x2lon(nx, nz); st.lat = y2lat(ny, nz); draw();
+  };
+  const pts = new Map(); let pinchD = 0, moved = false, sx = 0, sy = 0, downPin = null;
+  host.addEventListener('pointerdown', e => { if (e.target.closest('.map-zoom,.map-attr')) return; downPin = e.target.closest('.map-pin'); try { host.setPointerCapture(e.pointerId); } catch (e2) {} pts.set(e.pointerId, [e.clientX, e.clientY]); moved = false; sx = e.clientX; sy = e.clientY; if (pts.size === 2) { const [a, b] = [...pts.values()]; pinchD = Math.hypot(a[0] - b[0], a[1] - b[1]); } });
+  host.addEventListener('pointermove', e => {
+    if (!pts.has(e.pointerId)) return;
+    const prev = pts.get(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]);
+    if (Math.hypot(e.clientX - sx, e.clientY - sy) > 6) moved = true;
+    if (pts.size === 1) { const { cx, cy } = center(); st.lon = x2lon(cx - (e.clientX - prev[0]), st.z); st.lat = Math.max(-85, Math.min(85, y2lat(cy - (e.clientY - prev[1]), st.z))); draw(); }
+    else if (pts.size === 2) { const [a, b] = [...pts.values()]; const d = Math.hypot(a[0] - b[0], a[1] - b[1]); if (pinchD && Math.abs(Math.log2(d / pinchD)) > 0.6) { const r = host.getBoundingClientRect(); zoomAt(d > pinchD ? 1 : -1, (a[0] + b[0]) / 2 - r.left, (a[1] + b[1]) / 2 - r.top); pinchD = d; } }
+  });
+  const up = e => { pts.delete(e.pointerId); if (pts.size < 2) pinchD = 0; };
+  host.addEventListener('pointerup', up); host.addEventListener('pointercancel', up);
+  host.addEventListener('wheel', e => { e.preventDefault(); const r = host.getBoundingClientRect(); zoomAt(e.deltaY < 0 ? 1 : -1, e.clientX - r.left, e.clientY - r.top); }, { passive: false });
+  host.addEventListener('dblclick', e => { const r = host.getBoundingClientRect(); zoomAt(1, e.clientX - r.left, e.clientY - r.top); });
+  host.addEventListener('click', e => {
+    const z = e.target.closest('[data-z]'); if (z) { const { w, h } = size(); return zoomAt(+z.dataset.z, w / 2, h / 2); }
+    if (moved) return;
+    const pin = e.target.closest('.map-pin') || downPin; downPin = null; if (!pin) return;
+    const g = marks._groups[+pin.dataset.g]; if (!g) return;
+    if (g.items.length > 1 && st.z < 16 && new Set(g.items.map(p => `${p.lat.toFixed(4)},${p.lon.toFixed(4)}`)).size > 1) return zoomAt(2, g.x, g.y);
+    if (onTap) onTap(g.items);
+  });
+  const ro = window.ResizeObserver ? new ResizeObserver(() => draw()) : null; if (ro) ro.observe(host);
+  requestAnimationFrame(draw);
+  return { get center() { return [st.lat, st.lon]; }, go(lat, lon, z) { st.lat = lat; st.lon = lon; if (z) st.z = z; draw(); }, fit(p) { fit(p); draw(); }, set(p) { points = p; draw(); }, destroy() { if (ro) ro.disconnect(); } };
+}
+function mapPoints() {
+  const out = [];
+  S.people.forEach(p => {
+    const o = geoPair(p.originGeo), a = geoPair(p.addressGeo), g = isDead(p) ? geoPair(p.graveGeo) : null;
+    if (o) out.push({ k: 'origin', lat: o[0], lon: o[1], icon: I.home, t: p.originPlace || 'Herkunftsort', s: fullName(p), pid: p.id });
+    if (a) out.push({ k: 'home', lat: a[0], lon: a[1], icon: I.people, t: (p.address || 'Wohnort').split('\n').slice(-1)[0], s: fullName(p), pid: p.id });
+    if (g) out.push({ k: 'grave', lat: g[0], lon: g[1], icon: I.candle, t: p.grave || 'Grab', s: fullName(p), pid: p.id });
+  });
+  S.photos.forEach(ph => { if (typeof ph.lat === 'number' && typeof ph.lon === 'number') out.push({ k: 'photo', lat: ph.lat, lon: ph.lon, icon: I.photos, t: ph.caption || ph.place || 'Foto', s: (ph.personIds || []).map(P).filter(Boolean).map(callName).join(', '), ph: ph.id }); });
+  return out;
+}
+function openFamilyMap() {
+  const L = mkLayer('layer fmap', 'fmap');
+  const kinds = [['all', 'Alles'], ['origin', 'Herkunft'], ['home', 'Wohnorte'], ['grave', 'Gräber'], ['photo', 'Fotos']];
+  let filt = 'all', mv = null;
+  const all = mapPoints();
+  const list = () => filt === 'all' ? all : all.filter(p => p.k === filt);
+  L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><h2>Familienkarte</h2></div>
+    <div class="chips-row map-chips">${kinds.filter(([k]) => k === 'all' || all.some(p => p.k === k)).map(([k, t]) => `<button type="button" class="fchip${k === filt ? ' on' : ''}" data-f="${k}">${t}${k !== 'all' ? ' · ' + all.filter(p => p.k === k).length : ''}</button>`).join('')}</div>
+    ${all.length ? '<div class="map-host"></div><div class="map-card" hidden></div>' : `<div class="layer-body narrow"><p class="empty-note">Noch keine Orte mit Standort. Auf die Karte kommen Fotos mit GPS, Gräber mit Standort und Herkunftsorte und Wohnadressen, bei denen du im Formular «Auf Karte» gewählt hast.</p></div>`}`;
+  const card = L.el.querySelector('.map-card');
+  const showCard = items => {
+    card.hidden = false;
+    card.innerHTML = `<button type="button" class="icon-btn sm map-card-x" data-act="cardx" aria-label="Schliessen">${I.close}</button>${items.slice(0, 20).map(p => { const ph = p.ph && S.photos.get(p.ph); return `<button type="button" class="row" ${p.ph ? `data-ph="${esc(p.ph)}"` : `data-open="${esc(p.pid)}"`}>${ph && ph.thumb ? `<span class="av trash-ph" style="--size:44px">${imgTag(ph.thumb)}</span>` : p.pid ? avatar(P(p.pid), 44) : ''}<span class="meta"><span class="t">${esc(p.t)}</span><span class="s">${esc([{ origin: 'Herkunft', home: 'Wohnort', grave: 'Grab', photo: 'Foto' }[p.k], p.s].filter(Boolean).join(' · '))}</span></span><a class="mini-btn" href="${esc(geoMaps(p.lat.toFixed(6) + ',' + p.lon.toFixed(6)))}" target="_blank" rel="noopener">${I.map}</a></button>`; }).join('')}`;
+    hydrateSoon();
+  };
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-act],[data-f],[data-open],[data-ph]'); if (!b || b.closest('a')) return;
+    if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.act === 'cardx') { card.hidden = true; return; }
+    if (b.dataset.f) { filt = b.dataset.f; L.el.querySelectorAll('.fchip').forEach(c => c.classList.toggle('on', c.dataset.f === filt)); card.hidden = true; mv.set(list()); mv.fit(list()); return; }
+    if (b.dataset.ph) return openLightbox([b.dataset.ph], 0);
+    if (b.dataset.open) return openPerson(b.dataset.open);
+  });
+  L.onClose = () => { if (mv) mv.destroy(); };
+  pushLayer(L);
+  const host = L.el.querySelector('.map-host'); if (host) mv = mapView(host, { points: list(), onTap: showCard });
+}
+/* Ort auf der Karte wählen (Herkunftsort, Wohnadresse, Grab) */
+function pickOnMap({ title = 'Ort wählen', start = null, query = '' } = {}) {
+  return new Promise(resolve => {
+    const L = mkLayer('layer mappick', 'mappick'); L.result = undefined; L.onClose = () => { if (mv) mv.destroy(); resolve(L.result); };
+    L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Abbrechen">${I.close}</button><h2>${esc(title)}</h2></div>
+      <form class="layer-search map-search"><span class="search-ic">${I.search}</span><input type="search" placeholder="Ort suchen oder Google-Maps-Link einfügen" autocomplete="off" enterkeyhint="search"></form>
+      <div class="map-results" hidden></div>
+      <div class="map-host pick"></div>
+      <p class="map-note">Karte verschieben, bis das Kreuz auf dem Ort steht. Die Suche schickt nur den eingegebenen Ortsnamen an OpenStreetMap.</p>
+      <div class="layer-foot">${start ? '<button type="button" class="btn" data-act="clear">Entfernen</button>' : ''}<button type="button" class="btn" data-act="here">${I.target} Mein Standort</button><button type="button" class="btn primary" data-act="ok">Übernehmen</button></div>`;
+    const inp = L.el.querySelector('input'), res = L.el.querySelector('.map-results');
+    let mv = null;
+    pushLayer(L);
+    mv = mapView(L.el.querySelector('.map-host'), { pick: true, start: start || [42.6, 20.9] });
+    if (!start) mv.go(42.6, 20.9, 7);
+    const search = async () => {
+      const q = inp.value.trim(); if (!q) return;
+      const g = parseGeo(q); if (g) { const [a, b] = geoPair(g); mv.go(a, b, 16); return; }
+      res.hidden = false; res.innerHTML = '<div class="hint">Suche …</div>';
+      try {
+        const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=de,sq&q=' + encodeURIComponent(q));
+        const arr = await r.json();
+        res.innerHTML = arr.length ? arr.map((x, i) => `<button type="button" class="row" data-r="${i}"><span class="meta"><span class="t">${esc(x.name || x.display_name.split(',')[0])}</span><span class="s">${esc(x.display_name)}</span></span></button>`).join('') : '<div class="hint">Nichts gefunden.</div>';
+        res._arr = arr;
+      } catch (e) { res.innerHTML = '<div class="hint">Suche geht gerade nicht. Du kannst die Karte auch von Hand verschieben.</div>'; }
+    };
+    L.el.querySelector('form').addEventListener('submit', e => { e.preventDefault(); inp.blur(); act(search); });
+    if (query) { inp.value = query; }
+    L.el.addEventListener('click', e => {
+      const b = e.target.closest('[data-act],[data-r]'); if (!b) return;
+      if (b.dataset.r !== undefined) { const x = res._arr[+b.dataset.r]; res.hidden = true; mv.go(+x.lat, +x.lon, x.type === 'village' || x.type === 'hamlet' ? 15 : 13); return; }
+      if (b.dataset.act === 'close') return closeLayer(L);
+      if (b.dataset.act === 'clear') { L.result = ''; return closeLayer(L); }
+      if (b.dataset.act === 'here') return act(async () => { const g = await currentGeo(); if (g) { const [a, c] = geoPair(g); mv.go(a, c, 16); } });
+      if (b.dataset.act === 'ok') { const [a, c] = mv.center; L.result = `${a.toFixed(6)},${c.toFixed(6)}`; return closeLayer(L); }
+    });
+  });
+}
+
+/* ---------- Dokumente (verschlüsselt, z.B. Urkunden, Briefe, Zeugnisse) ---------- */
+const DOC_MAX = 10 * 1024 * 1024;
+function docsOf(pid) { return [...S.docs.values()].filter(d => (d.personIds || []).includes(pid)).sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999') || (a.createdAt || 0) - (b.createdAt || 0)); }
+function docsSection(p) {
+  const list = docsOf(p.id);
+  if (!list.length && !S.canWrite) return '';
+  return `<div class="sec-row"><h3 class="section-h">Dokumente${list.length ? ` · ${list.length}` : ''}</h3>${S.canWrite ? `<button type="button" class="mini-btn" data-act="doc-add">${I.plus} Dokument</button>` : ''}</div>
+    ${list.length ? `<div class="card list">${list.map(d => `<div class="row doc-row"><button type="button" class="doc-open" data-doc="${esc(d.id)}">${d.thumb ? `<span class="av trash-ph" style="--size:44px">${imgTag(d.thumb)}</span>` : `<span class="av doc-ic" style="--size:44px">${I.doc}</span>`}<span class="meta"><span class="t">${esc(d.title || d.name || 'Dokument')}</span><span class="s">${esc([d.date ? fmtDate(d.date, true) : '', /pdf/.test(d.mime) ? 'PDF' : 'Bild', fmtBytes(d.size || 0)].filter(Boolean).join(' · '))}</span></span></button>${S.canWrite ? `<button type="button" class="icon-btn sm" data-dedit="${esc(d.id)}" aria-label="Bearbeiten">${I.edit}</button>` : ''}</div>`).join('')}</div>` : '<p class="empty-note">Alte Briefe, Urkunden, Zeugnisse oder Ausweise der Verstorbenen als Foto oder PDF, verschlüsselt.</p>'}`;
+}
+function pickDocFile() {
+  return new Promise(res => {
+    const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'application/pdf,image/*'; inp.hidden = true;
+    inp.addEventListener('change', () => { const f = inp.files && inp.files[0]; inp.remove(); res(f || null); });
+    document.body.appendChild(inp); inp.click();
+  });
+}
+async function docForm({ id = null, personIds = [], file = null } = {}) {
+  const prev = id ? S.docs.get(id) : null;
+  const v = await dialog(`<div class="dlg-title">${prev ? 'Dokument bearbeiten' : 'Dokument speichern'}</div>
+    <div class="dlg-form"><div class="field"><label for="dc-t">Bezeichnung</label><input id="dc-t" autocomplete="off" autocapitalize="sentences" placeholder="z.B. Geburtsurkunde, Brief aus Deutschland"></div>
+    <div class="field"><label for="dc-d">Datum (freiwillig)</label><input id="dc-d" inputmode="decimal" autocomplete="off" placeholder="TT.MM.JJJJ oder Jahr"></div></div>
+    <div class="dlg-btns">${prev ? '<button type="button" class="btn danger" data-v="del">Löschen</button>' : ''}<button type="button" class="btn" data-v="__cancel">Abbrechen</button><button type="button" class="btn primary" data-v="ok">Speichern</button></div>`,
+    { onOpen: el => { el.querySelector('#dc-t').value = prev ? prev.title || '' : (file ? file.name.replace(/\.[a-z0-9]{2,5}$/i, '').replace(/[_-]+/g, ' ') : ''); el.querySelector('#dc-d').value = toInput(prev ? prev.date : ''); },
+      map: (x, el) => x === 'ok' ? { title: el.querySelector('#dc-t').value.trim(), date: el.querySelector('#dc-d').value.trim() } : x === 'del' ? 'del' : null });
+  if (!v) return;
+  if (v === 'del') {
+    if (!await confirmDialog({ title: 'Dokument löschen?', text: `Es kommt in den Papierkorb und kann ${TRASH_DAYS} Tage lang wiederhergestellt werden.`, ok: 'Löschen', danger: true })) return;
+    trash('docs', id); changed(); toastUndo('Dokument im Papierkorb', () => restoreEntry(id)); return;
+  }
+  const date = parseDateInput(v.date); if (date === null) { toast('Datum bitte als TT.MM.JJJJ oder Jahr'); return; }
+  if (prev) { put('docs', { ...prev, title: v.title, date: date || '' }); changed(); toast('Gespeichert'); return; }
+  let blob = file, thumbBlob = null, mime = file.type || (/\.pdf$/i.test(file.name) ? 'application/pdf' : '');
+  if (!/^image\/|pdf/.test(mime)) throw { code: 'user', message: 'Bitte ein Bild oder ein PDF wählen.' };
+  showBusy('Dokument wird verschlüsselt …');
+  try {
+    if (/^image\//.test(mime)) {
+      const img = await loadImg(file);
+      if (file.size > 3 * 1024 * 1024 || !/jpe?g|png|webp/.test(mime)) { const sc = await scaleTo(img, 2600, 0.88); blob = sc.blob; mime = 'image/jpeg'; }
+      thumbBlob = (await scaleTo(img, 480, 0.8)).blob;
+    }
+    if (blob.size > DOC_MAX) throw { code: 'user', message: `Das Dokument ist zu gross (höchstens ${fmtBytes(DOC_MAX)}).` };
+    const up = await encryptAndUpload(blob);
+    const o = { id: newId(), treeId: S.treeId, personIds: [...personIds], title: v.title, date: date || '', mime, name: file.name || '', size: blob.size, blob: up.id, key: up.key };
+    if (thumbBlob) { const T = await encryptAndUpload(thumbBlob); o.thumb = T.id; o.tk = T.key; setImg(T.id, thumbBlob); idb.put(T.id, T.data); }
+    idb.put(up.id, up.data);
+    put('docs', o); changed();
+  } finally { hideBusy(); }
+  toast('Dokument gespeichert');
+}
+async function blobPlain(id, key) {
+  let bytes = await idb.get(id);
+  if (!bytes) { const r = await api('apiGetBlobs', [id]); bytes = r && r[id] ? FSC.unb64(r[id]) : null; if (bytes) idb.put(id, bytes); }
+  if (!bytes) throw { code: 'user', message: 'Die Datei wurde nicht gefunden.' };
+  return FSC.decBlob(id, key, bytes);
+}
+async function openDoc(id) {
+  const d = S.docs.get(id); if (!d) return;
+  showBusy('Dokument wird entschlüsselt …');
+  let blob; try { blob = new Blob([await blobPlain(d.blob, d.key)], { type: d.mime || 'application/octet-stream' }); } finally { hideBusy(); }
+  if (/^image\//.test(d.mime)) {
+    const L = mkLayer('layer lightbox', 'docview'); const u = URL.createObjectURL(blob);
+    L.onClose = () => URL.revokeObjectURL(u);
+    L.el.innerHTML = `<div class="lb-top"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><span class="lb-count">${esc(d.title || 'Dokument')}</span><button type="button" class="icon-btn" data-act="dl" aria-label="Speichern">${I.save}</button></div><div class="lb-stage doc-stage"><img src="${u}" alt="${esc(d.title || 'Dokument')}"></div>`;
+    L.el.addEventListener('click', e => { const b = e.target.closest('[data-act]'); if (!b) return; if (b.dataset.act === 'close') closeLayer(L); if (b.dataset.act === 'dl') act(() => saveFile(d.name || `${slugify(d.title)}.jpg`, blob)); });
+    pushLayer(L); return;
+  }
+  return viewFile(d.name || `${slugify(d.title)}.pdf`, blob);
+}
+/* Datei zum Ansehen öffnen: in der App mit einer passenden App (PDF-Betrachter), im Browser in einem neuen Tab */
+async function viewFile(name, blob) {
+  if (NATIVE && NATIVE.viewEnd && NATIVE.saveBegin) {
+    const bytes = await blobBytes(blob);
+    NATIVE.saveBegin(name, blob.type || 'application/octet-stream');
+    for (let i = 0; i < bytes.length; i += 786432) NATIVE.saveChunk(FSC.b64(bytes.subarray(i, i + 786432)));
+    NATIVE.viewEnd(); return true;
+  }
+  const u = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = u; a.target = '_blank'; a.rel = 'noopener';
+  if (NATIVE) a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(u), 60000);
+  return true;
+}
+
+/* ---------- Kommentare und Herzen (bei Fotos und Erinnerungen) ---------- */
+function commentsOn(target) { return [...S.comments.values()].filter(c => c.on === target).sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0)); }
+function heartsOn(target) { return [...S.hearts.values()].filter(h => h.on === target); }
+async function heartId(target) { return 'h' + (await FSC.sha256hex('heart|' + target + '|' + ((S.me && S.me.id) || ''))).slice(0, 30); }
+function myHeart(target) { return heartsOn(target).find(h => S.me && (h.updatedByCred || h.byCred) === S.me.id); }
+function reactBar(target, dark) {
+  const hs = heartsOn(target), cs = commentsOn(target), mine = myHeart(target);
+  return `<div class="react${dark ? ' dark' : ''}"><button type="button" class="react-b${mine ? ' on' : ''}" data-heart="${esc(target)}"${S.canWrite ? '' : ' disabled'} aria-label="Herz">${I.heart}<span>${hs.length || ''}</span></button><button type="button" class="react-b" data-comments="${esc(target)}" aria-label="Kommentare">${I.chat}<span>${cs.length ? cs.length : S.canWrite ? 'Kommentieren' : ''}</span></button>${hs.length ? `<span class="react-who">${esc(hs.map(h => h.updatedBy || h.createdBy).filter(Boolean).slice(0, 3).join(', '))}${hs.length > 3 ? ' …' : ''}</span>` : ''}</div>`;
+}
+async function toggleHeart(target) {
+  if (!S.canWrite) return;
+  const mine = myHeart(target);
+  if (mine) remove('hearts', mine.id);
+  else put('hearts', { id: await heartId(target), treeId: S.treeId, on: target });
+  rebuild(); changed();
+}
+function openComments(target) {
+  const L = mkLayer('layer comments', 'comments');
+  const ph = S.photos.get(target), st = S.stories.get(target);
+  const title = ph ? (ph.caption || 'Foto') : st ? (st.title || 'Erinnerung') : 'Kommentare';
+  const draw = () => {
+    const cs = commentsOn(target), hs = heartsOn(target);
+    L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><h2>${esc(title)}</h2></div>
+      <div class="layer-body narrow">${ph && ph.thumb ? `<div class="cm-thumb">${imgTag(ph.thumb)}</div>` : ''}
+      ${hs.length ? `<p class="cm-hearts">${I.heart} ${esc(hs.map(h => h.updatedBy || h.createdBy || '?').join(', '))}</p>` : ''}
+      ${cs.length ? cs.map(c => `<div class="cm"><span class="cm-av">${esc(memberInitials(c.createdBy || '?'))}</span><div class="cm-b"><div class="cm-h"><b>${esc(c.createdBy || 'Unbekannt')}</b> <span>${esc(fmtWhen(c.createdAt))}</span>${S.canWrite && (S.isAdmin || (S.me && c.updatedByCred === S.me.id)) ? `<button type="button" class="icon-btn sm" data-cdel="${esc(c.id)}" aria-label="Löschen">${I.close}</button>` : ''}</div><div class="cm-t">${esc(c.text)}</div></div></div>`).join('') : '<p class="empty-note">Noch keine Kommentare.</p>'}</div>
+      ${S.canWrite ? `<form class="cm-form"><textarea rows="1" placeholder="Kommentar schreiben, z.B. «Das war 1985 in Gjakova!»" aria-label="Kommentar"></textarea><button type="submit" class="btn primary">Senden</button></form>` : ''}`;
+    hydrateSoon();
+    const ta = L.el.querySelector('textarea'); if (ta) ta.addEventListener('input', () => { ta.style.height = 'auto'; ta.style.height = Math.min(140, ta.scrollHeight) + 'px'; });
+    const fm = L.el.querySelector('form'); if (fm) fm.addEventListener('submit', e => { e.preventDefault(); const text = ta.value.trim(); if (!text) return; put('comments', { id: newId(), treeId: S.treeId, on: target, text: text.slice(0, 2000) }); rebuild(); changed(); draw(); });
+    const body = L.el.querySelector('.layer-body'); body.scrollTop = body.scrollHeight;
+  };
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-act],[data-cdel]'); if (!b) return;
+    if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.cdel) return act(async () => { if (await confirmDialog({ title: 'Kommentar löschen?', ok: 'Löschen', danger: true })) { remove('comments', b.dataset.cdel); rebuild(); changed(); draw(); } });
+  });
+  pushLayer(L); draw();
+}
+
+/* ---------- Gedenktage (Todestage, auf Wunsch) ---------- */
+function memorialsOn() { return LS.get('memorials') === '1'; }
+function upcomingMemorials(maxDays) {
+  const t = new Date(); t.setHours(0, 0, 0, 0); const res = [];
+  for (const p of S.people.values()) {
+    if (!isDead(p)) continue;
+    const b = parseIso(p.deathDate); if (!b || !b.m || !b.d) continue;
+    const mkD = y => { let d = b.d; if (b.m === 2 && d === 29 && new Date(y, 1, 29).getMonth() !== 1) d = 28; return new Date(y, b.m - 1, d); };
+    let next = mkD(t.getFullYear()); if (next < t) next = mkD(t.getFullYear() + 1);
+    const days = Math.round((next - t) / 86400000);
+    if (days <= maxDays) res.push({ p, days, years: next.getFullYear() - b.y, label: dayMonth(b.d, b.m) });
+  }
+  return res.sort((a, b) => a.days - b.days);
+}
+function memorialsHtml() {
+  if (!memorialsOn()) return '';
+  const m = upcomingMemorials(30).slice(0, 8); if (!m.length) return '';
+  return `<h2 class="section-h">Gedenktage</h2><div class="bday-row">${m.map(x => `<button type="button" class="bday mem${x.days === 0 ? ' today' : ''}" data-open="${x.p.id}">${avatar(x.p, 40)}<span class="when">${x.days === 0 ? 'Heute' : x.days === 1 ? 'Morgen' : `in ${x.days} Tagen`}</span><span class="bn">${esc(fullName(x.p))}</span><span class="bs">† vor ${x.years} ${x.years === 1 ? 'Jahr' : 'Jahren'} · ${esc(x.label)}</span></button>`).join('')}</div>`;
+}
+
+/* ---------- Änderungsverlauf (frühere Fassungen einer Person) ---------- */
+const HIST_FIELDS = ['firstName', 'lastName', 'birthName', 'nickname', 'gender', 'birthDate', 'birthPlace', 'originPlace', 'originGeo', 'fis', 'deceased', 'deathDate', 'deathPlace', 'grave', 'graveGeo', 'job', 'employer', 'phone', 'email', 'address', 'addressGeo', 'notes'];
+const HIST_KEEP = 15;
+const HIST_LABEL = Object.assign(Object.fromEntries(MERGE_FIELDS), { notes: 'Notizen', deceased: 'Verstorben', graveGeo: 'Standort Grab', originGeo: 'Karte Herkunft', addressGeo: 'Karte Wohnort' });
+function histSnap(p) { const o = {}; HIST_FIELDS.forEach(k => { if (p[k] !== undefined && p[k] !== '' && p[k] !== false) o[k] = p[k]; }); return o; }
+function histOf(pid) { return [...G.hist.values()].filter(h => h.pid === pid).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)); }
+function recordHistory(prev) {
+  if (!prev) return;
+  const snap = histSnap(prev);
+  put('hist', { id: newId(), treeId: prev.treeId, pid: prev.id, snap, was: { by: prev.updatedBy || prev.createdBy || '', at: prev.updatedAt || prev.createdAt || 0 } });
+  histOf(prev.id).slice(HIST_KEEP).forEach(h => remove('hist', h.id));
+}
+function histDiff(a, b) {
+  const out = [];
+  HIST_FIELDS.forEach(k => { const x = a[k] ?? '', y = b[k] ?? ''; if (String(x) !== String(y)) out.push({ k, from: x, to: y }); });
+  return out;
+}
+function showVal(k, v) { if (v === '' || v == null || v === false) return '–'; if (v === true) return 'ja'; if (/Geo$/.test(k)) return 'gesetzt'; return String(fieldShow(k, v)); }
+function openHistory(pid) {
+  const L = mkLayer('layer', 'hist');
+  const draw = () => {
+    const p = P(pid); if (!p) return closeLayer(L);
+    const hs = histOf(pid);
+    const cur = histSnap(p);
+    L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><h2>Verlauf · ${esc(callName(p))}</h2></div>
+      <div class="layer-body narrow"><p class="gl-note">Frühere Fassungen der Angaben. Beim Wiederherstellen bleiben Eltern, Partner, Kinder und Fotos unverändert.</p>
+      ${hs.length ? hs.map((h, i) => { const after = i === 0 ? cur : hs[i - 1].snap; const d = histDiff(h.snap, after); return `<div class="card hist">
+        <div class="hist-h"><b>${esc(h.createdBy || 'Jemand')}</b> hat ${esc(fmtWhen(h.createdAt))} geändert</div>
+        ${d.length ? `<div class="hist-d">${d.map(x => `<div><span class="k">${esc(HIST_LABEL[x.k] || x.k)}</span><span class="from">${esc(showVal(x.k, x.from))}</span>${I.chevR}<span class="to">${esc(showVal(x.k, x.to))}</span></div>`).join('')}</div>` : '<div class="hist-d muted">Keine Änderung an den Angaben</div>'}
+        ${S.canWrite && d.length ? `<button type="button" class="mini-btn" data-hrest="${esc(h.id)}">${I.history} Fassung davor wiederherstellen</button>` : ''}</div>`; }).join('') : '<p class="empty-note">Noch keine früheren Fassungen. Sie entstehen, sobald jemand die Angaben ändert.</p>'}</div>`;
+  };
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-act],[data-hrest]'); if (!b) return;
+    if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.hrest) return act(async () => {
+      const h = G.hist.get(b.dataset.hrest), p = P(pid); if (!h || !p) return;
+      if (!await confirmDialog({ title: 'Diese Fassung wiederherstellen?', text: `Die Angaben von ${fullName(p)} werden auf den Stand vor dieser Änderung gesetzt. Die jetzige Fassung bleibt im Verlauf.`, ok: 'Wiederherstellen' })) return;
+      recordHistory(p);
+      const n = { ...p }; HIST_FIELDS.forEach(k => { delete n[k]; }); Object.assign(n, h.snap);
+      put('people', n); rebuild(); changed(); toast('Fassung wiederhergestellt'); draw();
+    });
+  });
+  pushLayer(L); draw();
+}
+
+/* ---------- Familienchronik ---------- */
+function chronEvents() {
+  const ev = [];
+  const yOf = d => parseIso(d)?.y;
+  S.people.forEach(p => {
+    if (p.birthDate && yOf(p.birthDate)) ev.push({ k: 'birth', d: p.birthDate, ids: [p.id], t: `${fullName(p)} geboren`, s: p.birthPlace || '' });
+    if (isDead(p) && p.deathDate && yOf(p.deathDate)) ev.push({ k: 'death', d: p.deathDate, ids: [p.id], t: `${fullName(p)} gestorben`, s: [p.deathPlace, p.birthDate ? `${ageAt(p.birthDate, p.deathDate)} Jahre alt` : ''].filter(Boolean).join(' · ') });
+  });
+  const seen = new Set();
+  S.people.forEach(p => partnersOf(p).forEach(q => {
+    const k = [p.id, q.id].sort().join('+'); if (seen.has(k)) return; seen.add(k);
+    const m = marriageOf(p, q.id) || marriageOf(q, p.id); if (m && m.date && yOf(m.date)) ev.push({ k: 'wed', d: m.date, ids: [p.id, q.id], t: `Hochzeit ${callName(p)} & ${callName(q)}`, s: m.place || '' });
+  }));
+  S.photos.forEach(ph => { if (ph.date && yOf(ph.date)) ev.push({ k: 'photo', d: ph.date, ids: ph.personIds || [], ph: ph.id, t: ph.caption || ((ph.personIds || []).filter(x => S.people.has(x)).length ? 'Foto mit ' + (ph.personIds || []).map(P).filter(Boolean).map(callName).join(', ') : 'Foto'), s: ph.place || '' }); });
+  S.stories.forEach(st => { if (st.date && yOf(st.date)) ev.push({ k: 'story', d: st.date, ids: st.personIds || [], st: st.id, t: st.title || (st.text || 'Erinnerung').slice(0, 70), s: (st.personIds || []).map(P).filter(Boolean).map(callName).join(', ') }); });
+  return ev.sort((x, y) => (x.d < y.d ? -1 : x.d > y.d ? 1 : 0));
+}
+function ageAt(b, d) { const x = parseIso(b), y = parseIso(d); if (!x || !y) return ''; let a = y.y - x.y; if (x.m && y.m && (y.m < x.m || y.m === x.m && x.d && y.d && y.d < x.d)) a--; return a; }
+function openChronicle() {
+  const L = mkLayer('layer', 'chron');
+  let filt = 'all', rev = false;
+  const kinds = { birth: ['Geburt', I.cake], wed: ['Hochzeit', I.rings], death: ['Tod', I.candle], photo: ['Foto', I.photos], story: ['Erinnerung', I.book] };
+  const draw = () => {
+    let ev = chronEvents(); if (filt !== 'all') ev = ev.filter(e2 => filt === 'fam' ? ['birth', 'wed', 'death'].includes(e2.k) : e2.k === filt);
+    if (rev) ev.reverse();
+    const nowY = new Date().getFullYear(); let dec = null, html = '';
+    ev.forEach(e2 => {
+      const y = parseIso(e2.d).y, d0 = Math.floor(y / 10) * 10;
+      if (d0 !== dec) { dec = d0; html += `<h3 class="chron-dec">${d0}er</h3>`; }
+      const th = e2.ph && S.photos.get(e2.ph);
+      html += `<button type="button" class="chron-ev k-${e2.k}" ${e2.ph ? `data-ph="${esc(e2.ph)}"` : `data-open="${esc((e2.ids || []).find(x => S.people.has(x)) || '')}"`}><span class="chron-y">${esc(e2.d.length >= 7 ? fmtDate(e2.d, false) : String(y))}</span><span class="chron-ic">${kinds[e2.k][1]}</span><span class="meta"><span class="t">${esc(e2.t)}</span><span class="s">${esc([e2.s, nowY - y > 0 ? `vor ${nowY - y} ${nowY - y === 1 ? 'Jahr' : 'Jahren'}` : ''].filter(Boolean).join(' · '))}</span></span>${th && th.thumb ? `<span class="chron-th">${imgTag(th.thumb)}</span>` : ''}</button>`;
+    });
+    L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="Schliessen">${I.close}</button><h2>Familienchronik</h2><button type="button" class="icon-btn" data-act="rev" aria-label="Reihenfolge umkehren">${I.refresh}</button></div>
+      <div class="layer-body narrow"><div class="chips-row">${[['all', 'Alles'], ['fam', 'Familie'], ['photo', 'Fotos'], ['story', 'Erinnerungen']].map(([k, t]) => `<button type="button" class="fchip${filt === k ? ' on' : ''}" data-f="${k}">${t}</button>`).join('')}</div>
+      ${html ? `<div class="chron">${html}</div>` : '<p class="empty-note">Noch keine Ereignisse mit Datum. Geburtstage, Hochzeiten und Fotos mit Datum erscheinen hier.</p>'}</div>`;
+    hydrateSoon();
+  };
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-act],[data-f],[data-open],[data-ph]'); if (!b) return;
+    if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.act === 'rev') { rev = !rev; return draw(); }
+    if (b.dataset.f) { filt = b.dataset.f; return draw(); }
+    if (b.dataset.ph) return openLightbox([b.dataset.ph], 0);
+    if (b.dataset.open) return openPerson(b.dataset.open);
+  });
+  pushLayer(L); draw();
+}
+
 /* ---------- Papierkorb und Rückgängig ---------- */
 let undoTimer = 0;
 function toastUndo(msg, fn) {
@@ -3102,6 +3943,7 @@ function finalDelete(id) {
   TRASH.delete(id); Q.put.delete(id); Q.del.add(id);
   if (e.kind === 'photos') dropPhotoFiles(e.o);
   if (e.kind === 'stories' && e.o.audio) { Q.blobs.add(e.o.audio); }
+  if (e.kind === 'docs') { if (e.o.blob) Q.blobs.add(e.o.blob); if (e.o.thumb) Q.blobs.add(e.o.thumb); }
   flushSoon();
 }
 function purgeTrash() {
@@ -3113,6 +3955,7 @@ function trashLabel(e) {
   if (e.kind === 'people') return { t: fullName(o), s: 'Person', av: avatar(o, 44) };
   if (e.kind === 'photos') return { t: o.caption || 'Foto', s: 'Foto', av: `<span class="av trash-ph" style="--size:44px">${o.thumb ? imgTag(o.thumb) : ''}</span>` };
   if (e.kind === 'stories') return { t: (o.text || 'Sprachaufnahme').slice(0, 60), s: 'Erinnerung', av: `<span class="av" style="--size:44px">${I.text}</span>` };
+  if (e.kind === 'docs') return { t: o.title || o.name || 'Dokument', s: 'Dokument', av: `<span class="av" style="--size:44px">${I.doc}</span>` };
   return { t: o.name || 'Eintrag', s: '', av: '' };
 }
 function openTrash() {
@@ -3514,7 +4357,7 @@ async function buildPosterPdf(lay, title, sub) {
   const c = [];
   c.push(`${K.toFixed(5)} 0 0 ${(-K).toFixed(5)} 0 ${(H * K).toFixed(2)} cm`);
   c.push(`1 1 1 rg 0 0 ${W} ${H} re f`);
-  const text = (str, x, y, size, bold, col, align) => { const w = toWin(str); const tw = textW(w, size, bold); const xx = align === 'c' ? x - tw / 2 : x; c.push(`BT /${bold ? 'F2' : 'F1'} ${size} Tf ${rgb(col, 'rg')} 1 0 0 -1 ${xx.toFixed(2)} ${y.toFixed(2)} Tm ${pdfStr(w)} Tj ET`); };
+  const text = (str, x, y, size, bold, col, align) => { const w = toWin(T(str)); const tw = textW(w, size, bold); const xx = align === 'c' ? x - tw / 2 : x; c.push(`BT /${bold ? 'F2' : 'F1'} ${size} Tf ${rgb(col, 'rg')} 1 0 0 -1 ${xx.toFixed(2)} ${y.toFixed(2)} Tm ${pdfStr(w)} Tj ET`); };
   text(title, PAD, 62, 30, true, colors.ink);
   text(sub, PAD, 90, 13, false, colors.muted);
   const ox = PAD, oy = PAD + HEAD;
@@ -3542,26 +4385,181 @@ async function buildPosterPdf(lay, title, sub) {
     if (yr) { const w = fitText(yr, 9.5, false, NODE_W + 8); c.push(`BT /F1 9.5 Tf ${rgb(colors.muted, 'rg')} 1 0 0 -1 ${(cx - textW(w, 9.5, false) / 2).toFixed(2)} ${(y + 84 + nm.length * 14 + 2).toFixed(2)} Tm ${pdfStr(w)} Tj ET`); }
   });
   text('Familienstammbaum · ' + fmtDate(isoOf(new Date()), true), PAD, H - 26, 10, false, colors.muted);
-  const content = latin1(c.join('\n'));
-  const z = await deflate(content);
+  return pdfAssemble([{ w: W * K, h: H * K, content: c.join('\n') }], [...imgs.values()], title);
+}
+/* PDF mit mehreren Seiten zusammensetzen; Bilder als JPEG (DCTDecode) */
+async function pdfAssemble(pages, imgList, title) {
   const objs = [];
   const enc = s2 => latin1(s2);
+  const stream = (dict, data) => { const head = enc(`<< ${dict} /Length ${data.length} >>\nstream\n`), tail = enc('\nendstream'); const u = new Uint8Array(head.length + data.length + tail.length); u.set(head); u.set(data, head.length); u.set(tail, head.length + data.length); return u; };
+  const nImg = imgList.length, firstPage = 5 + nImg;
   objs.push(enc('<< /Type /Catalog /Pages 2 0 R >>'));
-  objs.push(enc('<< /Type /Pages /Kids [3 0 R] /Count 1 >>'));
-  const imgList = [...imgs.values()];
-  const xo = imgList.map((im, i) => `/${im.name} ${6 + i} 0 R`).join(' ');
-  const contentNo = 6 + imgList.length;
-  objs.push(enc(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${(W * K).toFixed(2)} ${(H * K).toFixed(2)}] /Resources << /Font << /F1 4 0 R /F2 5 0 R >>${xo ? ` /XObject << ${xo} >>` : ''} >> /Contents ${contentNo} 0 R >>`));
+  objs.push(enc(`<< /Type /Pages /Kids [${pages.map((_, i) => `${firstPage + i * 2} 0 R`).join(' ')}] /Count ${pages.length} >>`));
   objs.push(enc('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>'));
   objs.push(enc('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>'));
-  const stream = (dict, data) => { const head = enc(`<< ${dict} /Length ${data.length} >>\nstream\n`), tail = enc('\nendstream'); const u = new Uint8Array(head.length + data.length + tail.length); u.set(head); u.set(data, head.length); u.set(tail, head.length + data.length); return u; };
   imgList.forEach(im => objs.push(stream(`/Type /XObject /Subtype /Image /Width ${im.inf.w} /Height ${im.inf.h} /ColorSpace /${im.inf.c === 1 ? 'DeviceGray' : 'DeviceRGB'} /BitsPerComponent 8 /Filter /DCTDecode`, im.b)));
-  objs.push(z ? stream('/Filter /FlateDecode', z) : stream('', content));
+  const xo = imgList.map((im, i) => `/${im.name} ${5 + i} 0 R`).join(' ');
+  for (let i = 0; i < pages.length; i++) {
+    const pgx = pages[i];
+    objs.push(enc(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pgx.w.toFixed(2)} ${pgx.h.toFixed(2)}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >>${xo ? ` /XObject << ${xo} >>` : ''} >> /Contents ${firstPage + i * 2 + 1} 0 R >>`));
+    const content = latin1(pgx.content); const z = await deflate(content);
+    objs.push(z ? stream('/Filter /FlateDecode', z) : stream('', content));
+  }
   const parts = [enc('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n')]; let off = parts[0].length; const xref = [];
   objs.forEach((o, i) => { xref.push(off); const h = enc(`${i + 1} 0 obj\n`), t = enc('\nendobj\n'); parts.push(h, o, t); off += h.length + o.length + t.length; });
   const xs = off;
   parts.push(enc(`xref\n0 ${objs.length + 1}\n0000000000 65535 f \n${xref.map(x => String(x).padStart(10, '0') + ' 00000 n \n').join('')}trailer\n<< /Size ${objs.length + 1} /Root 1 0 R /Info << /Producer (Familienstammbaum) /Title ${pdfStr(toWin(title))} >> >>\nstartxref\n${xs}\n%%EOF\n`));
   return new Blob(parts, { type: 'application/pdf' });
+}
+/* Text umbrechen (Helvetica-Breiten) */
+function wrapText(str, size, bold, maxW) {
+  const out = [];
+  String(str || '').split(/\n/).forEach(par => {
+    let line = '';
+    par.split(/\s+/).filter(Boolean).forEach(w0 => {
+      let w = w0;
+      while (textW(toWin(w), size, bold) > maxW && w.length > 1) { let cut = w.length; while (cut > 1 && textW(toWin(w.slice(0, cut)), size, bold) > maxW) cut--; if (line) { out.push(line); line = ''; } out.push(w.slice(0, cut)); w = w.slice(cut); }
+      const t = line ? line + ' ' + w : w;
+      if (textW(toWin(t), size, bold) > maxW && line) { out.push(line); line = w; } else line = t;
+    });
+    out.push(line);
+  });
+  return out;
+}
+/* ---------- Familienbuch (PDF, eine Seite pro Person) ---------- */
+async function exportBook() {
+  if (!S.people.size) { toast('Der Stammbaum ist noch leer.'); return; }
+  const v = await dialog(`<div class="dlg-title">Familienbuch</div>
+    <div class="dlg-text">Ein PDF mit einer Seite pro Person: Foto, Lebensdaten, Herkunft, Familie und Erinnerungen. Schön zum Ausdrucken oder Verschenken.</div>
+    <div class="dlg-form"><label class="check"><input type="checkbox" id="bk-contact"> Telefon, E-Mail und Adresse aufnehmen</label><label class="check"><input type="checkbox" id="bk-stories" checked> Erinnerungen und Notizen aufnehmen</label></div>
+    <div class="dlg-text warn">Das PDF ist nicht verschlüsselt.</div>
+    <div class="dlg-btns"><button type="button" class="btn" data-v="__cancel">Abbrechen</button><button type="button" class="btn primary" data-v="ok">PDF erstellen</button></div>`,
+    { map: (x, el) => x === 'ok' ? { contact: el.querySelector('#bk-contact').checked, stories: el.querySelector('#bk-stories').checked } : null });
+  if (!v) return;
+  const t = curTree();
+  let blob;
+  showBusy('Familienbuch wird erstellt …');
+  try { blob = await buildBook(t?.name || 'Familienstammbaum', v); } finally { hideBusy(); }
+  const done = await saveFile(`${slugify(t?.name)}-familienbuch.pdf`, blob);
+  if (done) toast('Familienbuch gespeichert');
+}
+async function buildBook(title, opt) {
+  const W = 595.28, H = 841.89, M = 56, CW = W - 2 * M;
+  const C = { ink: hexRgb('#16201B'), muted: hexRgb('#5A6862'), accent: hexRgb('#2B5A4C'), line: hexRgb('#D5DFDA'), soft: hexRgb('#EEF4F1') };
+  /* Reihenfolge: nach Generationen ab den ältesten Vorfahren, innerhalb nach Geburt */
+  const gen = new Map(); const ppl = [...S.people.values()];
+  const g0 = id => { if (gen.has(id)) return gen.get(id); gen.set(id, 0); const p = P(id); const ps = (p.parentIds || []).filter(x => S.people.has(x)); const g = ps.length ? Math.max(...ps.map(g0)) + 1 : 0; gen.set(id, g); return g; };
+  ppl.forEach(p => g0(p.id));
+  ppl.forEach(p => { if (!(p.parentIds || []).some(x => S.people.has(x))) { const pa = partnersOf(p).filter(q => (q.parentIds || []).some(x => S.people.has(x))); if (pa.length) gen.set(p.id, Math.max(...pa.map(q => gen.get(q.id)))); } });
+  const order = ppl.sort((a, b) => gen.get(a.id) - gen.get(b.id) || byBirth(a, b));
+  const pageOf = new Map();
+  /* Fotos */
+  const thumbs = new Map(); order.forEach(p => { const ph = avatarPhoto(p); if (ph && BK.has(ph.thumb)) thumbs.set(p.id, ph.thumb); });
+  const bytes = await thumbBytes([...new Set(thumbs.values())]);
+  const imgs = new Map(); let n = 0;
+  for (const [pid, fid] of thumbs) { const b = bytes.get(fid); const inf = b && jpegInfo(b); if (inf && (inf.c === 3 || inf.c === 1)) { if (!imgs.has(fid)) imgs.set(fid, { name: 'Im' + (++n), b, inf }); } else thumbs.delete(pid); }
+  const pages = [];
+  let c = null, y = 0, pno = 0;
+  const newPage = () => { if (c) pages.push({ w: W, h: H, content: c.join('\n') }); pno++; c = [`1 0 0 -1 0 ${H.toFixed(2)} cm`]; y = M; };
+  const txt = (str, x, yy, size, bold, col, align) => { const w = toWin(T(str)); const tw = textW(w, size, bold); const xx = align === 'c' ? x - tw / 2 : align === 'r' ? x - tw : x; c.push(`BT /${bold ? 'F2' : 'F1'} ${size} Tf ${rgb(col, 'rg')} 1 0 0 -1 ${xx.toFixed(2)} ${yy.toFixed(2)} Tm ${pdfStr(w)} Tj ET`); };
+  const footer = (label) => { c.push(`${rgb(C.line, 'RG')} 0.6 w ${M} ${H - 40} m ${W - M} ${H - 40} l S`); txt(title, M, H - 26, 8.5, false, C.muted); txt(String(pno), W - M, H - 26, 8.5, false, C.muted, 'r'); if (label) txt(label, W / 2, H - 26, 8.5, false, C.muted, 'c'); };
+  const ensure = (need, label) => { if (y + need > H - 60) { footer(label); newPage(); y = M + 10; } };
+  const para = (str, size, bold, col, indent, gap, label) => { wrapText(T(str), size, bold, CW - (indent || 0)).forEach(l => { ensure(size * 1.45, label); txt(l, M + (indent || 0), y + size, size, bold, col); y += size * 1.45; }); y += gap || 0; };
+  /* Titelseite */
+  newPage();
+  txt('Familienbuch', W / 2, 300, 34, true, C.accent, 'c');
+  txt(title, W / 2, 345, 20, false, C.ink, 'c');
+  txt(`${order.length} Personen · Stand ${fmtDate(isoOf(new Date()), true)}`, W / 2, 380, 11, false, C.muted, 'c');
+  const home = P(refId()); const hph = home && thumbs.get(home.id) && imgs.get(thumbs.get(home.id));
+  if (hph) { const r = 70, cx = W / 2, cy = 470, sc = Math.max(2 * r / hph.inf.w, 2 * r / hph.inf.h), iw = hph.inf.w * sc, ih = hph.inf.h * sc; c.push(`q ${circlePath(cx, cy, r)} W n ${iw.toFixed(2)} 0 0 ${(-ih).toFixed(2)} ${(cx - iw / 2).toFixed(2)} ${(cy + ih / 2).toFixed(2)} cm /${hph.name} Do Q`); }
+  /* Inhaltsverzeichnis: Seitenzahlen erst nach dem Satz bekannt -> zwei Durchgänge */
+  const tocLines = order.length, perPage = 40, tocPages = Math.ceil(tocLines / perPage);
+  const next = 2 + tocPages;
+  /* Inhalt der Personen zuerst setzen (eigene Seitenzählung), dann Verzeichnis davor */
+  const saved = { pages, c };
+  pages.length = 0; c = null;
+  const personPages = [];
+  const startNo = next;
+  pno = startNo - 1;
+  for (const p of order) {
+    newPage(); pageOf.set(p.id, pno);
+    const fid = thumbs.get(p.id), im = fid && imgs.get(fid);
+    const ph = 120;
+    if (im) { const sc = Math.max(ph / im.inf.w, ph / im.inf.h), iw = im.inf.w * sc, ih = im.inf.h * sc; c.push(`q ${M} ${y} ${ph} ${ph} re W n ${iw.toFixed(2)} 0 0 ${(-ih).toFixed(2)} ${(M + ph / 2 - iw / 2).toFixed(2)} ${(y + ph / 2 + ih / 2).toFixed(2)} cm /${im.name} Do Q`); }
+    else { const h2 = hue(p); c.push(`${rgb(hslRgb(h2, 32, 90), 'rg')} ${M} ${y} ${ph} ${ph} re f`); txt(toWin(initials(p)), M + ph / 2, y + ph / 2 + 12, 34, true, hslRgb(h2, 36, 30), 'c'); }
+    const tx = M + ph + 22, tw = CW - ph - 22;
+    let ty = y + 6;
+    wrapText(fullName(p), 22, true, tw).forEach(l => { txt(l, tx, ty + 20, 22, true, C.ink); ty += 27; });
+    const sub = [p.nickname ? `«${p.nickname}»` : '', p.birthName && p.birthName !== p.lastName ? `geb. ${p.birthName}` : ''].filter(Boolean).join(' · ');
+    if (sub) { txt(sub, tx, ty + 12, 11, false, C.muted); ty += 18; }
+    const life = [p.birthDate ? `* ${fmtDate(p.birthDate, true)}${p.birthPlace ? ', ' + p.birthPlace : ''}` : '', isDead(p) ? `† ${p.deathDate ? fmtDate(p.deathDate, true) : 'verstorben'}${p.deathPlace ? ', ' + p.deathPlace : ''}` : ''].filter(Boolean);
+    life.forEach(l => { wrapText(l, 11, false, tw).forEach(x => { txt(x, tx, ty + 14, 11, false, C.ink); ty += 16; }); });
+    const r = refId() && refId() !== p.id ? relation(refId(), p.id) : null;
+    if (r) { txt(relLine(r), tx, ty + 14, 10.5, true, C.accent); ty += 16; }
+    y = Math.max(y + ph, ty) + 22;
+    const label = fullName(p);
+    const kv = (k, val) => { if (!val) return; ensure(30, label); txt(k.toUpperCase(), M, y + 9, 8, true, C.muted); y += 13; para(val, 11, false, C.ink, 0, 7, label); };
+    kv('Herkunft', [p.originPlace, p.fis ? `Fis ${p.fis}` : ''].filter(Boolean).join(' · '));
+    kv('Beruf', [p.job, p.employer].filter(Boolean).join(', '));
+    if (isDead(p) && p.grave) kv('Grab', p.grave);
+    if (opt.contact) { kv('Telefon', p.phone); kv('E-Mail', p.email); kv('Adresse', p.address); }
+    /* Familie */
+    const ref = q => `${fullName(q)}${pageOf.has(q.id) || order.includes(q) ? '' : ''}`;
+    const fam = [];
+    const par = parentsOf(p); if (par.length) fam.push(['Eltern', par]);
+    const pa = partnersOf(p); if (pa.length) fam.push([pa.length > 1 ? 'Partner' : gw(pa[0], 'Partner', 'Partnerin', 'Partner/in'), pa]);
+    const ki = childrenOf(p.id).sort(byBirth); if (ki.length) fam.push(['Kinder', ki]);
+    const si = siblingsOf(p).sort(byBirth); if (si.length) fam.push(['Geschwister', si]);
+    if (fam.length) {
+      ensure(40, label); y += 4;
+      c.push(`${rgb(C.line, 'RG')} 0.6 w ${M} ${y} m ${W - M} ${y} l S`); y += 18;
+      txt('Familie', M, y, 13, true, C.accent); y += 10;
+      fam.forEach(([k, list]) => {
+        ensure(28, label);
+        txt(k, M, y + 12, 10, true, C.muted);
+        let ly = y;
+        list.forEach(q => {
+          const m = k.startsWith('Partner') ? (marriageOf(p, q.id) || marriageOf(q, p.id)) : null;
+          const line = `${ref(q)}${lifeShort(q) ? ' (' + lifeShort(q) + ')' : ''}${m ? ` · Hochzeit ${[fmtDate(m.date, true), m.place].filter(Boolean).join(', ')}` : ''}`;
+          wrapText(line, 10.5, false, CW - 110).forEach(l => { if (ly + 15 > H - 60) { footer(label); newPage(); ly = M + 10; } txt(l, M + 100, ly + 12, 10.5, false, C.ink); ly += 15; });
+        });
+        y = ly + 6;
+      });
+    }
+    if (opt.stories) {
+      const st = storiesOf(p.id);
+      if (st.length || p.notes) {
+        ensure(40, label); y += 4;
+        c.push(`${rgb(C.line, 'RG')} 0.6 w ${M} ${y} m ${W - M} ${y} l S`); y += 18;
+        txt('Erinnerungen', M, y, 13, true, C.accent); y += 12;
+        st.forEach(x => {
+          if (x.title) { ensure(20, label); para(x.title, 11, true, C.ink, 0, 2, label); }
+          if (x.text) para(x.text, 10.5, false, C.ink, 0, 2, label);
+          const meta = [x.date ? fmtDate(x.date, true) : '', x.audio ? 'Sprachaufnahme in der App' : '', x.createdBy ? 'erfasst von ' + x.createdBy : ''].filter(Boolean).join(' · ');
+          if (meta) para(meta, 9, false, C.muted, 0, 8, label);
+        });
+        if (p.notes) { ensure(20, label); para('Notizen', 10, true, C.muted, 0, 2, label); para(p.notes, 10.5, false, C.ink, 0, 6, label); }
+      }
+    }
+    footer('');
+  }
+  if (c) pages.push({ w: W, h: H, content: c.join('\n') });
+  const body = pages.splice(0, pages.length);
+  /* Inhaltsverzeichnis */
+  c = null; pno = 1;
+  const toc = [];
+  for (let i = 0; i < order.length; i += perPage) {
+    pno++; c = [`1 0 0 -1 0 ${H.toFixed(2)} cm`]; y = M;
+    if (i === 0) { txt('Inhalt', M, y + 24, 22, true, C.accent); y += 50; }
+    order.slice(i, i + perPage).forEach(p => {
+      const nm = fitText(fullName(p) + (lifeShort(p) ? '  ' + lifeShort(p) : ''), 10.5, false, CW - 40);
+      txt(nm, M, y + 12, 10.5, false, C.ink); txt(String(pageOf.get(p.id)), W - M, y + 12, 10.5, false, C.muted, 'r');
+      c.push(`${rgb(C.line, 'RG')} 0.4 w [1 2] 0 d ${M + textW(nm, 10.5, false) + 6} ${y + 12} m ${W - M - 24} ${y + 12} l S [] 0 d`);
+      y += 17.5;
+    });
+    toc.push({ w: W, h: H, content: c.join('\n') });
+  }
+  return pdfAssemble([saved.c ? { w: W, h: H, content: saved.c.join('\n') } : null, ...toc, ...body].filter(Boolean), [...imgs.values()], 'Familienbuch ' + title);
 }
 async function exportPoster() {
   if (!S.people.size) { toast('Der Stammbaum ist noch leer.'); return; }
@@ -3585,7 +4583,7 @@ async function exportPoster() {
 /* ---------- Geburtstage als Kalenderdatei (.ics), z.B. fürs iPhone ---------- */
 function icsEsc(t) { return String(t || '').replace(/\\/g, '\\\\').replace(/;/g, '\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n'); }
 function icsFold(line) { const b = new TextEncoder().encode(line); if (b.length <= 74) return line; const out = []; let cur = '', len = 0; for (const ch of line) { const l = new TextEncoder().encode(ch).length; if (len + l > (out.length ? 73 : 74)) { out.push(cur); cur = ''; len = 0; } cur += ch; len += l; } out.push(cur); return out.join('\r\n '); }
-function buildIcs(withWed) {
+function buildIcs(withWed, withMem) {
   const t = curTree(); const now = new Date(); const ref = refId();
   const stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
   const L2 = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Familienstammbaum//DE', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', `X-WR-CALNAME:${icsEsc('Geburtstage ' + (t?.name || ''))}`];
@@ -3594,6 +4592,7 @@ function buildIcs(withWed) {
     const p = parseIso(iso); if (!p || !p.m || !p.d) return;
     const y = p.y >= 1900 ? p.y : now.getFullYear();
     const feb29 = p.m === 2 && p.d === 29;
+    summary = T(summary); desc = desc ? T(desc) : desc;
     L2.push('BEGIN:VEVENT', `UID:${uid}@familienstammbaum`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${y}${pad(p.m)}${pad(p.d)}`, feb29 ? 'RRULE:FREQ=YEARLY;BYMONTH=2;BYMONTHDAY=-1' : 'RRULE:FREQ=YEARLY', `SUMMARY:${icsEsc(summary)}`);
     if (desc) L2.push(`DESCRIPTION:${icsEsc(desc)}`);
     L2.push('TRANSP:TRANSPARENT', 'BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER:PT9H', `DESCRIPTION:${icsEsc(summary)}`, 'END:VALARM', 'END:VEVENT');
@@ -3614,18 +4613,22 @@ function buildIcs(withWed) {
       ev('h-' + k.replace('+', '-'), m.date, `💍 Hochzeitstag ${callName(p)} & ${callName(q)}`, [parseIso(m.date)?.y ? `Geheiratet ${parseIso(m.date).y}` : '', m.place].filter(Boolean).join(' · '));
     }));
   }
+  if (withMem) sortedPeople().forEach(p => {
+    if (!isDead(p)) return; const d = parseIso(p.deathDate); if (!d || !d.m || !d.d) return;
+    ev('t-' + p.id, p.deathDate, `🕯 Gedenktag ${fullName(p)}`, `† ${fmtDate(p.deathDate, true)}`);
+  });
   L2.push('END:VCALENDAR');
   return { text: L2.map(icsFold).join('\r\n') + '\r\n', count };
 }
 async function exportCalendar() {
   const v = await dialog(`<div class="dlg-title">Geburtstage in den Kalender</div>
     <div class="dlg-text">Es entsteht eine Kalenderdatei mit allen Geburtstagen dieses Stammbaums, jedes Jahr wiederkehrend, mit Erinnerung am Morgen. ${IS_IOS ? 'Tippe danach auf die geladene Datei und wähle «Alle hinzufügen».' : 'Öffne die Datei danach mit deinem Kalender (z.B. Apple Kalender, Outlook oder Google Kalender im Browser unter Einstellungen → Importieren).'}</div>
-    <div class="dlg-form"><label class="check"><input type="checkbox" id="ics-wed" checked> Auch Hochzeitstage</label></div>
+    <div class="dlg-form"><label class="check"><input type="checkbox" id="ics-wed" checked> Auch Hochzeitstage</label><label class="check"><input type="checkbox" id="ics-mem"${memorialsOn() ? ' checked' : ''}> Auch Gedenktage (Todestage)</label></div>
     <div class="dlg-text warn">Im Kalender sind Namen und Geburtstage nicht mehr verschlüsselt. Bei einem Kalender mit Cloud-Abgleich liegen sie dann auch dort.</div>
     <div class="dlg-btns"><button type="button" class="btn" data-v="__cancel">Abbrechen</button><button type="button" class="btn primary" data-v="ok">Datei erstellen</button></div>`,
-    { map: (x, el) => (x === 'ok' ? { wed: el.querySelector('#ics-wed').checked } : null) });
+    { map: (x, el) => (x === 'ok' ? { wed: el.querySelector('#ics-wed').checked, mem: el.querySelector('#ics-mem').checked } : null) });
   if (!v) return;
-  const r = buildIcs(v.wed);
+  const r = buildIcs(v.wed, v.mem);
   if (!r.count) { toast('Keine Geburtstage mit Tag und Monat erfasst.'); return; }
   const t = curTree();
   const done = await saveFile(`geburtstage-${slugify(t?.name)}.ics`, new Blob([r.text], { type: 'text/calendar' }));
@@ -3796,6 +4799,7 @@ async function backupToDevice() {
     const ids = new Set();
     for (const ph of G.photos.values()) { if (ph.full) ids.add(ph.full); if (ph.thumb) ids.add(ph.thumb); }
     for (const st of G.stories.values()) if (st.audio) ids.add(st.audio);
+    for (const d of G.docs.values()) { if (d.blob) ids.add(d.blob); if (d.thumb) ids.add(d.thumb); }
     const list = [...ids], files = [];
     for (let i = 0; i < list.length; i += 8) {
       showBusy(`Fotos werden gesichert: ${Math.min(i + 8, list.length)} von ${list.length}`);
@@ -3882,7 +4886,16 @@ async function load(initial) {
     const sess = loadSession();
     if (!sess) { await resolveAccess(); return; }
     S.auth = await FSC.authOf(sess.secret);
-    const d = await api('apiLoad');
+    let d, cached = false;
+    try { d = await api('apiLoad'); }
+    catch (e) {
+      if (!isOffline(e)) throw e;
+      d = await idb.get(cacheKey('load'));
+      if (!d) throw e;
+      cached = true;
+    }
+    if (!cached && d && !d.denied && d.me && d.me.s === 'dev') { idb.put(cacheKey('load'), d); idb.put(cacheKey('loadAt'), Date.now()); }
+    setOffline(cached, cached ? await idb.get(cacheKey('loadAt')) : 0);
     if (!d || d.denied || !d.me || d.me.s !== 'dev') {
       clearSession(); S.denied = true; S.loaded = false; S.denyMsg = 'Dieses Gerät hat keinen Zugriff mehr. Bitte frag nach einer neuen Einladung.';
       G.trees = new Map(); G.people = new Map(); G.photos = new Map(); rebuild(); scheduleRender(); return;
@@ -3895,17 +4908,18 @@ async function load(initial) {
     S.me = { id: d.me.id, role: d.me.r, name: myMeta.name || '', meta: myMeta };
     S.role = d.me.r; S.canWrite = S.role !== 'view'; S.isAdmin = S.role === 'admin';
     const pend = [...Q.put].map(([id, kind]) => [id, kind, entryFor(id, kind)]);
-    const fresh = { trees: new Map(), people: new Map(), photos: new Map(), stories: new Map() };
+    const fresh = Object.fromEntries(KINDS.map(k => [k, new Map()]));
     TRASH.clear();
     let bad = 0;
     await Promise.all((d.e || []).map(async ([id, x]) => {
       try { const o = await FSC.dec(id, x); const kind = CODE_KIND[o.k]; delete o.k; o.id = id; if (!kind) return; if (o._del) TRASH.set(id, { kind, o }); else fresh[kind].set(id, o); }
       catch (e) { bad++; }
     }));
-    G.trees = fresh.trees; G.people = fresh.people; G.photos = fresh.photos; G.stories = fresh.stories;
+    KINDS.forEach(k => { G[k] = fresh[k]; });
     pend.forEach(([id, kind, o]) => { if (!o) return; if (o._del) { G[kind].delete(id); TRASH.set(id, { kind, o }); } else { TRASH.delete(id); G[kind].set(id, o); } });
-    Q.del.forEach(id => { G.trees.delete(id); G.people.delete(id); G.photos.delete(id); G.stories.delete(id); TRASH.delete(id); });
-    BK.clear(); G.photos.forEach(noteBlobKeys);
+    Q.del.forEach(id => { KINDS.forEach(k => G[k].delete(id)); TRASH.delete(id); });
+    await restorePending();
+    BK.clear(); G.photos.forEach(noteBlobKeys); G.docs.forEach(d => noteAnyKeys('docs', d));
     if (bad) console.warn(bad + ' Einträge konnten nicht entschlüsselt werden');
     S.denied = false; S.needClaim = false; S.denyMsg = '';
     S.loaded = true; S.loadError = null; S.slow = false; lastLoad = Date.now();
@@ -3917,7 +4931,8 @@ async function load(initial) {
       const pp = G.people.get(S.openOnLoad); S.openOnLoad = null;
       if (pp) { if (pp.treeId !== S.treeId) switchTree(pp.treeId); setTimeout(() => openPerson(pp.id), 60); }
     }
-    if (S.canWrite) purgeTrash();
+    if (S.canWrite && !S.offline) purgeTrash();
+    if (!S.offline && hasPending()) flushSoon();
     setTimeout(() => { maybeRemindBackup().catch(() => {}); }, 2500);
     if (S.legacyLeft && S.isAdmin && !S.migrating && !S.claimFlow) setTimeout(offerMigration, 500);
     else if (!S.claimFlow && !S.migrating) setTimeout(() => { maybeAskMe().then(birthdayGreeting); }, 700);
@@ -3925,6 +4940,7 @@ async function load(initial) {
     console.warn(e);
     if (e && e.code === 'no_google') S.noGoogle = true;
     if (!S.loaded) S.loadError = e;
+    else if (isOffline(e)) setOffline(true, S.offlineSince || Date.now());
     else toast('Aktualisieren hat nicht geklappt.');
     scheduleRender();
   } finally { clearTimeout(timer); }
@@ -3942,7 +4958,7 @@ function syncNative() {
   if (!NATIVE || !NATIVE.saveSession || !S.auth) return;
   try {
     const keys = {}; FSC.KR.raw.forEach((raw, v) => { keys[v] = FSC.b64u(raw); });
-    NATIVE.saveSession(JSON.stringify({ exec: EXEC, a: S.auth, cur: FSC.KR.cur, keys, admin: !!S.isAdmin, lastBackup: lastBackupAt() }));
+    NATIVE.saveSession(JSON.stringify({ exec: EXEC, a: S.auth, cur: FSC.KR.cur, keys, admin: !!S.isAdmin, lastBackup: lastBackupAt(), memorials: memorialsOn() }));
     const trees = {}; G.trees.forEach(t => { trees[t.id] = t.name || ''; });
     const people = [...G.people.values()].filter(p => !isDead(p) && /^\d{4}-\d{2}-\d{2}$/.test(p.birthDate || ''))
       .map(p => ({ id: p.id, name: fullName(p), firstName: callName(p), birthDate: p.birthDate, phone: p.phone || '', tree: trees[p.treeId] || '' }));
@@ -3973,7 +4989,11 @@ function forgetLink() {
     else if (window.google && google.script && google.script.history) google.script.history.replace({ layer: 0 }, {}, '');
   } catch (e) {}
 }
+function registerSW() {
+  try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === '127.0.0.1' || location.hostname === 'localhost') && !HAS_GAS) navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (e) {}
+}
 async function boot() {
+  registerSW();
   S.view = ['baum', 'personen', 'fotos'].includes(LS.get('view')) ? LS.get('view') : 'baum';
   S.treeMode = ['vor', 'beide'].includes(LS.get('mode')) ? LS.get('mode') : 'nach';
   bindShell(); render();
