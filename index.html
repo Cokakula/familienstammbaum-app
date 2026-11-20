@@ -9500,6 +9500,7 @@ async function redeem(kind, raw) {
   const r = await rawApi('apiActivate', [a, out]);
   if (loadSession()) { try { await idb.clear(); } catch (e) {} }
   saveSession({ id: r.id, secret: devSecret });
+  if (kind === 'i') { try { LS.set('usedLink', await FSC.sha256hex('link|' + raw)); } catch (e) {} }
   if (kind === 'i') S.justJoined = true;
 }
 
@@ -10431,9 +10432,12 @@ async function boot() {
     let go = true;
     if (loadSession()) {
       /* Schon eingerichtet: Ein verbrauchter Link (z. B. nochmals in WhatsApp angetippt) öffnet einfach den Stammbaum. */
-      let st = 'ok';
-      try { st = (await linkUsable(kind, hash[kind])) ? 'ok' : 'used'; } catch (e) { st = 'net'; }
-      if (st !== 'ok') { go = false; if (st === 'used' && kind === 'i') setTimeout(() => toast('Du bist schon drin. Der Stammbaum öffnet sich hier direkt, ohne Link.'), 1200); }
+      /* iPhone-Symbol auf dem Home-Bildschirm startet jedes Mal mit dem ursprünglichen Einladungslink */
+      const lh = kind === 'i' ? await FSC.sha256hex('link|' + hash[kind]) : '';
+      let st = lh && LS.get('usedLink') === lh ? 'mine' : 'ok';
+      if (st === 'ok') { try { st = (await linkUsable(kind, hash[kind])) ? 'ok' : 'used'; } catch (e) { st = 'net'; } }
+      if (st === 'used' && lh) LS.set('usedLink', lh);
+      if (st !== 'ok') { go = false; if (st === 'used' && kind === 'i' && !STANDALONE) setTimeout(() => toast('Du bist schon drin. Der Stammbaum öffnet sich hier direkt, ohne Link.'), 1200); }
     }
     if (go && loadSession()) go = await confirmDialog({ title: kind === 'i' ? 'Einladung einlösen?' : 'Notfall-Schlüssel verwenden?', text: 'Dieses Gerät hat schon Zugriff auf einen Stammbaum. Der bisherige Zugang auf diesem Gerät wird dabei ersetzt.', ok: 'Einlösen' });
     if (go) {
