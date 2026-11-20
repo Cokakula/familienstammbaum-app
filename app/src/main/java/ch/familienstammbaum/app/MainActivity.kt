@@ -18,6 +18,7 @@ import android.provider.OpenableColumns
 import android.util.Base64
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.FileProvider
 import android.webkit.GeolocationPermissions
 import android.webkit.PermissionRequest
 import android.webkit.ValueCallback
@@ -423,6 +424,26 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread {
                 val i = Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType(saveMime).putExtra(Intent.EXTRA_TITLE, saveName)
                 try { internalNav = true; createDoc.launch(i) } catch (e: ActivityNotFoundException) { internalNav = false; finishSave(false) }
+            }
+        }
+        /* Datei mit einer passenden App ansehen (z.B. PDF-Betrachter). Liegt nur kurz im App-Cache. */
+        @JavascriptInterface fun viewEnd() { if (!ours()) return;
+            try { saveOut?.close() } catch (e: Exception) { }
+            saveOut = null
+            val src = saveFile ?: return
+            runOnUiThread {
+                try {
+                    val dir = File(cacheDir, "ansehen").apply { mkdirs(); listFiles()?.forEach { it.delete() } }
+                    val f = File(dir, saveName)
+                    src.renameTo(f)
+                    val uri = FileProvider.getUriForFile(this@MainActivity, "$packageName.dateien", f)
+                    val i = Intent(Intent.ACTION_VIEW).setDataAndType(uri, saveMime).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    internalNav = true
+                    startActivity(Intent.createChooser(i, saveName))
+                } catch (e: Exception) {
+                    internalNav = false
+                    Toast.makeText(this@MainActivity, R.string.no_viewer, Toast.LENGTH_LONG).show()
+                }
             }
         }
     }

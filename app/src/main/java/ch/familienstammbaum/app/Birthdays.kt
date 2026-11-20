@@ -142,6 +142,7 @@ object Birthdays {
                 )
             }
             BackupReminder.check(context, sess.optBoolean("admin"), lastBackup, firstCreated, count)
+            if (sess.optBoolean("memorials")) MemorialReminder.check(context, people)
             val json = JSONObject().put("ok", true).put("people", out).toString()
             Prefs.setCache(context, json)
             parse(json)
@@ -314,6 +315,48 @@ object BackupReminder {
             .setColor(ContextCompat.getColor(context, R.color.accent))
             .build()
         try { NotificationManagerCompat.from(context).notify(ID, n); Prefs.setBackupNotified(context, now) } catch (e: SecurityException) {}
+    }
+}
+
+/** Gedenktage: am Todestag eine stille Mitteilung (nur wenn in der App eingeschaltet) */
+object MemorialReminder {
+    private const val CHANNEL = "gedenktage"
+    private val DATE = Regex("""^(\d{4})-(\d{2})-(\d{2})$""")
+
+    @SuppressLint("MissingPermission")
+    fun check(context: Context, people: List<JSONObject>) {
+        val today = LocalDate.now()
+        val stamp = today.toString()
+        if (Prefs.memorialNotified(context) == stamp) return
+        if (!Birthdays.canNotify(context)) return
+        val nm = context.getSystemService(NotificationManager::class.java) ?: return
+        for (p in people) {
+            if (!(p.optBoolean("deceased") || p.optString("deathDate").isNotEmpty())) continue
+            val m = DATE.find(p.optString("deathDate")) ?: continue
+            val y = m.groupValues[1].toInt(); val mo = m.groupValues[2].toInt(); var d = m.groupValues[3].toInt()
+            if (mo == 2 && d == 29 && !today.isLeapYear) d = 28
+            if (mo != today.monthValue || d != today.dayOfMonth) continue
+            if (nm.getNotificationChannel(CHANNEL) == null) nm.createNotificationChannel(NotificationChannel(CHANNEL, context.getString(R.string.mem_channel), NotificationManager.IMPORTANCE_LOW))
+            val name = listOf(p.optString("firstName"), p.optString("lastName")).filter { it.isNotBlank() }.joinToString(" ").ifBlank { "?" }
+            val years = today.year - y
+            val text = if (y > 0 && years > 0) context.getString(R.string.mem_text, years, name) else context.getString(R.string.mem_text_plain, name)
+            val id = p.optString("id")
+            val open = Intent(context, MainActivity::class.java).apply {
+                putExtra(MainActivity.EXTRA_PERSON, id)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
+            val code = (id.hashCode() and 0x0FFFFFFF) + 7
+            val n = NotificationCompat.Builder(context, CHANNEL)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(context.getString(R.string.mem_title, name))
+                .setContentText(text)
+                .setContentIntent(PendingIntent.getActivity(context, code, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+                .setAutoCancel(true)
+                .setColor(ContextCompat.getColor(context, R.color.accent))
+                .build()
+            try { NotificationManagerCompat.from(context).notify(code, n) } catch (e: SecurityException) {}
+        }
+        Prefs.setMemorialNotified(context, stamp)
     }
 }
 
