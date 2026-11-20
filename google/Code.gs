@@ -30,7 +30,12 @@ const API_ = {
   apiPutBlob: apiPutBlob, apiHasBlobs: apiHasBlobs, apiGetBlobs: apiGetBlobs, apiDelBlobs: apiDelBlobs,
   apiCreds: apiCreds, apiAddCred: apiAddCred, apiSetMyMeta: apiSetMyMeta, apiUpdCred: apiUpdCred, apiDelCred: apiDelCred, apiRotate: apiRotate,
   apiStorage: apiStorage, apiLegacyExport: apiLegacyExport, apiLegacyImages: apiLegacyImages, apiLegacyPurge: apiLegacyPurge,
+  apiVersion: apiVersion, apiSnapshots: apiSnapshots, apiSnapshotNow: apiSnapshotNow, apiSnapshotRestore: apiSnapshotRestore,
 };
+const VERSION = 2;
+const SNAP_DAYS = 7;      // automatische Sicherung höchstens einmal pro Woche (beim Öffnen durch ein Mitglied)
+const SNAP_KEEP = 12;     // so viele automatische Sicherungen bleiben erhalten (etwa drei Monate)
+const TRUSTED_RE = /^vt/; // Notfall-Schlüssel von Vertrauenspersonen (es kann mehrere geben)
 
 /* ---------- Web-App ---------- */
 function doGet(e) {
@@ -241,6 +246,7 @@ function apiLoad(a) {
   };
   if (z.s === 'dev') {
     touch_(me);
+    snapIfDue_();
     out.e = rows_('E').map(function (x) { return [x.id, x.d]; });
     out.legacy = z.r === 'admin' && legacy_();
   }
@@ -355,7 +361,8 @@ function apiAddCred(a, c) {
   const l = lock_();
   try {
     const all = rows_('Z');
-    const old = all.filter(function (x) { return x.id === row.id || (state === 'rec' && x.s === 'rec'); });
+    /* Der Haupt-Notfall-Schlüssel ersetzt den bisherigen; Schlüssel von Vertrauenspersonen bleiben bestehen */
+    const old = all.filter(function (x) { return x.id === row.id || (state === 'rec' && x.s === 'rec' && !TRUSTED_RE.test(row.id) && !TRUSTED_RE.test(x.id)); });
     old.forEach(function (x) { forget_(x.h); });
     const replaced = old.filter(function (x) { return x.id === row.id; })[0];
     if (replaced && !c.m) row.m = replaced.m;
@@ -389,7 +396,7 @@ function apiDelCred(a, id) {
   try {
     const z = rows_('Z').filter(function (x) { return x.id === id; })[0];
     if (!z) return { ok: true };
-    if (z.s === 'rec') throw new Error('Den Notfall-Schlüssel kannst du nur neu erstellen.');
+    if (z.s === 'rec' && !TRUSTED_RE.test(z.id)) throw new Error('Den Notfall-Schlüssel kannst du nur neu erstellen.');
     forget_(z.h);
     save_('Z', [], [id]);
   } finally { l.releaseLock(); }
@@ -438,6 +445,90 @@ function apiRotate(a, x) {
 function apiStorage(a) {
   need_(a, 'admin');
   return { used: DriveApp.getStorageUsed(), limit: DriveApp.getStorageLimit() };
+}
+
+/* ---------- Automatische Sicherung bei Google ----------
+ * Einmal pro Woche, wenn jemand den Stammbaum öffnet, legt das Skript eine Kopie der (verschlüsselten)
+ * Einträge im Drive-Ordner «FS / Sicherungen» ab. Es braucht dafür keinen Zeitplan und keine weiteren Rechte.
+ */
+function apiVersion() { return { v: VERSION }; }
+function snapFolder_() { return folder_(props_(), 'FS_SNAP', st_().dir, 'Sicherungen'); }
+function snapshot_(kind) {
+  const P = props_();
+  const e = rows_('E').map(function (x) { return [x.id, x.d, x.t]; });
+  const b = rows_('B').map(function (x) { return [x.id, x.f, x.n]; });
+  const at = Date.now();
+  const data = JSON.stringify({ format: 'familienstammbaum-google-sicherung', v: 1, at: at, kind: kind, kv: Number(P.getProperty('FS_KV') || 0), e: e, b: b });
+  const name = 'sicherung-' + Utilities.formatDate(new Date(at), Session.getScriptTimeZone() || 'Europe/Zurich', 'yyyy-MM-dd-HHmm') + '-' + kind + '.json';
+  const f = snapFolder_().createFile(name, data, 'application/json');
+  f.setDescription(JSON.stringify({ at: at, n: e.length, kind: kind }));
+  P.setProperty('FS_SNAP_AT', String(at));
+  /* ältere automatische Sicherungen aufräumen */
+  const list = snapList_().filter(function (x) { return x.kind === 'auto'; });
+  list.slice(SNAP_KEEP).forEach(function (x) { try { DriveApp.getFileById(x.id).setTrashed(true); } catch (err) { /* schon weg */ } });
+  return { id: f.getId(), at: at, n: e.length, kind: kind };
+}
+function snapIfDue_() {
+  try {
+    const last = Number(props_().getProperty('FS_SNAP_AT') || 0);
+    if (Date.now() - last < SNAP_DAYS * 864e5) return;
+    const l = LockService.getScriptLock();
+    if (!l.tryLock(5000)) return;
+    try {
+      if (Date.now() - Number(props_().getProperty('FS_SNAP_AT') || 0) < SNAP_DAYS * 864e5) return;
+      if (!rows_('E').length) return;
+      snapshot_('auto');
+    } finally { l.releaseLock(); }
+  } catch (err) { /* Sicherung ist nur eine Zugabe: Laden nie deswegen abbrechen */ }
+}
+function snapList_() {
+  const out = [];
+  const it = snapFolder_().getFiles();
+  while (it.hasNext()) {
+    const f = it.next();
+    if (f.isTrashed() || !/^sicherung-.*\.json$/.test(f.getName())) continue;
+    let d = {}; try { d = JSON.parse(f.getDescription() || '{}'); } catch (err) { d = {}; }
+    out.push({ id: f.getId(), at: Number(d.at) || f.getDateCreated().getTime(), n: Number(d.n) || 0, kind: d.kind || 'auto', size: f.getSize() });
+  }
+  return out.sort(function (a, b) { return b.at - a.at; });
+}
+function apiSnapshots(a) {
+  need_(a, 'admin');
+  return { v: VERSION, every: SNAP_DAYS, keep: SNAP_KEEP, list: snapList_() };
+}
+function apiSnapshotNow(a) {
+  need_(a, 'admin');
+  const l = lock_();
+  try { return snapshot_('manuell'); } finally { l.releaseLock(); }
+}
+/** Stand einer Sicherung zurückholen. Vorher wird der jetzige Stand gesichert, damit sich das rückgängig machen lässt. */
+function apiSnapshotRestore(a, id) {
+  need_(a, 'admin');
+  const l = lock_();
+  try {
+    const x = snapList_().filter(function (s) { return s.id === String(id); })[0];
+    if (!x) throw new Error('Sicherung nicht gefunden.');
+    const d = JSON.parse(DriveApp.getFileById(x.id).getBlob().getDataAsString('UTF-8'));
+    if (d.format !== 'familienstammbaum-google-sicherung' || !Array.isArray(d.e)) throw new Error('Die Sicherung ist beschädigt.');
+    const before = snapshot_('vorher');
+    const sh = tab_(st_().ss, 'E');
+    const last = sh.getLastRow();
+    if (last > 1) sh.getRange(2, 1, last - 1, 3).clearContent();
+    const rows = d.e.filter(function (r) { return r && ID_RE.test(String(r[0])); }).map(function (r) { return [String(r[0]), String(r[1] || ''), String(r[2] || '')]; });
+    if (rows.length) {
+      if (rows.length + 1 > sh.getMaxRows()) sh.insertRowsAfter(sh.getMaxRows(), rows.length + 1 - sh.getMaxRows() + 50);
+      for (let i = 0; i < rows.length; i += 2000) sh.getRange(2 + i, 1, Math.min(2000, rows.length - i), 3).setNumberFormat('@').setValues(rows.slice(i, i + 2000));
+    }
+    /* Dateien (Fotos usw.), die seither gelöscht wurden, aus dem Drive-Papierkorb zurückholen, soweit noch vorhanden */
+    const have = blobMap_(), back = [];
+    (d.b || []).forEach(function (r) {
+      if (!r || have[r[0]] || !ID_RE.test(String(r[0]))) return;
+      try { const f = DriveApp.getFileById(String(r[1])); if (f.isTrashed()) f.setTrashed(false); back.push({ id: String(r[0]), f: String(r[1]), n: String(r[2] || '') }); } catch (err) { /* endgültig weg */ }
+    });
+    if (back.length) save_('B', back);
+    SpreadsheetApp.flush();
+    return { ok: true, n: rows.length, files: back.length, before: before.id };
+  } finally { l.releaseLock(); }
 }
 
 /* ---------- Übernahme der bisherigen, unverschlüsselten Daten ---------- */
