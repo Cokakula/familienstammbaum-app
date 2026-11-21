@@ -477,6 +477,28 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text), null))
             }
         }
+        /* Startsymbol wechseln: Baum, Kosovo, Herz oder Tradita */
+        @JavascriptInterface fun setIcon(name: String): Boolean {
+            if (!ours()) return false
+            val all = listOf("Baum", "Kosovo", "Herz", "Tradita")
+            val pick = all.firstOrNull { it.equals(name, ignoreCase = true) } ?: return false
+            return try {
+                val pm = packageManager
+                pm.setComponentEnabledSetting(android.content.ComponentName(this@MainActivity, "ch.familienstammbaum.app.Icon$pick"), PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
+                all.filter { it != pick }.forEach { pm.setComponentEnabledSetting(android.content.ComponentName(this@MainActivity, "ch.familienstammbaum.app.Icon$it"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP) }
+                true
+            } catch (e: Exception) { false }
+        }
+        @JavascriptInterface fun iconName(): String {
+            if (!ours()) return ""
+            return try {
+                val pm = packageManager
+                listOf("Baum", "Kosovo", "Herz", "Tradita").firstOrNull {
+                    val st = pm.getComponentEnabledSetting(android.content.ComponentName(this@MainActivity, "ch.familienstammbaum.app.Icon$it"))
+                    st == PackageManager.COMPONENT_ENABLED_STATE_ENABLED || (st == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT && it == "Baum")
+                } ?: "Baum"
+            } catch (e: Exception) { "" }
+        }
         @JavascriptInterface fun openSettings() { if (!ours()) return; runOnUiThread { this@MainActivity.openSettings() } }
         @JavascriptInterface fun openSetup() { if (!ours()) return; runOnUiThread { showSetup() } }
         @JavascriptInterface fun pickedMeta(): String = if (ours()) pickedMeta else "[]"
