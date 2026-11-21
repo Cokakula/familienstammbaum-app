@@ -39,7 +39,7 @@ Tipp für Pixel-Handys: Unter **Einstellungen → Apps → Stammbaum → Akku** 
 
 ## Mitteilungen bei Neuem
 
-- Ab Version 1.0.17: Die App meldet sich, wenn andere etwas Neues in den Stammbaum stellen: Fotos und Personen, Beiträge auf der Pinnwand, Erinnerungen, Meilensteine, Rezepte und Dokumente, Familientreffen, und Herzen oder Kommentare zu den eigenen Fotos und Beiträgen (oder zu solchen, auf denen man vorkommt). Eigene Einträge werden nicht gemeldet.
+- Ab Version 1.0.18: Die App meldet sich, wenn andere etwas Neues in den Stammbaum stellen: Fotos und Personen, Beiträge auf der Pinnwand, Erinnerungen, Meilensteine, Rezepte und Dokumente, Familientreffen, und Herzen oder Kommentare zu den eigenen Fotos und Beiträgen (oder zu solchen, auf denen man vorkommt). Eigene Einträge werden nicht gemeldet.
 - Ohne fremden Mitteilungsdienst: Die App fragt im Hintergrund selbst beim eigenen Google-Skript nach, bekommt nur verschlüsselte Einträge und entschlüsselt sie auf dem Handy.
 - Mit dem Google-Code ab Version 4 etwa alle 30 Minuten und nur mit dem, was neu ist (wenig Daten). Mit älterem Code lädt die App den ganzen Stammbaum, darum dann nur im WLAN und höchstens alle 3 Stunden.
 - Eine Mitteilung pro Stammbaum, die neue Zeilen sammelt, bis man die App öffnet. Antippen öffnet «Neu im Stammbaum». Zwischen 22 und 7 Uhr ohne Ton. Auf dem gesperrten Bildschirm steht nur «Neu im Stammbaum».
