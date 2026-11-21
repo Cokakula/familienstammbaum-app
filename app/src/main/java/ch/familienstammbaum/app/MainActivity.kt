@@ -491,6 +491,8 @@ class MainActivity : AppCompatActivity() {
         }
         /* Die App kennt die Auswahl der Geburtstags-Erinnerungen (Feld «bdn» in der Sitzung) */
         @JavascriptInterface fun bdnSupported(): Boolean = true
+        /* Installierte Version, damit die Oberfläche auf ein Update hinweisen kann */
+        @JavascriptInterface fun appVersion(): String = AppUpdate.installed(this@MainActivity)
         @JavascriptInterface fun iconName(): String {
             if (!ours()) return ""
             return try {

@@ -92,4 +92,11 @@
     <string name="bday_week_text_age">%1$s wird am %2$s %3$d. Zeit für ein Geschenk oder einen Anruf.</string>
     <string name="bday_week_text">Am %1$s. Zeit für ein Geschenk oder einen Anruf.</string>
     <string name="round_text">Runder Geburtstag am %1$s, in zwei Wochen. Zeit, ein Fest zu planen.</string>
+    <string name="upd_channel">Neue App-Versionen</string>
+    <string name="upd_title">Neue Version der Stammbaum-App (%1$s)</string>
+    <string name="upd_text">Antippen zum Herunterladen. Danach die Datei öffnen und das Update bestätigen. Dein Zugang und die Einstellungen bleiben erhalten.</string>
+    <string name="upd_action">Herunterladen</string>
+    <string name="upd_title_sq">Version i ri i aplikacionit të trungut (%1$s)</string>
+    <string name="upd_text_sq">Prek këtu me e shkarku. Pastaj hape skedarin dhe konfirmo përditësimin. Qasja dhe cilësimet e tua mbesin.</string>
+    <string name="upd_action_sq">Shkarko</string>
 </resources>

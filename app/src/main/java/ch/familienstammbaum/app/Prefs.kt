@@ -80,6 +80,12 @@ object Prefs {
     fun setBackupNotified(c: Context, value: Long) { sp(c).edit().putLong("backupNotified", value).apply() }
     fun callsNotified(c: Context): String = sp(c).getString("callsNotified", "{}") ?: "{}"
     fun setCallsNotified(c: Context, value: String) { sp(c).edit().putString("callsNotified", value).apply() }
+    fun updChecked(c: Context): Long = sp(c).getLong("updChecked", 0L)
+    fun setUpdChecked(c: Context, value: Long) { sp(c).edit().putLong("updChecked", value).apply() }
+    fun updNotified(c: Context): String = sp(c).getString("updNotified", "") ?: ""
+    fun setUpdNotified(c: Context, value: String) { sp(c).edit().putString("updNotified", value).apply() }
+    /** Sprache der Oberfläche (aus der Sitzung, «de» oder «sq») */
+    fun lang(c: Context): String = try { org.json.JSONObject(session(c) ?: "{}").optString("lang", "de") } catch (e: Exception) { "de" }
 }
 
 /** Verschlüsselt kleine Texte mit einem Schlüssel, der den Android-Schlüsselspeicher nie verlässt */

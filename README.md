@@ -47,6 +47,8 @@ Tipp für Pixel-Handys: Unter **Einstellungen → Apps → Stammbaum → Akku** 
 
 Jede Änderung im Ordner `main` baut automatisch eine neue APK (Reiter **Actions**). Die neue APK einfach über die alte installieren; Link und Einstellungen bleiben erhalten.
 
+Hinweis auf neue Versionen (nur Android): Die App fragt höchstens alle 6 Stunden bei GitHub nach der neuesten Version (öffentliche Angabe, ohne Familiendaten). Ist eine neuere da, erscheint beim Start einmal ein Dialog mit **Herunterladen**, danach ein Hinweis in der Personenliste und im Menü unter **Android-App**. Ab Version 1.0.16 meldet sich die App zusätzlich einmal pro neuer Version mit einer Mitteilung, auch wenn sie geschlossen ist. Auf dem iPhone, am Computer und im Browser erscheint nichts davon, denn die Webversion ist dort immer aktuell.
+
 ## Technik
 
 - Kotlin, WebView, WorkManager. Android 8 oder neuer.
