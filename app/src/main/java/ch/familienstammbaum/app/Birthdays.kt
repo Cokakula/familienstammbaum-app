@@ -185,14 +185,29 @@ object Birthdays {
         if (!force && Prefs.lastNotified(context) == stamp) return 0
         ensureChannel(context)
         var count = 0
-        list.filter { it.isOn(today) }.forEach { if (post(context, it, today, true)) count++ }
+        /* Auswahl aus der App: 0 = nicht erinnern, 1 = am Tag, 2 = eine Woche vorher und am Tag (ohne Auswahl: alle am Tag) */
+        val pol = Prefs.session(context)?.let { runCatching { JSONObject(it).optJSONObject("bdn") }.getOrNull() }
+        val ids = pol?.optJSONObject("ids")
+        val roundAlways = pol?.optBoolean("round", true) ?: true
+        fun level(b: Birthday): Int = when {
+            pol == null -> 1
+            ids?.has(b.id) == true -> ids?.optInt(b.id, 0) ?: 0
+            else -> pol?.optInt("def", 0) ?: 0
+        }
+        fun wanted(b: Birthday, d: LocalDate) = level(b) >= 1 || (roundAlways && b.ageOn(d) in ROUND_AGES)
+        list.filter { it.isOn(today) && wanted(it, today) }.forEach { if (post(context, it, today, true)) count++ }
         if (Prefs.dayBefore(context)) {
             val tomorrow = today.plusDays(1)
-            list.filter { it.isOn(tomorrow) }.forEach { if (post(context, it, tomorrow, false)) count++ }
+            list.filter { it.isOn(tomorrow) && wanted(it, tomorrow) }.forEach { if (post(context, it, tomorrow, false)) count++ }
+        }
+        /* Engste Familie: eine Woche vorher */
+        if (pol != null) {
+            val in7 = today.plusDays(7)
+            list.filter { it.isOn(in7) && level(it) >= 2 }.forEach { if (postWeek(context, it, in7)) count++ }
         }
         /* Runde Geburtstage: zwei Wochen vorher Bescheid geben, damit Zeit für ein Fest bleibt */
         val in14 = today.plusDays(14)
-        list.filter { it.isOn(in14) && it.ageOn(in14) in ROUND_AGES }.forEach { if (postRound(context, it, in14)) count++ }
+        list.filter { it.isOn(in14) && it.ageOn(in14) in ROUND_AGES && (roundAlways || level(it) >= 1) }.forEach { if (postRound(context, it, in14)) count++ }
         Prefs.setLastNotified(context, stamp)
         return count
     }
@@ -212,6 +227,28 @@ object Birthdays {
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.round_title, b.firstName, age))
             .setContentText(context.getString(R.string.round_text, formatDate(date)))
+            .setContentIntent(PendingIntent.getActivity(context, code, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+            .setAutoCancel(true)
+            .setColor(ContextCompat.getColor(context, R.color.accent))
+            .build()
+        return try { NotificationManagerCompat.from(context).notify(code, n); true } catch (e: SecurityException) { false }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun postWeek(context: Context, b: Birthday, date: LocalDate): Boolean {
+        if (!canNotify(context)) return false
+        val age = b.ageOn(date)
+        val code = ((b.id.hashCode() xor 0x5A5A5A) and 0x0FFFFFFF) + 7
+        val open = Intent(context, MainActivity::class.java).apply {
+            putExtra(MainActivity.EXTRA_PERSON, b.id)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        val text = if (age > 0) context.getString(R.string.bday_week_text_age, b.firstName, formatDate(date), age) else context.getString(R.string.bday_week_text, formatDate(date))
+        val n = NotificationCompat.Builder(context, CHANNEL)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(context.getString(R.string.bday_week_title, b.name))
+            .setContentText(text)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setContentIntent(PendingIntent.getActivity(context, code, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
             .setAutoCancel(true)
             .setColor(ContextCompat.getColor(context, R.color.accent))

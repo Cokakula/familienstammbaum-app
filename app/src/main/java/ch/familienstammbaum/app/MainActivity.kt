@@ -489,6 +489,8 @@ class MainActivity : AppCompatActivity() {
                 true
             } catch (e: Exception) { false }
         }
+        /* Die App kennt die Auswahl der Geburtstags-Erinnerungen (Feld «bdn» in der Sitzung) */
+        @JavascriptInterface fun bdnSupported(): Boolean = true
         @JavascriptInterface fun iconName(): String {
             if (!ours()) return ""
             return try {

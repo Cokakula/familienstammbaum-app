@@ -88,5 +88,8 @@
     <string name="call_text">Letzter Anruf vor %1$d Tagen</string>
     <!-- Runde Geburtstage -->
     <string name="round_title">🎉 %1$s wird %2$d</string>
+    <string name="bday_week_title">In einer Woche hat %1$s Geburtstag</string>
+    <string name="bday_week_text_age">%1$s wird am %2$s %3$d. Zeit für ein Geschenk oder einen Anruf.</string>
+    <string name="bday_week_text">Am %1$s. Zeit für ein Geschenk oder einen Anruf.</string>
     <string name="round_text">Runder Geburtstag am %1$s, in zwei Wochen. Zeit, ein Fest zu planen.</string>
 </resources>
