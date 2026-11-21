@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         const val EXTRA_BACKUP = "backup"
         const val EXTRA_NEWS = "news"
         /** Ist die App gerade im Vordergrund? Dann braucht es keine Mitteilung über Neues. */
-        @Volatile @JvmStatic var visible = false
+        @Volatile var inFront = false
         const val ACTION_SETUP = "ch.familienstammbaum.app.SETUP"
         /** Die App zeigt die Webversion an: immer derselbe Stand wie im Browser */
         private const val WEB_HOST = "cokakula.github.io"
@@ -262,12 +262,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        visible = true
+        inFront = true
         if (::web.isInitialized) web.evaluateJavascript("window.__fsResume && window.__fsResume()", null)
     }
 
     override fun onPause() {
-        visible = false
+        inFront = false
         super.onPause()
     }
 

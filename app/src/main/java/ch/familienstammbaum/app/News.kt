@@ -263,7 +263,7 @@ object News {
 class NewsWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         val c = applicationContext
-        if (MainActivity.visible || !News.on(c)) return Result.success()
+        if (MainActivity.inFront || !News.on(c)) return Result.success()
         withContext(Dispatchers.IO) { runCatching { News.check(c) } }
         return Result.success()
     }

@@ -26,7 +26,15 @@ jobs:
           gradle-version: "8.11.1"
 
       - name: APK bauen
-        run: gradle assembleRelease --no-daemon --stacktrace
+        run: |
+          set -o pipefail
+          gradle assembleRelease --no-daemon --stacktrace 2>&1 | tee build.log
+
+      # Bei einem Fehler die wichtigsten Zeilen als Hinweis anzeigen (sichtbar ohne Anmeldung)
+      - name: Fehler anzeigen
+        if: failure()
+        run: |
+          grep -E "^e: |: error:|What went wrong|Execution failed" build.log | head -9 | while IFS= read -r l; do echo "::error::${l}"; done
 
       - name: APK umbenennen
         run: cp app/build/outputs/apk/release/app-release.apk Familienstammbaum.apk
