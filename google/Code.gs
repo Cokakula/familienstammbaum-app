@@ -34,8 +34,9 @@ const API_ = {
   apiStorage: apiStorage, apiLegacyExport: apiLegacyExport, apiLegacyImages: apiLegacyImages, apiLegacyPurge: apiLegacyPurge,
   apiVersion: apiVersion, apiSnapshots: apiSnapshots, apiSnapshotNow: apiSnapshotNow, apiSnapshotRestore: apiSnapshotRestore,
   apiMemPut: apiMemPut, apiMemGet: apiMemGet, apiMemDel: apiMemDel,
+  apiNews: apiNews,
 };
-const VERSION = 3;
+const VERSION = 4;
 const SNAP_DAYS = 7;      // automatische Sicherung höchstens einmal pro Woche (beim Öffnen durch ein Mitglied)
 const SNAP_KEEP = 12;     // so viele automatische Sicherungen bleiben erhalten (etwa drei Monate)
 const TRUSTED_RE = /^vt/; // Notfall-Schlüssel von Vertrauenspersonen (es kann mehrere geben)
@@ -289,6 +290,19 @@ function cleanPut_(list) {
     if (!ID_RE.test(id) || !/^v\d+:[A-Za-z0-9_-]+$/.test(d)) throw new Error('Ungültiger Eintrag.');
     return { id: id, d: str_(d, 49000), t: t };
   });
+}
+/**
+ * Für die Mitteilungen der Android-App: nur die Einträge, die seit «since» (Serverzeit in ms) geschrieben wurden,
+ * verschlüsselt wie immer. Ohne «zuletzt gesehen» und ohne Sicherung, damit die Abfrage im Hintergrund leicht bleibt.
+ */
+function apiNews(a, since) {
+  need_(a, 'view');
+  const now = Date.now();
+  since = Number(since) || 0;
+  const kv = Number(props_().getProperty('FS_KV') || 0);
+  if (since <= 0 || since > now) return { now: now, kv: kv, e: [] };
+  const e = rows_('E').filter(function (x) { return Number(x.t) > since; }).map(function (x) { return [x.id, x.d]; });
+  return { now: now, kv: kv, e: e.length > 300 ? e.slice(e.length - 300) : e };
 }
 function apiCommit(a, b) {
   need_(a, 'edit');

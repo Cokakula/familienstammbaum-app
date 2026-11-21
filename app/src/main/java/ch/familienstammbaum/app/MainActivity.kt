@@ -62,6 +62,9 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_PERSON = "person"
         const val EXTRA_BACKUP = "backup"
+        const val EXTRA_NEWS = "news"
+        /** Ist die App gerade im Vordergrund? Dann braucht es keine Mitteilung über Neues. */
+        @Volatile @JvmStatic var visible = false
         const val ACTION_SETUP = "ch.familienstammbaum.app.SETUP"
         /** Die App zeigt die Webversion an: immer derselbe Stand wie im Browser */
         private const val WEB_HOST = "cokakula.github.io"
@@ -85,6 +88,7 @@ class MainActivity : AppCompatActivity() {
 
     @Volatile private var pendingPerson: String? = null
     @Volatile private var pendingBackup = false
+    @Volatile private var pendingNews: String? = null
     private var pendingWebPerm: PermissionRequest? = null
     private var pendingGeo: Pair<String, GeolocationPermissions.Callback>? = null
     @Volatile private var pickedMeta: String = "[]"
@@ -153,8 +157,12 @@ class MainActivity : AppCompatActivity() {
         if (g != null) g.second.invoke(g.first, res.values.any { it }, false)
     }
 
+    private var notifyThenSettings = false
     private val askNotifications = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        if (!granted) Toast.makeText(this, R.string.notifications_denied, Toast.LENGTH_LONG).show()
+        if (!granted && notifyThenSettings) notificationSettings()
+        else if (!granted) Toast.makeText(this, R.string.notifications_denied, Toast.LENGTH_LONG).show()
+        notifyThenSettings = false
+        web.evaluateJavascript("window.__fsNotify && window.__fsNotify($granted)", null)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -197,6 +205,7 @@ class MainActivity : AppCompatActivity() {
 
         Birthdays.ensureChannel(this)
         Birthdays.schedule(this, update = false)
+        News.schedule(this, update = false)
         FamilyWidget.refresh(this)
         handleIntent(intent, initial = true)
         initTts()
@@ -251,6 +260,17 @@ class MainActivity : AppCompatActivity() {
         handleIntent(intent, initial = false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        visible = true
+        if (::web.isInitialized) web.evaluateJavascript("window.__fsResume && window.__fsResume()", null)
+    }
+
+    override fun onPause() {
+        visible = false
+        super.onPause()
+    }
+
     override fun onStart() {
         super.onStart()
         val away = backgroundAt > 0 && SystemClock.elapsedRealtime() - backgroundAt > RELOCK_AFTER_MS
@@ -301,6 +321,8 @@ class MainActivity : AppCompatActivity() {
         }
         val person = intent?.getStringExtra(EXTRA_PERSON)
         if (person != null) { pendingPerson = person; showWeb(true); return }
+        val news = intent?.getStringExtra(EXTRA_NEWS)
+        if (news != null) { intent?.removeExtra(EXTRA_NEWS); pendingNews = news; showWeb(true); return }
         if (intent?.getBooleanExtra(EXTRA_BACKUP, false) == true) { intent?.removeExtra(EXTRA_BACKUP); pendingBackup = true; showWeb(true); return }
         if (initial || web.visibility != View.VISIBLE) {
             if (Prefs.exec(this) != null) showWeb(initial) else showSetup()
@@ -346,6 +368,19 @@ class MainActivity : AppCompatActivity() {
         val text = if (clip != null && clip.itemCount > 0) clip.getItemAt(0).coerceToText(this).toString() else ""
         linkInput.setText(text)
         if (Links.extract(text) != null) saveLink(text) else linkError.visibility = View.VISIBLE
+    }
+
+    /** Mitteilungen erlauben: zuerst die Frage von Android, sonst die Einstellungen der App */
+    private fun allowNotifications() {
+        if (Build.VERSION.SDK_INT >= 33 &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+        ) { notifyThenSettings = true; askNotifications.launch(Manifest.permission.POST_NOTIFICATIONS); return }
+        notificationSettings()
+    }
+
+    private fun notificationSettings() {
+        val i = Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, packageName)
+        try { internalNav = true; startActivity(i) } catch (e: ActivityNotFoundException) { internalNav = false }
     }
 
     private fun askForNotifications() {
@@ -440,6 +475,8 @@ class MainActivity : AppCompatActivity() {
             pendingPerson?.let { o.put("person", it) }
             pendingPerson = null
             if (pendingBackup) { o.put("backup", true); pendingBackup = false }
+            pendingNews?.let { o.put("news", it) }
+            pendingNews = null
             if (Prefs.reset(ctx)) { o.put("reset", true); Prefs.clearReset(ctx) }
             return o.toString()
         }
@@ -448,6 +485,19 @@ class MainActivity : AppCompatActivity() {
             Prefs.setSession(this@MainActivity, json)
             runOnUiThread { Birthdays.schedule(this@MainActivity, update = false) }
         }
+        /* Mitteilungen bei Neuem */
+        @JavascriptInterface fun newsCfg(): String = if (ours()) News.cfg(this@MainActivity).toString() else "{}"
+        @JavascriptInterface fun setNewsCfg(json: String) { if (!ours()) return
+            News.setCfg(this@MainActivity, json)
+            runOnUiThread { News.schedule(this@MainActivity, update = true) }
+        }
+        @JavascriptInterface fun saveNewsCtx(json: String) { if (!ours()) return
+            Prefs.setNewsCtx(this@MainActivity, json)
+            News.seen(this@MainActivity)
+            runOnUiThread { News.schedule(this@MainActivity, update = false) }
+        }
+        @JavascriptInterface fun notifyOk(): Boolean = ours() && Birthdays.canNotify(this@MainActivity)
+        @JavascriptInterface fun openNotifySettings() { if (!ours()) return; runOnUiThread { allowNotifications() } }
         @JavascriptInterface fun clearSession() { if (!ours()) return; Prefs.clearSession(this@MainActivity) }
         @JavascriptInterface fun saveBirthdays(json: String) { if (!ours()) return; Prefs.setCache(this@MainActivity, json); FamilyWidget.refresh(this@MainActivity) }
         /* Vorlesen: "ok", "nolang" (keine Stimme für die Sprache) oder "no" */

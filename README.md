@@ -37,6 +37,15 @@ Die App zeigt deinen Familienstammbaum und erinnert dich an Geburtstage, auch we
 
 Tipp für Pixel-Handys: Unter **Einstellungen → Apps → Stammbaum → Akku** «Uneingeschränkt» wählen, damit die Erinnerungen pünktlich kommen.
 
+## Mitteilungen bei Neuem
+
+- Ab Version 1.0.17: Die App meldet sich, wenn andere etwas Neues in den Stammbaum stellen: Fotos und Personen, Beiträge auf der Pinnwand, Erinnerungen, Meilensteine, Rezepte und Dokumente, Familientreffen, und Herzen oder Kommentare zu den eigenen Fotos und Beiträgen (oder zu solchen, auf denen man vorkommt). Eigene Einträge werden nicht gemeldet.
+- Ohne fremden Mitteilungsdienst: Die App fragt im Hintergrund selbst beim eigenen Google-Skript nach, bekommt nur verschlüsselte Einträge und entschlüsselt sie auf dem Handy.
+- Mit dem Google-Code ab Version 4 etwa alle 30 Minuten und nur mit dem, was neu ist (wenig Daten). Mit älterem Code lädt die App den ganzen Stammbaum, darum dann nur im WLAN und höchstens alle 3 Stunden.
+- Eine Mitteilung pro Stammbaum, die neue Zeilen sammelt, bis man die App öffnet. Antippen öffnet «Neu im Stammbaum». Zwischen 22 und 7 Uhr ohne Ton. Auf dem gesperrten Bildschirm steht nur «Neu im Stammbaum».
+- Nie in einer Mitteilung: Geschenkideen, Wichteln, Zeitkapseln, Sprachgrüsse zum Geburtstag und private Einträge.
+- Einstellungen: im Stammbaum-Menü **Mitteilungen bei Neuem** (ein/aus und welche Arten).
+
 ## App-Sperre und Privatsphäre
 
 - Beim Öffnen und nach einer Minute im Hintergrund fragt die App nach Fingerabdruck, Gesicht oder PIN (in den App-Einstellungen abschaltbar).

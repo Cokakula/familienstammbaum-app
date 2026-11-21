@@ -39,7 +39,7 @@ object Prefs {
         val base = Links.base(link) ?: return
         val changed = exec(c) != base
         val e = sp(c).edit().putString("exec", base).putString("pending", link)
-        if (changed) e.putBoolean("reset", true).remove("session").remove("birthdays").remove("lastNotified")
+        if (changed) e.putBoolean("reset", true).remove("session").remove("birthdays").remove("lastNotified").remove("newsCtx").remove("newsState")
         e.apply()
     }
 
@@ -59,7 +59,7 @@ object Prefs {
     /** Zugang für die Erinnerungen im Hintergrund (mit dem Android-Schlüsselspeicher verschlüsselt) */
     fun session(c: Context): String? = sp(c).getString("session", null)?.let { Vault.open(it) }
     fun setSession(c: Context, json: String) { Vault.seal(json)?.let { sp(c).edit().putString("session", it).apply() } }
-    fun clearSession(c: Context) { sp(c).edit().remove("session").remove("birthdays").apply() }
+    fun clearSession(c: Context) { sp(c).edit().remove("session").remove("birthdays").remove("newsCtx").remove("newsState").apply() }
 
     /** Zuletzt bekannte Geburtstage (ebenfalls verschlüsselt) */
     fun cache(c: Context): String? = sp(c).getString("birthdays", null)?.let { Vault.open(it) }
@@ -84,6 +84,13 @@ object Prefs {
     fun setUpdChecked(c: Context, value: Long) { sp(c).edit().putLong("updChecked", value).apply() }
     fun updNotified(c: Context): String = sp(c).getString("updNotified", "") ?: ""
     fun setUpdNotified(c: Context, value: String) { sp(c).edit().putString("updNotified", value).apply() }
+    /** Mitteilungen bei Neuem: Einstellungen (ein/aus, Arten), was die Oberfläche über «mich» mitgibt, Stand der Abfragen */
+    fun newsCfg(c: Context): String = sp(c).getString("newsCfg", "") ?: ""
+    fun setNewsCfg(c: Context, value: String) { sp(c).edit().putString("newsCfg", value).apply() }
+    fun newsCtx(c: Context): String? = sp(c).getString("newsCtx", null)?.let { Vault.open(it) }
+    fun setNewsCtx(c: Context, json: String) { Vault.seal(json)?.let { sp(c).edit().putString("newsCtx", it).apply() } }
+    fun newsState(c: Context): String? = sp(c).getString("newsState", null)?.let { Vault.open(it) }
+    fun setNewsState(c: Context, json: String) { Vault.seal(json)?.let { sp(c).edit().putString("newsState", it).apply() } }
     /** Sprache der Oberfläche (aus der Sitzung, «de» oder «sq») */
     fun lang(c: Context): String = try { org.json.JSONObject(session(c) ?: "{}").optString("lang", "de") } catch (e: Exception) { "de" }
 }
