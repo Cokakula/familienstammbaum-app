@@ -65,10 +65,10 @@ object AppUpdate {
         val nm = c.getSystemService(NotificationManager::class.java) ?: return
         val sq = Prefs.lang(c) == "sq"
         if (nm.getNotificationChannel(CHANNEL) == null) {
-            nm.createNotificationChannel(NotificationChannel(CHANNEL, c.getString(R.string.upd_channel), NotificationManager.IMPORTANCE_DEFAULT))
+            nm.createNotificationChannel(NotificationChannel(CHANNEL, Lang.ctx(c).getString(R.string.upd_channel), NotificationManager.IMPORTANCE_DEFAULT))
         }
-        val title = c.getString(if (sq) R.string.upd_title_sq else R.string.upd_title, v)
-        val text = c.getString(if (sq) R.string.upd_text_sq else R.string.upd_text)
+        val title = Lang.ctx(c).getString(if (sq) R.string.upd_title_sq else R.string.upd_title, v)
+        val text = Lang.ctx(c).getString(if (sq) R.string.upd_text_sq else R.string.upd_text)
         val open = Intent(Intent.ACTION_VIEW, Uri.parse(APK)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val n = NotificationCompat.Builder(c, CHANNEL)
             .setSmallIcon(R.drawable.ic_notification)
@@ -76,7 +76,7 @@ object AppUpdate {
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setContentIntent(PendingIntent.getActivity(c, ID, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
-            .addAction(0, c.getString(if (sq) R.string.upd_action_sq else R.string.upd_action),
+            .addAction(0, Lang.ctx(c).getString(if (sq) R.string.upd_action_sq else R.string.upd_action),
                 PendingIntent.getActivity(c, ID + 1, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
             .setAutoCancel(true)
             .setColor(ContextCompat.getColor(c, R.color.accent))

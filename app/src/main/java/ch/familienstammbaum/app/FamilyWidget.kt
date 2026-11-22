@@ -42,10 +42,10 @@ class FamilyWidget : AppWidgetProvider() {
         private fun dayLabel(context: Context, today: LocalDate, d: LocalDate): String {
             val n = ChronoUnit.DAYS.between(today, d).toInt()
             return when {
-                n <= 0 -> context.getString(R.string.widget_today)
-                n == 1 -> context.getString(R.string.widget_tomorrow)
-                n < 7 -> context.getString(R.string.widget_in_days, n)
-                else -> Birthdays.formatDate(d)
+                n <= 0 -> Lang.ctx(context).getString(R.string.widget_today)
+                n == 1 -> Lang.ctx(context).getString(R.string.widget_tomorrow)
+                n < 7 -> Lang.ctx(context).getString(R.string.widget_in_days, n)
+                else -> Birthdays.formatDate(d, Lang.en(context))
             }
         }
 
@@ -58,7 +58,7 @@ class FamilyWidget : AppWidgetProvider() {
                 if (ChronoUnit.DAYS.between(today, d) > 60) continue
                 val age = b.ageOn(d)
                 val label = dayLabel(context, today, d)
-                val text = if (age > 0) context.getString(R.string.widget_bday_age, label, b.firstName, age) else context.getString(R.string.widget_bday, label, b.firstName)
+                val text = if (age > 0) Lang.ctx(context).getString(R.string.widget_bday_age, label, b.firstName, age) else Lang.ctx(context).getString(R.string.widget_bday, label, b.firstName)
                 out.add(Item(d, "🎂 $text", b.id, "0"))
             }
             val ev = JSONObject(json).optJSONArray("events")
@@ -69,7 +69,7 @@ class FamilyWidget : AppWidgetProvider() {
                     val d = runCatching { LocalDate.of(m.groupValues[1].toInt(), m.groupValues[2].toInt(), m.groupValues[3].toInt()) }.getOrNull() ?: continue
                     if (d.isBefore(today) || ChronoUnit.DAYS.between(today, d) > 90) continue
                     val title = listOf(o.optString("title"), o.optString("time")).filter { it.isNotBlank() }.joinToString(" · ")
-                    out.add(Item(d, "📅 " + context.getString(R.string.widget_event, dayLabel(context, today, d), title.ifBlank { "Familientreffen" }), null, "1" + o.optString("time")))
+                    out.add(Item(d, "📅 " + Lang.ctx(context).getString(R.string.widget_event, dayLabel(context, today, d), title.ifBlank { if (Lang.en(context)) "Family gathering" else "Familientreffen" }), null, "1" + o.optString("time")))
                 }
             }
             return out.sortedWith(compareBy({ it.date }, { it.sort }))
@@ -79,11 +79,12 @@ class FamilyWidget : AppWidgetProvider() {
             val v = RemoteViews(context.packageName, R.layout.widget_family)
             val open = Intent(context, MainActivity::class.java).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP }
             v.setOnClickPendingIntent(R.id.w_root, PendingIntent.getActivity(context, 0x71D6, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+            v.setTextViewText(R.id.w_title, Lang.ctx(context).getString(R.string.widget_title))
             val json = Prefs.cache(context)
             val list = if (json == null) null else runCatching { items(context, json, LocalDate.now()) }.getOrNull()
             ROWS.forEach { v.setViewVisibility(it, View.GONE) }
             if (list.isNullOrEmpty()) {
-                v.setTextViewText(R.id.w_empty, context.getString(if (json == null) R.string.widget_empty else R.string.widget_none))
+                v.setTextViewText(R.id.w_empty, Lang.ctx(context).getString(if (json == null) R.string.widget_empty else R.string.widget_none))
                 v.setViewVisibility(R.id.w_empty, View.VISIBLE)
                 return v
             }

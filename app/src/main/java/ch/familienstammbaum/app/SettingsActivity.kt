@@ -2,6 +2,7 @@ package ch.familienstammbaum.app
 
 import android.Manifest
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -42,6 +43,8 @@ class SettingsActivity : AppCompatActivity() {
         }
         refresh()
     }
+
+    override fun attachBaseContext(newBase: Context) { super.attachBaseContext(Lang.ctx(newBase)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,7 +126,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun refresh() {
         val on = Prefs.remindersOn(this)
-        timeValue.text = String.format(Locale.GERMAN, "%02d:%02d Uhr", Prefs.hour(this), Prefs.minute(this))
+        timeValue.text = if (Lang.en(this)) String.format(Locale.ENGLISH, "%02d:%02d", Prefs.hour(this), Prefs.minute(this)) else String.format(Locale.GERMAN, "%02d:%02d Uhr", Prefs.hour(this), Prefs.minute(this))
         linkValue.text = Prefs.exec(this)?.let { Links.masked(it) } ?: getString(R.string.no_link)
         val canLock = BiometricManager.from(this).canAuthenticate(
             BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL
@@ -148,7 +151,7 @@ class SettingsActivity : AppCompatActivity() {
             val lines = ArrayList<String>()
             if (fresh == null) lines.add(getString(R.string.check_offline))
             lines.add(getString(R.string.check_count, list.size))
-            if (next != null) lines.add(getString(R.string.check_next, next.first.name, Birthdays.formatDate(next.second)))
+            if (next != null) lines.add(getString(R.string.check_next, next.first.name, Birthdays.formatDate(next.second, Lang.en(this))))
             if (shown > 0) lines.add(getString(R.string.check_shown, shown))
             runOnUiThread { checkResult.text = lines.joinToString("\n") }
         }.start()

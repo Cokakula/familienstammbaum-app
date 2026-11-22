@@ -173,7 +173,8 @@ object News {
         val sent = LinkedHashSet<String>()
         for (i in 0 until sentArr.length()) sent.add(sentArr.optString(i))
         val sq = sess.optString("lang") == "sq"
-        val items = NewsCore.select(list, ctx, cats(c), st.optLong("mark"), sent, sq)
+        val en = sess.optString("lang") == "en"
+        val items = NewsCore.select(list, ctx, cats(c), st.optLong("mark"), sent, sq, en)
         if (items.isEmpty()) { saveState(c, st); return 0 }
 
         items.forEach { sent.addAll(it.ids) }
@@ -188,7 +189,7 @@ object News {
             for (i in 0 until old.length()) all.add(old.optString(i))
             val keep = all.take(30)
             lines.put(tree, JSONArray(keep))
-            val nid = post(c, tree, trees.optString(tree), trees.length() > 1, keep, sq)
+            val nid = post(c, tree, trees.optString(tree), trees.length() > 1, keep, sq, en)
             if (nid != 0) {
                 var known = false
                 for (i in 0 until nids.length()) if (nids.optInt(i) == nid) known = true
@@ -200,23 +201,24 @@ object News {
         return items.size
     }
 
-    private fun ensureChannel(c: Context, sq: Boolean) {
+    private fun ensureChannel(c: Context, sq: Boolean, en: Boolean) {
         val nm = c.getSystemService(NotificationManager::class.java) ?: return
         if (nm.getNotificationChannel(CHANNEL) != null) return
-        val ch = NotificationChannel(CHANNEL, if (sq) "Të rejat në trung" else "Neues im Stammbaum", NotificationManager.IMPORTANCE_DEFAULT)
-        ch.description = if (sq) "Kur të tjerët shtojnë foto, postime, takime ose komentojnë gjërat e tua"
+        val ch = NotificationChannel(CHANNEL, if (en) "News in the family tree" else if (sq) "Të rejat në trung" else "Neues im Stammbaum", NotificationManager.IMPORTANCE_DEFAULT)
+        ch.description = if (en) "When others add photos, posts or gatherings, or comment on your things"
+            else if (sq) "Kur të tjerët shtojnë foto, postime, takime ose komentojnë gjërat e tua"
             else "Wenn andere Fotos, Beiträge oder Treffen hinzufügen oder deine Sachen kommentieren"
         nm.createNotificationChannel(ch)
     }
 
     @SuppressLint("MissingPermission")
-    private fun post(c: Context, tree: String, treeName: String, multi: Boolean, lines: List<String>, sq: Boolean): Int {
+    private fun post(c: Context, tree: String, treeName: String, multi: Boolean, lines: List<String>, sq: Boolean, en: Boolean): Int {
         if (lines.isEmpty() || !Birthdays.canNotify(c)) return 0
-        ensureChannel(c, sq)
+        ensureChannel(c, sq, en)
         val id = BASE_ID + (tree.hashCode() and 0x3FF)
-        val head = if (sq) "E re në trung" else "Neu im Stammbaum"
+        val head = if (en) "New in the family tree" else if (sq) "E re në trung" else "Neu im Stammbaum"
         val title = if (multi && treeName.isNotBlank()) "$head · $treeName" else head
-        val text = if (lines.size > 1) (if (sq) "${lines.size} të reja · ${lines[0]}" else "${lines.size} Neuigkeiten · ${lines[0]}") else lines[0]
+        val text = if (lines.size > 1) (if (en) "${lines.size} updates · ${lines[0]}" else if (sq) "${lines.size} të reja · ${lines[0]}" else "${lines.size} Neuigkeiten · ${lines[0]}") else lines[0]
         val open = Intent(c, MainActivity::class.java).apply {
             putExtra(MainActivity.EXTRA_NEWS, tree.ifEmpty { "-" })
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -225,7 +227,7 @@ object News {
         val style: NotificationCompat.Style = if (lines.size > 1) {
             val s = NotificationCompat.InboxStyle()
             lines.take(6).forEach { s.addLine(it) }
-            if (lines.size > 6) s.setSummaryText(if (sq) "+${lines.size - 6} të tjera" else "+${lines.size - 6} weitere")
+            if (lines.size > 6) s.setSummaryText(if (en) "+${lines.size - 6} more" else if (sq) "+${lines.size - 6} të tjera" else "+${lines.size - 6} weitere")
             s
         } else NotificationCompat.BigTextStyle().bigText(lines[0])
         val hour = LocalTime.now().hour
@@ -234,7 +236,7 @@ object News {
         val pub = NotificationCompat.Builder(c, CHANNEL)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(head)
-            .setContentText(if (sq) "Hape aplikacionin për t'i pa" else "Zum Ansehen die App öffnen")
+            .setContentText(if (en) "Open the app to see them" else if (sq) "Hape aplikacionin për t'i pa" else "Zum Ansehen die App öffnen")
             .setColor(ContextCompat.getColor(c, R.color.accent))
             .build()
         val b = NotificationCompat.Builder(c, CHANNEL)

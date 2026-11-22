@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Setup -->
+    <string name="setup_title">Family tree</string>
+    <string name="setup_text">Paste the invitation link you got by WhatsApp or email. It only works once; after that the family tree opens here directly. For the very first setup, use the address of your Google web app.</string>
+    <string name="setup_tip">Tip: in WhatsApp, long-press the link, then choose «Share» and «Stammbaum».</string>
+    <string name="link_label">Invitation link or web app address</string>
+    <string name="link_invalid">This is not a family tree link. Copy the whole invitation link from WhatsApp or the email.</string>
+    <string name="paste">Paste from clipboard</string>
+    <string name="open">Open family tree</string>
+    <string name="link_saved">Link saved</string>
+    <string name="no_link_in_text">There is no family tree link in this text.</string>
+
+    <!-- General -->
+    <string name="offline_text">No connection. Check the internet and try again.</string>
+    <string name="retry">Try again</string>
+    <string name="choose_photos">Choose photos</string>
+    <string name="no_app_for_link">No app found that can open this link.</string>
+    <string name="notifications_denied">Without notifications there are no birthday reminders. You can allow them in the app settings.</string>
+
+    <!-- Reminders -->
+    <string name="channel_name">Birthdays</string>
+    <string name="backup_channel">Backup reminder</string>
+    <string name="backup_title">Time for a backup</string>
+    <string name="backup_text_days">The last backup of the family tree is %1$d days old. Tap here to make a new one.</string>
+    <string name="backup_text_never">There is no backup of the family tree yet. Tap here to make one.</string>
+    <string name="no_viewer">No app to view this file is installed on this phone.</string>
+    <string name="mem_channel">Remembrance days</string>
+    <string name="mem_title">Remembering %1$s</string>
+    <string name="mem_text">%2$s died %1$d years ago today.</string>
+    <string name="mem_text_plain">Today is the anniversary of %1$s\'s death.</string>
+    <string name="mic_denied">Without microphone permission the app cannot record voice messages.</string>
+    <string name="channel_description">Reminders of birthdays from the family tree</string>
+    <string name="bday_today_title">It\'s %1$s\'s birthday today</string>
+    <string name="bday_tomorrow_title">It\'s %1$s\'s birthday tomorrow</string>
+    <string name="bday_today_text_age">%1$s turns %2$d today.</string>
+    <string name="bday_tomorrow_text_age">%1$s turns %2$d tomorrow.</string>
+    <string name="bday_text_plain">Tap to open the card in the family tree.</string>
+    <string name="action_call">Call</string>
+    <string name="action_whatsapp">WhatsApp</string>
+    <string name="wa_text">Happy birthday, %1$s! 🎉</string>
+
+    <!-- Settings -->
+    <string name="settings_title">App settings</string>
+    <string name="section_reminders">Birthday reminders</string>
+    <string name="reminders_switch">Turn on reminders</string>
+    <string name="time_label">Time</string>
+    <string name="day_before">Also remind the day before</string>
+    <string name="permission_hint">Notifications are turned off for this app. Without them there are no reminders.</string>
+    <string name="permission_button">Allow notifications</string>
+    <string name="check_button">Check now</string>
+    <string name="checking">Checking …</string>
+    <string name="check_offline">No connection. Using the data loaded last.</string>
+    <string name="check_count">Birthdays in the family tree: %1$d</string>
+    <string name="check_next">Next birthday: %1$s on %2$s</string>
+    <string name="check_shown">Reminders shown: %1$d</string>
+    <string name="section_link">Connected family tree</string>
+    <string name="no_link">No family tree connected yet</string>
+    <string name="change_link">Use a different invitation link</string>
+    <string name="about_text">All details and photos are end-to-end encrypted. Google only stores unreadable data. Decryption happens here on the phone. The app reminds you of birthdays even when it is closed.</string>
+
+    <!-- App lock -->
+    <string name="section_privacy">Privacy</string>
+    <string name="lock_switch">App lock (fingerprint or PIN)</string>
+    <string name="lock_hint">When opening, and after one minute in the background, the app asks for your fingerprint, face or PIN.</string>
+    <string name="lock_hint_none">There is no screen lock set up on this phone. Set up a PIN or fingerprint in the Android settings so the app lock works.</string>
+    <string name="lock_title">Family tree</string>
+    <string name="lock_subtitle">Unlock to open</string>
+    <string name="lock_text">The family tree is locked.</string>
+    <string name="unlock">Unlock</string>
+    <!-- Home screen widget -->
+    <string name="widget_name">Birthdays and gatherings</string>
+    <string name="widget_desc">The next birthdays and family gatherings</string>
+    <string name="widget_title">Family tree</string>
+    <string name="widget_empty">Open the app once, then the next birthdays appear here.</string>
+    <string name="widget_none">No birthdays in the next few weeks.</string>
+    <string name="widget_today">Today</string>
+    <string name="widget_tomorrow">Tomorrow</string>
+    <string name="widget_in_days">In %1$d days</string>
+    <string name="widget_bday_age">%1$s · %2$s turns %3$d</string>
+    <string name="widget_bday">%1$s · %2$s\'s birthday</string>
+    <string name="widget_event">%1$s · %2$s</string>
+    <!-- Call reminder -->
+    <string name="call_channel">Call reminders</string>
+    <string name="call_title">Time to call %1$s</string>
+    <string name="call_text">Last call %1$d days ago</string>
+    <!-- Milestone birthdays -->
+    <string name="round_title">🎉 %1$s turns %2$d</string>
+    <string name="bday_week_title">%1$s\'s birthday is in one week</string>
+    <string name="bday_week_text_age">%1$s turns %3$d on %2$s. Time for a present or a call.</string>
+    <string name="bday_week_text">On %1$s. Time for a present or a call.</string>
+    <string name="round_text">Milestone birthday on %1$s, in two weeks. Time to plan a party.</string>
+    <string name="upd_channel">New app versions</string>
+    <string name="upd_title">New version of the family tree app (%1$s)</string>
+    <string name="upd_text">Tap to download. Then open the file and confirm the update. Your access and settings stay as they are.</string>
+    <string name="upd_action">Download</string>
+    <string name="upd_title_sq">Version i ri i aplikacionit të trungut (%1$s)</string>
+    <string name="upd_text_sq">Prek këtu me e shkarku. Pastaj hape skedarin dhe konfirmo përditësimin. Qasja dhe cilësimet e tua mbesin.</string>
+    <string name="upd_action_sq">Shkarko</string>
+</resources>

@@ -137,7 +137,7 @@ object Birthdays {
                 if (!DATE.matches(bd)) continue
                 val first = p.optString("firstName")
                 val last = p.optString("lastName")
-                val name = listOf(first, last).filter { it.isNotBlank() }.joinToString(" ").ifBlank { "Ohne Namen" }
+                val name = listOf(first, last).filter { it.isNotBlank() }.joinToString(" ").ifBlank { if (Lang.en(context)) "No name" else "Ohne Namen" }
                 out.put(
                     JSONObject().put("id", p.optString("id")).put("name", name).put("firstName", first.ifBlank { last.ifBlank { name } })
                         .put("birthDate", bd).put("phone", p.optString("phone")).put("tree", trees[p.optString("treeId")] ?: "")
@@ -173,8 +173,8 @@ object Birthdays {
     fun ensureChannel(context: Context) {
         val nm = context.getSystemService(NotificationManager::class.java) ?: return
         if (nm.getNotificationChannel(CHANNEL) == null) {
-            val channel = NotificationChannel(CHANNEL, context.getString(R.string.channel_name), NotificationManager.IMPORTANCE_DEFAULT)
-            channel.description = context.getString(R.string.channel_description)
+            val channel = NotificationChannel(CHANNEL, Lang.ctx(context).getString(R.string.channel_name), NotificationManager.IMPORTANCE_DEFAULT)
+            channel.description = Lang.ctx(context).getString(R.string.channel_description)
             nm.createNotificationChannel(channel)
         }
     }
@@ -225,8 +225,8 @@ object Birthdays {
         }
         val n = NotificationCompat.Builder(context, CHANNEL)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(context.getString(R.string.round_title, b.firstName, age))
-            .setContentText(context.getString(R.string.round_text, formatDate(date)))
+            .setContentTitle(Lang.ctx(context).getString(R.string.round_title, b.firstName, age))
+            .setContentText(Lang.ctx(context).getString(R.string.round_text, formatDate(date, Lang.en(context))))
             .setContentIntent(PendingIntent.getActivity(context, code, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
             .setAutoCancel(true)
             .setColor(ContextCompat.getColor(context, R.color.accent))
@@ -243,10 +243,10 @@ object Birthdays {
             putExtra(MainActivity.EXTRA_PERSON, b.id)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
-        val text = if (age > 0) context.getString(R.string.bday_week_text_age, b.firstName, formatDate(date), age) else context.getString(R.string.bday_week_text, formatDate(date))
+        val text = if (age > 0) Lang.ctx(context).getString(R.string.bday_week_text_age, b.firstName, formatDate(date, Lang.en(context)), age) else Lang.ctx(context).getString(R.string.bday_week_text, formatDate(date, Lang.en(context)))
         val n = NotificationCompat.Builder(context, CHANNEL)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(context.getString(R.string.bday_week_title, b.name))
+            .setContentTitle(Lang.ctx(context).getString(R.string.bday_week_title, b.name))
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setContentIntent(PendingIntent.getActivity(context, code, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
@@ -260,11 +260,11 @@ object Birthdays {
     private fun post(context: Context, b: Birthday, date: LocalDate, isToday: Boolean): Boolean {
         if (!canNotify(context)) return false
         val age = b.ageOn(date)
-        val title = context.getString(if (isToday) R.string.bday_today_title else R.string.bday_tomorrow_title, b.name)
+        val title = Lang.ctx(context).getString(if (isToday) R.string.bday_today_title else R.string.bday_tomorrow_title, b.name)
         val text = when {
-            age > 0 && isToday -> context.getString(R.string.bday_today_text_age, b.firstName, age)
-            age > 0 -> context.getString(R.string.bday_tomorrow_text_age, b.firstName, age)
-            else -> context.getString(R.string.bday_text_plain)
+            age > 0 && isToday -> Lang.ctx(context).getString(R.string.bday_today_text_age, b.firstName, age)
+            age > 0 -> Lang.ctx(context).getString(R.string.bday_tomorrow_text_age, b.firstName, age)
+            else -> Lang.ctx(context).getString(R.string.bday_text_plain)
         }
         val base = b.id.hashCode() and 0x0FFFFFFF
         val open = Intent(context, MainActivity::class.java).apply {
@@ -283,7 +283,7 @@ object Birthdays {
         val phone = b.phone.filter { it.isDigit() || it == '+' }
         if (isToday && phone.length >= 6) {
             val dial = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
-            builder.addAction(0, context.getString(R.string.action_call),
+            builder.addAction(0, Lang.ctx(context).getString(R.string.action_call),
                 PendingIntent.getActivity(context, base + 1, dial, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
             val intl = when {
                 phone.startsWith("+") -> phone.drop(1)
@@ -291,9 +291,9 @@ object Birthdays {
                 else -> null
             }
             if (intl != null && intl.length >= 8) {
-                val message = Uri.encode(context.getString(R.string.wa_text, b.firstName))
+                val message = Uri.encode(Lang.ctx(context).getString(R.string.wa_text, b.firstName))
                 val wa = Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/$intl?text=$message"))
-                builder.addAction(0, context.getString(R.string.action_whatsapp),
+                builder.addAction(0, Lang.ctx(context).getString(R.string.action_whatsapp),
                     PendingIntent.getActivity(context, base + 2, wa, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
             }
         }
@@ -321,8 +321,8 @@ object Birthdays {
         return best
     }
 
-    fun formatDate(d: LocalDate): String =
-        "${d.dayOfMonth}. ${d.month.getDisplayName(TextStyle.FULL, Locale.GERMAN)}"
+    fun formatDate(d: LocalDate, en: Boolean = false): String =
+        if (en) "${d.dayOfMonth} ${d.month.getDisplayName(TextStyle.FULL, Locale.ENGLISH)}" else "${d.dayOfMonth}. ${d.month.getDisplayName(TextStyle.FULL, Locale.GERMAN)}"
 
     /** Plant die tägliche Prüfung zur gewählten Uhrzeit */
     fun schedule(context: Context, update: Boolean) {
@@ -369,16 +369,16 @@ object BackupReminder {
         if (!Birthdays.canNotify(context)) return
         val nm = context.getSystemService(NotificationManager::class.java) ?: return
         if (nm.getNotificationChannel(CHANNEL) == null) {
-            nm.createNotificationChannel(NotificationChannel(CHANNEL, context.getString(R.string.backup_channel), NotificationManager.IMPORTANCE_DEFAULT))
+            nm.createNotificationChannel(NotificationChannel(CHANNEL, Lang.ctx(context).getString(R.string.backup_channel), NotificationManager.IMPORTANCE_DEFAULT))
         }
-        val text = if (last > 0) context.getString(R.string.backup_text_days, ((now - last) / DAY).toInt()) else context.getString(R.string.backup_text_never)
+        val text = if (last > 0) Lang.ctx(context).getString(R.string.backup_text_days, ((now - last) / DAY).toInt()) else Lang.ctx(context).getString(R.string.backup_text_never)
         val open = Intent(context, MainActivity::class.java).apply {
             putExtra(MainActivity.EXTRA_BACKUP, true)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
         val n = NotificationCompat.Builder(context, CHANNEL)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(context.getString(R.string.backup_title))
+            .setContentTitle(Lang.ctx(context).getString(R.string.backup_title))
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setContentIntent(PendingIntent.getActivity(context, ID, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
@@ -407,10 +407,10 @@ object MemorialReminder {
             val y = m.groupValues[1].toInt(); val mo = m.groupValues[2].toInt(); var d = m.groupValues[3].toInt()
             if (mo == 2 && d == 29 && !today.isLeapYear) d = 28
             if (mo != today.monthValue || d != today.dayOfMonth) continue
-            if (nm.getNotificationChannel(CHANNEL) == null) nm.createNotificationChannel(NotificationChannel(CHANNEL, context.getString(R.string.mem_channel), NotificationManager.IMPORTANCE_LOW))
+            if (nm.getNotificationChannel(CHANNEL) == null) nm.createNotificationChannel(NotificationChannel(CHANNEL, Lang.ctx(context).getString(R.string.mem_channel), NotificationManager.IMPORTANCE_LOW))
             val name = listOf(p.optString("firstName"), p.optString("lastName")).filter { it.isNotBlank() }.joinToString(" ").ifBlank { "?" }
             val years = today.year - y
-            val text = if (y > 0 && years > 0) context.getString(R.string.mem_text, years, name) else context.getString(R.string.mem_text_plain, name)
+            val text = if (y > 0 && years > 0) Lang.ctx(context).getString(R.string.mem_text, years, name) else Lang.ctx(context).getString(R.string.mem_text_plain, name)
             val id = p.optString("id")
             val open = Intent(context, MainActivity::class.java).apply {
                 putExtra(MainActivity.EXTRA_PERSON, id)
@@ -419,7 +419,7 @@ object MemorialReminder {
             val code = (id.hashCode() and 0x0FFFFFFF) + 7
             val n = NotificationCompat.Builder(context, CHANNEL)
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(context.getString(R.string.mem_title, name))
+                .setContentTitle(Lang.ctx(context).getString(R.string.mem_title, name))
                 .setContentText(text)
                 .setContentIntent(PendingIntent.getActivity(context, code, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
                 .setAutoCancel(true)
@@ -451,7 +451,7 @@ object CallReminder {
             val last = o.optLong("last")
             if (now < last + every * DAY || now < o.optLong("snooze")) continue
             if (now - sent.optLong(id) < 3 * DAY) continue
-            if (nm.getNotificationChannel(CHANNEL) == null) nm.createNotificationChannel(NotificationChannel(CHANNEL, context.getString(R.string.call_channel), NotificationManager.IMPORTANCE_DEFAULT))
+            if (nm.getNotificationChannel(CHANNEL) == null) nm.createNotificationChannel(NotificationChannel(CHANNEL, Lang.ctx(context).getString(R.string.call_channel), NotificationManager.IMPORTANCE_DEFAULT))
             val name = o.optString("name").ifBlank { "?" }
             val days = ((now - last) / DAY).toInt()
             val code = (id.hashCode() and 0x0FFFFFFF) + 11
@@ -461,14 +461,14 @@ object CallReminder {
             }
             val b = NotificationCompat.Builder(context, CHANNEL)
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(context.getString(R.string.call_title, name))
-                .setContentText(context.getString(R.string.call_text, days))
+                .setContentTitle(Lang.ctx(context).getString(R.string.call_title, name))
+                .setContentText(Lang.ctx(context).getString(R.string.call_text, days))
                 .setContentIntent(PendingIntent.getActivity(context, code, open, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
                 .setAutoCancel(true)
                 .setColor(ContextCompat.getColor(context, R.color.accent))
             val phone = o.optString("phone").filter { it.isDigit() || it == '+' }
             if (phone.length >= 6) {
-                b.addAction(0, context.getString(R.string.action_call),
+                b.addAction(0, Lang.ctx(context).getString(R.string.action_call),
                     PendingIntent.getActivity(context, code + 1, Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone")), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
             }
             try { NotificationManagerCompat.from(context).notify(code, b.build()); sent.put(id, now) } catch (e: SecurityException) { }

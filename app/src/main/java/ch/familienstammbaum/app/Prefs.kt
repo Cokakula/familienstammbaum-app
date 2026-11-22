@@ -58,7 +58,13 @@ object Prefs {
 
     /** Zugang für die Erinnerungen im Hintergrund (mit dem Android-Schlüsselspeicher verschlüsselt) */
     fun session(c: Context): String? = sp(c).getString("session", null)?.let { Vault.open(it) }
-    fun setSession(c: Context, json: String) { Vault.seal(json)?.let { sp(c).edit().putString("session", it).apply() } }
+    fun setSession(c: Context, json: String) {
+        Vault.seal(json)?.let { sp(c).edit().putString("session", it).apply() }
+        val l = try { org.json.JSONObject(json).optString("lang", "de") } catch (e: Exception) { "de" }
+        sp(c).edit().putString("uiLang", l).apply()
+    }
+    /** Nur die gewählte Sprache, unverschlüsselt (verrät nichts), damit sie schnell bereitsteht */
+    fun uiLang(c: Context): String = sp(c).getString("uiLang", null) ?: lang(c).also { sp(c).edit().putString("uiLang", it).apply() }
     fun clearSession(c: Context) { sp(c).edit().remove("session").remove("birthdays").remove("newsCtx").remove("newsState").apply() }
 
     /** Zuletzt bekannte Geburtstage (ebenfalls verschlüsselt) */

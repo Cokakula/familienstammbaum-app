@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() {
         val req = pendingWebPerm
         pendingWebPerm = null
         if (req != null) {
-            if (granted) req.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE)) else { req.deny(); Toast.makeText(this, R.string.mic_denied, Toast.LENGTH_LONG).show() }
+            if (granted) req.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE)) else { req.deny(); Toast.makeText(this, Lang.ctx(this).getString(R.string.mic_denied), Toast.LENGTH_LONG).show() }
         }
     }
 
@@ -160,10 +160,12 @@ class MainActivity : AppCompatActivity() {
     private var notifyThenSettings = false
     private val askNotifications = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         if (!granted && notifyThenSettings) notificationSettings()
-        else if (!granted) Toast.makeText(this, R.string.notifications_denied, Toast.LENGTH_LONG).show()
+        else if (!granted) Toast.makeText(this, Lang.ctx(this).getString(R.string.notifications_denied), Toast.LENGTH_LONG).show()
         notifyThenSettings = false
         web.evaluateJavascript("window.__fsNotify && window.__fsNotify($granted)", null)
     }
+
+    override fun attachBaseContext(newBase: android.content.Context) { super.attachBaseContext(Lang.ctx(newBase)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -298,8 +300,8 @@ class MainActivity : AppCompatActivity() {
     private fun authenticate() {
         if (!lockWanted()) { unlocked = true; lockView.visibility = View.GONE; return }
         val info = BiometricPrompt.PromptInfo.Builder()
-            .setTitle(getString(R.string.lock_title))
-            .setSubtitle(getString(R.string.lock_subtitle))
+            .setTitle(Lang.ctx(this).getString(R.string.lock_title))
+            .setSubtitle(Lang.ctx(this).getString(R.string.lock_subtitle))
             .setAllowedAuthenticators(AUTH)
             .build()
         try { prompt.authenticate(info) } catch (e: Exception) { /* Knopf «Entsperren» bleibt sichtbar */ }
@@ -312,7 +314,7 @@ class MainActivity : AppCompatActivity() {
             Intent.ACTION_SEND -> {
                 val link = Links.extract(intent.getStringExtra(Intent.EXTRA_TEXT).orEmpty())
                 if (link != null) { useLink(link); return }
-                Toast.makeText(this, R.string.no_link_in_text, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, Lang.ctx(this).getString(R.string.no_link_in_text), Toast.LENGTH_LONG).show()
             }
             Intent.ACTION_VIEW -> {
                 val link = intent.dataString?.let { Links.extract(it) }
@@ -395,7 +397,7 @@ class MainActivity : AppCompatActivity() {
         val intent = if (uri.scheme.equals("tel", ignoreCase = true)) Intent(Intent.ACTION_DIAL, uri) else Intent(Intent.ACTION_VIEW, uri)
         try { internalNav = true; startActivity(intent) } catch (e: ActivityNotFoundException) {
             internalNav = false
-            Toast.makeText(this, R.string.no_app_for_link, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, Lang.ctx(this).getString(R.string.no_app_for_link), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -403,7 +405,7 @@ class MainActivity : AppCompatActivity() {
 
     /* ---------- Fotos auswählen (mit Aufnahmeort) ---------- */
     private fun launchPicker(intent: Intent) {
-        try { internalNav = true; pickFiles.launch(Intent.createChooser(intent, getString(R.string.choose_photos))) }
+        try { internalNav = true; pickFiles.launch(Intent.createChooser(intent, Lang.ctx(this).getString(R.string.choose_photos))) }
         catch (e: ActivityNotFoundException) { internalNav = false; fileCallback?.onReceiveValue(null); fileCallback = null }
     }
 
@@ -505,7 +507,7 @@ class MainActivity : AppCompatActivity() {
             if (!ours()) return "no"
             val t = tts ?: return "no"
             if (!ttsReady) return "no"
-            val tries = if (lang == "sq") listOf(Locale("sq", "XK"), Locale("sq", "AL"), Locale("sq")) else listOf(Locale("de", "CH"), Locale.GERMANY, Locale.GERMAN)
+            val tries = if (lang == "sq") listOf(Locale("sq", "XK"), Locale("sq", "AL"), Locale("sq")) else if (lang == "en") listOf(Locale.UK, Locale.US, Locale.ENGLISH) else listOf(Locale("de", "CH"), Locale.GERMANY, Locale.GERMAN)
             val loc = tries.firstOrNull { t.isLanguageAvailable(it) >= TextToSpeech.LANG_AVAILABLE } ?: return "nolang"
             t.setLanguage(loc)
             t.setSpeechRate(0.92f)
@@ -593,7 +595,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent.createChooser(i, null))
                 } catch (e: Exception) {
                     internalNav = false
-                    Toast.makeText(this@MainActivity, R.string.no_viewer, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MainActivity, Lang.ctx(this@MainActivity).getString(R.string.no_viewer), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -613,7 +615,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent.createChooser(i, saveName))
                 } catch (e: Exception) {
                     internalNav = false
-                    Toast.makeText(this@MainActivity, R.string.no_viewer, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MainActivity, Lang.ctx(this@MainActivity).getString(R.string.no_viewer), Toast.LENGTH_LONG).show()
                 }
             }
         }
