@@ -518,9 +518,11 @@ class MainActivity : AppCompatActivity() {
         }
         @JavascriptInterface fun stopSpeak() { if (!ours()) return; ttsId = ""; ttsLast = ""; try { tts?.stop() } catch (e: Exception) { } }
         @JavascriptInterface fun http(id: Int, url: String, body: String) {
-            if (!ours() || url != Prefs.exec(this@MainActivity)) { respond(id, false, "Ungültige Adresse"); return }
+            /* eigener Stammbaum, oder ein Familienlink zu einem anderen Stammbaum (nur Google-Apps-Script-Adressen) */
+            if (!ours() || (url != Prefs.exec(this@MainActivity) && !Regex("^https://script\\.google\\.com/macros/s/[A-Za-z0-9_-]{20,120}/exec$").matches(url))) { respond(id, false, "Ungültige Adresse"); return }
             Thread { try { respond(id, true, Net.post(url, body)) } catch (e: Exception) { respond(id, false, e.message ?: "Fehler") } }.start()
         }
+        @JavascriptInterface fun httpAny(): Boolean = true
         @JavascriptInterface fun shareText(text: String) { if (!ours()) return;
             runOnUiThread {
                 internalNav = true

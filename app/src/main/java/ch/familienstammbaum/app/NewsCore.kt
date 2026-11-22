@@ -166,6 +166,10 @@ object NewsCore {
                     val text = cut(o.optString("text"), 60)
                     add(o, "herz", t("$w hat $acc kommentiert: «$text»", "$w komentoi $al: «$text»"))
                 }
+                "x" -> {
+                    if (o.optString("to") != meIn[o.optString("treeId")]) continue
+                    add(o, "herz", t("$w hat dir einen Morgengruss geschickt 🌅", "$w të ka dërgu një përshëndetje 🌅"))
+                }
                 "h" -> {
                     val code = mine[o.optString("on")] ?: continue
                     val (nom, acc, al) = target(code)

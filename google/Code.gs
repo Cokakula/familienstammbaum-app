@@ -25,6 +25,7 @@ const TABLES = {
   E: ['id', 'd', 't'],                                         // Einträge: Stammbäume, Personen, Fotos (verschlüsselt)
   Z: ['id', 'h', 'r', 's', 'pub', 'pk', 'kw', 'm', 'c', 'l'],  // Zugänge: Prüfwert, Rechte, Status, Schlüsselpaket, Name (verschlüsselt)
   B: ['id', 'f', 'n'],                                         // verschlüsselte Dateien: ID, Drive-Datei, Grösse
+  F: ['id', 'x', 'f', 't', 'm', 'c'],                          // Fotowand: Foto, Fotowand, Bild, Vorschau, Angaben (verschlüsselt), Zeit
 };
 const ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
 const API_ = {
@@ -35,8 +36,11 @@ const API_ = {
   apiVersion: apiVersion, apiSnapshots: apiSnapshots, apiSnapshotNow: apiSnapshotNow, apiSnapshotRestore: apiSnapshotRestore,
   apiMemPut: apiMemPut, apiMemGet: apiMemGet, apiMemDel: apiMemDel,
   apiNews: apiNews,
+  apiFestNew: apiFestNew, apiFestEnd: apiFestEnd, apiFestDel: apiFestDel, apiFestRows: apiFestRows, apiFestFiles: apiFestFiles,
+  apiFestInfo: apiFestInfo, apiFestUp: apiFestUp, apiFestList: apiFestList, apiFestGet: apiFestGet,
+  apiLinkPut: apiLinkPut, apiLinkGet: apiLinkGet, apiLinkDel: apiLinkDel,
 };
-const VERSION = 4;
+const VERSION = 5;
 const SNAP_DAYS = 7;      // automatische Sicherung höchstens einmal pro Woche (beim Öffnen durch ein Mitglied)
 const SNAP_KEEP = 12;     // so viele automatische Sicherungen bleiben erhalten (etwa drei Monate)
 const TRUSTED_RE = /^vt/; // Notfall-Schlüssel von Vertrauenspersonen (es kann mehrere geben)
@@ -682,6 +686,145 @@ function apiMemDel(a, id) {
     const m = memMap_();
     if (m[id]) { try { DriveApp.getFileById(m[id].f).setTrashed(true); } catch (e) { /* schon weg */ } delete m[id]; }
     props_().setProperty('FS_MEM', JSON.stringify(m));
+  } finally { l.releaseLock(); }
+  return { ok: true };
+}
+
+/* ---------- Fotowand am Fest ----------
+ * Gäste ohne Einladung laden Fotos hoch. Die Fotos werden im Browser der Gäste verschlüsselt; der Schlüssel steht nur
+ * im QR-Code-Link hinter dem «#». Dieses Skript sieht nur unlesbare Dateien und kennt nur einen Prüfwert des Links.
+ * Anlegen, beenden und löschen dürfen Mitglieder mit Bearbeiten-Rechten.
+ */
+const FEST_RE = /^[A-Za-z0-9_-]{8,40}$/, FEST_MAX = 600, FEST_BYTES = 6000000, FEST_KEEP = 14 * 864e5;
+function festMap_() { try { return JSON.parse(props_().getProperty('FS_FEST') || '{}'); } catch (e) { return {}; } }
+function festSave_(m) { props_().setProperty('FS_FEST', JSON.stringify(m)); }
+function festFolder_() { return folder_(props_(), 'FS_FESTDIR', st_().dir, 'x'); }
+function festByTok_(tok) {
+  const h = hash_('fest|' + String(tok || '')), m = festMap_();
+  for (const id in m) if (m[id].h === h) return Object.assign({ id: id }, m[id]);
+  throw new Error('Diese Fotowand gibt es nicht mehr.');
+}
+function festRows_(id, since) { return rows_('F').filter(function (r) { return r.x === id && Number(r.c) > (Number(since) || 0); }); }
+function festGet_(id, ids, which) {
+  const want = {}; (ids || []).slice(0, 12).forEach(function (i) { want[String(i)] = 1; });
+  const out = {};
+  rows_('F').forEach(function (r) {
+    if (r.x !== id || !want[r.id]) return;
+    try { out[r.id] = Utilities.base64Encode(DriveApp.getFileById(which === 'f' ? r.f : (r.t || r.f)).getBlob().getBytes()); } catch (e) { out[r.id] = null; }
+  });
+  return out;
+}
+function apiFestNew(a, id, h, exp, meta) {
+  need_(a, 'edit');
+  id = String(id || '');
+  if (!FEST_RE.test(id) || !/^[0-9a-f]{64}$/.test(String(h || ''))) throw new Error('Ungültige Fotowand.');
+  const l = lock_();
+  try {
+    const m = festMap_();
+    if (!m[id] && Object.keys(m).length >= 20) throw new Error('Es gibt schon 20 Fotowände. Bitte alte löschen.');
+    m[id] = { h: String(h), exp: Number(exp) || 0, meta: String(meta || '').slice(0, 600), n: (m[id] && m[id].n) || 0 };
+    festSave_(m);
+  } finally { l.releaseLock(); }
+  return { ok: true };
+}
+function apiFestEnd(a, id, exp) {
+  need_(a, 'edit');
+  const l = lock_();
+  try { const m = festMap_(); if (!m[id]) throw new Error('Diese Fotowand gibt es nicht mehr.'); m[id].exp = Number(exp) || Date.now(); festSave_(m); }
+  finally { l.releaseLock(); }
+  return { ok: true };
+}
+function apiFestDel(a, id) {
+  need_(a, 'edit');
+  id = String(id || '');
+  const l = lock_();
+  try {
+    const rs = festRows_(id, 0);
+    rs.forEach(function (r) { [r.f, r.t].filter(String).forEach(function (f) { try { DriveApp.getFileById(f).setTrashed(true); } catch (e) { /* schon weg */ } }); });
+    save_('F', [], rs.map(function (r) { return r.id; }));
+    const m = festMap_(); delete m[id]; festSave_(m);
+  } finally { l.releaseLock(); }
+  return { ok: true };
+}
+function apiFestRows(a, id, since) {
+  need_(a, 'view');
+  const m = festMap_()[String(id)];
+  return { n: m ? m.n || 0 : 0, exp: m ? m.exp : 0, gone: !m, rows: festRows_(String(id), since).map(function (r) { return [r.id, r.m, Number(r.c)]; }) };
+}
+function apiFestFiles(a, id, ids, which) { need_(a, 'view'); return festGet_(String(id), ids, which); }
+/* Gäste: nur mit dem Link */
+function apiFestInfo(tok) { const f = festByTok_(tok); return { id: f.id, exp: f.exp, n: f.n || 0, meta: f.meta, open: Date.now() < f.exp }; }
+function apiFestUp(tok, full, thumb, meta) {
+  const f = festByTok_(tok);
+  if (Date.now() > f.exp) throw new Error('Die Fotowand ist geschlossen.');
+  const b1 = Utilities.base64Decode(String(full || '')), b2 = Utilities.base64Decode(String(thumb || ''));
+  if (!b1.length || b1.length > FEST_BYTES || b2.length > 800000) throw new Error('Das Foto ist zu gross.');
+  const l = lock_();
+  try {
+    const m = festMap_(), cur = m[f.id];
+    if (!cur) throw new Error('Diese Fotowand gibt es nicht mehr.');
+    if ((cur.n || 0) >= FEST_MAX) throw new Error('Die Fotowand ist voll.');
+    const pid = Utilities.getUuid().replace(/-/g, '').slice(0, 20), dir = festFolder_();
+    const ff = dir.createFile(Utilities.newBlob(b1, 'application/octet-stream', f.id + '_' + pid + '_f'));
+    const ft = b2.length ? dir.createFile(Utilities.newBlob(b2, 'application/octet-stream', f.id + '_' + pid + '_t')) : null;
+    save_('F', [{ id: pid, x: f.id, f: ff.getId(), t: ft ? ft.getId() : '', m: String(meta || '').slice(0, 600), c: String(Date.now()) }]);
+    cur.n = (cur.n || 0) + 1; festSave_(m);
+    return { ok: true, id: pid, n: cur.n };
+  } finally { l.releaseLock(); }
+}
+function apiFestList(tok, since) {
+  const f = festByTok_(tok);
+  if (Date.now() > f.exp + FEST_KEEP) throw new Error('Die Fotowand ist geschlossen.');
+  return { n: f.n || 0, open: Date.now() < f.exp, rows: festRows_(f.id, since).map(function (r) { return [r.id, r.m, Number(r.c)]; }) };
+}
+function apiFestGet(tok, ids, which) {
+  const f = festByTok_(tok);
+  if (Date.now() > f.exp + FEST_KEEP) throw new Error('Die Fotowand ist geschlossen.');
+  return festGet_(f.id, ids, which);
+}
+
+/* ---------- Familienlink ----------
+ * Ein Stammbaum zeigt einer anderen Familie ausgewählte Personen (z. B. die Familie der Braut). Die Auswahl wird
+ * in der App mit einem eigenen Schlüssel verschlüsselt; der Schlüssel steht nur im Link hinter dem «#».
+ * Dieses Skript speichert nur die unlesbare Datei. Ändern und beenden dürfen Mitglieder mit Bearbeiten-Rechten.
+ */
+const LINK_RE = /^[A-Za-z0-9_-]{16,40}$/, LINK_BYTES = 4000000;
+function linkMap_() { try { return JSON.parse(props_().getProperty('FS_LINK') || '{}'); } catch (e) { return {}; } }
+function linkFolder_() { return folder_(props_(), 'FS_LINKDIR', st_().dir, 'z'); }
+function apiLinkPut(a, id, b64) {
+  need_(a, 'edit');
+  id = String(id || '');
+  if (!LINK_RE.test(id)) throw new Error('Ungültiger Familienlink.');
+  const bytes = Utilities.base64Decode(String(b64 || ''));
+  if (!bytes.length) throw new Error('Leere Datei.');
+  if (bytes.length > LINK_BYTES) throw new Error('Der Familienlink ist zu gross. Bitte weniger Personen wählen.');
+  const l = lock_();
+  try {
+    const m = linkMap_();
+    if (!m[id] && Object.keys(m).length >= 40) throw new Error('Es gibt schon 40 Familienlinks. Bitte alte beenden.');
+    if (m[id]) { try { DriveApp.getFileById(m[id].f).setTrashed(true); } catch (e) { /* schon weg */ } }
+    const f = linkFolder_().createFile(Utilities.newBlob(bytes, 'application/octet-stream', 'l'));
+    m[id] = { f: f.getId(), u: Date.now() };
+    props_().setProperty('FS_LINK', JSON.stringify(m));
+    return { ok: true, u: m[id].u };
+  } finally { l.releaseLock(); }
+}
+function apiLinkGet(id, since) {
+  id = String(id || '');
+  const m = LINK_RE.test(id) ? linkMap_()[id] : null;
+  if (!m) throw new Error('Dieser Familienlink wurde beendet.');
+  if (Number(since) >= m.u) return { u: m.u, same: true };
+  try { return { u: m.u, d: Utilities.base64Encode(DriveApp.getFileById(m.f).getBlob().getBytes()) }; }
+  catch (e) { throw new Error('Dieser Familienlink wurde beendet.'); }
+}
+function apiLinkDel(a, id) {
+  need_(a, 'edit');
+  id = String(id || '');
+  const l = lock_();
+  try {
+    const m = linkMap_();
+    if (m[id]) { try { DriveApp.getFileById(m[id].f).setTrashed(true); } catch (e) { /* schon weg */ } delete m[id]; }
+    props_().setProperty('FS_LINK', JSON.stringify(m));
   } finally { l.releaseLock(); }
   return { ok: true };
 }
