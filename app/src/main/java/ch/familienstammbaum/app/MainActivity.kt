@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var prompt: BiometricPrompt
 
     @Volatile private var pendingPerson: String? = null
+    @Volatile private var pendingAudio: String? = null
     @Volatile private var pendingBackup = false
     @Volatile private var pendingNews: String? = null
     private var pendingWebPerm: PermissionRequest? = null
@@ -312,13 +313,16 @@ class MainActivity : AppCompatActivity() {
         when (intent?.action) {
             ACTION_SETUP -> { showSetup(); return }
             Intent.ACTION_SEND -> {
+                if (isAudioShare(intent)) { takeSharedAudio(intent, initial); return }
                 val link = Links.extract(intent.getStringExtra(Intent.EXTRA_TEXT).orEmpty())
-                if (link != null) { useLink(link); return }
+                if (link != null) { if (!openPersonLink(link)) useLink(link); return }
                 Toast.makeText(this, Lang.ctx(this).getString(R.string.no_link_in_text), Toast.LENGTH_LONG).show()
             }
             Intent.ACTION_VIEW -> {
                 val link = intent.dataString?.let { Links.extract(it) }
-                if (link != null) { useLink(link); return }
+                if (link != null) { if (!openPersonLink(link)) useLink(link); return }
+                if (initial || web.visibility != View.VISIBLE) { if (Prefs.exec(this) != null) showWeb(initial) else showSetup() }
+                return
             }
         }
         val person = intent?.getStringExtra(EXTRA_PERSON)
@@ -348,6 +352,45 @@ class MainActivity : AppCompatActivity() {
         setup.visibility = View.VISIBLE
         linkError.visibility = View.GONE
         linkInput.setText("")
+    }
+
+    /* Link zu einer Person: nur im eigenen Stammbaum öffnen, den Zugang nie wechseln */
+    private fun openPersonLink(link: String): Boolean {
+        val pid = Links.person(link) ?: return false
+        val exec = Prefs.exec(this)
+        if (exec == null) { Toast.makeText(this, Lang.ctx(this).getString(R.string.person_link_setup), Toast.LENGTH_LONG).show(); showSetup(); return true }
+        val base = Links.base(link)
+        if (base != null && base != exec) { Toast.makeText(this, Lang.ctx(this).getString(R.string.person_link_other), Toast.LENGTH_LONG).show(); if (web.visibility != View.VISIBLE) showWeb(true); return true }
+        pendingPerson = pid; showWeb(true); return true
+    }
+
+    /* Sprachnachricht geteilt: Datei lesen und an die Webversion geben */
+    private fun isAudioShare(intent: Intent): Boolean {
+        val t = intent.type.orEmpty()
+        if (t.startsWith("audio/") || t == "application/ogg") return true
+        if (!t.startsWith("text/") && intent.hasExtra(Intent.EXTRA_STREAM)) return true
+        return false
+    }
+    private fun takeSharedAudio(intent: Intent, initial: Boolean) {
+        @Suppress("DEPRECATION")
+        val uri: Uri? = if (Build.VERSION.SDK_INT >= 33) intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java) else intent.getParcelableExtra(Intent.EXTRA_STREAM)
+        if (uri == null) { Toast.makeText(this, Lang.ctx(this).getString(R.string.audio_failed), Toast.LENGTH_LONG).show(); return }
+        var name = "Sprachnachricht.opus"
+        try { contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { c -> if (c.moveToFirst()) c.getString(0)?.let { if (it.isNotBlank()) name = it } } } catch (e: Exception) {}
+        val bytes = try {
+            contentResolver.openInputStream(uri)?.use { inp ->
+                val out = java.io.ByteArrayOutputStream(); val buf = ByteArray(65536); var total = 0
+                while (true) { val n = inp.read(buf); if (n < 0) break; total += n; if (total > 16 * 1024 * 1024) return@use null; out.write(buf, 0, n) }
+                out.toByteArray()
+            }
+        } catch (e: Exception) { null }
+        if (bytes == null) { Toast.makeText(this, Lang.ctx(this).getString(R.string.audio_failed), Toast.LENGTH_LONG).show(); return }
+        val mime = intent.type ?: contentResolver.getType(uri) ?: "audio/ogg"
+        pendingAudio = JSONObject().put("name", name).put("mime", mime).put("b64", Base64.encodeToString(bytes, Base64.NO_WRAP)).toString()
+        if (Prefs.exec(this) == null) { showSetup(); return }
+        if (!initial && web.visibility == View.VISIBLE && web.url != null) {
+            web.evaluateJavascript("window.__fsAudio && window.__fsAudio()", null)
+        } else showWeb(true)
     }
 
     private fun useLink(link: String) {
@@ -476,12 +519,14 @@ class MainActivity : AppCompatActivity() {
             Prefs.pending(ctx)?.let { o.put("link", it) }
             pendingPerson?.let { o.put("person", it) }
             pendingPerson = null
+            if (pendingAudio != null) o.put("audio", true)
             if (pendingBackup) { o.put("backup", true); pendingBackup = false }
             pendingNews?.let { o.put("news", it) }
             pendingNews = null
             if (Prefs.reset(ctx)) { o.put("reset", true); Prefs.clearReset(ctx) }
             return o.toString()
         }
+        @JavascriptInterface fun sharedAudio(): String { if (!ours()) return ""; val a = pendingAudio ?: return ""; pendingAudio = null; return a }
         @JavascriptInterface fun linkUsed() { if (!ours()) return; Prefs.clearPending(this@MainActivity) }
         @JavascriptInterface fun saveSession(json: String) { if (!ours()) return;
             Prefs.setSession(this@MainActivity, json)

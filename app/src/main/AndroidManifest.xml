@@ -40,12 +40,26 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
+            <!-- Sprachnachricht (z. B. aus WhatsApp) als Erinnerung sichern -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="application/ogg" />
+            </intent-filter>
             <!-- Einladungslink direkt mit der App öffnen -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="script.google.com" android:pathPrefix="/macros/s/" />
+            </intent-filter>
+            <!-- Links der Webversion (z. B. Link zu einer Person) mit der App öffnen -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="cokakula.github.io" android:pathPrefix="/familienstammbaum-app" />
             </intent-filter>
         </activity>
 

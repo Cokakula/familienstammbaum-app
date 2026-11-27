@@ -162,5 +162,12 @@ object Links {
 
     fun isSecret(link: String): Boolean = link.contains("#i=") || link.contains("#r=")
 
+    /** Link zu einer Person (…?g=…&p=<Nummer>), ohne Geheimnis */
+    fun person(link: String): String? {
+        if (link.contains('#')) return null
+        val p = try { Uri.parse(link).getQueryParameter("p") } catch (e: Exception) { null } ?: return null
+        return if (Regex("^[A-Za-z0-9_-]{4,60}$").matches(p)) p else null
+    }
+
     fun param(link: String, name: String): String? = try { Uri.parse(link.substringBefore('#')).getQueryParameter(name) } catch (e: Exception) { null }
 }

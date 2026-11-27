@@ -98,4 +98,7 @@
     <string name="upd_title_sq">Version i ri i aplikacionit të trungut (%1$s)</string>
     <string name="upd_text_sq">Prek këtu me e shkarku. Pastaj hape skedarin dhe konfirmo përditësimin. Qasja dhe cilësimet e tua mbesin.</string>
     <string name="upd_action_sq">Shkarko</string>
+    <string name="person_link_setup">This link opens a person in the family tree. First set up the family tree with your invitation link.</string>
+    <string name="person_link_other">This link belongs to a different family tree.</string>
+    <string name="audio_failed">The voice message could not be taken over (16 MB at most).</string>
 </resources>
