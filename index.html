@@ -2151,6 +2151,99 @@ body.has-layer .up-pill{bottom:calc(16px + env(safe-area-inset-bottom))}
 #treeWorld.flip-run .flip-in{animation:flipin .45s ease-out both}
 #treeWorld.flip-run .tree-svg{animation:flipin .5s ease-out both}
 @keyframes flipin{from{opacity:0}to{opacity:1}}
+
+/* 80 · Mitteilungen einschalten (Hinweis) */
+.push-card{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;padding:14px 16px;margin:4px 0 14px;border:1.5px solid var(--accent-soft)}
+.push-card .pc-ic{width:40px;height:40px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.push-card .pc-ic .ic,.push-card .pc-ic svg{width:22px;height:22px}
+.push-card .pc-t{flex:1 1 200px;display:flex;flex-direction:column;gap:2px}
+.push-card .pc-t small{color:var(--muted);font-size:.86rem;line-height:1.35}
+.push-card .pc-b{display:flex;gap:8px;margin-left:auto}
+/* 85 · Neu in der App */
+.feat-card{padding:12px 14px 14px;margin:4px 0 14px;background:linear-gradient(135deg,var(--accent-soft),var(--surface) 70%);border:1px solid var(--line)}
+.feat-card .fc-h{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.feat-card .fc-k{display:flex;align-items:center;gap:6px;font-size:.76rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.feat-card .fc-k .ic{width:16px;height:16px}
+.feat-card .fc-n{margin-left:auto;font-size:.8rem;color:var(--muted)}
+.feat-card .fc-b{display:flex;gap:12px;align-items:flex-start}
+.fc-ic{width:42px;height:42px;border-radius:12px;background:var(--surface);color:var(--accent);display:grid;place-items:center;flex:none;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.fc-ic .ic,.fc-ic svg{width:22px;height:22px}
+.feat-card .fc-t{display:flex;flex-direction:column;gap:3px}
+.feat-card .fc-t small{color:var(--muted);font-size:.88rem;line-height:1.4}
+.feat-card .fc-f{display:flex;gap:8px;margin-top:12px;padding-left:54px}
+/* 81 · Geschichten */
+.news-wrap{display:flex;align-items:stretch;gap:8px;margin:4px 0 14px}
+.news-wrap .news-banner{margin:0;flex:1;min-width:0}
+.news-play{flex:none;width:54px;border-radius:16px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center}
+.news-play svg{width:24px;height:24px}
+.layer.story{background:#0D1210;color:#fff;animation:fadein .2s ease}
+.sy-wrap{position:relative;flex:1;display:flex;flex-direction:column;min-height:0;padding-top:env(safe-area-inset-top);user-select:none;-webkit-user-select:none;touch-action:none;overflow:hidden}
+.sy-bars{position:absolute;top:calc(8px + env(safe-area-inset-top));left:10px;right:10px;display:flex;gap:4px;z-index:3}
+.sy-bar{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.3);overflow:hidden}
+.sy-bar i{display:block;height:100%;background:#fff;width:0}
+.sy-head{position:absolute;top:calc(18px + env(safe-area-inset-top));left:12px;right:6px;display:flex;align-items:center;gap:8px;z-index:3;font-size:.9rem;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.sy-head>span:not(.sy-wav){opacity:.75;font-size:.82rem}
+.sy-x{margin-left:auto;width:44px;height:44px;display:grid;place-items:center;color:#fff}
+.sy-x .ic{width:24px;height:24px}
+.sy-wav{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.18);display:inline-grid;place-items:center;font-weight:800;font-size:.82rem;color:#fff;flex:none}
+.sy-wav.sm{width:28px;height:28px;font-size:.72rem}
+.sy-body{flex:1;position:relative;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.sy-media{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.sy-media .sy-bg{position:absolute;inset:-20px;filter:blur(24px) brightness(.55);transform:scale(1.1)}
+.sy-media .sy-bg img{width:100%;height:100%;object-fit:cover}
+.sy-media>img{position:relative;max-width:100%;max-height:100%;object-fit:contain}
+.sy-cap{position:absolute;left:0;right:0;bottom:0;padding:60px 18px 84px;background:linear-gradient(transparent,rgba(0,0,0,.72));font-size:.95rem;line-height:1.4;z-index:2}
+.sy-cap p{margin:6px 0 0;font-size:1.02rem}
+.sy-cap small{display:block;margin-top:4px;opacity:.8}
+.sy-me{display:inline-block;margin-bottom:8px;padding:4px 10px;border-radius:12px;background:#F2C14E;color:#2A1E00;font-weight:800;font-size:.8rem}
+.sy-card{margin:auto;width:min(100%,460px);padding:86px 26px 96px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+.sy-card h2{margin:0;font-size:1.6rem;line-height:1.25;font-weight:800}
+.sy-card p{margin:0;opacity:.88;line-height:1.45}
+.sy-card .av{box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+.sy-intro .sy-spark{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#F2C14E,#E58A26);display:grid;place-items:center;color:#fff}
+.sy-intro .sy-spark .ic{width:34px;height:34px}
+.sy-ago{font-size:.9rem;opacity:.7!important}
+.sy-who{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap;justify-content:center}
+.sy-who small{width:100%;opacity:.75}
+.sy-hint{margin-top:18px!important;font-size:.82rem;opacity:.55!important}
+.sy-kick{font-size:.78rem!important;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.7!important;display:flex;align-items:center;gap:6px;justify-content:center}
+.sy-kick .ic{width:16px;height:16px}
+.sy-cap .sy-kick{justify-content:flex-start}
+.sy-rel{font-size:1.05rem;font-weight:700;color:#9FE0C2;opacity:1!important}
+.sy-sub{font-size:.9rem;opacity:.7!important}
+.sy-quote{font-size:1.15rem;line-height:1.5!important;font-style:italic}
+.sy-big{font-size:3rem;line-height:1;opacity:1!important}
+.sy-list{display:flex;flex-direction:column;gap:6px;margin-top:8px;text-align:left;width:100%}
+.sy-list p{background:rgba(255,255,255,.08);border-radius:12px;padding:8px 12px;font-size:.92rem}
+.sy-bd{display:flex;flex-direction:column;gap:8px;width:100%;margin-top:6px}
+.sy-bdr{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:14px;background:rgba(255,255,255,.08);color:#fff;text-align:left}
+.sy-bdr span{display:flex;flex-direction:column}
+.sy-bdr small{opacity:.75}
+.sy-endb{display:flex;gap:10px;margin-top:14px}
+.sy-end .btn:not(.primary){background:rgba(255,255,255,.14);color:#fff}
+.sy-foot{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:10px;padding:12px 14px calc(14px + env(safe-area-inset-bottom));z-index:3}
+.sy-fb{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:22px;background:rgba(255,255,255,.14);color:#fff;font-weight:700}
+.sy-fb .ic{width:22px;height:22px}
+.sy-fb.on{background:#E2476B}
+.sy-fb.sy-open{margin-left:auto;background:#fff;color:#16201B}
+/* 83 · Wer ist drauf? */
+.up-pill.who{cursor:pointer}
+body.who-open .up-pill{display:none}
+.up-who{background:#F2C14E!important;color:#2A1E00;white-space:nowrap;flex:none}
+.wo-strip{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.wo-th{width:64px;height:64px;border-radius:12px;overflow:hidden;flex:none;background:var(--surface-2)}
+.wo-th img{width:100%;height:100%;object-fit:cover}
+.wo-more{display:grid;place-items:center;font-weight:800;color:var(--muted)}
+.wo-q{font-weight:700;font-size:1.02rem;margin:4px 0 10px}
+.wo-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.wo-chip{position:relative;display:flex;align-items:center;gap:8px;padding:5px 14px 5px 5px;border-radius:24px;background:var(--surface);border:1.5px solid var(--line);font-weight:600;min-height:44px}
+.wo-chip.on{border-color:var(--accent);background:var(--accent-soft)}
+.wo-chip i{position:absolute;left:30px;top:2px;width:18px;height:18px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center}
+.wo-chip i .ic{width:12px;height:12px}
+.wo-add{padding-left:12px;color:var(--accent);border-style:dashed}
+.wo-add .ic{width:20px;height:20px}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.layer.story{animation:none}}
 </style>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -6082,6 +6175,90 @@ function kekuleText(rootId) {
     const q = P(byNum.get(n)); lines.push(`${n}  ${fullName(q)}${lifeShort(q) ? ` (${lifeShort(q)})` : ''}`);
   });
   return lines.join('\n');
+}
+
+/* ---------- 85 · «Neu in der App»: neue Funktionen einmal kurz vorstellen ----------
+ * Eine Karte oben in der Personenliste, eine Funktion nach der anderen, mit «Ausprobieren».
+ * Wer die App auf diesem Gerät neu einrichtet, sieht die bisherigen Neuheiten nicht (nur spätere).
+ */
+const APP_FEATS = [
+  { id: 'push', d: '2026-11-28', ok: () => pushSupported() || pushNeedsHome(), ic: () => BDN_BELL,
+    t: ['Mitteilungen auch auf dem iPhone', 'Njoftime edhe në iPhone', 'Notifications on the iPhone too'],
+    x: ['Erfahre sofort, wenn jemand Fotos hochlädt oder dich markiert. Verschlüsselt wie alles andere.', 'Mëso menjëherë kur dikush ngarkon foto ose të shënon. E shifruar si gjithçka tjetër.', 'Find out right away when someone uploads photos or tags you. Encrypted like everything else.'] },
+  { id: 'story', d: '2026-11-28', ic: () => I.spark,
+    t: ['«Seit du weg warst»', '«Që kur mungove»', '«While you were away»'],
+    x: ['Warst du ein paar Tage nicht da, zeigt die App das Neue als Geschichten: Fotos gross, neue Personen, Beiträge und die nächsten Geburtstage.', 'Nëse mungove disa ditë, aplikacioni t\'i tregon të rejat si histori: foto të mëdha, persona të rinj, postime dhe ditëlindjet e ardhshme.', 'If you were away for a few days, the app shows what\'s new as stories: big photos, new people, posts and upcoming birthdays.'] },
+  { id: 'whoon', d: '2026-11-28', ok: () => S.canWrite, ic: () => I.photos,
+    t: ['Fotos im Hintergrund hochladen', 'Ngarko foto në sfond', 'Upload photos in the background'],
+    x: ['Viele Fotos auf einmal wählen und gleich weiterschauen. Danach fragt die App «Wer ist drauf?», und wer drauf ist, erfährt es.', 'Zgjidh shumë foto njëherësh dhe vazhdo menjëherë. Pastaj aplikacioni pyet «Kush është në foto?», dhe kush është, e merr vesh.', 'Pick lots of photos at once and keep browsing. Then the app asks «Who\'s in them?», and those in them find out.'] },
+  { id: 'pwidget', d: '2026-11-28', ok: () => pwOk(), ic: () => I.photos,
+    t: ['Foto des Tages auf dem Startbildschirm', 'Fotoja e ditës në ekranin kryesor', 'Photo of the day on the home screen'],
+    x: ['Ein neues Widget zeigt jeden Tag ein anderes Familienfoto, an Geburtstagen eines vom Geburtstagskind.', 'Një widget i ri tregon çdo ditë një foto tjetër familjare, në ditëlindje një të ditëlindjes.', 'A new widget shows a different family photo every day, on birthdays one of the birthday person.'] },
+  { id: 'peek', d: '2026-11-28', ok: () => !WIDE.matches, ic: () => I.tree,
+    t: ['Vorschau im Baum', 'Parapamja në trung', 'Preview in the tree'],
+    x: ['Eine Person im Baum antippen zeigt zuerst ein halbes Blatt mit Anrufen und WhatsApp. Nach oben wischen öffnet das ganze Profil.', 'Prek një person në trung dhe shfaqet fillimisht një gjysmë faqe me Telefono dhe WhatsApp. Rrëshqit lart për profilin e plotë.', 'Tapping a person in the tree first shows a half sheet with Call and WhatsApp. Swipe up for the full profile.'] },
+  { id: 'sides', d: '2026-11-28', ic: () => '<i class="sdot sd-b" style="position:static;display:inline-block;width:18px;height:18px"></i>',
+    t: ['Seitenfarben', 'Ngjyrat e anëve', 'Side colours'],
+    x: ['Ein kleiner Punkt am Bild zeigt die Seite: grün Vaterseite, orange Mutterseite, grau angeheiratet.', 'Një pikë e vogël te fotoja tregon anën: jeshile nga babai, portokalli nga nana, gri nga martesa.', 'A small dot on the picture shows the side: green father\'s side, orange mother\'s side, grey by marriage.'] },
+  { id: 'whois', d: '2026-11-28', ic: () => I.photos,
+    t: ['Wer ist wer für mich?', 'Kush është kush për mua?', 'Who is who to me?'],
+    x: ['Auf einem Gruppenfoto mit Markierungen steht über jedem Gesicht deine Bezeichnung, z. B. «Axha» oder «Kushëriri».', 'Në një foto grupi me shënime, mbi çdo fytyrë shkruhet lidhja jote, p.sh. «Axha» ose «Kushëriri».', 'On a group photo with tags, your relationship appears above each face, e.g. «Uncle» or «Cousin».'] },
+  { id: 'viewas', d: '2026-11-27', ic: () => I.eye || I.spark,
+    t: ['Mit den Augen von …', 'Me sytë e …', 'Through the eyes of …'],
+    x: ['Sieh den Stammbaum aus der Sicht einer anderen Person und erfahre, wie du mit allen verwandt bist.', 'Shiko trungun me sytë e një personi tjetër dhe mëso si je në farefisni me të gjithë.', 'See the family tree from another person\'s point of view and find out how you are related to everyone.'] },
+];
+function appFeatSeen() { try { return JSON.parse(LS.get('featSeen') || '[]') || []; } catch (e) { return []; } }
+/* War dieses Gerät schon vor heute im Stammbaum? (für Hinweise, die neue Mitglieder nicht gleich am ersten Tag sehen sollen) */
+function appOldUser() { const s = +LS.get('devSince') || Date.now(); const t = new Date(); t.setHours(0, 0, 0, 0); return s < t.getTime(); }
+function appNewsInit() {
+  /* Schon vor diesem Update benutzt (es gab einen früheren Besuch): gilt als bisheriges Gerät */
+  if (!LS.get('devSince')) { const prev = [...S.prevSeen.values()].filter(x => x > 0); LS.set('devSince', String(prev.length ? Math.min(...prev) - 864e5 : Date.now())); }
+  if (!LS.get('featBase')) LS.set('featBase', [...S.prevSeen.values()].some(x => x > 0) ? '2026-11-26' : isoOf(new Date()));
+}
+function appNewsList() {
+  const base = LS.get('featBase') || '9999', seen = new Set(appFeatSeen());
+  return APP_FEATS.filter(f => f.d > base && !seen.has(f.id) && (!f.ok || f.ok()));
+}
+function appNewsCard() {
+  if (simpleOn() || !S.me || LS.get('featOff') === '1') return '';
+  const list = appNewsList(); if (!list.length) return '';
+  const f = list[0], k = uiLang() === 'sq' ? 1 : uiLang() === 'en' ? 2 : 0;
+  return `<div class="card feat-card"><div class="fc-h"><span class="fc-k">${I.spark}<span>${esc(wkL('Neu in der App', 'E re në aplikacion', 'New in the app'))}</span></span><span class="fc-n">${list.length > 1 ? esc(wkL(`noch ${list.length - 1}`, `edhe ${list.length - 1}`, `${list.length - 1} more`)) : ''}</span><button type="button" class="icon-btn sm" data-act="feat-x" aria-label="${esc(wkL('Alle ausblenden', 'Fshihi të gjitha', 'Hide all'))}">${I.close}</button></div>
+    <div class="fc-b"><span class="fc-ic">${f.ic()}</span><span class="fc-t"><b>${esc(f.t[k])}</b><small>${esc(f.x[k])}</small></span></div>
+    <div class="fc-f"><button type="button" class="btn sm primary" data-act="feat-go" data-f="${f.id}">${esc(wkL('Ausprobieren', 'Provoje', 'Try it'))}</button><button type="button" class="btn sm" data-act="feat-next" data-f="${f.id}">${esc(list.length > 1 ? wkL('Weiter', 'Më tej', 'Next') : wkL('Verstanden', 'Në rregull', 'Got it'))}</button></div></div>`;
+}
+function appNewsSeen(id) { const s = appFeatSeen(); if (!s.includes(id)) { s.push(id); LS.set('featSeen', JSON.stringify(s)); } }
+function appNewsNext(id) { appNewsSeen(id); scheduleRender(); }
+function appNewsDone() { APP_FEATS.forEach(f => appNewsSeen(f.id)); scheduleRender(); }
+async function appNewsGo(id) {
+  appNewsSeen(id); scheduleRender();
+  await closeLayers(layers.length);
+  switch (id) {
+    case 'push': return openPushSettings();
+    case 'story': { const sl = storySlides(storySince() || Date.now() - 14 * 864e5); if (sl.length > 2) return openStory(sl); return openNews(); }
+    case 'whoon': setView('fotos'); return;
+    case 'pwidget': return dialog(`<div class="dlg-title">${esc(wkL('Foto des Tages', 'Fotoja e ditës', 'Photo of the day'))}</div>
+      <ol class="dlg-steps"><li>${esc(wkL('Startbildschirm lange drücken → «Widgets».', 'Shtyp gjatë ekranin kryesor → «Widgets».', 'Long-press the home screen → «Widgets».'))}</li><li>${esc(wkL('«Familienstammbaum» → «Foto des Tages» auf den Startbildschirm ziehen.', '«Familienstammbaum» → tërhiqe «Fotoja e ditës» në ekranin kryesor.', '«Familienstammbaum» → drag «Photo of the day» onto the home screen.'))}</li></ol>
+      <div class="dlg-text muted-t">${esc(wkL('Das Foto ist nur auf deinem Handy entschlüsselt, aber auf dem Startbildschirm für alle sichtbar, die aufs Handy schauen.', 'Fotoja shifrohet vetëm në telefonin tënd, por në ekranin kryesor e sheh kushdo që e shikon telefonin.', 'The photo is only decrypted on your phone, but anyone looking at your home screen can see it.'))}</div>
+      <div class="dlg-btns"><button type="button" class="btn primary" data-v="__cancel">OK</button></div>`);
+    case 'peek': setView('baum'); return;
+    case 'sides': setView('personen'); return;
+    case 'whois': setView('fotos'); return;
+    case 'viewas': return viewAsPick();
+  }
+}
+/* Menü → Entdecken → «Neu in der App»: alle Neuheiten, jederzeit */
+function appNewsMenuRow() { return `<button type="button" class="opt" data-v="appnews">${I.spark}<span>${esc(wkL('Neu in der App', 'E re në aplikacion', 'New in the app'))}<small>${esc(wkL('Was sich zuletzt verbessert hat', 'Çka është përmirësu së fundi', 'What has improved recently'))}</small></span></button>`; }
+function openAppNews() {
+  const L = mkLayer('layer', 'appnews'), k = uiLang() === 'sq' ? 1 : uiLang() === 'en' ? 2 : 0;
+  L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="${esc(wkL('Schliessen', 'Mbyll', 'Close'))}">${I.close}</button><h2>${esc(wkL('Neu in der App', 'E re në aplikacion', 'New in the app'))}</h2></div>
+    <div class="layer-body narrow"><div class="card list">${APP_FEATS.filter(f => !f.ok || f.ok()).map(f => `<button type="button" class="row" data-fgo="${f.id}"><span class="av fc-ic" style="--size:44px">${f.ic()}</span><span class="meta"><span class="t">${esc(f.t[k])}</span><span class="s">${esc(f.x[k])}</span></span>${I.chevR}</button>`).join('')}</div></div>`;
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-act],[data-fgo]'); if (!b) return;
+    if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.fgo) return act(() => appNewsGo(b.dataset.fgo));
+  });
+  pushLayer(L);
 }
 
 /* ---------- Frag den Stammbaum ----------
@@ -11632,6 +11809,359 @@ function plinkHintHtml() {
   return `<div class="plink-hint"><p>${esc(wkL('Dieser Link öffnet eine Person im Familienstammbaum. Öffne ihn dort, wo du den Stammbaum sonst benutzt: in der Stammbaum-App oder über das Symbol auf dem Home-Bildschirm.', 'Kjo lidhje hap një person në trungun familjar. Hape aty ku e përdor zakonisht trungun: në aplikacion ose përmes ikonës në ekranin kryesor.', 'This link opens a person in the family tree. Open it where you usually use the family tree: in the family tree app or via the icon on your home screen.'))}</p>${intent ? `<a class="btn primary" href="${esc(intent)}">${I.tree}<span>${wkL('In der Stammbaum-App öffnen', 'Hape në aplikacion', 'Open in the family tree app')}</span></a>` : ''}</div>`;
 }
 
+/* ---------- 80 · Mitteilungen im Browser und auf dem iPhone (Web Push, Ende-zu-Ende-verschlüsselt) ----------
+ * Jedes Gerät meldet sich mit verschlüsselten Angaben beim eigenen Google-Skript an (braucht Google-Code Version 6).
+ * Wer etwas Neues hinzufügt, verschlüsselt die Mitteilung schon auf dem eigenen Gerät für jedes Empfängergerät
+ * (RFC 8291). Das Skript reicht sie nur weiter; Apple, Google oder Mozilla stellen einen verschlossenen Umschlag zu.
+ */
+const PUSH_SUB = 'https://cokakula.github.io/familienstammbaum-app/';
+const PUSH_KINDS = ['people', 'photos', 'stories', 'posts', 'miles', 'recipes', 'docs', 'events', 'comments', 'hearts', 'greets'];
+const MILE_EN = { smile: 'First smile', tooth: 'First tooth', sit: 'Sits up alone', crawl: 'Crawling', steps: 'First steps', word: 'First word', kita: 'First day at nursery', school: 'First day at school', bike: 'Riding a bike', swim: 'Learned to swim' };
+function pushSupported() {
+  try { return IS_WEB && 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && (location.protocol === 'https:' || location.hostname === '127.0.0.1' || location.hostname === 'localhost'); } catch (e) { return false; }
+}
+/* iPhone im Browser: Mitteilungen gibt es erst, wenn der Stammbaum auf dem Home-Bildschirm liegt */
+function pushNeedsHome() { return IS_WEB && IS_IOS && !STANDALONE && !pushSupported(); }
+function pushKey(k) { return k + ':' + (EXEC || ''); }
+function pushCfg() {
+  let c = {}; try { c = JSON.parse(LS.get(pushKey('push')) || '{}') || {}; } catch (e) { c = {}; }
+  c.cats = c.cats || {}; NEWS_CATS.forEach(([k]) => { if (c.cats[k] == null) c.cats[k] = true; });
+  return c;
+}
+function pushCfgSet(c) { LS.set(pushKey('push'), JSON.stringify({ on: !!c.on, cats: c.cats || {}, asked: c.asked || 0 })); }
+function pushOn() { return pushSupported() && pushCfg().on && typeof Notification !== 'undefined' && Notification.permission === 'granted'; }
+function pushDev() { let d = LS.get('pushDev'); if (!d || !/^pd[A-Za-z0-9_-]{8,40}$/.test(d)) { d = 'pd' + FSC.id(12); LS.set('pushDev', d); } return d; }
+function pushServerOk() { return (S.serverV || 0) >= 6; }
+
+/* Schlüssel, mit dem sich die Absender beim Mitteilungsdienst ausweisen (VAPID), einer pro Gerät */
+async function pushVapid() {
+  let v = null; try { v = JSON.parse(LS.get('vapid') || 'null'); } catch (e) { v = null; }
+  if (v && v.d && v.x && v.y) return v;
+  const kp = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
+  const j = await crypto.subtle.exportKey('jwk', kp.privateKey);
+  v = { d: j.d, x: j.x, y: j.y }; LS.set('vapid', JSON.stringify(v));
+  return v;
+}
+function pushPubRaw(v) { const r = new Uint8Array(65); r[0] = 4; r.set(FSC.unb64u(v.x), 1); r.set(FSC.unb64u(v.y), 33); return r; }
+function pushCat(...a) { const o = new Uint8Array(a.reduce((s, x) => s + x.length, 0)); let i = 0; a.forEach(x => { o.set(x, i); i += x.length; }); return o; }
+function pushSameKey(a, b) { if (!a || a.length !== b.length) return false; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false; return true; }
+function pushReg() {
+  return Promise.race([navigator.serviceWorker.ready, new Promise((_, rej) => setTimeout(() => rej({ code: 'user', message: wkL('Mitteilungen sind hier nicht verfügbar. Lade die Seite neu und versuche es nochmals.', 'Njoftimet nuk janë në dispozicion këtu. Ringarko faqen dhe provo sërish.', 'Notifications are not available here. Reload the page and try again.') }), 8000))]);
+}
+async function pushSubscription(create) {
+  const reg = await pushReg();
+  let sub = await reg.pushManager.getSubscription();
+  const v = await pushVapid(), want = pushPubRaw(v);
+  if (sub) {
+    const k = sub.options && sub.options.applicationServerKey;
+    if (k && !pushSameKey(new Uint8Array(k), want)) { try { await sub.unsubscribe(); } catch (e) {} sub = null; }
+  }
+  if (!sub && create) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: want });
+  return sub;
+}
+
+/* ---------- An- und abmelden ---------- */
+async function pushEnable() {
+  if (!pushSupported()) return false;
+  if (!pushServerOk()) { await pushNeedServer(); return false; }
+  let perm = Notification.permission;
+  if (perm !== 'granted') perm = await Notification.requestPermission();
+  if (perm !== 'granted') {
+    await dialog(`<div class="dlg-title">${esc(wkL('Mitteilungen nicht erlaubt', 'Njoftimet nuk lejohen', 'Notifications not allowed'))}</div>
+      <div class="dlg-text">${esc(IS_IOS ? wkL('Erlaube sie unter Einstellungen → Mitteilungen → Stammbaum.', 'Lejoji te Cilësimet → Njoftimet → Stammbaum.', 'Allow them under Settings → Notifications → Stammbaum.') : wkL('Erlaube sie in den Einstellungen des Browsers für diese Seite (Schloss-Symbol neben der Adresse).', 'Lejoji te cilësimet e shfletuesit për këtë faqe (simboli i drynit pranë adresës).', 'Allow them in the browser settings for this page (lock icon next to the address).'))}</div>
+      <div class="dlg-btns"><button type="button" class="btn primary" data-v="__cancel">OK</button></div>`);
+    return false;
+  }
+  await pushSubscription(true);
+  const c = pushCfg(); c.on = true; pushCfgSet(c);
+  await pushSyncSub(true);
+  toast(wkL('Mitteilungen sind eingeschaltet', 'Njoftimet janë ndezur', 'Notifications are on'));
+  return true;
+}
+async function pushDisable() {
+  const c = pushCfg(); c.on = false; pushCfgSet(c);
+  try { localStorage.removeItem('stammbaum.' + pushKey('pushSig')); } catch (e) {}
+  try { await api('apiPushSub', pushDev(), ''); } catch (e) { console.warn(e); }
+}
+/* Angaben dieses Geräts (verschlüsselt) beim Skript hinterlegen, wenn sich etwas geändert hat */
+async function pushSyncSub(force) {
+  if (!pushSupported() || !pushServerOk() || !S.me || S.offline) return;
+  const c = pushCfg(); if (!c.on) return;
+  if (Notification.permission !== 'granted') { c.on = false; pushCfgSet(c); try { await api('apiPushSub', pushDev(), ''); } catch (e) {} return; }
+  const sub = await pushSubscription(true); if (!sub) return;
+  const j = sub.toJSON(), v = await pushVapid(), dev = pushDev();
+  const rec = { v: 1, dev, cred: S.me.id, name: myName(), me: (S.me.meta && S.me.meta.me) || {}, lang: uiLang(), cats: c.cats, e: j.endpoint, p: j.keys && j.keys.p256dh, s: j.keys && j.keys.auth, vk: v };
+  if (!rec.e || !rec.p || !rec.s) return;
+  const sig = await FSC.sha256hex(JSON.stringify(rec) + '|' + FSC.KR.cur);
+  if (!force && LS.get(pushKey('pushSig')) === sig) return;
+  await api('apiPushSub', dev, await FSC.enc('pu' + dev, Object.assign({ at: Date.now() }, rec)));
+  LS.set(pushKey('pushSig'), sig);
+}
+/* Nach dem Laden: Liste der angemeldeten Geräte entschlüsseln (kommt mit apiLoad ab Version 6) */
+async function pushIngest(rows) {
+  const out = [];
+  for (const [id, cred, d] of rows || []) { try { const rec = await FSC.dec('pu' + id, d); if (rec && rec.e) out.push({ id, cred, rec }); } catch (e) { /* alter Schlüssel o. ä. */ } }
+  S.pushSubs = out;
+  if (!LS.get(pushKey('pushMark'))) LS.set(pushKey('pushMark'), String(Date.now()));
+  if (pushOn()) pushSyncSub(false).catch(e => console.warn(e));
+}
+async function pushNeedServer() {
+  if (!S.isAdmin) {
+    await dialog(`<div class="dlg-title">${esc(wkL('Noch nicht bereit', 'Ende jo gati', 'Not ready yet'))}</div>
+      <div class="dlg-text">${esc(wkL('Für Mitteilungen im Browser und auf dem iPhone muss der Admin zuerst den Google-Code aktualisieren (Version 6).', 'Për njoftime në shfletues dhe në iPhone, administratori duhet ta përditësojë së pari kodin e Google (versioni 6).', 'For notifications in the browser and on the iPhone, the admin first has to update the Google code (version 6).'))}</div>
+      <div class="dlg-btns"><button type="button" class="btn primary" data-v="__cancel">OK</button></div>`);
+    return;
+  }
+  await dialog(`<div class="dlg-title">Neuer Google-Code nötig (Version 6)</div>
+    <div class="dlg-text">Für Mitteilungen im Browser und auf dem iPhone braucht es den neuen Code im Google-Apps-Script-Projekt. So geht es (am besten am Computer):</div>
+    <ol class="dlg-steps"><li>Den neuen <a href="${CODE_GS_URL}" target="_blank" rel="noopener">Code.gs auf GitHub</a> öffnen → oben rechts «Raw» → alles kopieren.</li>
+    <li><a href="https://script.google.com" target="_blank" rel="noopener">script.google.com</a> → Projekt «Familienstammbaum» → Datei Code.gs: alles ersetzen → Speichern.</li>
+    <li><b>Neu:</b> Oben in der Auswahl die Funktion «mitteilungenFreischalten» wählen → «Ausführen» → Google fragt nach der Erlaubnis, eine Verbindung zu einem externen Dienst herzustellen → erlauben.</li>
+    <li>Bereitstellen → Bereitstellungen verwalten → Stift → Version «Neue Version» → Bereitstellen.</li></ol>
+    <div class="dlg-text">Die Adresse bleibt gleich. Danach die App neu laden.</div>
+    <div class="dlg-btns"><button type="button" class="btn primary" data-v="__cancel">OK</button></div>`);
+}
+
+/* ---------- Senden: was ich neu hinzugefügt habe, für jedes Empfängergerät eigens verschlüsselt ---------- */
+let pushTimer = 0;
+function pushReady() { return !!(S.loaded && S.me && !S.offline && pushServerOk() && (S.pushSubs || []).some(x => x.cred !== S.me.id)); }
+function pushSoon(ms) { if (!pushReady()) return; clearTimeout(pushTimer); pushTimer = setTimeout(() => { pushTimer = 0; pushSend().catch(e => console.warn(e)); }, ms == null ? 45000 : ms); }
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && pushTimer) { clearTimeout(pushTimer); pushTimer = 0; pushSend().catch(e => console.warn(e)); } });
+/* Von wem ist ein Eintrag? Ältere Einträge haben nur den Namen (createdBy) */
+function pushOwn(o, cred, name) { return !!(o && (o.createdByCred ? o.createdByCred === cred : (o.createdBy && o.createdBy === name && (!o.updatedByCred || o.updatedByCred === cred)))); }
+function pushMineSince(since) {
+  const me = S.me && S.me.id, nm = myName(), out = []; if (!me) return out;
+  PUSH_KINDS.forEach(kind => G[kind].forEach(o => { if ((o.createdAt || 0) > since && pushOwn(o, me, nm) && !isPriv(o)) out.push(Object.assign({ k: KIND_CODE[kind] }, o)); }));
+  return out;
+}
+/* Personen, die ich auf schon vorhandenen Fotos markiert habe (pAt: Person → [Zeit, Zugang, Name]) */
+function pushTagsSince(since) {
+  const me = S.me && S.me.id, out = []; if (!me) return out;
+  G.photos.forEach(o => { if ((o.createdAt || 0) > since || isPriv(o)) return; Object.entries(o.pAt || {}).forEach(([pid, v]) => { if (Array.isArray(v) && v[0] > since && v[1] === me) out.push({ o, pid }); }); });
+  return out;
+}
+function pushLinesFor(r, mine, tags) {
+  const L = r.lang === 'sq' ? 1 : r.lang === 'en' ? 2 : 0, t = (...a) => a[L];
+  const on = k => !r.cats || r.cats[k] !== false;
+  const w = myName() || t('Jemand', 'Dikush', 'Someone');
+  const meIn = r.me || {}, meOf = o => meIn[o.treeId];
+  const withMe = o => { const me = meOf(o); return !!(me && ((o.personIds || []).includes(me) || (o.tags || []).some(x => x && x.pid === me) || o.fromId === me)); };
+  const cut = (s, n) => { s = String(s || '').replace(/\s+/g, ' ').trim(); return s.length > n ? s.slice(0, n).trim() + ' …' : s; };
+  const day = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ''); if (!m) return ''; return L === 2 ? `${+m[3]} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][+m[2] - 1]} ${m[1]}` : `${+m[3]}.${+m[2]}.${m[1]}`; };
+  const target = id => {
+    for (const [kind, c] of [['photos', 'f'], ['stories', 's'], ['posts', 'b'], ['recipes', 'k']]) { const o = G[kind].get(id); if (o) return pushOwn(o, r.cred, r.name) ? c + '!' : withMe(o) ? c : ''; }
+    const m = G.miles.get(id); if (m) { const me = meOf(m), ch = G.people.get(m.pid); return pushOwn(m, r.cred, r.name) || (me && ch && (m.pid === me || (ch.parentIds || []).includes(me))) ? 'm' : ''; }
+    return '';
+  };
+  const ACC = { 'f!': ['dein Foto', 'foton tënde', 'your photo'], f: ['ein Foto mit dir', 'një foto me ty', 'a photo with you'], 's!': ['deine Erinnerung', 'kujtimin tënd', 'your memory'], s: ['eine Erinnerung mit dir', 'një kujtim me ty', 'a memory with you'], 'b!': ['deinen Beitrag', 'postimin tënd', 'your post'], b: ['einen Beitrag mit dir', 'një postim me ty', 'a post with you'], 'k!': ['dein Rezept', 'recetën tënde', 'your recipe'], k: ['ein Rezept von dir', 'një recetë prej teje', 'a recipe from you'], m: ['einen Meilenstein', 'një moment të veçantë', 'a milestone'] };
+  const NOM = { 'b!': 'dein Beitrag', b: 'ein Beitrag mit dir', m: 'ein Meilenstein' };
+  const by = k => mine.filter(o => o.k === k);
+  const mineL = [], rest = [];
+  const ph = by('f'), n = ph.length, wm = ph.filter(withMe).length;
+  if (wm && (on('fotos') || on('herz'))) mineL.push(wm === n
+    ? (n === 1 ? t(`📸 Du bist auf einem neuen Foto von ${w}`, `📸 Je në një foto të re prej ${w}`, `📸 You're in a new photo from ${w}`) : t(`📸 Du bist auf ${n} neuen Fotos von ${w}`, `📸 Je në ${n} foto të reja prej ${w}`, `📸 You're in ${n} new photos from ${w}`))
+    : t(`📸 Du bist auf ${wm} von ${n} neuen Fotos von ${w}`, `📸 Je në ${wm} nga ${n} foto të reja prej ${w}`, `📸 You're in ${wm} of ${n} new photos from ${w}`));
+  else if (n && on('fotos')) rest.push(n === 1 ? t(`${w} hat ein Foto hochgeladen`, `${w} ka ngarku një foto`, `${w} uploaded a photo`) : t(`${w} hat ${n} Fotos hochgeladen`, `${w} ka ngarku ${n} foto`, `${w} uploaded ${n} photos`));
+  const tg = new Set(tags.filter(x => meOf(x.o) === x.pid).map(x => x.o.id)).size;
+  if (tg && (on('fotos') || on('herz'))) mineL.push(tg === 1 ? t(`🏷️ ${w} hat dich auf einem Foto markiert`, `🏷️ ${w} të ka shënu në një foto`, `🏷️ ${w} tagged you in a photo`) : t(`🏷️ ${w} hat dich auf ${tg} Fotos markiert`, `🏷️ ${w} të ka shënu në ${tg} foto`, `🏷️ ${w} tagged you in ${tg} photos`));
+  by('x').forEach(o => { if (o.to && o.to === meOf(o) && on('herz')) mineL.push(t(`🌅 ${w} hat dir einen Morgengruss geschickt`, `🌅 ${w} të ka dërgu një përshëndetje`, `🌅 ${w} sent you a good-morning greeting`)); });
+  const hs = by('h').map(o => [o, target(o.on)]).filter(x => x[1]);
+  if (hs.length && on('herz')) {
+    if (hs.length === 1) { const [o, c] = hs[0], em = o.em && o.em !== '❤️' ? o.em : ''; mineL.push(em ? t(`${em} ${w} hat auf ${ACC[c][0]} reagiert`, `${em} ${w} reagoi në ${ACC[c][1]}`, `${em} ${w} reacted to ${ACC[c][2]}`) : t(`❤️ ${w} gefällt ${NOM[c] || ACC[c][0]}`, `❤️ ${w} e pëlqen ${ACC[c][1]}`, `❤️ ${w} likes ${ACC[c][2]}`)); }
+    else mineL.push(t(`❤️ ${w} hat ${hs.length}× auf deine Sachen reagiert`, `❤️ ${w} reagoi ${hs.length} herë në gjërat e tua`, `❤️ ${w} reacted ${hs.length} times to your things`));
+  }
+  by('c').forEach(o => { const c = target(o.on); if (c && on('herz')) mineL.push(t(`💬 ${w} hat ${ACC[c][0]} kommentiert: «${cut(o.text, 60)}»`, `💬 ${w} komentoi ${ACC[c][1]}: «${cut(o.text, 60)}»`, `💬 ${w} commented on ${ACC[c][2]}: «${cut(o.text, 60)}»`)); });
+  const pp = by('p');
+  if (pp.length && on('fotos')) rest.push(pp.length === 1 ? t(`${w} hat ${fullName(pp[0])} hinzugefügt`, `${w} e ka shtu ${fullName(pp[0])}`, `${w} added ${fullName(pp[0])}`) : t(`${w} hat ${pp.length} Personen hinzugefügt`, `${w} ka shtu ${pp.length} persona`, `${w} added ${pp.length} people`));
+  by('b').forEach(o => { if (on('pin')) rest.push(o.text ? t(`${w} auf der Pinnwand: «${cut(o.text, 70)}»`, `${w} në mur: «${cut(o.text, 70)}»`, `${w} on the board: «${cut(o.text, 70)}»`) : t(`${w} hat ein Foto auf die Pinnwand gestellt`, `${w} ka postu një foto në mur`, `${w} put a photo on the board`)); });
+  by('s').forEach(o => { if (o.greet || o.openAt || !on('erz')) return; const ti = cut(o.title || o.text, 50); rest.push(ti ? t(`${w} hat eine Erinnerung erzählt: «${ti}»`, `${w} ka tregu një kujtim: «${ti}»`, `${w} shared a memory: «${ti}»`) : t(`${w} hat eine Sprachaufnahme geteilt`, `${w} ka nda një incizim`, `${w} shared a voice recording`)); });
+  by('m').forEach(o => {
+    if (!on('erz')) return;
+    const ty = mileType(o.mt), known = o.mt !== 'own' && MILES.some(x => x[0] === o.mt);
+    const name = known ? [ty[2], ty[3], MILE_EN[o.mt] || ty[2]][L] : (o.title || [ty[2], ty[3], 'Own milestone'][L]);
+    const ch = callName(G.people.get(o.pid));
+    rest.push(t(`⭐ Neuer Meilenstein – ${ch}: ${name}`, `⭐ Moment i ri – ${ch}: ${name}`, `⭐ New milestone – ${ch}: ${name}`));
+  });
+  by('k').forEach(o => { if (on('erz')) rest.push(t(`${w} hat ein Rezept geteilt: «${cut(o.title, 50)}»`, `${w} ka nda një recetë: «${cut(o.title, 50)}»`, `${w} shared a recipe: «${cut(o.title, 50)}»`)); });
+  by('d').forEach(o => { if (on('erz')) rest.push(t(`${w} hat ein Dokument hinzugefügt`, `${w} ka shtu një dokument`, `${w} added a document`) + (o.title ? `: «${cut(o.title, 50)}»` : '')); });
+  by('e').forEach(o => { if (!on('treff')) return; const ti = cut(o.title, 50) || t('Familientreffen', 'Takim familjar', 'Family gathering'), d = day(o.date); rest.push(t(`📅 Neues Familientreffen: «${ti}»`, `📅 Takim i ri familjar: «${ti}»`, `📅 New family gathering: «${ti}»`) + (d ? ', ' + d : '')); });
+  return [...mineL, ...rest];
+}
+async function pushEncrypt(plain, uaPub, auth) {
+  const CS = crypto.subtle, TE = FSC.TE;
+  const as = await CS.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits']);
+  const asPub = new Uint8Array(await CS.exportKey('raw', as.publicKey));
+  const ua = await CS.importKey('raw', uaPub, { name: 'ECDH', namedCurve: 'P-256' }, false, []);
+  const ecdh = new Uint8Array(await CS.deriveBits({ name: 'ECDH', public: ua }, as.privateKey, 256));
+  const hk = async (salt, ikm, info, len) => new Uint8Array(await CS.deriveBits({ name: 'HKDF', hash: 'SHA-256', salt, info }, await CS.importKey('raw', ikm, 'HKDF', false, ['deriveBits']), len * 8));
+  const ikm = await hk(auth, ecdh, pushCat(TE.encode('WebPush: info\u0000'), uaPub, asPub), 32);
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const cek = await hk(salt, ikm, TE.encode('Content-Encoding: aes128gcm\u0000'), 16);
+  const nonce = await hk(salt, ikm, TE.encode('Content-Encoding: nonce\u0000'), 12);
+  const key = await CS.importKey('raw', cek, 'AES-GCM', false, ['encrypt']);
+  const ct = new Uint8Array(await CS.encrypt({ name: 'AES-GCM', iv: nonce }, key, pushCat(plain, new Uint8Array([2]))));
+  return pushCat(salt, new Uint8Array([0, 0, 16, 0]), new Uint8Array([65]), asPub, ct);
+}
+async function pushJwt(vk, aud) {
+  const key = await crypto.subtle.importKey('jwk', { kty: 'EC', crv: 'P-256', d: vk.d, x: vk.x, y: vk.y, ext: true }, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['sign']);
+  const enc = o => FSC.b64u(FSC.TE.encode(JSON.stringify(o)));
+  const h = enc({ typ: 'JWT', alg: 'ES256' }), p = enc({ aud, exp: Math.floor(Date.now() / 1000) + 12 * 3600, sub: PUSH_SUB });
+  const sig = new Uint8Array(await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, key, FSC.TE.encode(h + '.' + p)));
+  return h + '.' + p + '.' + FSC.b64u(sig);
+}
+async function pushMsg(s, payload) {
+  const r = s.rec;
+  const body = await pushEncrypt(FSC.TE.encode(JSON.stringify(payload)), FSC.unb64u(r.p), FSC.unb64u(r.s));
+  return { i: s.id, e: r.e, a: `vapid t=${await pushJwt(r.vk, new URL(r.e).origin)}, k=${FSC.b64u(pushPubRaw(r.vk))}`, b: FSC.b64(body), t: 86400 };
+}
+async function pushSend() {
+  if (!pushReady()) return;
+  /* Während noch hochgeladen wird oder «Wer ist drauf?» offen ist: etwas warten, damit eine einzige Mitteilung kommt */
+  if (document.visibilityState !== 'hidden' && (UPQ.items.some(x => x.st === 'wait' || x.st === 'run' || x.st === 'net') || UPQ.whoOn)) { pushSoon(20000); return; }
+  const mk = pushKey('pushMark'), now = Date.now(), mark = +LS.get(mk) || now;
+  const since = Math.max(mark, now - 864e5);
+  const mine = pushMineSince(since), tags = pushTagsSince(since);
+  if (!mine.length && !tags.length) { LS.set(mk, String(now)); return; }
+  const tree = (mine[0] || (tags[0] && tags[0].o) || {}).treeId || S.treeId;
+  const tag = 'fs-' + (await FSC.sha256hex('push|' + EXEC)).slice(0, 10);
+  const u = './?g=' + encodeURIComponent(paramOfExec(EXEC)) + '&go=neu&t=' + encodeURIComponent(tree || '');
+  const out = [];
+  for (const s of S.pushSubs || []) {
+    if (!s.rec || s.cred === S.me.id) continue;
+    const lines = pushLinesFor(s.rec, mine, tags); if (!lines.length) continue;
+    const L = s.rec.lang === 'sq' ? 1 : s.rec.lang === 'en' ? 2 : 0;
+    const more = lines.length - 4;
+    const shown = lines.slice(0, 4).concat(more > 0 ? [[`+ ${more} weitere`, `+ ${more} të tjera`, `+ ${more} more`][L]] : []);
+    try { out.push(await pushMsg(s, { t: ['Neu im Stammbaum', 'E re në trung', 'New in the family tree'][L], lines: shown, u, tag, at: now })); } catch (e) { console.warn(e); }
+  }
+  for (let i = 0; i < out.length; i += 50) await api('apiPush', out.slice(i, i + 50));
+  LS.set(mk, String(now));
+}
+
+/* ---------- Antippen der Mitteilung: «Seit du weg warst» bzw. «Neu im Stammbaum» ---------- */
+function pushGo(url) {
+  let q; try { q = new URL(url, location.href).searchParams; } catch (e) { return; }
+  if (q.get('go') !== 'neu') return;
+  const t = q.get('t') || '';
+  if (!S.loaded) { S.goOnLoad = { go: 'neu', t }; return; }
+  if (t && G.trees.has(t) && t !== S.treeId) switchTree(t);
+  closeLayers(layers.length).then(() => setTimeout(() => storyOrNews(), 80));
+}
+try { if ('serviceWorker' in navigator) navigator.serviceWorker.addEventListener('message', e => { if (e.data && e.data.fsGo) pushGo(e.data.fsGo); }); } catch (e) {}
+
+/* ---------- Einstellungen und Hinweis in der Personenliste ---------- */
+function pushMenuSub() {
+  if (pushNeedsHome()) return wkL('Zuerst zum Home-Bildschirm hinzufügen', 'Së pari shtoje në ekranin kryesor', 'Add to the home screen first');
+  if (!pushOn()) return wkL('Aus', 'Fikur', 'Off');
+  const c = pushCfg(), n = NEWS_CATS.filter(([k]) => c.cats[k]).length;
+  return n === NEWS_CATS.length ? wkL('Ein · Fotos, Pinnwand, Treffen, Herzen und mehr', 'Ndezur · foto, mur, takime, zemra e më shumë', 'On · photos, board, gatherings, hearts and more') : wkL(`Ein · ${n} von ${NEWS_CATS.length} Arten`, `Ndezur · ${n} nga ${NEWS_CATS.length} lloje`, `On · ${n} of ${NEWS_CATS.length} kinds`);
+}
+async function openPushSettings() {
+  const L = mkLayer('layer', 'newsset');
+  const draw = () => {
+    const c = pushCfg(), on = pushOn();
+    const home = pushNeedsHome();
+    L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="${esc(wkL('Schliessen', 'Mbyll', 'Close'))}">${I.close}</button><h2>${esc(wkL('Mitteilungen bei Neuem', 'Njoftime për të rejat', 'Notifications about new things'))}</h2></div>
+      <div class="layer-body narrow">
+        <p class="gl-note">${esc(wkL('Das Handy meldet sich, wenn andere etwas Neues in den Stammbaum stellen, zum Beispiel «Du bist auf 6 neuen Fotos von Arta». Was du selbst hinzufügst, wird nicht gemeldet.', 'Telefoni të njofton kur të tjerët shtojnë diçka të re në trung, p.sh. «Je në 6 foto të reja prej Artës». Ajo që shton vetë nuk njoftohet.', 'Your phone tells you when others add something new to the family tree, for example «You\'re in 6 new photos from Arta». What you add yourself is not announced.'))}</p>
+        ${home ? `<div class="card hint-card"><span>${esc(wkL('Auf dem iPhone gehen Mitteilungen nur, wenn der Stammbaum als Symbol auf dem Home-Bildschirm liegt (ab iOS 16.4). Öffne ihn dort und schalte die Mitteilungen dann hier ein.', 'Në iPhone njoftimet funksionojnë vetëm kur trungu është si simbol në ekranin kryesor (prej iOS 16.4). Hape prej aty dhe ndizi njoftimet këtu.', 'On the iPhone, notifications only work when the family tree is an icon on the home screen (iOS 16.4 or later). Open it from there and turn notifications on here.'))}</span></div>` : `
+        <div class="card list"><label class="row nw-row"><span class="meta"><span class="t">${esc(wkL('Mitteilungen auf diesem Gerät', 'Njoftime në këtë pajisje', 'Notifications on this device'))}</span><span class="s">${esc(on ? wkL('Ein', 'Ndezur', 'On') : wkL('Aus', 'Fikur', 'Off'))}</span></span><input type="checkbox" class="sw" data-pon${on ? ' checked' : ''} aria-label="${esc(wkL('Mitteilungen auf diesem Gerät', 'Njoftime në këtë pajisje', 'Notifications on this device'))}"></label></div>
+        ${on ? `<h3 class="section-h">${esc(wkL('Worüber?', 'Për çka?', 'About what?'))}</h3>
+        <div class="card list">${NEWS_CATS.map(([k, t, s]) => `<label class="row nw-row"><span class="meta"><span class="t">${esc(T(t))}</span>${s ? `<span class="s">${esc(T(s))}</span>` : ''}</span><input type="checkbox" class="sw" data-pcat="${k}"${c.cats[k] ? ' checked' : ''} aria-label="${esc(T(t))}"></label>`).join('')}</div>` : ''}
+        ${!pushServerOk() ? `<div class="card hint-card"><span>${esc(S.isAdmin ? wkL('Dafür braucht es den neuen Google-Code (Version 6).', 'Për këtë duhet kodi i ri i Google (versioni 6).', 'This needs the new Google code (version 6).') : wkL('Sobald der Admin den Google-Code aktualisiert (Version 6), geht es auch hier.', 'Sapo administratori ta përditësojë kodin e Google (versioni 6), funksionon edhe këtu.', 'As soon as the admin updates the Google code (version 6), this works here too.'))}</span>${S.isAdmin ? `<button type="button" class="btn sm" data-act="gas6">${I.info || ''}<span>${esc(wkL('Anleitung', 'Udhëzimi', 'How to'))}</span></button>` : ''}</div>` : ''}`}
+        <p class="gl-note">${I.lock || ''} <span>${esc(wkL('Die Mitteilung wird auf dem Gerät der Person, die etwas hinzufügt, für dein Gerät verschlüsselt. Apple bzw. Google stellen sie nur zu: Sie sehen, dass dein Gerät eine Mitteilung bekommt, aber nicht, was drinsteht oder von wem sie ist. Auf dem gesperrten Bildschirm zeigt das iPhone den Inhalt erst nach dem Entsperren, wenn «Vorschauen» so eingestellt ist.', 'Njoftimi shifrohet për pajisjen tënde në pajisjen e personit që shton diçka. Apple ose Google vetëm e dorëzojnë: e shohin që pajisja jote merr një njoftim, por jo çka shkruan ose prej kujt është.', 'The notification is encrypted for your device on the device of the person who adds something. Apple or Google only deliver it: they see that your device gets a notification, but not what it says or who it is from.'))}</span></p>
+      </div>`;
+  };
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-act]'); if (!b) return;
+    if (b.dataset.act === 'close') return closeLayer(L);
+    if (b.dataset.act === 'gas6') return act(pushNeedServer);
+  });
+  L.el.addEventListener('change', e => {
+    const t = e.target;
+    if (t.matches('[data-pon]')) return act(async () => { if (t.checked) await pushEnable(); else await pushDisable(); draw(); scheduleRender(); });
+    if (t.matches('[data-pcat]')) { const c = pushCfg(); c.cats[t.dataset.pcat] = t.checked; pushCfgSet(c); draw(); act(() => pushSyncSub(true)); }
+  });
+  L.live = true; L.render = draw;
+  pushLayer(L); draw();
+}
+/* Menü: im Browser bzw. auf dem iPhone statt der Einstellung der Android-App */
+function pushMenuRow() {
+  if (newsNativeOk() || !(pushSupported() || pushNeedsHome())) return '';
+  return `<button type="button" class="opt" data-v="pushset">${BDN_BELL}<span>${esc(wkL('Mitteilungen bei Neuem', 'Njoftime për të rejat', 'Notifications about new things'))}<small>${esc(pushMenuSub())}</small></span></button>`;
+}
+/* Hinweis oben in der Personenliste (nicht beim ersten Besuch, und nur bis man sich entschieden hat) */
+function pushCard() {
+  if (!pushSupported() || !pushServerOk() || pushOn() || simpleOn() || !S.me) return '';
+  const c = pushCfg(); if (c.asked) return '';
+  if (!appOldUser()) return '';
+  return `<div class="card push-card"><span class="pc-ic">${BDN_BELL}</span><span class="pc-t"><b>${esc(wkL('Nichts mehr verpassen', 'Mos humb asgjë', 'Never miss a thing'))}</b><small>${esc(wkL('Erfahre sofort, wenn jemand Fotos hochlädt oder dich auf einem Foto markiert.', 'Mëso menjëherë kur dikush ngarkon foto ose të shënon në një foto.', 'Find out right away when someone uploads photos or tags you in one.'))}</small></span><span class="pc-b"><button type="button" class="btn sm primary" data-act="push-on">${esc(wkL('Einschalten', 'Ndize', 'Turn on'))}</button><button type="button" class="btn sm" data-act="push-no">${esc(wkL('Später', 'Më vonë', 'Later'))}</button></span></div>`;
+}
+async function pushCardAct(yes) {
+  const c = pushCfg(); c.asked = Date.now(); pushCfgSet(c);
+  if (yes) await pushEnable();
+  scheduleRender();
+}
+
+/* ---------- 84 · Foto des Tages (Widget der Android-App) ----------
+ * Die App wählt für die nächsten 7 Tage je ein Foto (Geburtstagskind, «heute vor … Jahren», sonst abwechselnd)
+ * und gibt der Android-App kleine Bilder mit. Die Android-App speichert sie verschlüsselt auf dem Handy.
+ */
+function pwOk() { try { return !!(IN_APP && NATIVE && typeof NATIVE.savePhotoDays === 'function'); } catch (e) { return false; } }
+function pwHash(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h; }
+function pwHas(ph, pid) { return (ph.personIds || []).includes(pid) || (ph.tags || []).some(t => t && t.pid === pid); }
+function pwNames(ph) {
+  const ids = [...new Set([...(ph.tags || []).map(t => t && t.pid), ...(ph.personIds || [])])].filter(id => S.people.has(id));
+  const n = ids.slice(0, 3).map(id => callName(P(id))).join(', ') + (ids.length > 3 ? ' …' : '');
+  const y = /^(\d{4})/.exec(ph.date || '');
+  return [n, y ? y[1] : ''].filter(Boolean).join(' · ');
+}
+function pwPick(n) {
+  const all = [...S.photos.values()].filter(ph => ph.thumb && !isPriv(ph));
+  if (!all.length) return [];
+  const hearts = new Map(); S.hearts.forEach(h => hearts.set(h.on, (hearts.get(h.on) || 0) + 1));
+  const weight = ph => 1 + (hearts.get(ph.id) || 0) + Math.min(3, (ph.personIds || []).length) + ((ph.tags || []).length ? 1 : 0);
+  const best = (list, seed) => { const w = list.map(weight), tot = w.reduce((a, b) => a + b, 0); let r = (pwHash(seed) % 10000) / 10000 * tot; for (let i = 0; i < list.length; i++) { r -= w[i]; if (r <= 0) return list[i]; } return list[list.length - 1]; };
+  const used = new Set(), out = [];
+  for (let i = 0; i < n; i++) {
+    const d = new Date(); d.setDate(d.getDate() + i); const iso = isoOf(d), md = iso.slice(5);
+    let pick = null, cap = '';
+    const bp = [...S.people.values()].find(p => !isDead(p) && String(p.birthDate || '').slice(5, 10) === md);
+    if (bp) { const c = all.filter(ph => pwHas(ph, bp.id) && !used.has(ph.id)); if (c.length) { pick = best(c, iso + bp.id); cap = '🎂 ' + wkL(`${callName(bp)} hat Geburtstag`, `${callName(bp)} ka ditëlindjen`, `It's ${callName(bp)}'s birthday`); } }
+    if (!pick) {
+      const c = all.filter(ph => /^\d{4}-\d{2}-\d{2}/.test(ph.date || '') && ph.date.slice(5, 10) === md && ph.date.slice(0, 4) < iso.slice(0, 4) && !used.has(ph.id));
+      if (c.length) { pick = best(c, iso); const y = +iso.slice(0, 4) - +pick.date.slice(0, 4); cap = y === 1 ? wkL('Heute vor einem Jahr', 'Sot një vit më parë', 'One year ago today') : wkL(`Heute vor ${y} Jahren`, `Sot ${y} vjet më parë`, `${y} years ago today`); }
+    }
+    if (!pick) { const c = all.filter(ph => !used.has(ph.id)); pick = best(c.length ? c : all, 'pw' + iso); cap = pick.caption || ''; }
+    used.add(pick.id);
+    out.push({ day: iso, ph: pick, cap: cap || pwNames(pick), sub: cap ? pwNames(pick) : '' });
+  }
+  return out;
+}
+/* Vorschaubild entschlüsseln und für das Widget verkleinern (höchstens 480 Pixel, als JPEG) */
+async function pwJpeg(ph) {
+  let bytes = await idb.get(ph.thumb);
+  if (!bytes) { try { const r = await api('apiGetBlobs', [ph.thumb]); bytes = r && r[ph.thumb] ? FSC.unb64(r[ph.thumb]) : null; if (bytes) idb.put(ph.thumb, bytes); } catch (e) { return ''; } }
+  if (!bytes) return '';
+  const blob = await openImg(ph.thumb, bytes); if (!blob) return '';
+  const bmp = await createImageBitmap(blob);
+  const k = Math.min(1, 480 / Math.max(bmp.width, bmp.height)), w = Math.round(bmp.width * k), h = Math.round(bmp.height * k);
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+  cv.getContext('2d').drawImage(bmp, 0, 0, w, h);
+  const out = await new Promise(res => cv.toBlob(res, 'image/jpeg', 0.82));
+  return out ? FSC.b64(new Uint8Array(await out.arrayBuffer())) : '';
+}
+async function photoWidgetSync(force) {
+  if (!pwOk() || !S.loaded || S.offline) return;
+  const sig = [isoOf(new Date()), S.treeId, S.photos.size, uiLang()].join('|');
+  if (!force && LS.get('pwSig') === sig) return;
+  const days = pwPick(7), out = [];
+  for (const d of days) { try { const img = await pwJpeg(d.ph); if (img) out.push({ day: d.day, id: d.ph.id, cap: d.cap, sub: d.sub, img }); } catch (e) { console.warn(e); } }
+  if (!out.length) return;
+  NATIVE.savePhotoDays(JSON.stringify({ title: wkL('Foto des Tages', 'Fotoja e ditës', 'Photo of the day'), days: out }));
+  LS.set('pwSig', sig);
+}
+
 /* ---------- Emoji-Reaktionen, weiche Übergänge, Konfetti ---------- */
 const REACTS = ['❤️', '😂', '😢', '🙏', '👏'];
 function reactEm(h) { return (h && h.em && REACTS.includes(h.em)) ? h.em : '❤️'; }
@@ -12803,6 +13333,186 @@ function openSky(focusId) {
   pushLayer(L); draw();
 }
 
+/* ---------- 81 · «Seit du weg warst»: das Neue als Geschichten zum Durchtippen ----------
+ * Wer ein paar Stunden nicht drin war, sieht beim Öffnen neue Fotos, Personen, Beiträge, Erinnerungen und die
+ * nächsten Geburtstage gross, mit Herz und Kommentar. Antippen rechts: weiter, links: zurück, halten: anhalten.
+ */
+const STORY_GAP = 12 * 3600e3;
+const STORY_MS = 5500;
+function storySince() { return S.prevSeen.get(S.treeId) || 0; }
+function storySlides(since) {
+  if (!since) return [];
+  const items = newsItems(since).filter(x => x.what === 'new' || x.what === 'open');
+  const me = myPersonId();
+  const withMe = o => !!(me && ((o.personIds || []).includes(me) || (o.tags || []).some(t => t && t.pid === me)));
+  const out = [];
+  /* Fotos: pro Person, die hochgeladen hat; Fotos mit mir zuerst */
+  const byWho = new Map();
+  items.filter(x => x.kind === 'photos' && x.o.thumb && !isPriv(x.o)).forEach(x => { const k = x.by || ''; if (!byWho.has(k)) byWho.set(k, []); byWho.get(k).push(x); });
+  let nPh = 0;
+  [...byWho.entries()].sort((a, b) => b[1].some(x => withMe(x.o)) - a[1].some(x => withMe(x.o))).forEach(([who, list]) => {
+    list.sort((a, b) => (withMe(b.o) - withMe(a.o)) || (b.at - a.at));
+    list.slice(0, 5).forEach(x => { if (nPh++ < 15) out.push({ type: 'photo', o: x.o, by: who, n: list.length, me: withMe(x.o), at: x.at }); });
+  });
+  items.filter(x => x.kind === 'people' && x.what === 'new').slice(0, 4).forEach(x => out.push({ type: 'person', o: x.o, by: x.by, at: x.at }));
+  items.filter(x => x.kind === 'posts').slice(0, 4).forEach(x => out.push({ type: 'post', o: x.o, by: x.by, at: x.at }));
+  items.filter(x => x.kind === 'stories').slice(0, 3).forEach(x => out.push({ type: 'story', o: x.o, by: x.by, at: x.at, open: x.what === 'open' }));
+  items.filter(x => x.kind === 'miles').slice(0, 3).forEach(x => out.push({ type: 'mile', o: x.o, by: x.by, at: x.at }));
+  items.filter(x => x.kind === 'events').slice(0, 2).forEach(x => out.push({ type: 'event', o: x.o, by: x.by, at: x.at }));
+  items.filter(x => x.kind === 'recipes').slice(0, 2).forEach(x => out.push({ type: 'recipe', o: x.o, by: x.by, at: x.at }));
+  const love = items.filter(x => x.kind === 'hearts' || (x.kind === 'comments' && heartAboutMe(x.o.on)));
+  if (love.length) out.push({ type: 'love', list: love });
+  if (!out.length) return [];
+  const bd = upcomingBirthdays(7).slice(0, 5);
+  if (bd.length) out.push({ type: 'bday', list: bd });
+  const who = [...new Set(items.map(x => x.by).filter(Boolean))];
+  return [{ type: 'intro', since, items, who }, ...out, { type: 'end' }];
+}
+function storyAgo(since) {
+  const h = Math.max(1, Math.round((Date.now() - since) / 3600e3)), d = Math.round(h / 24);
+  if (h < 36) return wkL(`vor ${h} Stunden`, `para ${h} orësh`, `${h} hours ago`);
+  return wkL(`vor ${d} Tagen`, `para ${d} ditësh`, `${d} days ago`);
+}
+/* Nach dem Laden automatisch, einmal pro Besuch */
+async function maybeStory() {
+  if (!S.loaded || simpleOn() || layers.length || S.claimFlow) return;
+  const since = storySince(); if (!since || Date.now() - since < STORY_GAP) return;
+  const key = 'storyAt.' + S.treeId; if (LS.get(key) === String(since)) return;
+  const sl = storySlides(since); if (sl.filter(x => !['intro', 'end', 'bday'].includes(x.type)).length < 2) return;
+  for (let i = 0; i < 30 && document.querySelector('.splash-ph,.splash'); i++) await new Promise(r => setTimeout(r, 100));
+  if (layers.length) return;
+  LS.set(key, String(since));
+  openStory(sl);
+}
+/* Aus der Mitteilung oder dem Knopf: Geschichten, sonst die Liste «Neu im Stammbaum» */
+function storyOrNews() {
+  const sl = storySlides(storySince());
+  if (sl.length > 2) return openStory(sl);
+  openNews();
+}
+function storyMedia(s) {
+  const o = s.o;
+  const ppl = [...new Set([...(o.personIds || []), ...(o.tags || []).map(t => t && t.pid)])].map(id => S.people.get(id)).filter(Boolean);
+  const names = ppl.slice(0, 4).map(p => callName(p)).join(', ') + (ppl.length > 4 ? ' …' : '');
+  const yr = /^(\d{4})/.exec(o.date || '');
+  return `<div class="sy-media"><div class="sy-bg">${imgTag(o.thumb, { lazy: false })}</div>${imgTag(o.full || o.thumb, { big: !!o.full, lazy: false })}</div>
+    <div class="sy-cap">${s.me ? `<span class="sy-me">${esc(wkL('Du bist drauf', 'Je në foto', 'You\'re in it'))}</span>` : ''}
+      <b translate="no">${esc(s.by || '')}</b> <span>${esc(s.n === 1 ? wkL('hat ein Foto hochgeladen', 'ka ngarku një foto', 'uploaded a photo') : wkL(`hat ${s.n} Fotos hochgeladen`, `ka ngarku ${s.n} foto`, `uploaded ${s.n} photos`))}</span>
+      ${o.caption ? `<p translate="no">${esc(o.caption)}</p>` : ''}${names || yr ? `<small translate="no">${esc([names, yr ? yr[1] : ''].filter(Boolean).join(' · '))}</small>` : ''}</div>`;
+}
+function storyBody(s) {
+  const o = s.o, me = viewMe() || refId();
+  switch (s.type) {
+    case 'intro': {
+      const n = s.items.length;
+      return `<div class="sy-card sy-intro"><div class="sy-spark">${I.spark}</div><h2>${esc(wkL('Seit deinem letzten Besuch', 'Që nga vizita jote e fundit', 'Since your last visit'))}</h2>
+        <p class="sy-ago">${esc(storyAgo(s.since))}</p><p>${esc(newsSummary(s.items))}</p>
+        ${s.who.length ? `<div class="sy-who">${s.who.slice(0, 5).map(w => `<span class="sy-wav" translate="no">${esc(memberInitials(w))}</span>`).join('')}<small translate="no">${esc(wkL('von ', 'prej ', 'from ') + s.who.slice(0, 3).join(', ') + (s.who.length > 3 ? ' …' : ''))}</small></div>` : ''}
+        <p class="sy-hint">${esc(n > 1 ? wkL('Rechts antippen für weiter', 'Prek djathtas për më tej', 'Tap on the right to continue') : '')}</p></div>`;
+    }
+    case 'photo': return storyMedia(s);
+    case 'person': {
+      const r = me && me !== o.id ? relation(me, o.id) : null;
+      return `<div class="sy-card sy-person">${avatar(o, 132)}<p class="sy-kick">${esc(wkL('Neu im Stammbaum', 'E re në trung', 'New in the family tree'))}</p><h2 translate="no">${esc(fullName(o))}</h2>${r ? `<p class="sy-rel">${esc(relLine(r))}</p>` : ''}<p class="sy-sub">${esc([lifeShort(o), s.by ? wkL('hinzugefügt von ', 'shtuar nga ', 'added by ') + s.by : ''].filter(Boolean).join(' · '))}</p></div>`;
+    }
+    case 'post': return `${o.photo && o.photo.thumb ? `<div class="sy-media"><div class="sy-bg">${imgTag(o.photo.thumb, { lazy: false })}</div>${imgTag(o.photo.full || o.photo.thumb, { big: !!o.photo.full, lazy: false })}</div>` : ''}
+      <div class="${o.photo && o.photo.thumb ? 'sy-cap' : 'sy-card sy-post'}"><p class="sy-kick">${I.board} ${esc(wkL('Pinnwand', 'Muri', 'Board'))}</p>${o.text ? `<p class="sy-quote" translate="no">${esc(String(o.text).slice(0, 400))}</p>` : ''}<small translate="no">${esc(s.by || '')}</small></div>`;
+    case 'story': return `<div class="sy-card sy-story"><p class="sy-kick">${o.audio ? I.mic : I.book} ${esc(s.open ? wkL('Zeitkapsel geöffnet', 'Kapsula u hap', 'Time capsule opened') : wkL('Neue Erinnerung', 'Kujtim i ri', 'New memory'))}</p><h2 translate="no">${esc(o.title || '')}</h2>${o.text ? `<p class="sy-quote" translate="no">${esc(String(o.text).slice(0, 320))}${String(o.text).length > 320 ? ' …' : ''}</p>` : ''}<small translate="no">${esc(s.by || '')}</small></div>`;
+    case 'mile': { const ch = P(o.pid); return `<div class="sy-card sy-mile">${ch ? avatar(ch, 110) : ''}<p class="sy-big">${mileType(o.mt)[1]}</p><h2><span translate="no">${esc(callName(ch))}</span>: ${esc(mileName(o))}</h2>${o.text ? `<p class="sy-quote" translate="no">${esc(String(o.text).slice(0, 240))}</p>` : ''}</div>`; }
+    case 'event': return `<div class="sy-card sy-event"><p class="sy-big">📅</p><p class="sy-kick">${esc(wkL('Neues Familientreffen', 'Takim i ri familjar', 'New family gathering'))}</p><h2 translate="no">${esc(o.title || '')}</h2><p class="sy-sub">${esc([fmtDate(o.date, true), o.time || '', o.place || ''].filter(Boolean).join(' · '))}</p></div>`;
+    case 'recipe': return `${o.photo && o.photo.thumb ? `<div class="sy-media"><div class="sy-bg">${imgTag(o.photo.thumb, { lazy: false })}</div>${imgTag(o.photo.thumb, { lazy: false })}</div><div class="sy-cap">` : '<div class="sy-card sy-post">'}<p class="sy-kick">${I.bowl} ${esc(wkL('Neues Rezept', 'Recetë e re', 'New recipe'))}</p><h2 translate="no">${esc(o.title || '')}</h2><small translate="no">${esc(s.by || '')}</small></div>`;
+    case 'love': {
+      const hs = s.list.filter(x => x.kind === 'hearts'), cs = s.list.filter(x => x.kind === 'comments');
+      return `<div class="sy-card sy-love"><p class="sy-big">❤️</p><h2>${esc(wkL('Für dich', 'Për ty', 'For you'))}</h2>
+        <p>${esc([hs.length ? wkL(`${hs.length} ${hs.length === 1 ? 'Herz' : 'Herzen'}`, `${hs.length} zemra`, `${hs.length} ${hs.length === 1 ? 'heart' : 'hearts'}`) : '', cs.length ? wkL(`${cs.length} ${cs.length === 1 ? 'Kommentar' : 'Kommentare'}`, `${cs.length} komente`, `${cs.length} ${cs.length === 1 ? 'comment' : 'comments'}`) : ''].filter(Boolean).join(' · '))}</p>
+        <div class="sy-list">${s.list.slice(0, 4).map(x => `<p><b translate="no">${esc(x.by || '')}</b> ${x.kind === 'comments' ? `<span translate="no">«${esc(String(x.o.text || '').slice(0, 70))}»</span>` : esc(x.o.em && x.o.em !== '❤️' ? x.o.em : '❤️')}</p>`).join('')}</div></div>`;
+    }
+    case 'bday': return `<div class="sy-card sy-bday"><p class="sy-big">🎂</p><h2>${esc(wkL('Bald Geburtstag', 'Ditëlindje së shpejti', 'Birthdays coming up'))}</h2>
+      <div class="sy-bd">${s.list.map(x => `<button type="button" class="sy-bdr" data-sopen="${esc(x.p.id)}">${avatar(x.p, 52)}<span><b translate="no">${esc(callName(x.p))}</b><small>${esc(x.days === 0 ? wkL('heute 🎉', 'sot 🎉', 'today 🎉') : x.days === 1 ? wkL('morgen', 'nesër', 'tomorrow') : wkL(`in ${x.days} Tagen`, `për ${x.days} ditë`, `in ${x.days} days`))} · ${esc(wkL(`wird ${x.age}`, `mbush ${x.age}`, `turns ${x.age}`))}</small></span></button>`).join('')}</div></div>`;
+    case 'end': return `<div class="sy-card sy-end"><p class="sy-big">🎉</p><h2>${esc(wkL('Alles gesehen', 'I pe të gjitha', 'All caught up'))}</h2><p>${esc(wkL('Danke fürs Vorbeischauen. Ein Herz oder ein Kommentar freut die anderen.', 'Faleminderit që kalove. Një zemër ose një koment i gëzon të tjerët.', 'Thanks for stopping by. A heart or a comment makes the others happy.'))}</p>
+      <div class="sy-endb"><button type="button" class="btn" data-sact="list">${esc(wkL('Als Liste', 'Si listë', 'As a list'))}</button><button type="button" class="btn primary" data-sact="close">${esc(wkL('Zum Stammbaum', 'Te trungu', 'To the family tree'))}</button></div></div>`;
+  }
+  return '';
+}
+function storyTarget(s) { return ['photo', 'post', 'story', 'mile', 'recipe'].includes(s.type) ? s.o.id : ''; }
+function storyFoot(s) {
+  const tg = storyTarget(s);
+  const open = s.type === 'person' ? `data-sopen="${esc(s.o.id)}"` : s.type === 'mile' ? `data-sopen="${esc(s.o.pid)}"` : s.type === 'event' ? `data-sev="${esc(s.o.id)}"` : s.type === 'story' && (s.o.personIds || [])[0] ? `data-sopen="${esc(s.o.personIds[0])}"` : s.type === 'photo' ? `data-sphoto="${esc(s.o.id)}"` : s.type === 'post' ? `data-spost="${esc(s.o.id)}"` : s.type === 'recipe' ? `data-srcp="${esc(s.o.id)}"` : '';
+  if (!tg && !open) return '';
+  const mine = tg && myHeart(tg), hs = tg ? heartsOn(tg).length : 0, cs = tg ? commentsOn(tg).length : 0;
+  return `<div class="sy-foot">${tg && S.canWrite ? `<button type="button" class="sy-fb${mine ? ' on' : ''}" data-sheart="${esc(tg)}" aria-label="${esc(wkL('Herz', 'Zemër', 'Heart'))}">${I.heart}<span>${hs || ''}</span></button>` : ''}${tg ? `<button type="button" class="sy-fb" data-scmt="${esc(tg)}" aria-label="${esc(wkL('Kommentare', 'Komente', 'Comments'))}">${I.chat}<span>${cs || ''}</span></button>` : ''}${open ? `<button type="button" class="sy-fb sy-open" ${open}>${esc(s.type === 'story' && s.o.audio ? wkL('Anhören', 'Dëgjo', 'Listen') : wkL('Öffnen', 'Hap', 'Open'))}${I.chevR}</button>` : ''}</div>`;
+}
+function openStory(slides) {
+  if (!slides || !slides.length) return;
+  const L = mkLayer('layer story', 'story');
+  const st = { i: 0, t0: performance.now(), el: 0, paused: false, raf: 0 };
+  L.st = st;
+  const head = s => {
+    const by = s.by || (s.type === 'intro' ? '' : '');
+    return `<div class="sy-head">${by ? `<span class="sy-wav sm" translate="no">${esc(memberInitials(by))}</span><b translate="no">${esc(by)}</b>` : `<b>${esc(wkL('Neu im Stammbaum', 'E re në trung', 'New in the family tree'))}</b>`}${s.at ? `<span>${esc(fmtWhen(s.at))}</span>` : ''}<button type="button" class="sy-x" data-sact="close" aria-label="${esc(wkL('Schliessen', 'Mbyll', 'Close'))}">${I.close}</button></div>`;
+  };
+  const draw = () => {
+    const s = slides[st.i];
+    L.el.innerHTML = `<div class="sy-wrap sy-${s.type}" role="dialog" aria-label="${esc(wkL('Seit deinem letzten Besuch', 'Që nga vizita jote e fundit', 'Since your last visit'))}">
+      <div class="sy-bars">${slides.map((x, i) => `<span class="sy-bar"><i style="width:${i < st.i ? 100 : 0}%"></i></span>`).join('')}</div>
+      ${head(s)}<div class="sy-body">${storyBody(s)}</div>${storyFoot(s)}</div>`;
+    hydrateSoon();
+    /* nächstes Bild schon laden */
+    const nx = slides[st.i + 1]; const nf = nx && nx.o && (nx.o.full || (nx.o.photo && nx.o.photo.full));
+    if (nf && !IMG.has(nf)) { imgWant.set(nf, true); pumpImgs(); }
+  };
+  const go = d => {
+    const n = st.i + d;
+    if (n < 0) { st.t0 = performance.now(); st.el = 0; return; }
+    if (n >= slides.length) return finish();
+    st.i = n; st.el = 0; st.t0 = performance.now(); draw();
+  };
+  const finish = () => { S.newsHidden.add(S.treeId); closeLayer(L); scheduleRender(); };
+  const tick = now => {
+    if (!layers.includes(L)) return;
+    const s = slides[st.i], top = layers[layers.length - 1] === L;
+    if (!st.paused && top && s.type !== 'end') {
+      const el = st.el + (now - st.t0); st.t0 = now; st.el = el;
+      const bar = L.el.querySelectorAll('.sy-bar i')[st.i]; if (bar) bar.style.width = Math.min(100, el / STORY_MS * 100) + '%';
+      if (el >= STORY_MS) go(1);
+    } else st.t0 = now;
+    st.raf = requestAnimationFrame(tick);
+  };
+  /* Antippen: links zurück, rechts weiter; halten hält an; nach unten wischen schliesst */
+  let down = null;
+  L.el.addEventListener('pointerdown', e => {
+    if (e.target.closest('button,a,input,textarea')) return;
+    down = { x: e.clientX, y: e.clientY, t: performance.now() }; st.paused = true;
+  });
+  const up = e => {
+    if (!down) return; const d = down; down = null; st.paused = false;
+    const dx = e.clientX - d.x, dy = e.clientY - d.y, dt = performance.now() - d.t;
+    if (dy > 90 && Math.abs(dy) > Math.abs(dx)) return closeLayer(L);
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) return go(dx < 0 ? 1 : -1);
+    if (dt < 350 && Math.abs(dx) < 12 && Math.abs(dy) < 12) { const w = L.el.getBoundingClientRect().width; go(e.clientX < w * 0.33 ? -1 : 1); }
+  };
+  L.el.addEventListener('pointerup', up); L.el.addEventListener('pointercancel', () => { down = null; st.paused = false; });
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-sact],[data-sheart],[data-scmt],[data-sopen],[data-sev],[data-sphoto],[data-spost],[data-srcp]'); if (!b) return;
+    if (b.dataset.sact === 'close') return finish();
+    if (b.dataset.sact === 'list') { S.newsHidden.add(S.treeId); return closeLayer(L).then(() => openNews()); }
+    if (b.dataset.sheart) return act(async () => { await toggleHeart(b.dataset.sheart); const f = L.el.querySelector('.sy-foot'); if (f) f.outerHTML = storyFoot(slides[st.i]); });
+    if (b.dataset.scmt) return openComments(b.dataset.scmt);
+    if (b.dataset.sopen) return closeLayer(L).then(() => openPerson(b.dataset.sopen));
+    if (b.dataset.sev) return closeLayer(L).then(() => openEvent(b.dataset.sev));
+    if (b.dataset.sphoto) { const ids = slides.filter(x => x.type === 'photo').map(x => x.o.id); return openLightbox(ids, Math.max(0, ids.indexOf(b.dataset.sphoto))); }
+    if (b.dataset.spost) return closeLayer(L).then(() => setView('pinnwand'));
+    if (b.dataset.srcp) return closeLayer(L).then(() => openRecipe(b.dataset.srcp));
+  });
+  L.el.addEventListener('keydown', e => { if (e.key === 'ArrowRight') go(1); else if (e.key === 'ArrowLeft') go(-1); });
+  L.onClose = () => { cancelAnimationFrame(st.raf); };
+  /* Zurück aus Kommentaren oder Foto: weiterlaufen */
+  L.live = true; L.render = () => { const f = L.el.querySelector('.sy-foot'); if (f) f.outerHTML = storyFoot(slides[st.i]); };
+  pushLayer(L); draw();
+  L.el.tabIndex = -1; try { L.el.focus({ preventScroll: true }); } catch (e) {}
+  st.raf = requestAnimationFrame(tick);
+}
+
 /* ---------- 5 · Suche im Baum: Name tippen, der Baum fährt zur Person und hebt sie hervor ---------- */
 function treeFindOpen() {
   const wrap = document.querySelector('.tree-wrap'); if (!wrap) return;
@@ -13458,6 +14168,11 @@ function upqBatchCheck() {
     const ok = b.items.filter(x => x.st === 'ok');
     const pids = b.items[0] ? b.items[0].personIds : [];
     if (ok.length && pids.length === 1) { const p = G.people.get(pids[0]); if (p && !p.avatarPhotoId) upd(p.id, { avatarPhotoId: ok[0].id }); }
+    /* 83 · danach fragen, wer drauf ist (nicht beim einzelnen Profilbild) */
+    if (ok.length && S.canWrite && !simpleOn() && !(pids.length === 1 && ok.length === 1)) {
+      const w = UPQ.whoOn || { ids: [], pids: [] };
+      UPQ.whoOn = { ids: [...w.ids, ...ok.map(x => x.id)], pids: [...new Set([...w.pids, ...pids])], at: Date.now() };
+    }
     flush();
     b.done(ok.map(x => x.id));
     return false;
@@ -13469,7 +14184,7 @@ function upqPaint() {
   if (!items.length) { if (el) el.remove(); return; }
   if (!el) {
     el = document.createElement('button'); el.type = 'button'; el.id = 'upPill'; el.className = 'up-pill';
-    el.addEventListener('click', () => act(upqSheet));
+    el.addEventListener('click', () => act(() => UPQ.whoOn && !UPQ.items.some(x => x.st !== 'ok') ? whoOnSheet() : upqSheet()));
     document.body.appendChild(el);
   }
   const ok = items.filter(x => x.st === 'ok').length, err = items.filter(x => x.st === 'err').length, n = items.length;
@@ -13479,9 +14194,10 @@ function upqPaint() {
   el.innerHTML = busy.length
     ? `<span class="up-spin" aria-hidden="true"></span><span class="up-t">${esc(net ? wkL('Warte auf Internet …', 'Në pritje të internetit …', 'Waiting for internet …') : wkL(`Fotos werden verschlüsselt · ${ok + err + 1} von ${n}`, `Fotot po shifrohen · ${ok + err + 1} nga ${n}`, `Encrypting photos · ${ok + err + 1} of ${n}`))}</span><span class="up-bar"><i style="width:${pct}%"></i></span>`
     : err ? `<span class="up-ic">!</span><span class="up-t">${esc(wkL(`${ok} gespeichert · ${err} fehlgeschlagen`, `${ok} u ruajtën · ${err} dështuan`, `${ok} saved · ${err} failed`))}</span><span class="up-go">${esc(wkL('Nochmals', 'Sërish', 'Retry'))}</span>`
-    : `<span class="up-ic ok">✓</span><span class="up-t">${esc(ok === 1 ? wkL('Foto gespeichert', 'Fotoja u ruajt', 'Photo saved') : wkL(`${ok} Fotos gespeichert`, `${ok} foto u ruajtën`, `${ok} photos saved`))}</span>`;
+    : `<span class="up-ic ok">✓</span><span class="up-t">${esc(ok === 1 ? wkL('Foto gespeichert', 'Fotoja u ruajt', 'Photo saved') : wkL(`${ok} Fotos gespeichert`, `${ok} foto u ruajtën`, `${ok} photos saved`))}</span>${UPQ.whoOn ? `<span class="up-go up-who">${esc(wkL('Wer ist drauf?', 'Kush është në foto?', 'Who\'s in them?'))}</span>` : ''}`;
+  el.classList.toggle('who', !busy.length && !err && !!UPQ.whoOn);
   clearTimeout(el._t);
-  if (!busy.length && !err) el._t = setTimeout(() => { if (!UPQ.items.some(x => x.st !== 'ok')) { UPQ.items = []; upqPaint(); } }, 3500);
+  if (!busy.length && !err) el._t = setTimeout(() => { if (!UPQ.items.some(x => x.st !== 'ok') && !layers.some(l => l.kind === 'whoon')) { UPQ.items = []; UPQ.whoOn = null; upqPaint(); } }, UPQ.whoOn ? 12000 : 3500);
 }
 async function upqSheet() {
   const items = UPQ.items; if (!items.length) return;
@@ -14034,6 +14750,93 @@ function openWelt() {
   window.addEventListener('resize', onResize);
   L.onClose = () => window.removeEventListener('resize', onResize);
   L.live = true; L.render = () => { draw(); };
+  pushLayer(L); draw();
+}
+
+/* ---------- 83 · «Wer ist drauf?» nach dem Hochladen ----------
+ * Nach dem Hochladen fragt die Anzeige unten «Wer ist drauf?». Vorgeschlagen werden Personen, die auf Fotos vom
+ * gleichen Tag oder im gleichen Album sind, sonst die nächste Familie. Wer drauf ist, bekommt «Du bist auf … Fotos».
+ * pAt (Person → [Zeit, Zugang, Name]) merkt sich, wer jemanden später auf einem Foto zugeordnet hat.
+ */
+function whoOnSuggest(ids, pre) {
+  const phs = ids.map(id => G.photos.get(id)).filter(Boolean);
+  const score = new Map();
+  const add = (pid, w) => { if (!pid || !S.people.has(pid) || pre.includes(pid) || isDead(P(pid))) return; score.set(pid, (score.get(pid) || 0) + w); };
+  const days = new Set(phs.map(p => String(p.date || '').slice(0, 10)).filter(d => d.length === 10));
+  const albums = new Set(phs.map(p => p.album).filter(Boolean));
+  S.photos.forEach(ph => {
+    if (ids.includes(ph.id)) return;
+    const who = [...new Set([...(ph.personIds || []), ...(ph.tags || []).map(t => t && t.pid)])];
+    const d = String(ph.date || '').slice(0, 10);
+    if (d.length === 10 && days.has(d)) who.forEach(pid => add(pid, 5));
+    if (ph.album && albums.has(ph.album)) who.forEach(pid => add(pid, 3));
+    if (pre.some(p => who.includes(p))) who.forEach(pid => add(pid, 1));
+  });
+  const me = myPersonId(), mp = P(me);
+  if (mp) {
+    add(me, 2);
+    partnersOf(mp).forEach(p => add(p.id, 2)); childrenOf(me).forEach(p => add(p.id, 2));
+    (mp.parentIds || []).forEach(id => add(id, 1.5)); siblingsOf(mp).forEach(p => add(p.id, 1));
+    childrenOf(me).forEach(c => childrenOf(c.id).forEach(g => add(g.id, 1)));
+  }
+  return [...score.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10).map(x => x[0]);
+}
+function whoOnApply(ids, pids) {
+  const now = Date.now(), cred = (S.me && S.me.id) || '', nm = myName();
+  let n = 0;
+  ids.forEach(id => {
+    const ph = G.photos.get(id); if (!ph) return;
+    const cur = (ph.personIds || []).filter(x => S.people.has(x)), add = pids.filter(p => !cur.includes(p));
+    if (!add.length) return;
+    const pAt = Object.assign({}, ph.pAt || {}); add.forEach(p => { pAt[p] = [now, cred, nm]; });
+    put('photos', Object.assign({}, ph, { personIds: [...cur, ...add], pAt })); n++;
+  });
+  if (n) changed();
+  return n;
+}
+/* Auch beim Markieren im Foto: wer neu dazukommt, bekommt einen Zeitstempel (für die Mitteilung) */
+function pAtWith(ph, pid) {
+  if ((ph.personIds || []).includes(pid)) return ph.pAt;
+  return Object.assign({}, ph.pAt || {}, { [pid]: [Date.now(), (S.me && S.me.id) || '', myName()] });
+}
+async function whoOnSheet() {
+  const w = UPQ.whoOn; if (!w) return;
+  const ids = w.ids.filter(id => G.photos.has(id));
+  if (!ids.length || !S.canWrite) { UPQ.whoOn = null; return; }
+  const pre = (w.pids || []).filter(id => S.people.has(id));
+  const sel = new Set(), sugg = whoOnSuggest(ids, pre), n = ids.length;
+  const L = mkLayer('layer', 'whoon');
+  const chip = pid => { const p = P(pid); return p ? `<button type="button" class="wo-chip${sel.has(pid) ? ' on' : ''}" data-wpid="${esc(pid)}" aria-pressed="${sel.has(pid)}">${avatar(p, 34)}<span translate="no">${esc(callName(p))}</span>${sel.has(pid) ? `<i>${I.check}</i>` : ''}</button>` : ''; };
+  const draw = () => {
+    L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="close" aria-label="${esc(wkL('Schliessen', 'Mbyll', 'Close'))}">${I.close}</button><h2>${esc(wkL('Wer ist drauf?', 'Kush është në foto?', 'Who\'s in them?'))}</h2></div>
+      <div class="layer-body narrow">
+        <div class="wo-strip">${ids.slice(0, 12).map(id => `<span class="wo-th">${imgTag(G.photos.get(id).thumb)}</span>`).join('')}${n > 12 ? `<span class="wo-th wo-more">+${n - 12}</span>` : ''}</div>
+        <p class="wo-q">${esc(n === 1 ? wkL('Wer ist auf dem Foto?', 'Kush është në foto?', 'Who is in the photo?') : wkL(`Wer ist auf den ${n} Fotos? Tippe alle an, die drauf sind.`, `Kush është në ${n} fotot? Prek të gjithë që janë në to.`, `Who is in the ${n} photos? Tap everyone who's in them.`))}</p>
+        ${pre.length ? `<p class="gl-note">${esc(wkL('Schon zugeordnet: ', 'Tashmë të caktuar: ', 'Already assigned: '))}<span translate="no">${esc(pre.map(id => callName(P(id))).join(', '))}</span></p>` : ''}
+        <div class="wo-chips">${sugg.map(chip).join('')}<button type="button" class="wo-chip wo-add" data-wadd>${I.plus}<span>${esc(wkL('Andere Person', 'Person tjetër', 'Someone else'))}</span></button></div>
+        <p class="gl-note">${esc(n > 1 ? wkL(`Gilt für alle ${n} Fotos. Einzelne Gesichter markierst du später im Foto mit «Markieren».`, `Vlen për të gjitha ${n} fotot. Fytyrat veç e veç i shënon më vonë në foto me «Shëno».`, `Applies to all ${n} photos. You can tag single faces later in the photo with «Tag».`) : wkL('Gesichter markierst du später im Foto mit «Markieren».', 'Fytyrat i shënon më vonë në foto me «Shëno».', 'You can tag faces later in the photo with «Tag».'))} ${esc(wkL('Wer drauf ist und die App hat, sieht es unter «Neu» und bekommt eine Mitteilung, falls eingeschaltet.', 'Kush është në to dhe e ka aplikacionin, e sheh te «E re» dhe merr njoftim, nëse e ka ndezur.', 'Anyone in them who has the app sees it under «New» and gets a notification if switched on.'))}</p>
+      </div>
+      <div class="layer-foot"><button type="button" class="btn" data-act="later">${esc(wkL('Später', 'Më vonë', 'Later'))}</button><button type="button" class="btn primary" data-act="save"${sel.size ? '' : ' disabled'}>${esc(sel.size ? wkL(`Speichern (${sel.size})`, `Ruaj (${sel.size})`, `Save (${sel.size})`) : wkL('Speichern', 'Ruaj', 'Save'))}</button></div>`;
+    hydrateSoon();
+  };
+  const done = () => { UPQ.whoOn = null; UPQ.items = UPQ.items.filter(x => x.st !== 'ok'); upqPaint(); };
+  L.onClose = () => { document.body.classList.remove('who-open'); };
+  document.body.classList.add('who-open');
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-act],[data-wpid],[data-wadd]'); if (!b) return;
+    if (b.dataset.wpid) { const id = b.dataset.wpid; if (sel.has(id)) sel.delete(id); else sel.add(id); return draw(); }
+    if (b.hasAttribute('data-wadd')) return act(async () => {
+      const id = await pickPerson({ title: wkL('Wer ist drauf?', 'Kush është në foto?', 'Who\'s in them?'), exclude: new Set(pre) });
+      if (!id) return; if (!sugg.includes(id)) sugg.unshift(id); sel.add(id); draw();
+    });
+    if (b.dataset.act === 'close' || b.dataset.act === 'later') { done(); return closeLayer(L); }
+    if (b.dataset.act === 'save') {
+      const pids = [...sel]; whoOnApply(ids, pids); done(); closeLayer(L);
+      const withApp = new Set((S.pushSubs || []).map(x => x.rec && x.rec.me && x.rec.me[S.treeId]).filter(Boolean));
+      const mem = pids.map(P).filter(p => p && (isMember(p) || withApp.has(p.id)) && p.id !== myPersonId()).map(p => callName(p));
+      toast(mem.length ? wkL(`Gespeichert. ${mem.join(' und ')} ${mem.length === 1 ? 'sieht' : 'sehen'} es unter «Neu».`, `U ruajt. ${mem.join(' dhe ')} e ${mem.length === 1 ? 'sheh' : 'shohin'} te «E re».`, `Saved. ${mem.join(' and ')} will see it under «New».`) : wkL('Gespeichert', 'U ruajt', 'Saved'));
+    }
+  });
   pushLayer(L); draw();
 }
 
@@ -14811,7 +15614,7 @@ function hasPending() { return Q.put.size > 0 || Q.del.size > 0 || Q.blobs.size 
 function myName() { return (S.me && (S.me.name || (myPersonId() && callName(P(myPersonId()))))) || ''; }
 let quietPut = false;   /* Sicherung/Übernahme: Autor und Zeit nicht überschreiben */
 function put(kind, o) {
-  if (kind !== 'trees' && !quietPut) { o = Object.assign({}, o, { updatedBy: myName(), updatedByCred: (S.me && S.me.id) || '', updatedAt: Date.now() }); if (!o.createdBy && !o.createdAt) { o.createdAt = Date.now(); o.createdBy = myName(); o.createdByCred = (S.me && S.me.id) || ''; } else if (!o.createdBy && Date.now() - (o.createdAt || 0) < 5000) o.createdBy = myName(); }
+  if (kind !== 'trees' && !quietPut) { o = Object.assign({}, o, { updatedBy: myName(), updatedByCred: (S.me && S.me.id) || '', updatedAt: Date.now() }); if (!o.createdBy && !o.createdAt) { o.createdAt = Date.now(); o.createdBy = myName(); o.createdByCred = (S.me && S.me.id) || ''; } else if (!o.createdBy && Date.now() - (o.createdAt || 0) < 5000) { o.createdBy = myName(); if (!o.createdByCred) o.createdByCred = (S.me && S.me.id) || ''; } }
   G[kind].set(o.id, o); TRASH.delete(o.id); Q.put.set(o.id, kind); Q.del.delete(o.id); noteAnyKeys(kind, o);
 }
 /* In den Papierkorb (30 Tage wiederherstellbar) */
@@ -14860,7 +15663,7 @@ async function flush() {
     for (const [id, kind] of ids) { const o = entryFor(id, kind); if (o) putArr.push(await encryptEntry(kind, o)); }
     await commitEntries(putArr, dels);
     if (blobs.length) await api('apiDelBlobs', blobs);
-  })().then(() => { saveFailed = false; if (S.offline) { setOffline(false); setTimeout(() => load(false), 300); } if (!hasPending()) storePending(); syncNative(); }, e => {
+  })().then(() => { saveFailed = false; if (S.offline) { setOffline(false); setTimeout(() => load(false), 300); } if (!hasPending()) storePending(); syncNative(); pushSoon(); }, e => {
     console.warn(e);
     ids.forEach(([id, kind]) => { if (!Q.put.has(id) && !Q.del.has(id)) Q.put.set(id, kind); });
     dels.forEach(id => { if (!Q.put.has(id)) Q.del.add(id); });
@@ -15213,6 +16016,12 @@ function onMainClick(e) {
   switch (t.dataset.act) {
     case 'slides': return slideshow(photosByDate(filteredPhotos()), S.photoFilter.startsWith('album:') ? S.photoFilter.slice(6) : 'Alle Fotos');
     case 'news': return openNews();
+    case 'story': return storyOrNews();
+    case 'push-on': return act(() => pushCardAct(true));
+    case 'push-no': return act(() => pushCardAct(false));
+    case 'feat-go': return act(() => appNewsGo(t.dataset.f));
+    case 'feat-next': return appNewsNext(t.dataset.f);
+    case 'feat-x': return appNewsDone();
     case 'otd': return openOnThisDay();
     case 'welcome': return openWelcome(false);
     case 'welcome-x': LS.set('welcomeBan.' + S.treeId, '1'); return renderMain();
@@ -15600,7 +16409,7 @@ function renderPeopleList() {
   const q = norm(S.q);
   let html = askHintRow() + relChipsHtml() + sideLegend();
   if (!q) {
-    html += welcomeBanner() + mgBanner() + greetBanner() + apkUpdBanner() + backupBanner() + bkCheckBanner() + candleBanner() + termsBanner() + callsBanner() + wichtelBanner() + roundBanner() + eduYearBanner() + holBanner() + eventsBanner() + newsBanner() + onThisDayBanner() + yearBanner() + installBanner();
+    html += appNewsCard() + pushCard() + welcomeBanner() + mgBanner() + greetBanner() + apkUpdBanner() + backupBanner() + bkCheckBanner() + candleBanner() + termsBanner() + callsBanner() + wichtelBanner() + roundBanner() + eduYearBanner() + holBanner() + eventsBanner() + newsBanner() + onThisDayBanner() + yearBanner() + installBanner();
     const b = upcomingBirthdays(45).filter(x => x.p.id === myPersonId() || bdnWanted(x.p, x.age)).slice(0, 10);
     if (b.length) html += `<div class="sec-row"><h2 class="section-h">Nächste Geburtstage</h2><button type="button" class="mini-btn bdn-mini" data-act="bdn" aria-label="Geburtstags-Erinnerungen">${BDN_BELL}</button></div><div class="bday-row">${b.map(x => `<button type="button" class="bday${x.days === 0 ? ' today' : ''}${isRoundAge(x.age) ? ' round' : ''}" data-open="${x.p.id}">${avatar(x.p, 40)}<span class="when">${x.days === 0 ? 'Heute 🎉' : x.days === 1 ? 'Morgen' : `in ${x.days} Tagen`}</span><span class="bn">${esc(fullName(x.p))}</span><span class="bs">${isRoundAge(x.age) ? '🎉 ' : ''}wird ${x.age} · ${esc(x.label)}</span></button>`).join('')}</div>`;
   }
@@ -16315,7 +17124,7 @@ async function tagAt(L, ph, ev) {
   const tags = (cur.tags || []).filter(t => t.pid !== pid && S.people.has(t.pid));
   tags.push({ pid, x: +x.toFixed(4), y: +y.toFixed(4) });
   const ids = [...new Set([...(cur.personIds || []).filter(id => S.people.has(id)), pid])];
-  await updPhoto(ph.id, { tags, personIds: ids });
+  await updPhoto(ph.id, { tags, personIds: ids, pAt: pAtWith(cur, pid) });
   L.render();
   toast(`${callName(P(pid))} markiert`);
 }
@@ -16345,7 +17154,7 @@ function onLbClick(e, L) {
   if (t.dataset.act === 'fullimg') { L.fullOk = L.ids[L.index]; return L.render(); }
   const ph = S.photos.get(L.ids[L.index]); if (!ph || !S.canWrite) return;
   switch (t.dataset.act) {
-    case 'tag': return act(async () => { const ids = await pickPerson({ title: 'Wer ist auf dem Foto?', multi: true, selected: (ph.personIds || []).filter(x => S.people.has(x)) }); if (ids) { await updPhoto(ph.id, { personIds: ids, tags: (ph.tags || []).filter(x => ids.includes(x.pid)) }); toast(ids.length ? `${ids.length} ${ids.length === 1 ? 'Person' : 'Personen'} zugeordnet` : 'Zuordnung entfernt'); } });
+    case 'tag': return act(async () => { const ids = await pickPerson({ title: 'Wer ist auf dem Foto?', multi: true, selected: (ph.personIds || []).filter(x => S.people.has(x)) }); if (ids) { let pAt = ph.pAt; ids.forEach(x => { pAt = pAtWith(Object.assign({}, ph, { pAt }), x); }); await updPhoto(ph.id, { personIds: ids, tags: (ph.tags || []).filter(x => ids.includes(x.pid)), pAt }); toast(ids.length ? `${ids.length} ${ids.length === 1 ? 'Person' : 'Personen'} zugeordnet` : 'Zuordnung entfernt'); } });
     case 'avatar': return act(() => setAvatarFromPhoto(ph));
     case 'edit': return act(() => editPhoto(ph));
     case 'del': return act(() => deletePhoto(ph));
@@ -16413,7 +17222,7 @@ async function openTreeMenu() {
       <button type="button" class="opt" data-v="kin">${I.link}<span>Wie sind wir verwandt?<small>Verwandtschaft zwischen zwei Personen</small></span></button>
       <button type="button" class="opt" data-v="viewas">${ICN_EYE}<span>Mit den Augen einer anderen Person<small>Alle Bezeichnungen aus ihrer Sicht</small></span></button>
       <button type="button" class="opt" data-v="welcome">${I.people}<span>Wer ist wer<small>Die nächsten Verwandten mit Bild und Bezeichnung</small></span></button>
-      <button type="button" class="opt" data-v="news">${I.spark}<span>Neu im Stammbaum<small>${(() => { const n = newsItems().length; return n ? `${n} ${n === 1 ? 'Änderung' : 'Änderungen'} seit deinem letzten Besuch` : 'Was andere zuletzt ergänzt haben'; })()}</small></span></button>
+      ${appNewsMenuRow()}<button type="button" class="opt" data-v="news">${I.spark}<span>Neu im Stammbaum<small>${(() => { const n = newsItems().length; return n ? `${n} ${n === 1 ? 'Änderung' : 'Änderungen'} seit deinem letzten Besuch` : 'Was andere zuletzt ergänzt haben'; })()}</small></span></button>
       <button type="button" class="opt" data-v="chron">${I.clock}<span>Familienchronik<small>Geburten, Hochzeiten, Fotos und Erinnerungen nach Jahren</small></span></button>
       <button type="button" class="opt" data-v="year">${ICN7.year}<span>Jahresrückblick<small>Unser Jahr: Geburten, Hochzeiten, die schönsten Fotos, auch als PDF</small></span></button>
       <button type="button" class="opt" data-v="map">${I.pin}<span>Familienkarte<small>Herkunft, Wohnorte, Gräber und Fotoorte</small></span></button>
@@ -16460,7 +17269,7 @@ async function openTreeMenu() {
       <button type="button" class="opt" data-v="stats">${I.chart}<span>Statistik<small>Generationen, Namen, Geburtstage, wo die Familie lebt</small></span></button>
       <div class="dlg-sec">Einstellungen und Verwaltung</div>` : ''}
     ${t ? `<button type="button" class="opt" data-v="bdn">${BDN_BELL}<span>Geburtstags-Erinnerungen<small>${(() => { const c = bdnCfg(); return c ? (c.circle === 'close' ? 'Engste Familie' : c.circle === 'wide' ? 'Mit Onkel, Tanten und Cousins' : 'Alle') + (c.round !== false ? ' und runde Geburtstage' : '') : 'An alle Geburtstage'; })()}</small></span></button>` : ''}
-    ${t ? newsMenuRow() : ''}
+    ${t ? newsMenuRow() + pushMenuRow() : ''}
     ${t ? `<button type="button" class="opt" data-v="me">${I.userc}<span>Ich im Stammbaum<small>${esc(myPersonId() ? fullName(P(myPersonId())) + ' – alle Bezeichnungen aus deiner Sicht' : 'Noch nicht gewählt – Bezeichnungen gelten für die Hauptperson')}</small></span></button>` : ''}
     ${S.isAdmin ? `<button type="button" class="opt" data-v="members">${I.people}<span>Mitglieder &amp; Zugriff<small>Einladen, Rechte vergeben, Notfall-Schlüssel</small></span></button>
       <button type="button" class="opt" data-v="backup">${I.save}<span>Sicherung aufs Gerät<small>${lastBackupAt() ? `Letzte: ${esc(fmtDate(isoOf(new Date(lastBackupAt())), true))}${backupDue() ? ' – fällig' : ''}` : 'Noch keine Sicherung'} · verschlüsselt, mit allen Fotos</small></span></button>
@@ -16505,6 +17314,8 @@ async function openTreeMenu() {
   if (v === 'edu') return openEduOverview();
   if (v === 'bdn') return openBdn();
   if (v === 'newsset') return openNewsSettings();
+  if (v === 'pushset') return openPushSettings();
+  if (v === 'appnews') return openAppNews();
   if (v === 'roots') return openRoots();
   if (v === 'welt') return openWelt();
   if (v === 'reise') return act(() => openReise());
@@ -16911,7 +17722,8 @@ function newsBanner() {
   if (S.newsHidden.has(S.treeId)) return '';
   const items = newsItems(); if (!items.length) return '';
   const who = [...new Set(items.map(x => x.by).filter(Boolean))].slice(0, 3);
-  return `<button type="button" class="news-banner" data-act="news">${I.spark}<span>Neu seit deinem letzten Besuch<small>${esc(newsSummary(items))}${who.length ? ` · von ${esc(who.join(', '))}` : ''}</small></span>${I.chevR}</button>`;
+  const play = storySlides(storySince()).length > 2 ? `<button type="button" class="news-play" data-act="story" aria-label="${esc(wkL('Als Geschichte ansehen', 'Shiko si histori', 'View as a story'))}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></button>` : '';
+  return `<div class="news-wrap${play ? ' has-play' : ''}"><button type="button" class="news-banner" data-act="news">${I.spark}<span>Neu seit deinem letzten Besuch<small>${esc(newsSummary(items))}${who.length ? ` · von ${esc(who.join(', '))}` : ''}</small></span>${I.chevR}</button>${play}</div>`;
 }
 function openNews() {
   const L = mkLayer('layer', 'news');
@@ -19494,6 +20306,9 @@ async function load(initial) {
     S.loaded = true; S.loadError = null; S.slow = false; lastLoad = Date.now();
     if (IS_WEB && !S.persistAsked) { S.persistAsked = true; askPersist(); }
     S.legacyLeft = !!d.legacy;
+    if (!cached && d.v) { S.serverV = d.v; serverV = d.v; }
+    else if (!cached) S.serverV = 0;
+    if (d.v) pushIngest(d.push).catch(e => console.warn(e));
     if (S.treeId && !G.trees.has(S.treeId)) S.treeId = null;
     pickTree(); rebuild(); scheduleRender();
     syncNative();
@@ -19504,13 +20319,17 @@ async function load(initial) {
     }
     if (S.audioPending || S.audioOnLoad) { const o = S.audioOnLoad; S.audioPending = false; S.audioOnLoad = null; setTimeout(() => act(() => sharedAudioOpen(o)), 400); }
     if (S.newsOnLoad) { const t = S.newsOnLoad; S.newsOnLoad = null; openNewsFromNative(t); }
+    if (S.goOnLoad) { const g = S.goOnLoad; S.goOnLoad = null; if (g.t && G.trees.has(g.t) && g.t !== S.treeId) switchTree(g.t); setTimeout(() => storyOrNews(), 400); }
+    if (S.photoOnLoad) { const pid = S.photoOnLoad; S.photoOnLoad = null; const ph = G.photos.get(pid); if (ph) { if (ph.treeId !== S.treeId) switchTree(ph.treeId); setTimeout(() => openLightbox([pid], 0), 300); } }
+    appNewsInit();
+    setTimeout(() => { photoWidgetSync().catch(e => console.warn(e)); }, 5000);
     if (S.canWrite && !S.offline) purgeTrash();
     setTimeout(() => { try { healPriv(); } catch (e) { console.warn(e); } }, 4000);
     if (S.isAdmin && !S.offline && !S.linksSynced) { S.linksSynced = true; setTimeout(() => syncMemberLinks().catch(() => {}), 3000); }
     if (!S.offline && hasPending()) flushSoon();
     setTimeout(() => { maybeRemindBackup().catch(() => {}); }, 2500);
     if (S.legacyLeft && S.isAdmin && !S.migrating && !S.claimFlow) setTimeout(offerMigration, 500);
-    else if (!S.claimFlow && !S.migrating) setTimeout(() => { maybeTour().then(() => maybeAskMe()).then(() => maybeAskBdn()).then(birthdayGreeting).then(() => maybeApkUpd().catch(() => {})).then(() => maybeNewsIntro()).then(() => flPendingRun()).then(() => flSoon()).catch(() => {}); }, 700);
+    else if (!S.claimFlow && !S.migrating) setTimeout(() => { maybeTour().then(() => maybeAskMe()).then(() => maybeAskBdn()).then(birthdayGreeting).then(() => S.goOnLoad || S.newsOnLoad ? null : maybeStory()).then(() => maybeApkUpd().catch(() => {})).then(() => maybeNewsIntro()).then(() => flPendingRun()).then(() => flSoon()).catch(() => {}); }, 700);
     if (!S.claimFlow && !S.migrating) setTimeout(() => { maybeSplash().catch(() => {}); }, 150);
   } catch (e) {
     console.warn(e);
@@ -19592,6 +20411,7 @@ async function boot() {
     if (cfg.person) params.p = cfg.person;
     if (cfg.backup) S.askBackup = true;
     if (cfg.news) S.newsOnLoad = String(cfg.news);
+    if (cfg.photo) S.photoOnLoad = String(cfg.photo);
     if (cfg.audio) S.audioPending = true;
     if (!EXEC) { S.noGoogle = true; render(); return; }
   } else if (HAS_GAS) {
@@ -19624,6 +20444,10 @@ async function boot() {
   if (hash.m) { await showMemorialPage(hash.m); return; }
   if (hash.fw) { await showFestPage(hash.fw, hash.tv === '1'); return; }
   S.openOnLoad = params.p || null;
+  if (params.go === 'neu') {                             /* Antippen einer Mitteilung im Browser bzw. auf dem iPhone */
+    S.goOnLoad = { go: 'neu', t: params.t || '' };
+    try { if (IS_WEB) history.replaceState(null, '', location.pathname + (EXEC ? '?g=' + encodeURIComponent(paramOfExec(EXEC)) : '')); } catch (e) {}
+  }
   S.legacyKey = params.k || '';
   const kind = hash.i ? 'i' : hash.r ? 'r' : '';
   /* iPhone: Home-Bildschirm-Apps haben eigenen Speicher. Die Einladung dort einlösen, wo man den Stammbaum künftig öffnet. */
