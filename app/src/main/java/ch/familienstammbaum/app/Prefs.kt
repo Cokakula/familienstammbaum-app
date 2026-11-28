@@ -39,7 +39,7 @@ object Prefs {
         val base = Links.base(link) ?: return
         val changed = exec(c) != base
         val e = sp(c).edit().putString("exec", base).putString("pending", link)
-        if (changed) e.putBoolean("reset", true).remove("session").remove("birthdays").remove("lastNotified").remove("newsCtx").remove("newsState")
+        if (changed) e.putBoolean("reset", true).remove("session").remove("birthdays").remove("lastNotified").remove("newsCtx").remove("newsState").remove("photoDays")
         e.apply()
     }
 
@@ -65,7 +65,10 @@ object Prefs {
     }
     /** Nur die gewählte Sprache, unverschlüsselt (verrät nichts), damit sie schnell bereitsteht */
     fun uiLang(c: Context): String = sp(c).getString("uiLang", null) ?: lang(c).also { sp(c).edit().putString("uiLang", it).apply() }
-    fun clearSession(c: Context) { sp(c).edit().remove("session").remove("birthdays").remove("newsCtx").remove("newsState").apply() }
+    fun clearSession(c: Context) { sp(c).edit().remove("session").remove("birthdays").remove("newsCtx").remove("newsState").remove("photoDays").apply() }
+    /** Widget «Foto des Tages»: welche Bilder für welche Tage (verschlüsselt) */
+    fun photoDays(c: Context): String? = sp(c).getString("photoDays", null)?.let { Vault.open(it) }
+    fun setPhotoDays(c: Context, json: String) { Vault.seal(json)?.let { sp(c).edit().putString("photoDays", it).apply() } }
 
     /** Zuletzt bekannte Geburtstage (ebenfalls verschlüsselt) */
     fun cache(c: Context): String? = sp(c).getString("birthdays", null)?.let { Vault.open(it) }
@@ -124,6 +127,19 @@ object Vault {
         c.init(Cipher.ENCRYPT_MODE, key())
         val ct = c.doFinal(text.toByteArray(Charsets.UTF_8))
         Base64.encodeToString(c.iv + ct, Base64.NO_WRAP)
+    } catch (e: Exception) { null }
+
+    /** Für Bilder (Widget «Foto des Tages»): IV + verschlüsselte Bytes */
+    fun sealBytes(data: ByteArray): ByteArray? = try {
+        val c = Cipher.getInstance("AES/GCM/NoPadding")
+        c.init(Cipher.ENCRYPT_MODE, key())
+        c.iv + c.doFinal(data)
+    } catch (e: Exception) { null }
+
+    fun openBytes(b: ByteArray): ByteArray? = try {
+        val c = Cipher.getInstance("AES/GCM/NoPadding")
+        c.init(Cipher.DECRYPT_MODE, key(), GCMParameterSpec(128, b.copyOfRange(0, 12)))
+        c.doFinal(b.copyOfRange(12, b.size))
     } catch (e: Exception) { null }
 
     fun open(data: String): String? = try {

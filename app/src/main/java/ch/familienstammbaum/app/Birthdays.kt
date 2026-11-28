@@ -488,6 +488,7 @@ class BirthdayWorker(context: Context, params: WorkerParameters) : CoroutineWork
         }
         withContext(Dispatchers.IO) { AppUpdate.check(c) }
         FamilyWidget.refresh(c)
+        PhotoWidget.refresh(c)
         // Falls Android die Prüfung stark verschoben hat: wieder auf die gewünschte Uhrzeit legen
         if (Birthdays.minutesOff(c) > 120) Birthdays.schedule(c, update = true)
         return Result.success()

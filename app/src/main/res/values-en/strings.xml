@@ -81,6 +81,9 @@
     <string name="widget_bday_age">%1$s · %2$s turns %3$d</string>
     <string name="widget_bday">%1$s · %2$s\'s birthday</string>
     <string name="widget_event">%1$s · %2$s</string>
+    <string name="wp_name">Photo of the day</string>
+    <string name="wp_desc">A different family photo every day</string>
+    <string name="wp_empty">Open the app once, then a different family photo appears here every day.</string>
     <!-- Call reminder -->
     <string name="call_channel">Call reminders</string>
     <string name="call_title">Time to call %1$s</string>

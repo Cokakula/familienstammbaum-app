@@ -7,6 +7,7 @@
  *     b/          verschlüsselte Fotos und Vorschaubilder (zufällige Dateinamen)
  *     g/          verschlüsselte Gedenkseiten (lesbar nur mit dem Schlüssel aus dem Link)
  *     Sicherungen/ automatische, verschlüsselte Sicherungen
+ *   Tabelle P: Geräte, die Mitteilungen im Browser bzw. auf dem iPhone möchten (Angaben verschlüsselt)
  *
  * Ver- und entschlüsselt wird nur in der App bzw. im Browser der Familienmitglieder.
  * Der Schlüssel steht im Einladungslink hinter dem «#» und wird nie an Google gesendet.
@@ -26,6 +27,7 @@ const TABLES = {
   Z: ['id', 'h', 'r', 's', 'pub', 'pk', 'kw', 'm', 'c', 'l'],  // Zugänge: Prüfwert, Rechte, Status, Schlüsselpaket, Name (verschlüsselt)
   B: ['id', 'f', 'n'],                                         // verschlüsselte Dateien: ID, Drive-Datei, Grösse
   F: ['id', 'x', 'f', 't', 'm', 'c'],                          // Fotowand: Foto, Fotowand, Bild, Vorschau, Angaben (verschlüsselt), Zeit
+  P: ['id', 'c', 'd', 't'],                                     // Mitteilungen (Web Push): Gerät, Zugang, Angaben (verschlüsselt), Zeit
 };
 const ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
 const API_ = {
@@ -39,8 +41,9 @@ const API_ = {
   apiFestNew: apiFestNew, apiFestEnd: apiFestEnd, apiFestDel: apiFestDel, apiFestRows: apiFestRows, apiFestFiles: apiFestFiles,
   apiFestInfo: apiFestInfo, apiFestUp: apiFestUp, apiFestList: apiFestList, apiFestGet: apiFestGet,
   apiLinkPut: apiLinkPut, apiLinkGet: apiLinkGet, apiLinkDel: apiLinkDel,
+  apiPushSub: apiPushSub, apiPush: apiPush,
 };
-const VERSION = 5;
+const VERSION = 6;
 const SNAP_DAYS = 7;      // automatische Sicherung höchstens einmal pro Woche (beim Öffnen durch ein Mitglied)
 const SNAP_KEEP = 12;     // so viele automatische Sicherungen bleiben erhalten (etwa drei Monate)
 const TRUSTED_RE = /^vt/; // Notfall-Schlüssel von Vertrauenspersonen (es kann mehrere geben)
@@ -259,6 +262,8 @@ function apiLoad(a) {
     snapIfDue_();
     out.e = rows_('E').map(function (x) { return [x.id, x.d]; });
     out.legacy = z.r === 'admin' && legacy_();
+    out.v = VERSION;
+    out.push = pushRows_();
   }
   return out;
 }
@@ -422,6 +427,7 @@ function apiDelCred(a, id) {
     if (z.s === 'rec' && !TRUSTED_RE.test(z.id)) throw new Error('Den Notfall-Schlüssel kannst du nur neu erstellen.');
     forget_(z.h);
     save_('Z', [], [id]);
+    save_('P', [], rows_('P').filter(function (x) { return x.c === id; }).map(function (x) { return x.id; }));
   } finally { l.releaseLock(); }
   return { ok: true };
 }
@@ -827,4 +833,63 @@ function apiLinkDel(a, id) {
     props_().setProperty('FS_LINK', JSON.stringify(m));
   } finally { l.releaseLock(); }
   return { ok: true };
+}
+
+
+/* ---------- Mitteilungen im Browser und auf dem iPhone (Web Push, braucht Version 6) ----------
+ * Jedes Gerät meldet sich mit verschlüsselten Angaben an (Tabelle P). Wer etwas Neues hinzufügt, verschlüsselt
+ * die Mitteilung schon auf dem eigenen Gerät für jedes Empfängergerät. Dieses Skript reicht sie nur an den
+ * Mitteilungsdienst des Empfängers weiter (Apple, Google, Mozilla, Microsoft) und kann sie nicht lesen.
+ */
+const PUSH_RE = /^https:\/\/(fcm\.googleapis\.com|updates\.push\.services\.mozilla\.com|push\.services\.mozilla\.com|web\.push\.apple\.com|[a-z0-9-]+\.push\.apple\.com|[a-z0-9.-]+\.notify\.windows\.com)\//;
+function pushRows_() {
+  const live = {};
+  rows_('Z').forEach(function (z) { if (z.s === 'dev') live[z.id] = 1; });
+  return rows_('P').filter(function (x) { return live[x.c]; }).map(function (x) { return [x.id, x.c, x.d]; });
+}
+/** Dieses Gerät an- (d = verschlüsselte Angaben) oder abmelden (d leer) */
+function apiPushSub(a, id, d) {
+  const me = need_(a, 'view');
+  id = String(id || '');
+  if (!ID_RE.test(id)) throw new Error('Ungültige Geräte-ID.');
+  d = String(d || '');
+  if (d && !/^v\d+:[A-Za-z0-9_-]+$/.test(d)) throw new Error('Ungültiger Eintrag.');
+  const l = lock_();
+  try {
+    const old = rows_('P').filter(function (x) { return x.id === id; })[0];
+    if (old && old.c !== me.id && !d) return { ok: true };
+    if (d) save_('P', [{ id: id, c: me.id, d: str_(d, 8000), t: String(Date.now()) }]);
+    else save_('P', [], [id]);
+  } finally { l.releaseLock(); }
+  return { ok: true };
+}
+/** Fertig verschlüsselte Mitteilungen weiterreichen: [{i: Gerät, e: Adresse, a: VAPID-Kopf, b: Inhalt (Base64), t: Gültigkeit}] */
+function apiPush(a, msgs) {
+  const me = need_(a, 'view');
+  msgs = (msgs || []).slice(0, 60);
+  if (!msgs.length) return [];
+  const cache = CacheService.getScriptCache(), ck = 'push_' + me.id, n = Number(cache.get(ck) || 0);
+  if (n + msgs.length > 400) throw new Error('Zu viele Mitteilungen in kurzer Zeit.');
+  cache.put(ck, String(n + msgs.length), 3600);
+  const reqs = msgs.map(function (m) {
+    const url = String(m && m.e || ''), auth = String(m && m.a || ''), b = String(m && m.b || '');
+    if (url.length > 1000 || !PUSH_RE.test(url)) throw new Error('Ungültige Adresse für Mitteilungen.');
+    if (auth.length > 1500 || !/^vapid t=[A-Za-z0-9_.-]+, k=[A-Za-z0-9_-]+$/.test(auth)) throw new Error('Ungültige Mitteilung.');
+    if (b.length > 6000 || !/^[A-Za-z0-9+\/]+=*$/.test(b)) throw new Error('Ungültige Mitteilung.');
+    return {
+      url: url, method: 'post', contentType: 'application/octet-stream', payload: Utilities.base64Decode(b), muteHttpExceptions: true, followRedirects: false,
+      headers: { Authorization: auth, 'Content-Encoding': 'aes128gcm', TTL: String(Math.max(60, Math.min(Number(m.t) || 86400, 604800))), Urgency: 'normal' },
+    };
+  });
+  const codes = UrlFetchApp.fetchAll(reqs).map(function (r) { return r.getResponseCode(); });
+  /* Abgemeldete Geräte (404/410) gleich entfernen */
+  const gone = [];
+  codes.forEach(function (c, i) { const id = String(msgs[i] && msgs[i].i || ''); if ((c === 404 || c === 410) && ID_RE.test(id)) gone.push(id); });
+  if (gone.length) { const l = lock_(); try { save_('P', [], gone); } finally { l.releaseLock(); } }
+  return codes;
+}
+/** Einmal im Editor ausführen (Version 6): Google fragt dann nach der Erlaubnis, Mitteilungen weiterzureichen. */
+function mitteilungenFreischalten() {
+  UrlFetchApp.getRequest('https://web.push.apple.com/');
+  Logger.log('Mitteilungen sind freigeschaltet. Jetzt «Bereitstellen → Bereitstellungen verwalten → Neue Version».');
 }

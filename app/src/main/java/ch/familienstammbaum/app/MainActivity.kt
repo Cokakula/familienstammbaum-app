@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         const val EXTRA_PERSON = "person"
         const val EXTRA_BACKUP = "backup"
         const val EXTRA_NEWS = "news"
+        const val EXTRA_PHOTO = "photo"
         /** Ist die App gerade im Vordergrund? Dann braucht es keine Mitteilung über Neues. */
         @Volatile var inFront = false
         const val ACTION_SETUP = "ch.familienstammbaum.app.SETUP"
@@ -90,6 +91,7 @@ class MainActivity : AppCompatActivity() {
     @Volatile private var pendingAudio: String? = null
     @Volatile private var pendingBackup = false
     @Volatile private var pendingNews: String? = null
+    @Volatile private var pendingPhoto: String? = null
     private var pendingWebPerm: PermissionRequest? = null
     private var pendingGeo: Pair<String, GeolocationPermissions.Callback>? = null
     @Volatile private var pickedMeta: String = "[]"
@@ -210,6 +212,7 @@ class MainActivity : AppCompatActivity() {
         Birthdays.schedule(this, update = false)
         News.schedule(this, update = false)
         FamilyWidget.refresh(this)
+        PhotoWidget.refresh(this)
         handleIntent(intent, initial = true)
         initTts()
     }
@@ -329,6 +332,8 @@ class MainActivity : AppCompatActivity() {
         if (person != null) { pendingPerson = person; showWeb(true); return }
         val news = intent?.getStringExtra(EXTRA_NEWS)
         if (news != null) { intent?.removeExtra(EXTRA_NEWS); pendingNews = news; showWeb(true); return }
+        val photo = intent?.getStringExtra(EXTRA_PHOTO)
+        if (photo != null) { intent?.removeExtra(EXTRA_PHOTO); pendingPhoto = photo; showWeb(true); return }
         if (intent?.getBooleanExtra(EXTRA_BACKUP, false) == true) { intent?.removeExtra(EXTRA_BACKUP); pendingBackup = true; showWeb(true); return }
         if (initial || web.visibility != View.VISIBLE) {
             if (Prefs.exec(this) != null) showWeb(initial) else showSetup()
@@ -523,6 +528,8 @@ class MainActivity : AppCompatActivity() {
             if (pendingBackup) { o.put("backup", true); pendingBackup = false }
             pendingNews?.let { o.put("news", it) }
             pendingNews = null
+            pendingPhoto?.let { o.put("photo", it) }
+            pendingPhoto = null
             if (Prefs.reset(ctx)) { o.put("reset", true); Prefs.clearReset(ctx) }
             return o.toString()
         }
@@ -545,7 +552,9 @@ class MainActivity : AppCompatActivity() {
         }
         @JavascriptInterface fun notifyOk(): Boolean = ours() && Birthdays.canNotify(this@MainActivity)
         @JavascriptInterface fun openNotifySettings() { if (!ours()) return; runOnUiThread { allowNotifications() } }
-        @JavascriptInterface fun clearSession() { if (!ours()) return; Prefs.clearSession(this@MainActivity) }
+        @JavascriptInterface fun clearSession() { if (!ours()) return; Prefs.clearSession(this@MainActivity); PhotoWidget.clear(this@MainActivity) }
+        /* Widget «Foto des Tages»: Bilder für die nächsten Tage */
+        @JavascriptInterface fun savePhotoDays(json: String) { if (!ours()) return; PhotoWidget.save(this@MainActivity, json) }
         @JavascriptInterface fun saveBirthdays(json: String) { if (!ours()) return; Prefs.setCache(this@MainActivity, json); FamilyWidget.refresh(this@MainActivity) }
         /* Vorlesen: "ok", "nolang" (keine Stimme für die Sprache) oder "no" */
         @JavascriptInterface fun speak(id: String, text: String, lang: String): String {

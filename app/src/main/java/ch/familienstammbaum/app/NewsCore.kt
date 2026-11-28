@@ -131,9 +131,10 @@ object NewsCore {
                 val withMe = if (me.isNullOrEmpty()) 0 else list.count { me in personIds(it) }
                 val n = list.size
                 val line = when {
-                    n == 1 && withMe == 1 -> t("$w hat ein Foto mit dir hochgeladen", "$w ka ngarku një foto me ty", "$w uploaded a photo with you")
+                    n == 1 && withMe == 1 -> t("📸 Du bist auf einem neuen Foto von $w", "📸 Je në një foto të re prej $w", "📸 You're in a new photo from $w")
                     n == 1 -> t("$w hat ein Foto hochgeladen", "$w ka ngarku një foto", "$w uploaded a photo")
-                    withMe > 0 -> t("$w hat $n Fotos hochgeladen, $withMe davon mit dir", "$w ka ngarku $n foto, $withMe me ty", "$w uploaded $n photos, $withMe of them with you")
+                    withMe == n -> t("📸 Du bist auf $n neuen Fotos von $w", "📸 Je në $n foto të reja prej $w", "📸 You're in $n new photos from $w")
+                    withMe > 0 -> t("📸 Du bist auf $withMe von $n neuen Fotos von $w", "📸 Je në $withMe nga $n foto të reja prej $w", "📸 You're in $withMe of $n new photos from $w")
                     else -> t("$w hat $n Fotos hochgeladen", "$w ka ngarku $n foto", "$w uploaded $n photos")
                 }
                 out.add(Item(tree, "fotos", list.maxOf { it.optLong("createdAt") }, list.map { it.optString("id") }, line))
@@ -146,6 +147,31 @@ object NewsCore {
                     if (name.isBlank()) t("$w hat eine Person hinzugefügt", "$w ka shtu një person", "$w added a person") else t("$w hat $name hinzugefügt", "$w e ka shtu $name", "$w added $name")
                 } else t("$w hat ${list.size} Personen hinzugefügt", "$w ka shtu ${list.size} persona", "$w added ${list.size} people")
                 out.add(Item(tree, "fotos", list.maxOf { it.optLong("createdAt") }, list.map { it.optString("id") }, line))
+            }
+        }
+
+        // Auf schon vorhandenen Fotos markiert (pAt: Person → [Zeit, Zugang, Name])
+        if ("fotos" in cats || "herz" in cats) {
+            val tagged = LinkedHashMap<Pair<String, String>, MutableList<Pair<String, Long>>>()
+            for (o in entries) {
+                if (o.optString("k") != "f" || o.has("_del") || o.has("pc")) continue
+                val tree = o.optString("treeId")
+                val me = meIn[tree]
+                if (me.isNullOrEmpty() || o.optLong("createdAt") > mark) continue
+                val a = o.optJSONObject("pAt")?.optJSONArray(me) ?: continue
+                val at = a.optLong(0)
+                val by = a.optString(1)
+                val key = o.optString("id") + ":tag"
+                if (at <= mark || by == cred || key in sent) continue
+                val w = a.optString(2).ifBlank { t("Jemand", "Dikush", "Someone") }
+                tagged.getOrPut(Pair(tree, w)) { ArrayList() }.add(Pair(key, at))
+            }
+            tagged.forEach { (k, list) ->
+                val (tree, w) = k
+                val n = list.size
+                val line = if (n == 1) t("🏷️ $w hat dich auf einem Foto markiert", "🏷️ $w të ka shënu në një foto", "🏷️ $w tagged you in a photo")
+                    else t("🏷️ $w hat dich auf $n Fotos markiert", "🏷️ $w të ka shënu në $n foto", "🏷️ $w tagged you in $n photos")
+                out.add(Item(tree, if ("fotos" in cats) "fotos" else "herz", list.maxOf { it.second }, list.map { it.first }, line))
             }
         }
 
