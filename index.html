@@ -7585,6 +7585,10 @@ function treeFlipApply(lay) {
   const vr = vp.getBoundingClientRect(), n = lay.nodes.get(fid), o = f.old.get(fid);
   const k = clamp(f.k, 0.18, 2.4);
   S.T.k = k; S.T.x = o.x - vr.left - (n.x + PAD) * k; S.T.y = o.y - vr.top - (n.y + PAD) * k;
+  /* Ohne leeren Rand: passt die neue Ansicht ganz hinein, bleibt sie ganz sichtbar, sonst wird der Rand gefüllt */
+  const W = (lay.w + PAD * 2) * k, H = (lay.h + PAD * 2) * k;
+  const fit = (v, size, view) => size <= view ? clamp(v, 0, view - size) : clamp(v, view - size, 0);
+  S.T.x = fit(S.T.x, W, vr.width); S.T.y = fit(S.T.y, H, vr.height);
   applyT(false);
   if (reduced || liteMode()) return true;
   const moves = [];
