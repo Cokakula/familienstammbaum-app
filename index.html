@@ -2244,6 +2244,43 @@ body.who-open .up-pill{display:none}
 .wo-add .ic{width:20px;height:20px}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.layer.story{animation:none}}
+
+/* 87 · Hinweise als Stapel */
+.hstack{margin:4px 0 14px}
+.hs-track{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-x:contain;align-items:flex-start;padding:2px 2px 4px;margin:-2px -2px 0;transition:height .25s ease}
+.hs-track::-webkit-scrollbar{display:none}
+.hs-item{flex:0 0 calc(100% - 26px);scroll-snap-align:start;scroll-snap-stop:always;min-width:0;display:flex;align-self:flex-start}
+.hs-item>*{margin:0!important;flex:1;min-width:0;box-sizing:border-box}
+.hs-item>.news-wrap{display:flex}
+.hs-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;padding:0 4px;font-size:.8rem;color:var(--muted)}
+.hs-dots{display:flex;gap:2px}
+.hs-dot{width:22px;height:22px;display:grid;place-items:center;border-radius:50%}
+.hs-dot::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--muted);opacity:.35;transition:transform .2s}
+.hs-dot.on::after{background:var(--accent);opacity:1;transform:scale(1.25)}
+/* 89 · Meine Leute */
+.mp-wrap{margin:2px 0 10px}
+.mp-h{margin:4px 0 6px!important}
+.mp-row{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px;margin:0 -2px;scroll-snap-type:x proximity}
+.mp-row::-webkit-scrollbar{display:none}
+.mp{position:relative;flex:none;width:62px;display:flex;flex-direction:column;align-items:center;gap:5px;scroll-snap-align:start;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
+.mp>span{font-size:.78rem;font-weight:600;max-width:62px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mp .av{transition:transform .15s}
+.mp:active .av{transform:scale(.94)}
+.mp-ph{position:absolute;top:34px;right:2px;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;border:2px solid var(--bg)}
+.mp-ph .ic{width:11px;height:11px}
+.mp.calling .av{box-shadow:0 0 0 4px var(--accent-soft)}
+/* 91 · Aus Kontakten */
+.ct-bar{margin:0 0 14px}
+.ct-btn{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;padding:10px 14px;border-radius:14px;background:var(--accent-soft);color:var(--accent);font-weight:700;text-align:left}
+.ct-btn .ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ct-head{display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 8px 8px 14px;border-radius:14px;background:var(--accent-soft)}
+.ct-ic{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;flex:none}
+.ct-ic .ic{width:15px;height:15px}
+.ct-t{flex:1;min-width:0;font-size:.92rem}
+.ct-other{padding:8px 12px;border-radius:10px;font-weight:700;color:var(--accent);min-height:40px}
+.field.ct-ok input,.field.ct-ok textarea{border-color:var(--accent);background-image:none}
+.ct-sugg{display:block;margin-top:6px;padding:7px 10px;border-radius:10px;border:1px dashed var(--accent);color:var(--ink);font-size:.86rem;text-align:left;width:100%}
+.ct-sugg b{font-weight:700}
 </style>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -6939,6 +6976,86 @@ async function personPhotoImgs(p, max) {
   return out;
 }
 
+/* ---------- 91 · Aus den Kontakten übernehmen ----------
+ * Im Formular einer Person: einen Kontakt aus dem Telefonbuch wählen. Name, Telefon, E-Mail, Adresse und
+ * (in der Android-App) Geburtstag kommen in leere Felder; ist ein Feld schon ausgefüllt, gibt es «Übernehmen».
+ * Gelesen wird nur der gewählte Kontakt, und nur auf dem Gerät. Android: App (ab 1.0.23) und Chrome; iPhone nicht.
+ */
+const CT_LAND = { CH: 'Schweiz', DE: 'Deutschland', AT: 'Österreich', XK: 'Kosovo', AL: 'Albanien', MK: 'Nordmazedonien', RS: 'Serbien', ME: 'Montenegro', IT: 'Italien', FR: 'Frankreich', US: 'USA', GB: 'Grossbritannien', SE: 'Schweden', NL: 'Niederlande', BE: 'Belgien', LI: 'Liechtenstein', TR: 'Türkei', HR: 'Kroatien', SI: 'Slowenien', NO: 'Norwegen', DK: 'Dänemark', CA: 'Kanada', AU: 'Australien' };
+function ctNative() { try { return !!(IN_APP && NATIVE && typeof NATIVE.pickContact === 'function'); } catch (e) { return false; } }
+function ctWeb() { try { return !IN_APP && 'contacts' in navigator && 'ContactsManager' in window && typeof navigator.contacts.select === 'function'; } catch (e) { return false; } }
+function contactsOk() { return ctNative() || ctWeb(); }
+function contactsBtn() {
+  if (!contactsOk()) return '';
+  return `<div class="ct-bar"><button type="button" class="ct-btn" data-ctpick><svg viewBox="0 0 24 24" aria-hidden="true" class="ic"><path d="M6 3h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6zM6 3v18M3 7h3M3 12h3M3 17h3M12.5 13a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM8.5 17.5c.6-1.8 2.2-3 4-3s3.4 1.2 4 3"/></svg><span>${esc(wkL('Aus Kontakten übernehmen', 'Merr prej kontakteve', 'Take from contacts'))}</span></button></div>`;
+}
+let ctWait = null;
+window.__fsContact = (json, denied) => { const r = ctWait; ctWait = null; if (r) r({ json, denied: !!denied }); };
+function ctSplit(name) {
+  const parts = String(name || '').replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
+  if (parts.length < 2) return { first: parts[0] || '', last: '' };
+  const last = parts.pop(); return { first: parts.join(' '), last };
+}
+function ctDate(s) {
+  s = String(s || '').trim(); let m;
+  if ((m = /^(\d{4})-?(\d{2})-?(\d{2})/.exec(s))) return `${m[3]}.${m[2]}.${m[1]}`;
+  if ((m = /^(\d{1,2})\.(\d{1,2})\.(\d{4})$/.exec(s))) return `${m[1].padStart(2, '0')}.${m[2].padStart(2, '0')}.${m[3]}`;
+  return '';
+}
+async function ctPick() {
+  if (ctNative()) {
+    const r = await new Promise(res => { ctWait = res; NATIVE.pickContact(); });
+    if (r.denied) throw { code: 'user', message: wkL('Ohne Zugriff auf die Kontakte geht es nicht. Erlaube ihn in den Einstellungen des Handys unter Apps → Familienstammbaum → Berechtigungen.', 'Pa qasje te kontaktet nuk bën. Lejoje te cilësimet e telefonit: Aplikacionet → Familienstammbaum → Lejet.', 'This needs access to your contacts. Allow it in the phone settings under Apps → Familienstammbaum → Permissions.') };
+    if (!r.json) return null;
+    const c = JSON.parse(r.json), sp = ctSplit(c.name);
+    const a = (c.addrs || [])[0] || null;
+    return { name: c.name || '', first: c.given || sp.first, last: c.family || sp.last, tel: c.tels || [], email: c.mails || [], bday: ctDate(c.bday), addr: a && { street: a.street || '', postcode: a.postcode || '', city: a.city || '', country: a.country || '', formatted: a.formatted || '' } };
+  }
+  let props = ['name', 'tel', 'email', 'address'];
+  try { const have = await navigator.contacts.getProperties(); props = props.filter(p => have.includes(p)); } catch (e) {}
+  const list = await navigator.contacts.select(props, { multiple: false });
+  const c = list && list[0]; if (!c) return null;
+  const sp = ctSplit((c.name || [])[0]);
+  const a = (c.address || [])[0];
+  return { name: (c.name || [])[0] || '', first: sp.first, last: sp.last, tel: c.tel || [], email: c.email || [], bday: '', addr: a ? { street: (a.addressLine || []).join(', '), postcode: a.postalCode || '', city: a.city || '', country: CT_LAND[String(a.country || '').toUpperCase()] || (String(a.country || '').length > 2 ? a.country : ''), formatted: '' } : null };
+}
+function ctFire(inp) { inp.dispatchEvent(new Event('input', { bubbles: true })); inp.dispatchEvent(new Event('change', { bubbles: true })); inp.dispatchEvent(new Event('blur')); }
+async function ctApply(el) {
+  const c = await ctPick(); if (!c) return;
+  const took = [];
+  const put = (sel, val, label, alts) => {
+    const inp = el.querySelector(sel); val = String(val || '').trim(); if (!inp || !val) return;
+    const fld = inp.closest('.field'); fld.querySelectorAll('.ct-sugg').forEach(x => x.remove());
+    const cur = inp.value.trim();
+    if (!cur) { inp.value = val; ctFire(inp); fld.classList.add('ct-ok'); took.push(label); }
+    else if (cur.replace(/\s+/g, '') !== val.replace(/\s+/g, '')) fld.insertAdjacentHTML('beforeend', `<button type="button" class="ct-sugg" data-ctset="${esc(sel)}" data-ctval="${esc(val)}">${esc(wkL('Aus Kontakt:', 'Prej kontaktit:', 'From contact:'))} <b translate="no">${esc(val.replace(/\n/g, ', '))}</b> · ${esc(wkL('Übernehmen', 'Merre', 'Use'))}</button>`);
+    (alts || []).forEach(v => { if (v && v.replace(/\s+/g, '') !== (inp.value || '').replace(/\s+/g, '')) fld.insertAdjacentHTML('beforeend', `<button type="button" class="ct-sugg" data-ctset="${esc(sel)}" data-ctval="${esc(v)}">${esc(wkL('Andere Nummer:', 'Numër tjetër:', 'Other number:'))} <b translate="no">${esc(v)}</b></button>`); });
+  };
+  put('#f-first', c.first, wkL('Vorname', 'Emri', 'First name'));
+  put('#f-last', c.last, wkL('Nachname', 'Mbiemri', 'Last name'));
+  const tels = [...new Set((c.tel || []).map(x => String(x).trim()).filter(Boolean))];
+  put('#f-ph', tels[0], wkL('Telefon', 'Telefoni', 'Phone'), tels.slice(1, 3));
+  put('#f-em', (c.email || [])[0], wkL('E-Mail', 'E-maili', 'Email'));
+  put('#f-bd', c.bday, wkL('Geburtstag', 'Ditëlindja', 'Birthday'));
+  if (c.addr) {
+    const a = c.addr, line2 = [a.postcode, a.city].filter(Boolean).join(' ');
+    const txt = a.street || line2 ? [a.street, line2].filter(Boolean).join('\n') : a.formatted;
+    put('#f-ad', txt, wkL('Adresse', 'Adresa', 'Address'));
+    if (a.country) put('#f-lc', a.country, wkL('Land', 'Shteti', 'Country'));
+  }
+  const bar = el.querySelector('.ct-bar');
+  if (bar) bar.innerHTML = `<div class="ct-head"><span class="ct-ic" aria-hidden="true">${I.check}</span><span class="ct-t">${esc(wkL('Aus Kontakten:', 'Prej kontakteve:', 'From contacts:'))} <b translate="no">${esc(c.name || [c.first, c.last].filter(Boolean).join(' '))}</b></span><button type="button" class="ct-other" data-ctpick>${esc(wkL('Anderer', 'Tjetër', 'Other'))}</button></div>`;
+  toast(took.length ? wkL(`Übernommen: ${took.join(', ')}`, `U morën: ${took.join(', ')}`, `Taken: ${took.join(', ')}`) : wkL('Nichts Neues im Kontakt', 'Asgjë e re në kontakt', 'Nothing new in this contact'));
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-ctpick]');
+  if (b) { e.preventDefault(); const el = b.closest('.layer'); if (el) act(() => ctApply(el)); return; }
+  const s = e.target.closest && e.target.closest('[data-ctset]'); if (!s) return;
+  e.preventDefault();
+  const el = s.closest('.layer'), inp = el && el.querySelector(s.dataset.ctset);
+  if (inp) { inp.value = s.dataset.ctval; ctFire(inp); const f = inp.closest('.field'); f.classList.add('ct-ok'); f.querySelectorAll('.ct-sugg').forEach(x => x.remove()); }
+});
+
 /* ---------- Tablet und Computer: Profil rechts neben Baum und Liste ---------- */
 const WIDE = window.matchMedia ? matchMedia('(min-width: 900px)') : { matches: false, addEventListener() {} };
 function isDocked(L) { return !!(L && L.dock && WIDE.matches); }
@@ -10972,6 +11089,73 @@ document.addEventListener('click', e => {
   mgPlay(g, b).then(() => { if (!simpleOn()) setTimeout(() => renderMain(), 400); });
 }, true);
 
+/* ---------- 89 · «Meine Leute» ganz oben in der Personenliste ----------
+ * Die Personen, die du am häufigsten öffnest, anrufst oder per WhatsApp schreibst, als Reihe runder Bilder.
+ * Gezählt wird nur auf diesem Gerät (nicht verschlüsselt nötig: nur Personen-IDs und Zahlen, bleibt lokal).
+ * Solange noch nichts gezählt ist, füllt die nächste Familie die Reihe. Antippen: Profil, gedrückt halten: anrufen.
+ */
+const MP_HALF = 30 * 864e5;
+function mpMap() { try { return JSON.parse(LS.get('useP') || '{}') || {}; } catch (e) { return {}; } }
+function mpScore(v, now) { return v ? v[0] * Math.pow(0.5, (now - v[1]) / MP_HALF) : 0; }
+function useBump(id, w) {
+  if (!id || !S.people.has(id) || id === myPersonId()) return;
+  const m = mpMap(), now = Date.now();
+  m[id] = [mpScore(m[id], now) + w, now];
+  const keys = Object.keys(m);
+  if (keys.length > 80) keys.sort((a, b) => mpScore(m[a], now) - mpScore(m[b], now)).slice(0, keys.length - 80).forEach(k => delete m[k]);
+  LS.set('useP', JSON.stringify(m));
+}
+function myPeople(n) {
+  const me = myPersonId(), m = mpMap(), now = Date.now();
+  const ok = id => id && id !== me && S.people.has(id) && !isDead(P(id));
+  const ids = Object.keys(m).filter(id => ok(id) && mpScore(m[id], now) >= 1).sort((a, b) => mpScore(m[b], now) - mpScore(m[a], now));
+  const mp = P(me);
+  if (mp && ids.length < n) {
+    const fam = [...partnersOf(mp).map(p => p.id), ...(mp.parentIds || []), ...childrenOf(me).map(p => p.id), ...siblingsOf(mp).map(p => p.id)];
+    childrenOf(me).forEach(c => childrenOf(c.id).forEach(g => fam.push(g.id)));
+    (mp.parentIds || []).forEach(pid => { const pp = P(pid); if (pp) (pp.parentIds || []).forEach(x => fam.push(x)); });
+    fam.forEach(id => { if (ok(id) && !ids.includes(id) && ids.length < n) ids.push(id); });
+  }
+  return ids.slice(0, n).map(P);
+}
+function myPeopleRow() {
+  if (simpleOn() || S.people.size < 4) return '';
+  const list = myPeople(10); if (list.length < 3) return '';
+  return `<div class="mp-wrap"><h2 class="section-h mp-h">${esc(wkL('Meine Leute', 'Njerëzit e mi', 'My people'))}</h2>
+    <div class="mp-row">${list.map(p => `<button type="button" class="mp" data-open="${esc(p.id)}"${p.phone ? ` data-mpcall="${esc(p.id)}"` : ''} aria-label="${esc(fullName(p) + (p.phone ? wkL(', gedrückt halten zum Anrufen', ', mbaje shtypur për të telefonu', ', press and hold to call') : ''))}">${avatar(p, 52)}${p.phone ? `<i class="mp-ph" aria-hidden="true">${I.phone}</i>` : ''}<span translate="no">${esc(callName(p))}</span></button>`).join('')}</div></div>`;
+}
+/* Gedrückt halten: anrufen (über einen echten tel:-Link, damit die Nacht-Rückfrage und das Zählen greifen) */
+let mpHold = null, mpLong = false;
+document.addEventListener('pointerdown', e => {
+  const b = e.target.closest && e.target.closest('.mp[data-mpcall]'); if (!b) return;
+  mpLong = false; clearTimeout(mpHold);
+  const x0 = e.clientX, y0 = e.clientY;
+  const cancel = ev => { if (!ev || ev.type !== 'pointermove' || Math.hypot(ev.clientX - x0, ev.clientY - y0) > 10) { clearTimeout(mpHold); document.removeEventListener('pointermove', cancel); document.removeEventListener('pointerup', cancel); document.removeEventListener('pointercancel', cancel); } };
+  document.addEventListener('pointermove', cancel); document.addEventListener('pointerup', cancel); document.addEventListener('pointercancel', cancel);
+  mpHold = setTimeout(() => {
+    cancel(null); mpLong = true;
+    const p = P(b.dataset.mpcall); if (!p || !p.phone) return;
+    try { navigator.vibrate && navigator.vibrate(30); } catch (x) {}
+    b.classList.add('calling'); setTimeout(() => b.classList.remove('calling'), 900);
+    const a = document.createElement('a'); a.href = 'tel:' + telHref(p.phone); a.dataset.callp = p.id; a.hidden = true;
+    document.body.appendChild(a); a.click(); setTimeout(() => a.remove(), 1000);
+  }, 550);
+});
+document.addEventListener('click', e => {
+  if (!mpLong) return;
+  const b = e.target.closest && e.target.closest('.mp'); if (!b) return;
+  mpLong = false; e.preventDefault(); e.stopImmediatePropagation();
+}, true);
+document.addEventListener('contextmenu', e => { if (e.target.closest && e.target.closest('.mp')) e.preventDefault(); });
+/* Zählen: Anrufe und WhatsApp zählen mehr als Öffnen */
+document.addEventListener('click', e => {
+  const a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
+  const h = a.getAttribute('href') || '';
+  if (/^tel:/.test(h) && a.dataset.callp) return useBump(a.dataset.callp, 3);
+  const m = /^https:\/\/wa\.me\/(\d{6,})/.exec(h); if (!m) return;
+  for (const p of S.people.values()) { const d = telHref(p.phone).replace(/^\+/, '').replace(/^00/, ''); if (d && d.length >= 6 && d === m[1]) return useBump(p.id, 3); }
+});
+
 /* ---------- Namen und Bedeutungen ----------
  * [Namen (Varianten mit /), Geschlecht, Bedeutung Deutsch, Wort/Erklärung Shqip, Herkunft]
  */
@@ -13257,6 +13441,54 @@ document.addEventListener('change', e => {
     }, 320);
   });
 })();
+
+/* ---------- 87 · Hinweise als Stapel ----------
+ * Oben in der Personenliste liegen die Hinweise (Geburtstagsgrüsse, Anrufe, Neues, Sicherung …) nicht mehr
+ * untereinander, sondern nebeneinander zum Wischen. Das Wichtigste zuerst, darunter «1 von 4» und Punkte.
+ */
+function hintStack(parts) {
+  const cards = parts.filter(x => x && String(x).trim());
+  if (cards.length < 2) return cards.join('');
+  const n = cards.length, i = Math.min(S.hsIdx || 0, n - 1);
+  return `<div class="hstack" data-hstack role="region" aria-roledescription="${esc(wkL('Stapel', 'Grumbull', 'Stack'))}" aria-label="${esc(wkL('Hinweise', 'Njoftime', 'Notices'))}">
+    <div class="hs-track">${cards.map((c, k) => `<div class="hs-item" role="group" aria-label="${k + 1} / ${n}">${c}</div>`).join('')}</div>
+    <div class="hs-foot"><span class="hs-n">${esc(hsLabel(i, n))}</span><span class="hs-dots">${cards.map((_, k) => `<button type="button" class="hs-dot${k === i ? ' on' : ''}" data-hsgo="${k}" aria-label="${esc(hsLabel(k, n))}"></button>`).join('')}</span></div></div>`;
+}
+function hsLabel(i, n) { return wkL(`${i + 1} von ${n}`, `${i + 1} nga ${n}`, `${i + 1} of ${n}`); }
+function hsPos(t, i) { const it = t.children; return it[i] ? it[i].offsetLeft - it[0].offsetLeft : 0; }
+function hsIndex(t) {
+  const it = t.children; let best = 0, d = Infinity;
+  for (let k = 0; k < it.length; k++) { const x = Math.abs(hsPos(t, k) - t.scrollLeft); if (x < d) { d = x; best = k; } }
+  return best;
+}
+function hsPaint(box, i) {
+  const items = box.querySelectorAll('.hs-item'), n = items.length;
+  /* Höhe folgt dem gezeigten Hinweis (ein kurzer Hinweis lässt keine Lücke) */
+  const t = box.querySelector('.hs-track'); if (t && items[i]) t.style.height = (items[i].offsetHeight + 6) + 'px';
+  const lab = box.querySelector('.hs-n'); if (lab) lab.textContent = hsLabel(i, n);
+  box.querySelectorAll('.hs-dot').forEach((d, k) => d.classList.toggle('on', k === i));
+}
+/* Nach dem Neuzeichnen der Liste: beim zuletzt gezeigten Hinweis bleiben */
+function hstackRestore(root) {
+  const t = root && root.querySelector('.hs-track'); if (!t) return;
+  const n = t.children.length; if (!n) return;
+  const i = Math.min(S.hsIdx || 0, n - 1);
+  if (i) { t.style.scrollBehavior = 'auto'; t.scrollLeft = hsPos(t, i); t.style.scrollBehavior = ''; }
+  t.style.transition = 'none'; hsPaint(t.closest('.hstack'), i); void t.offsetHeight; t.style.transition = '';
+  /* Wächst ein Hinweis nachträglich (Bilder geladen), Höhe nachführen */
+  if (window.ResizeObserver) { const box = t.closest('.hstack'), ro = new ResizeObserver(() => { if (!box.isConnected) return ro.disconnect(); hsPaint(box, Math.min(S.hsIdx || 0, n - 1)); }); [...t.children].forEach(x => ro.observe(x)); }
+}
+document.addEventListener('scroll', e => {
+  const t = e.target; if (!t || !t.classList || !t.classList.contains('hs-track')) return;
+  const i = hsIndex(t); if (i === S.hsIdx) return;
+  S.hsIdx = i; hsPaint(t.closest('.hstack'), i);
+}, true);
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-hsgo]'); if (!b) return;
+  const box = b.closest('.hstack'), t = box && box.querySelector('.hs-track'); if (!t) return;
+  const i = +b.dataset.hsgo; S.hsIdx = i;
+  t.scrollTo({ left: hsPos(t, i), behavior: reduced ? 'auto' : 'smooth' }); hsPaint(box, i);
+});
 
 /* ---------- Sternenhimmel der Erinnerung: die Verstorbenen als Sterne ---------- */
 function starHash(id) { let h = 2166136261; for (const ch of String(id)) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; } return h; }
@@ -15949,6 +16181,7 @@ function setMain(key, html, noScroll) {
   const changedView = main.dataset.v !== key;
   main.dataset.v = key; main.classList.toggle('no-scroll', !!noScroll);
   main.innerHTML = html;
+  hstackRestore(main);
   if (changedView && !reduced && main.firstElementChild) main.firstElementChild.classList.add('v-enter');
   return main;
 }
@@ -16409,7 +16642,8 @@ function renderPeopleList() {
   const q = norm(S.q);
   let html = askHintRow() + relChipsHtml() + sideLegend();
   if (!q) {
-    html += appNewsCard() + pushCard() + welcomeBanner() + mgBanner() + greetBanner() + apkUpdBanner() + backupBanner() + bkCheckBanner() + candleBanner() + termsBanner() + callsBanner() + wichtelBanner() + roundBanner() + eduYearBanner() + holBanner() + eventsBanner() + newsBanner() + onThisDayBanner() + yearBanner() + installBanner();
+    /* 89 · «Meine Leute», dann 87 · alle Hinweise als Stapel (das Wichtigste zuerst) */
+    html += myPeopleRow() + hintStack([greetBanner(), callsBanner(), newsBanner(), candleBanner(), termsBanner(), eventsBanner(), roundBanner(), wichtelBanner(), onThisDayBanner(), holBanner(), eduYearBanner(), yearBanner(), welcomeBanner(), mgBanner(), appNewsCard(), pushCard(), apkUpdBanner(), backupBanner(), bkCheckBanner(), installBanner()]);
     const b = upcomingBirthdays(45).filter(x => x.p.id === myPersonId() || bdnWanted(x.p, x.age)).slice(0, 10);
     if (b.length) html += `<div class="sec-row"><h2 class="section-h">Nächste Geburtstage</h2><button type="button" class="mini-btn bdn-mini" data-act="bdn" aria-label="Geburtstags-Erinnerungen">${BDN_BELL}</button></div><div class="bday-row">${b.map(x => `<button type="button" class="bday${x.days === 0 ? ' today' : ''}${isRoundAge(x.age) ? ' round' : ''}" data-open="${x.p.id}">${avatar(x.p, 40)}<span class="when">${x.days === 0 ? 'Heute 🎉' : x.days === 1 ? 'Morgen' : `in ${x.days} Tagen`}</span><span class="bn">${esc(fullName(x.p))}</span><span class="bs">${isRoundAge(x.age) ? '🎉 ' : ''}wird ${x.age} · ${esc(x.label)}</span></button>`).join('')}</div>`;
   }
@@ -16418,6 +16652,7 @@ function renderPeopleList() {
   html += `<h2 class="section-h">${q ? `${list.length} Treffer${list.similar ? ` · ${wkL(`${list.similar} ähnlich geschrieben`, `${list.similar} të shkruar ngjashëm`, `${list.similar} with similar spelling`)}` : ''}` : `${all.length} ${all.length === 1 ? 'Person' : 'Personen'}`}</h2>`;
   html += list.length ? `<div class="card list">${list.map(p => q && p.phone ? `<div class="rw">${rowHtml(p, home)}<a class="rw-call" href="tel:${esc(telHref(p.phone))}" data-callp="${esc(p.id)}" target="_blank" rel="noopener" aria-label="Anrufen">${I.phone}</a></div>` : rowHtml(p, home)).join('')}</div>` : '<p class="empty-note">Niemand gefunden.</p>';
   el.innerHTML = html;
+  hstackRestore(el);
 }
 
 /* ---------- Ansicht: Fotos ---------- */
@@ -16452,6 +16687,7 @@ function renderPhotosView(main) {
 function openPerson(id) {
   if (!S.people.has(id)) return;
   if (peekTop()) { closeLayer(peekTop()).then(() => openPerson(id)); return; }
+  useBump(id, 1);
   const top = layers[layers.length - 1];
   /* Breiter Bildschirm: Antippen im Baum oder in der Liste ersetzt das angedockte Profil */
   if (WIDE.matches && top && layers.every(x => x.dock) && !(lastTap && lastTap.el && lastTap.el.closest && lastTap.el.closest('.layer'))) {
@@ -16670,6 +16906,7 @@ function personForm({ id = null, preset = {}, title = '', rel = null, note = '' 
     L.el.innerHTML = `<div class="layer-head"><button type="button" class="icon-btn" data-act="cancel" aria-label="Abbrechen">${I.close}</button><h2>${esc(title || (prev ? 'Person bearbeiten' : 'Neue Person'))}</h2></div>
       <form class="layer-body narrow" novalidate>
         ${note ? `<p class="prefill-note">${I.spark}<span>${esc(note)}</span></p>` : ''}
+        ${contactsBtn()}
         <div>
         <div class="two">
           <div class="field"><label for="f-first">Vorname</label><input id="f-first" autocomplete="off" autocapitalize="words" enterkeyhint="next"></div>
