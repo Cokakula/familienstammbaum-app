@@ -2086,6 +2086,71 @@ html[data-theme="dark"] .kb-txt p,html[data-theme="dark"] .kb-page h3{color:var(
 .gq-qr svg{width:100%;height:100%}
 .gq-tip{font-size:.84rem}
 .mv-play{margin-top:10px}
+
+/* 70 · Vorschau-Blatt im Baum */
+.layer.peek{top:auto;left:0;right:0;bottom:0;height:auto;background:none;pointer-events:none;animation:none}
+.pk-sheet{pointer-events:auto;margin:0 auto;max-width:560px;background:var(--surface);border-radius:24px 24px 0 0;box-shadow:0 -8px 28px rgba(0,0,0,.18);padding:8px 16px calc(14px + env(safe-area-inset-bottom));animation:pkup .26s cubic-bezier(.2,.8,.2,1);transition:transform .22s cubic-bezier(.2,.8,.2,1);touch-action:none}
+@keyframes pkup{from{transform:translateY(100%)}to{transform:none}}
+.pk-grab{width:42px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 10px}
+.pk-top{display:flex;align-items:flex-start;gap:12px}
+.pk-av{flex:none;border-radius:50%}
+.pk-m{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;padding-top:4px}
+.pk-m b{font-size:1.15rem;line-height:1.2}
+.pk-rel{color:var(--accent);font-weight:700;font-size:.92rem}
+.pk-sub{color:var(--muted);font-size:.85rem}
+.pk-m .ltime{margin-top:6px;font-size:.8rem;padding:5px 10px}
+.pk-acts{display:flex;gap:6px;margin-top:12px}
+.pk-b{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:56px;border-radius:14px;background:var(--bg);color:var(--ink);font-size:.76rem;font-weight:700;text-decoration:none}
+.pk-b svg{width:22px;height:22px;color:var(--accent)}
+.pk-b.pk-main{background:var(--accent);color:#fff}
+.pk-b.pk-main svg{color:#fff}
+.pk-hint{margin:8px 0 0;text-align:center;color:var(--muted);font-size:.74rem}
+html.lite .pk-sheet{animation:none}
+/* 73 · Seitenfarben */
+.av{position:relative}
+.sdot{position:absolute;left:11%;bottom:11%;width:19%;height:19%;min-width:8px;min-height:8px;max-width:14px;max-height:14px;border-radius:50%;box-shadow:0 0 0 2px var(--surface);z-index:1;display:block}
+.sd-v{background:#3E9A62}
+.sd-m{background:#E58A26}
+.sd-b{background:conic-gradient(#3E9A62 0 50%,#E58A26 50% 100%)}
+.sd-i{background:#9AA5A0}
+.side-legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin:2px 4px 10px;font-size:.78rem;color:var(--muted)}
+.side-legend span{display:inline-flex;align-items:center;gap:6px}
+.side-legend .sdot{position:static;width:10px;height:10px;min-width:10px;min-height:10px}
+/* 75 · Jahres-Leiste bei den Fotos */
+.ph-sort{margin-top:10px;grid-template-columns:1fr 1fr}
+.ph-sort button{white-space:nowrap;padding:0 10px}
+body.has-peek .toast{bottom:calc(var(--pk-h,280px) + 14px)}
+body.has-peek .up-pill{bottom:calc(var(--pk-h,280px) + 10px)}
+.ph-scrub{position:fixed;right:0;top:150px;bottom:110px;width:34px;z-index:40;touch-action:none;opacity:0;transition:opacity .25s}
+.ph-scrub.show,.ph-scrub:hover{opacity:1}
+.ps-track{position:absolute;right:6px;top:0;bottom:0;width:4px;border-radius:2px;background:rgba(0,0,0,.08)}
+.ps-track span{position:absolute;right:10px;transform:translateY(-50%);font-size:.66rem;font-weight:700;color:var(--muted);background:var(--bg);padding:0 3px;border-radius:4px;white-space:nowrap}
+.ps-thumb{position:absolute;right:2px;width:12px;height:34px;margin-top:-17px;border-radius:6px;background:var(--accent);box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.ps-bubble{position:absolute;right:28px;transform:translateY(-50%);padding:8px 14px;border-radius:14px;background:var(--accent);color:#fff;font-weight:800;font-size:1.3rem;white-space:nowrap;box-shadow:0 6px 16px rgba(0,0,0,.25);opacity:0;transition:opacity .15s;pointer-events:none}
+.ph-scrub.drag .ps-bubble,.ph-scrub.show .ps-bubble{opacity:1}
+.ph-scrub:not(.drag) .ps-bubble{font-size:1rem;padding:6px 10px}
+/* 78 · Hochladen im Hintergrund */
+.up-pill{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom));z-index:450;display:flex;align-items:center;gap:10px;max-width:calc(100% - 24px);padding:9px 14px;border-radius:22px;background:#1F2A26;color:#fff;font-size:.86rem;font-weight:600;box-shadow:0 8px 22px rgba(0,0,0,.3);overflow:hidden}
+.up-pill .up-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.up-spin{width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.3);border-top-color:#9FE0BE;animation:upspin .8s linear infinite;flex:none}
+@keyframes upspin{to{transform:rotate(360deg)}}
+.up-bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.12)}
+.up-bar i{display:block;height:100%;background:#9FE0BE;transition:width .3s}
+.up-ic{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#E5534B;font-weight:800;font-size:.8rem;flex:none}
+.up-ic.ok{background:#3E9A62}
+.up-go{padding:3px 10px;border-radius:12px;background:rgba(255,255,255,.18);font-weight:700}
+body.has-layer .up-pill{bottom:calc(16px + env(safe-area-inset-bottom))}
+.up-list{display:flex;flex-direction:column;gap:6px;max-height:44vh;overflow:auto;padding:0 20px 8px}
+.up-row{display:flex;align-items:center;gap:10px}
+.up-row img,.up-noimg{width:44px;height:44px;border-radius:10px;object-fit:cover;background:var(--line);flex:none}
+.up-n{flex:1;min-width:0;display:flex;flex-direction:column;font-size:.86rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.up-n small{color:#C0392B;white-space:normal}
+.up-s{font-weight:800;width:22px;text-align:center}
+.up-row.st-ok .up-s{color:#3E9A62}.up-row.st-err .up-s{color:#C0392B}
+/* 79 · Fliessender Ansichtswechsel */
+#treeWorld.flip-run .flip-in{animation:flipin .45s ease-out both}
+#treeWorld.flip-run .tree-svg{animation:flipin .5s ease-out both}
+@keyframes flipin{from{opacity:0}to{opacity:1}}
 </style>
 </head>
 <body>
@@ -7490,6 +7555,45 @@ function filmChip(p) {
   return `<button type="button" class="tool-chip" data-act="film">${I.play}<span>Lebensfilm</span></button>`;
 }
 
+/* ---------- 79 · Fliessender Wechsel zwischen Baumansichten ----------
+ * Die gewählte Person bleibt an ihrer Stelle, alle anderen gleiten an den neuen Platz.
+ */
+function treeFlipPrep() {
+  const world = document.getElementById('treeWorld'), vp = document.getElementById('treeVp');
+  if (!world || !vp || !S.lay) return;
+  const fid = [S.focusId, refId(), S.lay.rootId].find(id => id && S.lay.nodes.has(id));
+  const old = new Map();
+  world.querySelectorAll('.node:not(.dup)').forEach(n => { if (!old.has(n.dataset.id)) { const r = n.getBoundingClientRect(); old.set(n.dataset.id, { x: r.left, y: r.top }); } });
+  S.flip = { fid, old, k: S.T.k, at: fid ? old.get(fid) : null, t: Date.now() };
+}
+/* Nach dem Zeichnen der neuen Ansicht: true = Lage übernommen (nicht neu zentrieren) */
+function treeFlipApply(lay) {
+  const f = S.flip; S.flip = null;
+  if (!f || Date.now() - f.t > 3000) return false;
+  const vp = document.getElementById('treeVp'), world = document.getElementById('treeWorld'); if (!vp || !world) return false;
+  const fid = f.fid && lay.nodes.has(f.fid) ? f.fid : [...f.old.keys()].find(id => lay.nodes.has(id));
+  if (!fid || !f.old.has(fid)) return false;
+  const vr = vp.getBoundingClientRect(), n = lay.nodes.get(fid), o = f.old.get(fid);
+  const k = clamp(f.k, 0.18, 2.4);
+  S.T.k = k; S.T.x = o.x - vr.left - (n.x + PAD) * k; S.T.y = o.y - vr.top - (n.y + PAD) * k;
+  applyT(false);
+  if (reduced || liteMode()) return true;
+  const moves = [];
+  world.querySelectorAll('.node').forEach(el => {
+    const was = !el.classList.contains('dup') && f.old.get(el.dataset.id);
+    if (was) { const r = el.getBoundingClientRect(); const dx = (was.x - r.left) / k, dy = (was.y - r.top) / k; if (Math.abs(dx) > 1 || Math.abs(dy) > 1) moves.push([el, dx, dy]); }
+    else el.classList.add('flip-in');
+  });
+  world.classList.add('flip-run');
+  moves.forEach(([el, dx, dy]) => { el.style.transition = 'none'; el.style.translate = `${dx.toFixed(1)}px ${dy.toFixed(1)}px`; });
+  void world.offsetWidth;
+  requestAnimationFrame(() => {
+    moves.forEach(([el]) => { el.style.transition = 'translate .5s cubic-bezier(.2,.8,.2,1)'; el.style.translate = '0px 0px'; });
+    setTimeout(() => { moves.forEach(([el]) => { el.style.transition = ''; el.style.translate = ''; }); world.querySelectorAll('.flip-in').forEach(x => x.classList.remove('flip-in')); world.classList.remove('flip-run'); }, 650);
+  });
+  return true;
+}
+
 /* ---------- Schriftart wählen, Lade-Animation, Baum: neu und Geburtstag ---------- */
 const FONT_FAMS = [['modern', 'Modern', '"Figtree",system-ui,sans-serif', ''], ['klassisch', 'Klassisch', '"Lora",Georgia,serif', 'Lora:wght@400;500;600;700'], ['rund', 'Rund', '"Nunito",ui-rounded,system-ui,sans-serif', 'Nunito:wght@400;500;600;700;800'], ['klar', 'Gut lesbar', '"Atkinson Hyperlegible",Verdana,system-ui,sans-serif', 'Atkinson+Hyperlegible:wght@400;700']];
 function fontFam() { const v = LS.get('fontFam'); return FONT_FAMS.some(f => f[0] === v) ? v : 'modern'; }
@@ -11106,6 +11210,94 @@ function pcardBind(L) {
   }, { passive: true });
 }
 
+/* ---------- 70 · Vorschau-Blatt im Baum: halbes Blatt statt ganzes Profil ----------
+ * Nur auf dem Handy (auf breiten Bildschirmen steht das Profil ohnehin neben dem Baum). Der Baum bleibt bedienbar.
+ */
+function peekOn() { return !WIDE.matches && LS.get('treePeek') !== 'off' && !simpleOn(); }
+function peekTop() { const t = layers[layers.length - 1]; return t && t.kind === 'peek' ? t : null; }
+function treePeek(id) {
+  if (!P(id)) return;
+  S.focusId = id;
+  document.querySelectorAll('#treeWorld .node.focus').forEach(n => n.classList.remove('focus'));
+  document.querySelectorAll(`#treeWorld .node[data-id="${CSS.escape(id)}"]:not(.dup)`).forEach(n => n.classList.add('focus'));
+  const cur = peekTop();
+  if (cur) { cur.id = id; cur.at = Date.now(); cur.render(); peekReveal(cur); peekBody(cur); return; }
+  const L = mkLayer('layer peek', 'peek'); L.id = id; L.live = true; L.at = Date.now();
+  L.render = () => {
+    const p = P(L.id); if (!p) return closeLayer(L);
+    const ref = refId(), r = ref && ref !== p.id ? relation(ref, p.id) : null;
+    const rel = p.id === ref ? (viewAsId() ? wkL('Ansicht', 'Pamja', 'View') : myPersonId() === p.id ? wkL('Das bist du', 'Ky je ti', 'That\'s you') : '') : r ? relLine(r) : '';
+    const lw = !isDead(p) && liveWhere(p), n = photosOf(p.id).length;
+    const sub = [lifeShort(p), lw ? (lw.place || lw.land) : ''].filter(Boolean).join(' · ');
+    const tel = !isDead(p) && p.phone ? telHref(p.phone) : '', wa = !isDead(p) && p.phone ? waHref(p.phone) : '';
+    L.el.innerHTML = `<div class="pk-sheet">
+      <div class="pk-grab" aria-hidden="true"></div>
+      <div class="pk-top"><button type="button" class="pk-av" data-pk="full" aria-label="${esc(wkL('Profil öffnen', 'Hap profilin', 'Open profile'))}">${avatar(p, 64)}</button>
+        <div class="pk-m"><b translate="no">${esc(fullName(p))}</b>${rel ? `<span class="pk-rel" translate="no">${esc(rel)}</span>` : ''}${sub ? `<span class="pk-sub">${esc(sub)}</span>` : ''}${localTimeHtml(p)}</div>
+        <button type="button" class="icon-btn sm" data-pk="close" aria-label="${esc(wkL('Schliessen', 'Mbyll', 'Close'))}">${I.close}</button></div>
+      <div class="pk-acts">
+        ${tel ? `<a class="pk-b" href="${esc(tel)}" data-callp="${esc(p.id)}">${I.phone}<span>${wkL('Anrufen', 'Telefono', 'Call')}</span></a>` : ''}
+        ${wa ? `<a class="pk-b" href="${esc(wa)}" target="_blank" rel="noopener">${I.chat}<span>WhatsApp</span></a>` : ''}
+        ${n ? `<button type="button" class="pk-b" data-pk="photos">${I.photos}<span>${wkL('Fotos', 'Foto', 'Photos')} ${n}</span></button>` : ''}
+        <button type="button" class="pk-b pk-main" data-pk="full">${I.chevR}<span>${wkL('Profil', 'Profili', 'Profile')}</span></button>
+      </div>
+      <p class="pk-hint">${esc(wkL('Nach oben wischen für das ganze Profil', 'Rrëshqit lart për profilin e plotë', 'Swipe up for the full profile'))}</p>
+    </div>`;
+  };
+  const full = jump => {
+    const id = L.id;
+    closeLayer(L).then(() => { openPerson(id); if (jump) setTimeout(() => { const t = layers[layers.length - 1]; if (t && t.kind !== 'peek') pcardJump(t, jump); }, 380); });
+  };
+  L.el.addEventListener('click', e => {
+    const b = e.target.closest('[data-pk]'); if (!b) return;
+    if (b.dataset.pk === 'close') return closeLayer(L);
+    if (b.dataset.pk === 'full') return full();
+    if (b.dataset.pk === 'photos') return full('photos');
+  });
+  /* Wischen: hoch = ganzes Profil, runter = schliessen */
+  let sy = null, dy = 0;
+  L.el.addEventListener('pointerdown', e => { if (e.target.closest('a,button:not(.pk-av)')) return; sy = e.clientY; dy = 0; const sh = L.el.querySelector('.pk-sheet'); sh.style.transition = 'none'; try { sh.setPointerCapture(e.pointerId); } catch (x) {} });
+  L.el.addEventListener('pointermove', e => { if (sy == null) return; dy = e.clientY - sy; L.el.querySelector('.pk-sheet').style.transform = `translateY(${dy > 0 ? dy : dy / 3}px)`; });
+  const end = () => {
+    if (sy == null) return; sy = null;
+    const sh = L.el.querySelector('.pk-sheet'); sh.style.transition = ''; sh.style.transform = '';
+    if (dy < -50) full(); else if (dy > 70) closeLayer(L);
+  };
+  L.el.addEventListener('pointerup', end); L.el.addEventListener('pointercancel', end);
+  L.onClose = () => { document.querySelectorAll('#treeWorld .node.focus').forEach(n => n.classList.remove('focus')); peekBody(false); };
+  pushLayer(L);
+  requestAnimationFrame(() => { peekReveal(L); peekBody(L); });
+}
+/* Hinweise (Toast, Hochlade-Pille) über dem Blatt anzeigen statt darauf */
+function peekBody(L) {
+  const sh = L && L.el && L.el.querySelector('.pk-sheet');
+  document.body.classList.toggle('has-peek', !!sh);
+  if (sh) document.body.style.setProperty('--pk-h', Math.round(sh.getBoundingClientRect().height) + 'px');
+}
+/* Die angetippte Person nicht unter dem Blatt verstecken */
+function peekReveal(L) {
+  const n = document.querySelector(`#treeWorld .node[data-id="${CSS.escape(L.id)}"]:not(.dup)`), sh = L.el.querySelector('.pk-sheet');
+  if (!n || !sh) return;
+  const r = n.getBoundingClientRect(), top = sh.getBoundingClientRect().top, vp = $('#treeVp'); if (!vp) return;
+  const vr = vp.getBoundingClientRect();
+  let d = 0;
+  if (r.bottom > top - 16) d = (top - 16) - r.bottom;
+  else if (r.top < vr.top + 8) d = vr.top + 8 - r.top;
+  if (d) { S.T.y += d; applyT(true); }
+}
+/* Antippen ausserhalb (ohne Verschieben) schliesst das Blatt */
+(function () {
+  let dx = 0, dy0 = 0, downT = null;
+  document.addEventListener('pointerdown', e => { dx = e.clientX; dy0 = e.clientY; downT = e.target; }, true);
+  document.addEventListener('click', e => {
+    const L = peekTop(); if (!L || L.el.contains(e.target) || Date.now() - (L.at || 0) < 400) return;
+    const t = downT && downT.closest ? downT : e.target;   /* der Baum fängt den Zeiger ein: zählen, wo der Finger aufgesetzt hat */
+    if (t.closest && (t.closest('#treeWorld .node') || t.closest('.zoom') || t.closest('#toast') || L.el.contains(t))) return;
+    if (Math.hypot(e.clientX - dx, e.clientY - dy0) > 8) return;
+    closeLayer(L);
+  }, true);
+})();
+
 /* ---------- 66 · Verwandtschaft auf dem Gruppenfoto: über jedem markierten Gesicht die eigene Bezeichnung ---------- */
 function lbRelText(pid) {
   const ref = refId(); if (!ref) return '';
@@ -11125,6 +11317,65 @@ function lbRelBtn(L, tags) {
   const who = viewAsId() ? callName(P(ref)) : '';
   return `<button type="button" class="lb-toggle lb-rel${L.relTags ? ' on' : ''}" data-act="reltags">${I.people}<span>${L.relTags ? wkL('Nur Namen', 'Vetëm emrat', 'Names only') : who ? wkL(`Wer ist wer für ${who}?`, `Kush është kush për ${who}?`, `Who is who for ${who}?`) : wkL('Wer ist wer für mich?', 'Kush është kush për mua?', 'Who is who for me?')}</span></button>`;
 }
+
+/* ---------- 75 · Jahres-Leiste bei den Fotos: am rechten Rand ziehen, die Jahreszahl erscheint gross ---------- */
+function phYear(ph) { const d = parseIso(ph.date); return d && d.y ? d.y : null; }
+/* Beschriftung in der Blase: Aufnahmejahr, sonst Monat und Jahr des Hochladens */
+function phLabel(ph) {
+  if (phSortYear()) return phYear(ph) || wkL('ohne Datum', 'pa datë', 'no date');
+  const d = new Date(ph.createdAt || Date.now());
+  return `${(uiLang() === 'sq' ? KB_MON_SQ : uiLang() === 'en' ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] : MONTHS)[d.getMonth()]} ${d.getFullYear()}`;
+}
+function photosByYearDesc(list) { return [...list].sort((a, b) => { const x = a.date || '', y = b.date || ''; if (!x !== !y) return x ? -1 : 1; return y.localeCompare(x) || (b.createdAt || 0) - (a.createdAt || 0); }); }
+function phSortYear() { return LS.get('phSort') === 'year'; }
+function phSortHtml() {
+  return `<div class="segctl ph-sort" role="group" aria-label="${esc(wkL('Sortierung', 'Renditja', 'Sort order'))}"><button type="button" data-phsort="new" aria-pressed="${!phSortYear()}">${wkL('Neu hochgeladen', 'Të ngarkuara rishtas', 'Newly uploaded')}</button><button type="button" data-phsort="year" aria-pressed="${phSortYear()}">${wkL('Nach Aufnahmejahr', 'Sipas vitit', 'By year taken')}</button></div>`;
+}
+function phScrubMount(list) {
+  let sc = document.getElementById('phScrub');
+  const grid = document.querySelector('#phGrid .grid');
+  if (!grid || list.length < 12) { if (sc) sc.remove(); return; }
+  const years = list.map(phLabel);
+  if (!sc) {
+    sc = document.createElement('div'); sc.id = 'phScrub'; sc.className = 'ph-scrub';
+    sc.innerHTML = '<div class="ps-track"></div><div class="ps-thumb"></div><div class="ps-bubble" aria-hidden="true"></div>';
+    document.body.appendChild(sc);
+    let drag = false;
+    const at = (clientY, jump) => {
+      const r = sc.getBoundingClientRect(), f = clamp((clientY - r.top) / r.height, 0, 1);
+      const L = sc._list || [], i = Math.round(f * Math.max(0, L.length - 1));
+      const y = sc._years[i];
+      const b = sc.querySelector('.ps-bubble'); b.textContent = y || '–'; b.style.top = (f * r.height) + 'px';
+      sc.querySelector('.ps-thumb').style.top = (f * r.height) + 'px';
+      sc.classList.add('show', 'drag');
+      if (jump) { const el = document.querySelector(`#phGrid .grid [data-photo="${i}"]`); if (el) el.scrollIntoView({ block: 'start' }); }
+    };
+    sc.addEventListener('pointerdown', e => { drag = true; try { sc.setPointerCapture(e.pointerId); } catch (x) {} at(e.clientY, true); e.preventDefault(); });
+    sc.addEventListener('pointermove', e => { if (drag) at(e.clientY, true); });
+    const up = () => { drag = false; sc.classList.remove('drag'); clearTimeout(sc._t); sc._t = setTimeout(() => sc.classList.remove('show'), 1400); };
+    sc.addEventListener('pointerup', up); sc.addEventListener('pointercancel', up);
+    /* Beim normalen Scrollen kurz zeigen, wo man gerade ist */
+    const scroller = document.getElementById('main');
+    const onScroll = () => {
+      if (!document.getElementById('phScrub') || drag) return;
+      const g = document.querySelector('#phGrid .grid'); if (!g) return;
+      const items = g.querySelectorAll('[data-photo]'); if (!items.length) return;
+      const r = sc.getBoundingClientRect(), top = sc.getBoundingClientRect().top;
+      let i = 0; for (const it of items) { if (it.getBoundingClientRect().bottom > top + 4) { i = +it.dataset.photo; break; } }
+      const f = (sc._list || []).length > 1 ? i / (sc._list.length - 1) : 0;
+      sc.querySelector('.ps-thumb').style.top = (f * r.height) + 'px';
+      const b = sc.querySelector('.ps-bubble'); b.textContent = sc._years[i] || '–'; b.style.top = (f * r.height) + 'px';
+      sc.classList.add('show'); clearTimeout(sc._t); sc._t = setTimeout(() => sc.classList.remove('show'), 1200);
+    };
+    (scroller || window).addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+  sc._list = list; sc._years = years;
+  const marks = [];
+  if (phSortYear()) { let last = null; list.map(phYear).forEach((y, i) => { if (!y) return; const d = Math.floor(y / 10) * 10; if (d !== last) { marks.push([i, last == null ? y : d]); last = d; } }); }
+  sc.querySelector('.ps-track').innerHTML = marks.length > 1 ? marks.map(([i, y]) => `<span style="top:${(i / Math.max(1, list.length - 1) * 100).toFixed(1)}%">${y}</span>`).join('') : '';
+}
+function phScrubRemove() { const sc = document.getElementById('phScrub'); if (sc) sc.remove(); }
 
 /* ---------- Familien-Pinnwand: kurze Neuigkeiten mit Foto (verschlüsselt wie alles andere) ---------- */
 function postsSorted() { return [...(S.posts || new Map()).values()].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)); }
@@ -12008,6 +12259,59 @@ async function sibsImage(p, row, par) {
   return await new Promise(res => cv.toBlob(res, 'image/jpeg', 0.92));
 }
 
+/* ---------- 73 · Seitenfarben: Vaterseite, Mutterseite, beide Seiten, angeheiratet (aus der eigenen Sicht) ---------- */
+const SIDE_CACHE = new WeakMap();
+function sidesOn() { return LS.get('sides') !== 'off'; }
+function sideMap() {
+  const ref = refId(); if (!ref || !S.people) return null;
+  let c = SIDE_CACHE.get(S.people);
+  if (c && c.ref === ref) return c.map;
+  const r = P(ref), map = new Map();
+  const pars = (r && r.parentIds || []).map(P).filter(Boolean);
+  const F = pars.find(x => x.gender === 'm') || (pars.length === 2 ? pars.find(x => x.gender !== 'w') : null);
+  const M = pars.find(x => x !== F && x) || null;
+  const AF = F ? ancDepths(F.id) : new Map(), AM = M ? ancDepths(M.id) : new Map();
+  S.people.forEach((p, id) => {
+    if (id === ref) return;
+    const D = ancDepths(id);
+    const inF = [...D.keys()].some(k => AF.has(k)), inM = [...D.keys()].some(k => AM.has(k));
+    let s = '';
+    if (D.has(ref) || (inF && inM)) s = 'b'; else if (inF) s = 'v'; else if (inM) s = 'm';
+    else if (relation(ref, id)) s = 'i';
+    if (s) map.set(id, s);
+  });
+  SIDE_CACHE.set(S.people, { ref, map });
+  return map;
+}
+function sideOf(id) { if (!sidesOn()) return ''; const m = sideMap(); return m ? m.get(id) || '' : ''; }
+const SIDE_NAME = { v: ['Vaterseite', 'Nga babai', 'Father\'s side'], m: ['Mutterseite', 'Nga nana', 'Mother\'s side'], b: ['Beide Seiten', 'Nga të dy anët', 'Both sides'], i: ['Angeheiratet', 'Nga martesa', 'By marriage'] };
+function sideDot(p) {
+  const s = p && sideOf(p.id); if (!s) return '';
+  return `<i class="sdot sd-${s}" title="${esc(wkL(...SIDE_NAME[s]))}" aria-hidden="true"></i>`;
+}
+function sideLegend() {
+  const m = sidesOn() && sideMap(); if (!m || !m.size) return '';
+  const has = new Set(m.values());
+  return `<div class="side-legend" aria-label="${esc(wkL('Farbpunkte', 'Pikat me ngjyrë', 'Colour dots'))}">${['v', 'm', 'b', 'i'].filter(k => has.has(k)).map(k => `<span><i class="sdot sd-${k}"></i>${esc(wkL(...SIDE_NAME[k]))}</span>`).join('')}</div>`;
+}
+function sidesSetHtml() {
+  const on = sidesOn();
+  return `<div class="field" style="margin-top:16px"><span class="lbl">${wkL('Seitenfarben', 'Ngjyrat e anëve', 'Side colours')}</span><div class="segctl" role="group"><button type="button" data-sides="on" aria-pressed="${on}">${wkL('An', 'Ndezur', 'On')}</button><button type="button" data-sides="off" aria-pressed="${!on}">${wkL('Aus', 'Fikur', 'Off')}</button></div><p class="gl-note">${wkL('Ein kleiner Punkt am Bild zeigt, von welcher Seite jemand kommt: grün Vaterseite, orange Mutterseite, halb/halb beide Seiten, grau angeheiratet. Gilt aus deiner Sicht.', 'Një pikë e vogël te fotoja tregon nga cila anë vjen dikush: e gjelbër nga babai, portokalli nga nana, gjysmë-gjysmë nga të dy anët, gri nga martesa. Nga këndvështrimi yt.', 'A small dot on the picture shows which side someone comes from: green father\'s side, orange mother\'s side, half/half both sides, grey by marriage. From your point of view.')}</p></div>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-sides]'); if (!b) return;
+  LS.set('sides', b.dataset.sides); b.parentElement.querySelectorAll('[data-sides]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  scheduleRender(); layers.forEach(L => { if (L.live && L.render && L.kind !== 'dlg') L.render(); });
+});
+/* Einstellungen: Seitenfarben und Vorschau im Baum */
+function uiSetMount(el) {
+  if (!el) return;
+  const pk = LS.get('treePeek') !== 'off';
+  el.innerHTML = `<h3 class="section-h">${wkL('Bedienung', 'Përdorimi', 'Handling')}</h3>${sidesSetHtml()}
+    <div class="field" style="margin-top:16px"><span class="lbl">${wkL('Vorschau im Baum', 'Parapamja në trung', 'Preview in the tree')}</span><div class="segctl" role="group"><button type="button" data-peekset="on" aria-pressed="${pk}">${wkL('An', 'Ndezur', 'On')}</button><button type="button" data-peekset="off" aria-pressed="${!pk}">${wkL('Aus', 'Fikur', 'Off')}</button></div><p class="gl-note">${wkL('An: Eine Person im Baum antippen zeigt zuerst ein halbes Blatt mit Anrufen, WhatsApp und «Profil». Aus: Das ganze Profil öffnet sich sofort.', 'Ndezur: prekja e një personi në trung shfaq fillimisht një gjysmë faqe me Telefono, WhatsApp dhe «Profili». Fikur: hapet menjëherë profili i plotë.', 'On: tapping a person in the tree first shows a half sheet with Call, WhatsApp and «Profile». Off: the full profile opens right away.')}</p></div>`;
+  el.addEventListener('click', e => { const b = e.target.closest('[data-peekset]'); if (!b) return; LS.set('treePeek', b.dataset.peekset); el.querySelectorAll('[data-peekset]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); });
+}
+
 /* ---------- Platzhalter: gezeichnete Silhouetten nach Alter, Flaggen für die Sprachwahl ---------- */
 function circD(cx, cy, r) { return `M${cx - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0z`; }
 /* Je Form: [Pfad, Deckkraft, Strichbreite (0 = gefüllt)] in einem 64er-Raster */
@@ -12783,7 +13087,7 @@ const ICN10 = {
   sibs: '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="7" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="19" cy="11.5" r="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M1.5 20c0-4 1.6-7 3.5-7s3.5 3 3.5 7M9 20c0-3.2 1.3-5.6 3-5.6s3 2.4 3 5.6M16.3 20c0-2.5 1.2-4.4 2.7-4.4s2.7 1.9 2.7 4.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
 };
 function treeDockHtml() { return `<div class="tree-dock" id="treeDock"><div class="tree-panel" id="treePanel" hidden></div><div class="tree-tools" id="treeTools"></div></div>`; }
-function treeTap(id) { if (S.pathMode) return showPath(id); openPerson(id); }
+function treeTap(id) { if (S.pathMode) return showPath(id); if (peekOn()) return treePeek(id); openPerson(id); }
 function nodeKeyOf(id) { if (!S.lay) return null; let k2 = null; for (const k of S.lay.nodes.keys()) { if (String(k).split('#')[0] !== id) continue; if (!(S.lay.dups && S.lay.dups.has(k))) return k; if (k2 == null) k2 = k; } return k2; }
 function nodeCenter(k) { const n = S.lay.nodes.get(k); return { x: n.x + PAD + NODE_W / 2, y: n.y + PAD + (AV_R ? AV_CY : NODE_H / 2) }; }
 /* nach jedem Zeichnen des Baums */
@@ -13106,6 +13410,81 @@ document.addEventListener('visibilitychange', () => {
   const before = (apkUpdate() || { latest: {} }).latest.v;
   apkFetch(false).then(() => { const after = (apkUpdate() || { latest: {} }).latest.v; if (after !== before) scheduleRender(); }).catch(() => {});
 });
+
+/* ---------- 78 · Hochladen im Hintergrund: kleine Anzeige statt Warten, mit Liste und «Nochmals» ---------- */
+const UPQ = { items: [], running: false, batches: [] };
+function upqAdd(files, personIds) {
+  const batch = { items: files.map(f => ({ f, personIds: [...personIds], st: 'wait', tries: 0, tid: S.treeId, picked: nativePicked() })), done: null };
+  const pr = new Promise(res => { batch.done = res; });
+  batch.items.forEach(it => { it.batch = batch; });
+  UPQ.items.push(...batch.items); UPQ.batches.push(batch);
+  upqPaint(); upqRun();
+  return pr;
+}
+async function upqRun() {
+  if (UPQ.running) return; UPQ.running = true;
+  try {
+    for (;;) {
+      const it = UPQ.items.find(x => x.st === 'wait'); if (!it) break;
+      if (S.offline || navigator.onLine === false) { it.st = 'net'; upqPaint(); await new Promise(res => { const h = () => { window.removeEventListener('online', h); res(); }; window.addEventListener('online', h); setTimeout(h, 20000); }); it.st = 'wait'; continue; }
+      it.st = 'run'; upqPaint();
+      try { it.id = await uploadOne(it.f, it.personIds, it.tid, it.picked); it.st = 'ok'; }
+      catch (e) {
+        it.err = e; it.tries++;
+        const net = e && (e.code === 'net' || e.code === 'no_google');
+        if (net && it.tries < 3) { it.st = 'wait'; upqPaint(); await new Promise(r => setTimeout(r, 2500 * it.tries)); }
+        else it.st = 'err';
+      }
+      upqPaint(); upqBatchCheck();
+    }
+  } finally { UPQ.running = false; upqPaint(); }
+}
+function upqBatchCheck() {
+  UPQ.batches = UPQ.batches.filter(b => {
+    if (b.items.some(x => x.st === 'wait' || x.st === 'run' || x.st === 'net')) return true;
+    const ok = b.items.filter(x => x.st === 'ok');
+    const pids = b.items[0] ? b.items[0].personIds : [];
+    if (ok.length && pids.length === 1) { const p = G.people.get(pids[0]); if (p && !p.avatarPhotoId) upd(p.id, { avatarPhotoId: ok[0].id }); }
+    flush();
+    b.done(ok.map(x => x.id));
+    return false;
+  });
+}
+function upqPaint() {
+  let el = document.getElementById('upPill');
+  const items = UPQ.items, busy = items.filter(x => x.st === 'wait' || x.st === 'run' || x.st === 'net');
+  if (!items.length) { if (el) el.remove(); return; }
+  if (!el) {
+    el = document.createElement('button'); el.type = 'button'; el.id = 'upPill'; el.className = 'up-pill';
+    el.addEventListener('click', () => act(upqSheet));
+    document.body.appendChild(el);
+  }
+  const ok = items.filter(x => x.st === 'ok').length, err = items.filter(x => x.st === 'err').length, n = items.length;
+  const net = items.some(x => x.st === 'net');
+  const pct = Math.round((ok + err) / n * 100);
+  el.classList.toggle('done', !busy.length); el.classList.toggle('err', !busy.length && err > 0);
+  el.innerHTML = busy.length
+    ? `<span class="up-spin" aria-hidden="true"></span><span class="up-t">${esc(net ? wkL('Warte auf Internet …', 'Në pritje të internetit …', 'Waiting for internet …') : wkL(`Fotos werden verschlüsselt · ${ok + err + 1} von ${n}`, `Fotot po shifrohen · ${ok + err + 1} nga ${n}`, `Encrypting photos · ${ok + err + 1} of ${n}`))}</span><span class="up-bar"><i style="width:${pct}%"></i></span>`
+    : err ? `<span class="up-ic">!</span><span class="up-t">${esc(wkL(`${ok} gespeichert · ${err} fehlgeschlagen`, `${ok} u ruajtën · ${err} dështuan`, `${ok} saved · ${err} failed`))}</span><span class="up-go">${esc(wkL('Nochmals', 'Sërish', 'Retry'))}</span>`
+    : `<span class="up-ic ok">✓</span><span class="up-t">${esc(ok === 1 ? wkL('Foto gespeichert', 'Fotoja u ruajt', 'Photo saved') : wkL(`${ok} Fotos gespeichert`, `${ok} foto u ruajtën`, `${ok} photos saved`))}</span>`;
+  clearTimeout(el._t);
+  if (!busy.length && !err) el._t = setTimeout(() => { if (!UPQ.items.some(x => x.st !== 'ok')) { UPQ.items = []; upqPaint(); } }, 3500);
+}
+async function upqSheet() {
+  const items = UPQ.items; if (!items.length) return;
+  const urls = items.map(it => { try { return URL.createObjectURL(it.f); } catch (e) { return ''; } });
+  const IC = { ok: '✓', run: '…', wait: '⏳', net: '⏳', err: '✕' };
+  const why = e => { const c = e && e.code; return c === 'decode' ? wkL('Format nicht unterstützt (JPG oder PNG verwenden)', 'Formati nuk mbështetet (përdor JPG ose PNG)', 'Format not supported (use JPG or PNG)') : c === 'no_google' || c === 'net' ? wkL('Keine Verbindung zu Google', 'S\'ka lidhje me Google', 'No connection to Google') : wkL('Fehler beim Speichern', 'Gabim gjatë ruajtjes', 'Error while saving'); };
+  const err = items.some(x => x.st === 'err');
+  const v = await dialog(`<div class="dlg-title">${esc(wkL('Fotos hochladen', 'Ngarkimi i fotove', 'Uploading photos'))}</div>
+    <div class="up-list">${items.map((it, i) => `<div class="up-row st-${it.st}">${urls[i] ? `<img src="${esc(urls[i])}" alt="">` : '<span class="up-noimg"></span>'}<span class="up-n">${esc(it.f.name || 'Foto')}${it.st === 'err' ? `<small>${esc(why(it.err))}</small>` : ''}</span><span class="up-s">${IC[it.st]}</span></div>`).join('')}</div>
+    <div class="dlg-text">${esc(wkL('Du kannst die App normal weiter benutzen. Bitte die App nicht schliessen, bis alles gespeichert ist.', 'Mund ta përdorësh aplikacionin normalisht. Mos e mbyll derisa të ruhet gjithçka.', 'You can keep using the app as usual. Please don\'t close it until everything is saved.'))}</div>
+    <div class="dlg-btns">${err ? `<button type="button" class="btn primary" data-v="retry">${I.refresh}<span>${wkL('Nochmals versuchen', 'Provo sërish', 'Try again')}</span></button><button type="button" class="btn" data-v="clear">${wkL('Fehlgeschlagene entfernen', 'Hiq të dështuarat', 'Remove failed')}</button>` : `<button type="button" class="btn primary" data-v="__cancel">${wkL('Fertig', 'Gati', 'Done')}</button>`}</div>`);
+  urls.forEach(u => { try { u && URL.revokeObjectURL(u); } catch (e) {} });
+  if (v === 'retry') { UPQ.items.forEach(x => { if (x.st === 'err') { x.st = 'wait'; x.tries = 0; if (!UPQ.batches.includes(x.batch)) { x.batch = { items: [x], done: () => {} }; UPQ.batches.push(x.batch); } } }); upqPaint(); upqRun(); }
+  if (v === 'clear') { UPQ.items = UPQ.items.filter(x => x.st !== 'err'); upqPaint(); }
+}
+window.addEventListener('beforeunload', e => { if (UPQ.items.some(x => x.st === 'wait' || x.st === 'run' || x.st === 'net')) { e.preventDefault(); e.returnValue = ''; } });
 
 /* ---------- Aus Sicht einer anderen Person: alle Bezeichnungen so, als wäre man diese Person ----------
  * Nur eine Ansicht auf diesem Gerät, bis «Zurück zu mir» (oder bis die App neu geladen wird).
@@ -13900,7 +14279,7 @@ function avatar(p, size = 44) {
   const ph = avatarPhoto(p);
   const vb = isMember(p) && size <= 90 ? `<span class="vbadge" title="Verifiziert">${I.check}</span>` : '';
   const oc = occOf(p);
-  return `<span class="av${p.gender === 'w' ? ' g-w' : p.gender === 'm' ? ' g-m' : ''}${isDead(p) ? ' dead' : ''}${bdayToday(p) ? ' bday-glow' : ''}${isMember(p) ? ' member' : ''}${oc ? ' occ-' + oc.k : ''}" style="--size:${size}px;--h:${hue(p)}" aria-hidden="true">${silhouette(p)}${ph ? imgTag(ph.thumb) : ''}${occHtml(oc, size)}${vb}</span>`;
+  return `<span class="av${p.gender === 'w' ? ' g-w' : p.gender === 'm' ? ' g-m' : ''}${isDead(p) ? ' dead' : ''}${bdayToday(p) ? ' bday-glow' : ''}${isMember(p) ? ' member' : ''}${oc ? ' occ-' + oc.k : ''}" style="--size:${size}px;--h:${hue(p)}" aria-hidden="true">${silhouette(p)}${ph ? imgTag(ph.thumb) : ''}${occHtml(oc, size)}${vb}${sideDot(p)}</span>`;
 }
 
 /* ---------- Datumsangaben: gespeichert als JJJJ, JJJJ-MM oder JJJJ-MM-TT ---------- */
@@ -14279,18 +14658,20 @@ function openGlossary() {
       <label class="check big-check"><input type="checkbox" data-splash${splashOn() ? ' checked' : ''}> <span>Begrüssungsbild beim Öffnen</span><small>Einmal am Tag kurz ein Familienfoto</small></label>
       <label class="check big-check"><input type="checkbox" data-simple${simpleOn() ? ' checked' : ''}> <span>Einfacher Modus für die Grosseltern</span><small>Nur grosse Fotos der Familie: antippen, um anzurufen oder eine WhatsApp zu schreiben. Nichts lässt sich verstellen. Verlassen: unten lange drücken.</small></label>
       <label class="check big-check"><input type="checkbox" data-mem${memorialsOn() ? ' checked' : ''}> Gedenktage anzeigen<small>Todestage in der Personenliste${IN_APP ? ' und als Mitteilung' : ''}</small></label>
+      <div data-uiset></div>
       <div data-perfset></div>
       <div class="field" style="margin-top:4px"><span class="lbl">Bezeichnungen anzeigen</span><div class="segctl seg3" role="group" aria-label="Sprache der Bezeichnungen" data-langs></div></div>
       <p class="gl-note">Die albanischen Bezeichnungen sind in kosovarischer Alltagsform, zum Beispiel <span lang="sq">Axha</span> <span>statt</span> <span lang="sq">Xhaxhai</span>, <span lang="sq">Nana</span> <span>statt</span> <span lang="sq">Nëna</span> <span>und</span> <span lang="sq">Çika</span> <span>statt</span> <span lang="sq">Vajza</span>. <span>Je nach Region im Kosovo kann es abweichen.</span></p>
       ${GLOSSARY.map(([h, rows]) => `<h3 class="section-h">${esc(h)}</h3><div class="card gl">${rows.map(([de, sq]) => `<div class="gl-row"><span class="gl-de" lang="${isEn() ? 'en' : 'de'}" translate="no">${esc(DE(de))}</span><span class="gl-sq" lang="sq">${esc(sq)}</span></div>`).join('')}</div>`).join('')}
     </div>`;
   perfSetMount(L.el.querySelector('[data-perfset]'));
+  uiSetMount(L.el.querySelector('[data-uiset]'));
   L.el.addEventListener('click', e => {
     const b = e.target.closest('[data-lang],[data-act],[data-font],[data-ui],[data-ff],[data-aicon]'); if (!b) return;
     if (b.dataset.act === 'close') return closeLayer(L);
     if (b.dataset.ff) { LS.set('fontFam', b.dataset.ff); applyFontFam(); paint(); return; }
     if (b.dataset.aicon) { setAppIcon(b.dataset.aicon); paint(); const h = L.el.querySelector('[data-aihint]'); h.hidden = false; h.textContent = T(appIconHint()); return; }
-    if (b.dataset.ui) { setUiLang(b.dataset.ui); paint(); return; }
+    if (b.dataset.ui) { setUiLang(b.dataset.ui); paint(); perfSetMount(L.el.querySelector('[data-perfset]')); uiSetMount(L.el.querySelector('[data-uiset]')); return; }
     if (b.dataset.font !== undefined) { LS.set('fontScale', b.dataset.font); applyFont(); paint(); scheduleRender(); return; }
     LS.set('lang', b.dataset.lang); paint(); scheduleRender();
   });
@@ -14571,7 +14952,7 @@ try {
   else window.addEventListener('popstate', e => onHistChange((e.state && e.state.layer) || 0));
 } catch (e) { histOK = false; }
 function updateInert() {
-  const open = layers.filter(L => !isDocked(L));
+  const open = layers.filter(L => !isDocked(L) && L.kind !== 'peek');
   document.body.classList.toggle('has-layer', open.length > 0);
   document.body.classList.toggle('has-full', open.some(L => L.kind !== 'dlg'));
   document.body.classList.toggle('has-dock', layers.some(isDocked));
@@ -14748,6 +15129,7 @@ const UI_LANGS = [['de', 'Deutsch'], ['sq', 'Kosovarisht'], ['en', 'English']];
 function langSwitch(mode) { const ul = uiLang(); return `<div class="lang-sw segctl" role="group" translate="no" aria-label="Sprache · Gjuha · Language">${UI_LANGS.map(([v, t]) => `<button type="button" ${mode === 'v' ? `data-v="ui:${v}"` : `data-act="ui-${v}"`} aria-pressed="${ul === v}">${langLbl(v, t, true)}</button>`).join('')}</div>`; }
 function setMain(key, html, noScroll) {
   const main = $('#main');
+  if (key !== 'fotos') phScrubRemove();
   const changedView = main.dataset.v !== key;
   main.dataset.v = key; main.classList.toggle('no-scroll', !!noScroll);
   main.innerHTML = html;
@@ -14804,7 +15186,7 @@ function renderWelcome(main) {
     ${S.isAdmin ? `<button type="button" class="btn block" data-act="restore" style="margin-top:10px">${I.up} Sicherung einspielen</button>` : ''}</div>`);
 }
 function onMainClick(e) {
-  const t = e.target.closest('[data-act],[data-open],[data-photo],[data-upload],[data-pf],[data-mode],[data-z],[data-ev],#treePersonChip');
+  const t = e.target.closest('[data-act],[data-open],[data-photo],[data-upload],[data-pf],[data-phsort],[data-mode],[data-z],[data-ev],#treePersonChip');
   if (!t) return;
   if (t.dataset.ev) return openEvent(t.dataset.ev);
   if (t.id === 'treePersonChip') return act(chooseTreePerson);
@@ -14812,7 +15194,8 @@ function onMainClick(e) {
   if (t.dataset.photo !== undefined) return openLightbox(filteredPhotos().map(p => p.id), +t.dataset.photo);
   if (t.dataset.upload !== undefined) return startUpload(t.dataset.upload || null);
   if (t.dataset.pf) { S.photoFilter = S.photoFilter === t.dataset.pf && t.dataset.pf.startsWith('album:') ? 'all' : t.dataset.pf; return renderMain(); }
-  if (t.dataset.mode) { S.treeMode = t.dataset.mode; LS.set('mode', S.treeMode); return renderMain(); }
+  if (t.dataset.mode) { if (t.dataset.mode !== S.treeMode) treeFlipPrep(); S.treeMode = t.dataset.mode; LS.set('mode', S.treeMode); return renderMain(); }
+  if (t.dataset.phsort) { LS.set('phSort', t.dataset.phsort); return renderMain(); }
   if (t.dataset.z) return zoomBtn(t.dataset.z);
   switch (t.dataset.act) {
     case 'slides': return slideshow(photosByDate(filteredPhotos()), S.photoFilter.startsWith('album:') ? S.photoFilter.slice(6) : 'Alle Fotos');
@@ -15057,7 +15440,8 @@ function renderTreeView(main) {
   if (lay.fams) decorateFamilies(world, lay); else world.classList.remove('fam-hi');
   treeFx();
   const key = `${S.treeId}|${S.treeMode}|${S.treeMode === 'alle' ? 'f:' + (S.famOnly || '') : subj}`;
-  if (S.centeredFor !== key) {
+  if (S.centeredFor !== key && treeFlipApply(lay)) { S.centeredFor = key; S.centerTarget = null; }
+  else if (S.centeredFor !== key) {
     S.centeredFor = key;
     const target = [S.centerTarget, S.focusId, home, lay.rootId].find(x => x && lay.nodes.has(x));
     S.centerTarget = null;
@@ -15068,7 +15452,7 @@ function renderTreeView(main) {
       const kf = Math.min(r.width / (lay.w + PAD * 2), (r.height - 20) / (lay.h + PAD * 2));
       if (kf >= 0.72) fitTree(false); else centerOn(target, 0.85, false);
     });
-  } else applyT(false);
+  } else { S.flip = null; applyT(false); }
 }
 function applyT(anim) {
   const w = $('#treeWorld'); if (!w) return;
@@ -15201,7 +15585,7 @@ function renderPeopleList() {
   const el = $('#plist'); if (!el) return;
   const all = sortedPeople(); const home = refId();
   const q = norm(S.q);
-  let html = askHintRow() + relChipsHtml();
+  let html = askHintRow() + relChipsHtml() + sideLegend();
   if (!q) {
     html += welcomeBanner() + mgBanner() + greetBanner() + apkUpdBanner() + backupBanner() + bkCheckBanner() + candleBanner() + termsBanner() + callsBanner() + wichtelBanner() + roundBanner() + eduYearBanner() + holBanner() + eventsBanner() + newsBanner() + onThisDayBanner() + yearBanner() + installBanner();
     const b = upcomingBirthdays(45).filter(x => x.p.id === myPersonId() || bdnWanted(x.p, x.age)).slice(0, 10);
@@ -15222,7 +15606,7 @@ function filteredPhotos() {
   const all = sortedPhotos();
   if (S.photoFilter === 'untagged') return all.filter(untaggedPhoto);
   if (S.photoFilter && S.photoFilter.startsWith('album:')) { const a = S.photoFilter.slice(6); return photosByDate(all.filter(ph => ph.album === a)); }
-  return all;
+  return phSortYear() ? photosByYearDesc(all) : all;
 }
 function renderPhotosView(main) {
   if (main.dataset.v !== 'fotos') setMain('fotos', '<div class="view"><div class="ph-head" id="phHead"></div><div id="phGrid"></div></div>');
@@ -15238,11 +15622,14 @@ function renderPhotosView(main) {
   $('#phGrid').innerHTML = list.length
     ? `<div class="grid">${list.map((ph, i) => `<button type="button" data-photo="${i}" aria-label="${esc(ph.caption || 'Foto öffnen')}">${imgTag(ph.thumb)}</button>`).join('')}</div>`
     : `<div class="state" style="padding-top:20px"><p>${S.photoFilter === 'untagged' ? 'Alle Fotos sind mindestens einer Person zugeordnet.' : 'Noch keine Fotos. Lade Familienfotos hoch und ordne sie danach einer oder mehreren Personen zu.'}</p></div>`;
+  if (list.length >= 12 && !(S.photoFilter || '').startsWith('album:')) $('#phHead').insertAdjacentHTML('beforeend', phSortHtml());
+  phScrubMount(list);
 }
 
 /* ---------- Personenblatt ---------- */
 function openPerson(id) {
   if (!S.people.has(id)) return;
+  if (peekTop()) { closeLayer(peekTop()).then(() => openPerson(id)); return; }
   const top = layers[layers.length - 1];
   /* Breiter Bildschirm: Antippen im Baum oder in der Liste ersetzt das angedockte Profil */
   if (WIDE.matches && top && layers.every(x => x.dock) && !(lastTap && lastTap.el && lastTap.el.closest && lastTap.el.closest('.layer'))) {
@@ -15817,38 +16204,25 @@ async function uploadFiles(files, personIds) {
   const imgs = files.filter(f => /^image\//.test(f.type) || /\.(jpe?g|png|webp|gif|heic|heif)$/i.test(f.name));
   if (!imgs.length) { toast('Bitte Bilddateien wählen (JPG oder PNG).'); return; }
   if (S.offline) { toast('Ohne Internet können keine Fotos hochgeladen werden. Bitte später nochmals versuchen.'); return; }
-  const picked = nativePicked();
-  let done = 0, failed = 0, firstId = null, lastErr = null;
-  const tid = S.treeId;
-  for (const f of imgs) {
-    toast(imgs.length > 1 ? `Foto ${done + failed + 1} von ${imgs.length} wird verschlüsselt gespeichert …` : 'Foto wird verschlüsselt gespeichert …', true);
-    try {
-      const nat = picked.find(x => x.name === f.name && (!x.size || x.size === f.size)) || {};
-      const ex = Object.assign({}, nat, exifInfo(await f.arrayBuffer()));
-      if (ex.lat == null && nat.lat != null) { ex.lat = nat.lat; ex.lon = nat.lon; }
-      const img = await loadImg(f);
-      const full = await scaleTo(img, 1800, 0.85);
-      const thumb = await scaleTo(img, 480, 0.8);
-      const F = await encryptAndUpload(full.blob);
-      const T = await encryptAndUpload(thumb.blob);
-      setImg(T.id, thumb.blob); idb.put(T.id, T.data); setImg(F.id, full.blob);
-      const id = newId();
-      const ph = { id, treeId: tid, full: F.id, fk: F.key, thumb: T.id, tk: T.key, w: full.w, h: full.h, caption: '', date: ex.date || '', place: '', personIds: [...personIds], createdAt: Date.now() };
-      if (ex.lat != null) { ph.lat = ex.lat; ph.lon = ex.lon; }
-      put('photos', ph);
-      if (!firstId) firstId = id;
-      done++;
-      changed();
-    } catch (e) { failed++; lastErr = e; console.warn(e); }
-  }
-  if (firstId && personIds.length === 1) { const p = G.people.get(personIds[0]); if (p && !p.avatarPhotoId) upd(p.id, { avatarPhotoId: firstId }); }
-  flush();
-  if (!failed) toast(done === 1 ? 'Foto gespeichert' : `${done} Fotos gespeichert`);
-  else {
-    const c = lastErr && lastErr.code;
-    const why = c === 'decode' ? 'Format wird nicht unterstützt, bitte JPG oder PNG verwenden.' : c === 'no_google' || c === 'net' ? 'Keine Verbindung zu Google.' : 'Bitte nochmals versuchen.';
-    toast(`${done ? `${done} gespeichert, ` : ''}${failed} fehlgeschlagen. ${why}`);
-  }
+  return upqAdd(imgs, personIds);
+}
+/* Ein Foto verschlüsseln und speichern (läuft in der Warteschlange im Hintergrund) */
+async function uploadOne(f, personIds, tid, picked) {
+  const nat = (picked || []).find(x => x.name === f.name && (!x.size || x.size === f.size)) || {};
+  const ex = Object.assign({}, nat, exifInfo(await f.arrayBuffer()));
+  if (ex.lat == null && nat.lat != null) { ex.lat = nat.lat; ex.lon = nat.lon; }
+  const img = await loadImg(f);
+  const full = await scaleTo(img, 1800, 0.85);
+  const thumb = await scaleTo(img, 480, 0.8);
+  const F = await encryptAndUpload(full.blob);
+  const T = await encryptAndUpload(thumb.blob);
+  setImg(T.id, thumb.blob); idb.put(T.id, T.data); setImg(F.id, full.blob);
+  const id = newId();
+  const ph = { id, treeId: tid, full: F.id, fk: F.key, thumb: T.id, tk: T.key, w: full.w, h: full.h, caption: '', date: ex.date || '', place: '', personIds: [...personIds], createdAt: Date.now() };
+  if (ex.lat != null) { ph.lat = ex.lat; ph.lon = ex.lon; }
+  put('photos', ph);
+  changed();
+  return id;
 }
 function placeOf(ph) {
   if (!ph) return null;
