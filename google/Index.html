@@ -11907,7 +11907,7 @@ async function pushNeedServer() {
     <div class="dlg-text">Für Mitteilungen im Browser und auf dem iPhone braucht es den neuen Code im Google-Apps-Script-Projekt. So geht es (am besten am Computer):</div>
     <ol class="dlg-steps"><li>Den neuen <a href="${CODE_GS_URL}" target="_blank" rel="noopener">Code.gs auf GitHub</a> öffnen → oben rechts «Raw» → alles kopieren.</li>
     <li><a href="https://script.google.com" target="_blank" rel="noopener">script.google.com</a> → Projekt «Familienstammbaum» → Datei Code.gs: alles ersetzen → Speichern.</li>
-    <li><b>Neu:</b> Oben in der Auswahl die Funktion «mitteilungenFreischalten» wählen → «Ausführen» → Google fragt nach der Erlaubnis, eine Verbindung zu einem externen Dienst herzustellen → erlauben.</li>
+    <li><b>Neu:</b> Oben in der Auswahl die Funktion «mitteilungenFreischalten» wählen → «Ausführen» → Google fragt nach der Erlaubnis, eine Verbindung zu einem externen Dienst herzustellen → erlauben. Nicht auslassen: ohne die Erlaubnis kann Google das neue Skript nicht ausführen.</li>
     <li>Bereitstellen → Bereitstellungen verwalten → Stift → Version «Neue Version» → Bereitstellen.</li></ol>
     <div class="dlg-text">Die Adresse bleibt gleich. Danach die App neu laden.</div>
     <div class="dlg-btns"><button type="button" class="btn primary" data-v="__cancel">OK</button></div>`);
@@ -19339,8 +19339,9 @@ async function needServer(v, what) {
     <div class="dlg-text">Für ${esc(what)} braucht es den neuen Code im Google-Apps-Script-Projekt. So geht es (am besten am Computer):</div>
     <ol class="dlg-steps"><li>Den neuen <a href="${CODE_GS_URL}" target="_blank" rel="noopener">Code.gs auf GitHub</a> öffnen → oben rechts «Raw» → alles kopieren.</li>
     <li><a href="https://script.google.com" target="_blank" rel="noopener">script.google.com</a> → Projekt «Familienstammbaum» → Datei Code.gs: alles ersetzen → Speichern.</li>
+    <li>Oben in der Auswahl die Funktion «mitteilungenFreischalten» wählen → «Ausführen» → die Erlaubnis bestätigen (einmalig, ab Version 6; nicht auslassen).</li>
     <li>Bereitstellen → Bereitstellungen verwalten → Stift → Version «Neue Version» → Bereitstellen.</li></ol>
-    <div class="dlg-text">Die Adresse bleibt gleich, und es braucht keine neuen Berechtigungen. Danach die App neu laden.</div>
+    <div class="dlg-text">Die Adresse bleibt gleich. Danach die App neu laden.</div>
     <div class="dlg-btns"><button type="button" class="btn primary" data-v="__cancel">OK</button></div>`);
   return false;
 }
