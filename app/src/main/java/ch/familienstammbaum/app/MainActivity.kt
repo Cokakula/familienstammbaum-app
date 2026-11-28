@@ -160,6 +160,26 @@ class MainActivity : AppCompatActivity() {
         if (g != null) g.second.invoke(g.first, res.values.any { it }, false)
     }
 
+    /* 91 · Kontakt aus dem Telefonbuch übernehmen (nur der gewählte, nur auf Wunsch) */
+    private val pickContactL = registerForActivityResult(ActivityResultContracts.PickContact()) { uri ->
+        if (uri == null) { contactResult(null, false); return@registerForActivityResult }
+        Thread {
+            val o = try { ContactRead.read(this, uri) } catch (e: Exception) { null }
+            runOnUiThread { contactResult(o?.toString(), false) }
+        }.start()
+    }
+    private val askContacts = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) launchContactPick() else contactResult(null, true)
+    }
+    private fun launchContactPick() {
+        try { pickContactL.launch(null) } catch (e: ActivityNotFoundException) { contactResult(null, false) }
+    }
+    private fun contactResult(json: String?, denied: Boolean) {
+        if (!::web.isInitialized) return
+        val arg = if (json == null) "null" else JSONObject.quote(json)
+        web.evaluateJavascript("window.__fsContact && window.__fsContact($arg, $denied)", null)
+    }
+
     private var notifyThenSettings = false
     private val askNotifications = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         if (!granted && notifyThenSettings) notificationSettings()
@@ -553,6 +573,14 @@ class MainActivity : AppCompatActivity() {
         @JavascriptInterface fun notifyOk(): Boolean = ours() && Birthdays.canNotify(this@MainActivity)
         @JavascriptInterface fun openNotifySettings() { if (!ours()) return; runOnUiThread { allowNotifications() } }
         @JavascriptInterface fun clearSession() { if (!ours()) return; Prefs.clearSession(this@MainActivity); PhotoWidget.clear(this@MainActivity) }
+        /* 91 · Kontakt wählen: fragt einmal nach dem Zugriff auf die Kontakte */
+        @JavascriptInterface fun pickContact() {
+            if (!ours()) return
+            runOnUiThread {
+                if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) launchContactPick()
+                else askContacts.launch(Manifest.permission.READ_CONTACTS)
+            }
+        }
         /* Widget «Foto des Tages»: Bilder für die nächsten Tage */
         @JavascriptInterface fun savePhotoDays(json: String) { if (!ours()) return; PhotoWidget.save(this@MainActivity, json) }
         @JavascriptInterface fun saveBirthdays(json: String) { if (!ours()) return; Prefs.setCache(this@MainActivity, json); FamilyWidget.refresh(this@MainActivity) }
